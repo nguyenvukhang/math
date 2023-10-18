@@ -1,6 +1,5 @@
 ---
 title: 'Definition 3.1.4 (Step-size rule)'
-open: true
 ---
 
 Let $f:{\mathbb R}^n\to{\mathbb R}$ be continuously differentiable and
