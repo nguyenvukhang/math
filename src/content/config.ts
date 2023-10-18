@@ -5,6 +5,7 @@ const posts = defineCollection({
   schema: z.object({
     title: z.string(),
     open: z.boolean().default(false),
+    draft: z.boolean().default(false),
   }),
 })
 

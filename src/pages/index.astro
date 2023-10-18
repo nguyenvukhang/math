@@ -5,14 +5,16 @@ const posts = await getCollection('posts')
 type PostProps = CollectionEntry<'posts'>
 
 const renders = await Promise.all(posts.map((v) => v.render()))
-const content = posts.map(({ render, ...v }, i) => ({
-  Content: renders[i].Content,
-  ...v,
-}))
+const content = posts
+  .map(({ render, ...v }, i) => ({
+    Content: renders[i].Content,
+    ...v,
+  }))
+  .filter((v) => v.data.draft === false)
 content.sort((a, b) => a.data.title.localeCompare(b.data.title))
 console.log(content)
 
-const SITE_TITLE = "Minimath"
+const SITE_TITLE = 'Minimath'
 ---
 
 <html lang="en">
@@ -72,7 +74,7 @@ const SITE_TITLE = "Minimath"
     <h1>{SITE_TITLE}</h1>
     <p>
       with love from past <a href="https://github.com/nguyenvukhang">khang</a>
-      to present everyone.
+       to present everyone.
     </p>
     {
       content.map(({ Content, data, slug }) => (
