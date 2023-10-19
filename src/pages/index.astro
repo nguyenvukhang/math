@@ -1,19 +1,14 @@
 ---
-import { CollectionEntry, getCollection } from 'astro:content'
-import { sorter, renderAll } from '../lib/sorter'
+import { getCollection } from 'astro:content'
+import { groupByFolder, renderAll } from '../lib/sorter'
 
-const NUM3_REGEX = new RegExp('d+.d+.d+')
+const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
 
 const unrenderedPosts = (await getCollection('posts')).filter(
   (v) => v.data.draft === false,
 )
 const posts = await renderAll(unrenderedPosts)
-
-posts.sort(sorter)
-
-// console.log('yes', parse_semver('Definition 1.2.3'))
-// posts.sort((a, b) => a.data.title.localeCompare(b.data.title))
-// console.log(posts)
+const grouped = groupByFolder(posts)
 
 const SITE_TITLE = 'Minimath'
 ---
@@ -21,7 +16,6 @@ const SITE_TITLE = 'Minimath'
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
@@ -73,29 +67,65 @@ const SITE_TITLE = 'Minimath'
   </head>
   <body>
     <h1>{SITE_TITLE}</h1>
-    <p>
+    <div style="padding-top:0px">
       with love from past <a href="https://github.com/nguyenvukhang">khang</a>
        to present everyone.
-    </p>
+    </div>
     {
-      posts.map(({ Content, data, slug }) => (
-        <details id={slug} open={data.open}>
-          <summary>
-            <span class="node-title">{data.title}</span>
-          </summary>
-          <Content />
-        </details>
+      Object.entries(grouped).map(([header, posts]) => (
+        <div>
+          <h2>{header}</h2>
+          <div>
+            {posts.map(({ Content, data, slug }) => (
+              <details id={slug} open={data.open}>
+                <summary class="node-title">{data.title}</summary>
+                <div style="display:flex;flex-direction:row">
+                  <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
+                  <div style="display:block">
+                    <Content />
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
       ))
     }
   </body>
 </html>
 
-<style>
-  details {
+<style is:global>
+  a {
+    color: #3b82f6;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 0.5rem;
+  }
+  summary,
+  .expand-line {
     cursor: pointer;
   }
-
-  summary > span:hover {
+  .content {
+    border-left: 2px solid #bbbbbb;
+    padding-left: 1rem;
+  }
+  .expand-line {
+    background-clip: content-box;
+    width: 3px;
+    min-width: 3px;
+    padding: 0 0.4rem 0 0.4em;
+    margin: 0 0.4rem 0 -0.4em;
+    background-color: #cccccc;
+  }
+  .expand-line:hover {
+    background-color: #aaaaaa;
+  }
+  .node-title:hover {
     color: #3b82f6;
   }
 </style>

@@ -12,6 +12,20 @@ export const renderAll = (posts: Post[]) =>
     })),
   )
 
+export const groupByFolder = (posts: Post[]) => {
+  const grouped = posts.reduce(
+    (a, p) => {
+      const folder = p.slug.slice(0, p.slug.indexOf('/'))
+      if (!a[folder]) a[folder] = []
+      a[folder].push(p)
+      return a
+    },
+    {} as Record<string, Post[]>,
+  )
+  Object.keys(grouped).forEach((k) => grouped[k].sort(sorter))
+  return grouped
+}
+
 const semver = (v: string, index: number) => {
   const p = v.split(' ')
   return p.length <= index || !NUM3_REGEX.test(p[index]) ? null : p[index]

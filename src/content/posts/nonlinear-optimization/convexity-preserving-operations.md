@@ -9,4 +9,3 @@ title: 'Proposition 1.2.6 (Convexity preserving operations)'
    R^n\to\mathbb R$ be convex and $g:\mathbb R^m\to\mathbb R^n$
    affine.  
    Then $f\circ G$ is convex.
-
