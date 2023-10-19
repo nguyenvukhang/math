@@ -4,6 +4,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
+    "test": "node ./scripts/checkhealth.js",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -30,6 +31,8 @@
     ]
   },
   "devDependencies": {
+    "chalk": "^5.3.0",
+    "mdast-util-from-markdown": "^2.0.0",
     "prettier-plugin-astro": "^0.12.0"
   }
 }
