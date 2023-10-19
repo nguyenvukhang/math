@@ -1,18 +1,19 @@
 ---
 import { CollectionEntry, getCollection } from 'astro:content'
+import { sorter, renderAll } from '../lib/sorter'
 
-const posts = await getCollection('posts')
-type PostProps = CollectionEntry<'posts'>
+const NUM3_REGEX = new RegExp('d+.d+.d+')
 
-const renders = await Promise.all(posts.map((v) => v.render()))
-const content = posts
-  .map(({ render, ...v }, i) => ({
-    Content: renders[i].Content,
-    ...v,
-  }))
-  .filter((v) => v.data.draft === false)
-content.sort((a, b) => a.data.title.localeCompare(b.data.title))
-console.log(content)
+const unrenderedPosts = (await getCollection('posts')).filter(
+  (v) => v.data.draft === false,
+)
+const posts = await renderAll(unrenderedPosts)
+
+posts.sort(sorter)
+
+// console.log('yes', parse_semver('Definition 1.2.3'))
+// posts.sort((a, b) => a.data.title.localeCompare(b.data.title))
+// console.log(posts)
 
 const SITE_TITLE = 'Minimath'
 ---
@@ -77,7 +78,7 @@ const SITE_TITLE = 'Minimath'
        to present everyone.
     </p>
     {
-      content.map(({ Content, data, slug }) => (
+      posts.map(({ Content, data, slug }) => (
         <details id={slug} open={data.open}>
           <summary>
             <span class="node-title">{data.title}</span>
