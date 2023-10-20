@@ -1,6 +1,5 @@
 ---
 title: 'Definition 2.1.1 (Directional derivative)'
-open: true
 ---
 
 Let $D\subset \mathbb R$ be open. $f:D\to\mathbb R$ is directionally
