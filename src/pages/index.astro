@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import { groupByFolder, renderAll } from '../lib/sorter'
-import '../../styles/katex.css'
-import '../../styles/global.css'
+import '../lib/katex.css'
 
 const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
 const EXPAND_ALL_JS = `
@@ -34,10 +33,10 @@ const SITE_TITLE = 'Minimath'
       with love from past <a href="https://github.com/nguyenvukhang">khang</a>
        to present everyone.
     </div>
-    <div style='display:flex;flex-direction:row;margin:1rem 0rem;'>
-    <button onclick={EXPAND_ALL_JS}>expand all</button>
-    <div style='width: 0.5rem'/>
-    <button onclick={CLOSE_ALL_JS}>close all</button>
+    <div style="display:flex;flex-direction:row;margin:1rem 0rem;">
+      <button onclick={EXPAND_ALL_JS}>expand all</button>
+      <div style="width: 0.5rem"></div>
+      <button onclick={CLOSE_ALL_JS}>close all</button>
     </div>
     {
       Object.entries(grouped).map(([header, posts]) => (
@@ -48,7 +47,7 @@ const SITE_TITLE = 'Minimath'
               <summary class="node-title">{data.title}</summary>
               <div style="display:flex;flex-direction:row">
                 <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
-                <div style="overflow:auto">
+                <div style="overflow-x:auto">
                   <Content />
                 </div>
               </div>
@@ -59,3 +58,33 @@ const SITE_TITLE = 'Minimath'
     }
   </body>
 </html>
+
+<style is:global>
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 0.5rem;
+  }
+  summary,
+  .expand-line {
+    cursor: pointer;
+  }
+  .expand-line {
+    background-clip: content-box;
+    width: 3px;
+    min-width: 3px;
+    padding: 0 0.4rem 0 0.4em;
+    margin: 0 0.4rem 0 -0.4em;
+    background-color: #cccccc;
+  }
+  .expand-line:hover {
+    background-color: #aaaaaa;
+  }
+  a,
+  .node-title:hover {
+    color: #3b82f6;
+  }
+</style>
