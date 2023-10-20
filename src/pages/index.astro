@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content'
 import { groupByFolder, renderAll } from '../lib/sorter'
+import '../../styles/katex.css'
+import '../../styles/global.css'
 
 const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
 
@@ -19,51 +21,6 @@ const SITE_TITLE = 'Minimath'
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
-
-    <!-- START: Katex import -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
-      crossorigin="anonymous"
-    />
-
-    <!-- The loading of KaTeX is deferred to speed up page rendering -->
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-      integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
-      crossorigin="anonymous"></script>
-
-    <!-- To automatically render math in text elements, include the auto-render extension: -->
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-      integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
-      crossorigin="anonymous"></script>
-
-    <!-- END: Katex import -->
-
-    <!-- START: Katex configuration -->
-
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const delimiters = [
-          { left: '$$', right: '$$', display: true },
-          { left: '$', right: '$', display: false },
-        ]
-        const macros = {
-          '\\norm': '\\lVert{#1}\\rVert',
-        }
-        renderMathInElement(document.body, {
-          macros,
-          delimiters,
-          throwOnError: false,
-        })
-      })
-    </script>
-
-    <!-- END: Katex configuration -->
   </head>
   <body>
     <h1>{SITE_TITLE}</h1>
@@ -73,59 +30,21 @@ const SITE_TITLE = 'Minimath'
     </div>
     {
       Object.entries(grouped).map(([header, posts]) => (
-        <div>
+        <>
           <h2>{header}</h2>
-          <div>
-            {posts.map(({ Content, data, slug }) => (
-              <details id={slug} open={data.open}>
-                <summary class="node-title">{data.title}</summary>
-                <div style="display:flex;flex-direction:row">
-                  <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
-                  <div style="display:block">
-                    <Content />
-                  </div>
+          {posts.map(({ Content, data, slug }) => (
+            <details id={slug} open={data.open}>
+              <summary class="node-title">{data.title}</summary>
+              <div style="display:flex;flex-direction:row">
+                <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
+                <div style="overflow:auto">
+                  <Content />
                 </div>
-              </details>
-            ))}
-          </div>
-        </div>
+              </div>
+            </details>
+          ))}
+        </>
       ))
     }
   </body>
 </html>
-
-<style is:global>
-  a {
-    color: #3b82f6;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-bottom: 0.5rem;
-  }
-  summary,
-  .expand-line {
-    cursor: pointer;
-  }
-  .content {
-    border-left: 2px solid #bbbbbb;
-    padding-left: 1rem;
-  }
-  .expand-line {
-    background-clip: content-box;
-    width: 3px;
-    min-width: 3px;
-    padding: 0 0.4rem 0 0.4em;
-    margin: 0 0.4rem 0 -0.4em;
-    background-color: #cccccc;
-  }
-  .expand-line:hover {
-    background-color: #aaaaaa;
-  }
-  .node-title:hover {
-    color: #3b82f6;
-  }
-</style>

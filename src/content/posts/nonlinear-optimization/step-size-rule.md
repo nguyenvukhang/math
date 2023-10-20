@@ -12,8 +12,8 @@ $$
 
 is called a step-size rule for $f$.
 
-We call it well-defined for $f$ if $T(x,d)\neq0\$ for all
-$(x,d)\in\mathcal{A}\_f$.
+We call it well-defined for $f$ if $T(x,d)\neq0$ for all
+$(x,d)\in\mathcal{A}_f$.
 
 If the step-size rule is well-defined for all continuously
 differentiable functions ${\mathbb R}^n\to{\mathbb R}$, we simply call
