@@ -5,6 +5,12 @@ import '../../styles/katex.css'
 import '../../styles/global.css'
 
 const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
+const EXPAND_ALL_JS = `
+const d=document.getElementsByTagName('details');
+for(let i=0;i<d.length;i++)d[i].setAttribute('open',true)`
+const CLOSE_ALL_JS = `
+const d=document.getElementsByTagName('details');
+for(let i=0;i<d.length;i++)d[i].removeAttribute('open')`
 
 const unrenderedPosts = (await getCollection('posts')).filter(
   (v) => v.data.draft === false,
@@ -27,6 +33,11 @@ const SITE_TITLE = 'Minimath'
     <div style="padding-top:0px">
       with love from past <a href="https://github.com/nguyenvukhang">khang</a>
        to present everyone.
+    </div>
+    <div style='display:flex;flex-direction:row;margin:1rem 0rem;'>
+    <button onclick={EXPAND_ALL_JS}>expand all</button>
+    <div style='width: 0.5rem'/>
+    <button onclick={CLOSE_ALL_JS}>close all</button>
     </div>
     {
       Object.entries(grouped).map(([header, posts]) => (
