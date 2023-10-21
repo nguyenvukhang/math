@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
-    "test": "node ./scripts/checkhealth.js",
+    "checkhealth": "node ./scripts/checkhealth.js",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
