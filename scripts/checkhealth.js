@@ -44,6 +44,9 @@ function internalUrlToFilename(url) {
 }
 
 let hasError = false
+const failCheck = () => {
+  throw new Error('checkhealth failed.')
+}
 
 getAllFiles(ROOT_DIR).forEach((filepath) => {
   const relpath = relative(ROOT_DIR, filepath)
@@ -61,6 +64,7 @@ getAllFiles(ROOT_DIR).forEach((filepath) => {
         hasError = true
         console.warn(chalk.yellow('[Warning: broken link]'))
         console.log(`'${relpath}' has broken link:\n${v.url}`)
+        failCheck()
       }
     })
 })
