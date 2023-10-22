@@ -12,8 +12,8 @@ export const renderAll = (posts: Post[]) =>
     })),
   )
 
-export const groupByFolder = (posts: Post[]) => {
-  const grouped = posts.reduce(
+export const groupByFolder = (posts: Post[]): [string, Post[]][] => {
+  const dict = posts.reduce(
     (a, p) => {
       const folder = p.slug.slice(0, p.slug.indexOf('/'))
       if (!a[folder]) a[folder] = []
@@ -22,8 +22,10 @@ export const groupByFolder = (posts: Post[]) => {
     },
     {} as Record<string, Post[]>,
   )
-  Object.keys(grouped).forEach((k) => grouped[k].sort(sorter))
-  return grouped
+  Object.keys(dict).forEach((k) => dict[k].sort(sorter))
+  const sorted = Object.entries(dict)
+  sorted.sort((a, b) => a[0].localeCompare(b[0]))
+  return sorted
 }
 
 const semver = (v: string, index: number) => {

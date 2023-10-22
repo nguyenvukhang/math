@@ -27,7 +27,7 @@ const SITE_TITLE = 'Minimath'
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
   </head>
-  <body>
+  <body class="markdown-body">
     <h1>{SITE_TITLE}</h1>
     <div style="padding-top:0px">
       with love from past <a href="https://github.com/nguyenvukhang">khang</a>
@@ -39,12 +39,12 @@ const SITE_TITLE = 'Minimath'
       <button onclick={CLOSE_ALL_JS}>close all</button>
     </div>
     {
-      Object.entries(grouped).map(([header, posts]) => (
+      grouped.map(([header, posts]) => (
         <>
           <h2>{header}</h2>
           {posts.map(({ Content, data, slug }) => (
             <details id={slug} open={data.open}>
-              <summary class="node-title">{data.title}</summary>
+              <summary>{data.title}</summary>
               <div style="display:flex;flex-direction:row">
                 <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
                 <div style="overflow-x:auto">
@@ -68,6 +68,9 @@ const SITE_TITLE = 'Minimath'
   h6 {
     margin-bottom: 0.5rem;
   }
+  .markdown-body {
+    word-wrap: break-word;
+  }
   summary,
   .expand-line {
     cursor: pointer;
@@ -83,8 +86,7 @@ const SITE_TITLE = 'Minimath'
   .expand-line:hover {
     background-color: #aaaaaa;
   }
-  a,
-  .node-title:hover {
+  a {
     color: #3b82f6;
   }
 </style>
