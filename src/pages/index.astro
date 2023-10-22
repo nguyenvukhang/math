@@ -18,6 +18,7 @@ const posts = await renderAll(unrenderedPosts)
 const grouped = groupByFolder(posts)
 
 const SITE_TITLE = 'Minimath'
+const IS_DEVELOPMENT = import.meta.env.DEV
 ---
 
 <html lang="en">
@@ -48,6 +49,9 @@ const SITE_TITLE = 'Minimath'
               <div style="display:flex;flex-direction:row">
                 <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
                 <div style="overflow-x:auto">
+                  {!IS_DEVELOPMENT ? null : (
+                    <button onclick={`location.href='#${href}'`}>focus</button>
+                  )}
                   <Content />
                 </div>
               </div>
