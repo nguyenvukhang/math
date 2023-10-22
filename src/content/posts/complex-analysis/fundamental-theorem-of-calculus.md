@@ -1,6 +1,5 @@
 ---
 title: "Theorem 1.1.1 (Fundamental theorem of calculus)"
-open: true
 ---
 
 ### First part

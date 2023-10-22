@@ -1,6 +1,5 @@
 ---
 title: 'Definition 2.1.1 (Bounded C¹ function)'
-open: true
 ---
 
 A function $\phi:[a,b]\to\R$ is continuously differentiable
