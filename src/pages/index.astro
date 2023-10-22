@@ -42,8 +42,8 @@ const SITE_TITLE = 'Minimath'
       grouped.map(([header, posts]) => (
         <>
           <h2>{header}</h2>
-          {posts.map(({ Content, data, slug }) => (
-            <details id={slug} open={data.open}>
+          {posts.map(({ Content, data, href }) => (
+            <details id={href} open={data.open}>
               <summary>{data.title}</summary>
               <div style="display:flex;flex-direction:row">
                 <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
@@ -67,6 +67,14 @@ const SITE_TITLE = 'Minimath'
   h5,
   h6 {
     margin-bottom: 0.5rem;
+  }
+  ul,
+  ol {
+    margin-top: 0px;
+  }
+  p {
+    margin-top: 0.6rem;
+    margin-bottom: 0.4rem;
   }
   .markdown-body {
     word-wrap: break-word;

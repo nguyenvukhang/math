@@ -6,9 +6,11 @@ const NUM3_REGEX = new RegExp('\\d+\\.\\d+\\.\\d+')
 
 export const renderAll = (posts: Post[]) =>
   Promise.all(posts.map((v) => v.render())).then((renders) =>
-    posts.map(({ render, ...v }, i) => ({
+    posts.map(({ render, id, ...v }, i) => ({
       Content: renders[i].Content,
       ...v,
+      id,
+      href: id.replace(/\.md$/, ''),
     })),
   )
 
@@ -18,6 +20,9 @@ export const groupByFolder = (posts: Post[]): [string, Post[]][] => {
       const folder = p.slug.slice(0, p.slug.indexOf('/'))
       if (!a[folder]) a[folder] = []
       a[folder].push(p)
+      if (p.slug.includes('propo')) {
+        console.log(p)
+      }
       return a
     },
     {} as Record<string, Post[]>,
@@ -41,11 +46,9 @@ const semver = (v: string, index: number) => {
  */
 export const sorter = (a: Post, b: Post) => {
   const sa = semver(a.data.title, 1)
-
   const sb = semver(b.data.title, 1)
   if (!sa && !sb) return a.data.title.localeCompare(b.data.title)
   if (!sa) return 1 // sort B first
   if (!sb) return -1 // sort A first
-
   return sa.localeCompare(sb)
 }
