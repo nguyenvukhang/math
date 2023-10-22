@@ -1,13 +1,24 @@
 ---
-title: 'Definition 1.4.1 (Harmonic function)'
-open: true
+title: 'Definition 1.4.4 (Harmonic function)'
 ---
 
-Let $U\subset\mathbb C$ be open. Let $f:U\to\mathbb C$ be a $C^1$
-function. $f$ is said to be **holomorphic** if
+Let $U\subset\mathbb C$ be open. Let $f:U\to\mathbb C$ be in $C^2(U)$.
+$f$ is said to be *harmonic* if
 
 $$
-\frac{\partial f}{\partial\bar z}=0
+\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}=0
 $$
 
-At every point of $U$.
+The operator
+
+$$
+\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
+$$
+
+is called the *Laplace operator*, or *Laplacian*, and is denoted by
+$\Delta$. We write
+
+$$
+\Delta f=
+\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}
+$$

@@ -1,6 +1,5 @@
 ---
 title: "Definition 1.4.2 (Cauchy-Riemann Equations)"
-open: true
 ---
 
 If $f(z) = u(z) + iv(z)$ is
