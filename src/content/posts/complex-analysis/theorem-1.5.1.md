@@ -5,7 +5,7 @@ title: Theorem 1.5.1
 Let $f,g\in C^1(U)$ where
 
 $$
-U:=\{ (x,y)\in\mathbb R^2:|x-a|\lt\delta,\ |y-b|\lt\epsilon \}
+U:=\{ (x,y)\in\R^2:|x-a|\lt\delta,\ |y-b|\lt\epsilon \}
 $$
 
 and let $\displaystyle\frac{\partial f}{\partial y}=\frac{\partial

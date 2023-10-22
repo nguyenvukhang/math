@@ -2,7 +2,7 @@
 title: 'Definition 1.2.1 (Convex sets)'
 ---
 
-A set $C\subset\mathbb R^n$ is called convex if
+A set $C\subset\R^n$ is called convex if
 
 $$
 \lambda x  + (1-\lambda ) y \in C

@@ -2,8 +2,8 @@
 title: 'Definition 1.4.4 (Harmonic function)'
 ---
 
-Let $U\subset\mathbb C$ be open. Let $f:U\to\mathbb C$ be in $C^2(U)$.
-$f$ is said to be *harmonic* if
+Let $U\subset\mathbb C$ be open. Let $f:U\to\C$ be in $C^2(U)$. $f$ is
+said to be *harmonic* if
 
 $$
 \frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}=0

@@ -2,11 +2,11 @@
 title: 'Definition 1.2.3 (Convex functions)'
 ---
 
-Let $C\subset\mathbb R^n$ be
+Let $C\subset\R^n$ be
 [convex](#nonlinear-optimization/convex-sets). Let $\lambda\in(0,1)$
 and $x,y\in C$ and let
 
-Then $f:C\to\mathbb R$ is said to be
+Then $f:C\to\R$ is said to be
 
 - convex on $C$ if
   $$

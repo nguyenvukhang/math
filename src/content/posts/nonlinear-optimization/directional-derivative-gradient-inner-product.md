@@ -2,12 +2,12 @@
 title: "Lemma 2.1.2 (Directional derivative and gradient)"
 ---
 
-Let $D\subset \mathbb R^n$ be open and $f:D\to\mathbb R$
+Let $D\subset \R^n$ be open and $f:D\to\R$
 differentiable at $x\in D$. Then $f$ is directionally differentiable
 at $x$ with
 
 $$
-f'(x;d) = \nabla f(x)^Td\quad\forall(d\in\mathbb R^n)
+f'(x;d) = \nabla f(x)^Td\quad\forall(d\in\R^n)
 $$
 
 Where $f'(x;d)$ is the [directional

@@ -1,9 +1,9 @@
 ---
-title: 'Definition 1.1.1 (Basics)'
+title: 'Definition 1.1.2 (Basics)'
 ---
 
-A **real-valued** function is any function $f:X\to\mathbb R$.  
-A **complex-valued** function is any function $f:X\to\mathbb C$.
+A **real-valued** function is any function $f:X\to\R$.  
+A **complex-valued** function is any function $f:X\to\C$.
 
 The $C^n$ notation:
 
