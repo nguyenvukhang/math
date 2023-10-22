@@ -1,6 +1,5 @@
 ---
 title: 'Definition 2.1.2 (Continuous complex curve)'
-open: true
 ---
 
 Let $\gamma:[a,b]\to\C$ be defined by $\gamma(t):=\gamma_1(t) +

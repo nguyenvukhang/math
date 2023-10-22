@@ -1,21 +1,10 @@
-import { lstatSync, readFileSync, readdirSync, existsSync } from 'fs'
-import { resolve, join, relative } from 'path'
+import { readFileSync, existsSync } from 'fs'
+import { join, relative } from 'path'
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import chalk from 'chalk'
-
-const ROOT_DIR = resolve('src/content/posts')
+import { POSTS_DIR, getPosts } from './utils.js'
 
 // UTILITIES {{{
-
-const getAllFiles = (root) => {
-  const [a, dir] = [[], (f) => lstatSync(f).isDirectory()]
-  const ls = (c) =>
-    readdirSync(c)
-      .map((f) => resolve(c, f))
-      .forEach((f) => (dir(f) ? ls(f) : a.push(f)))
-  ls(root)
-  return a.filter((f) => f !== root)
-}
 
 /**
  * @typedef {Object} Node
@@ -48,9 +37,8 @@ const failCheck = () => {
   throw new Error('checkhealth failed.')
 }
 
-getAllFiles(ROOT_DIR).forEach((filepath) => {
-  const relpath = relative(ROOT_DIR, filepath)
-  // console.log(filepath)
+getPosts().forEach((filepath) => {
+  const relpath = relative(POSTS_DIR, filepath)
   const contents = readFileSync(filepath)
   /** @type {Node} */
   const tree = fromMarkdown(contents)
@@ -59,16 +47,17 @@ getAllFiles(ROOT_DIR).forEach((filepath) => {
     .filter((v) => v.url && v.url.startsWith('#'))
     .forEach((v) => {
       const targetFile = internalUrlToFilename(v.url)
-      const exists = existsSync(join(ROOT_DIR, targetFile))
+      const exists = existsSync(join(POSTS_DIR, targetFile))
       if (!exists) {
         hasError = true
         console.warn(chalk.yellow('[Warning: broken link]'))
         console.log(`'${relpath}' has broken link:\n${v.url}`)
-        failCheck()
       }
     })
 })
 
 if (!hasError) {
   console.log(chalk.green('All checks passed!'))
+} else {
+  failCheck()
 }
