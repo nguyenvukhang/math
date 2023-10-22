@@ -33,9 +33,6 @@ function internalUrlToFilename(url) {
 }
 
 let hasError = false
-const failCheck = () => {
-  throw new Error('checkhealth failed.')
-}
 
 getPosts().forEach((filepath) => {
   const relpath = relative(POSTS_DIR, filepath)
@@ -56,8 +53,5 @@ getPosts().forEach((filepath) => {
     })
 })
 
-if (!hasError) {
-  console.log(chalk.green('All checks passed!'))
-} else {
-  failCheck()
-}
+if (!hasError) console.log(chalk.green('All checks passed!'))
+else throw new Error('checkhealth failed.')

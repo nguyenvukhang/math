@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "checkhealth": "node ./scripts/checkhealth.js",
+    "close-all": "node ./scripts/close-all.js",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",

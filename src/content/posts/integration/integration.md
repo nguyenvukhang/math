@@ -1,5 +1,5 @@
 ---
-title: 'Remark 1.1.1 Integration identities'
+title: 'Remark 1.1.1 (Integration identities)'
 ---
 
 $\displaystyle\int
