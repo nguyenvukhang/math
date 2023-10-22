@@ -1,5 +1,5 @@
 ---
-title: 'Definition 1.4.4 (Harmonic function)'
+title: 'Definition 1.4.4 (Harmonic functions)'
 ---
 
 Let $U\subset\mathbb C$ be open. Let $f:U\to\C$ be in $C^2(U)$. $f$ is

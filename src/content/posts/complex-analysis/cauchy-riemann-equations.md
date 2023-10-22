@@ -3,7 +3,7 @@ title: "Definition 1.4.2 (Cauchy-Riemann Equations)"
 ---
 
 If $f(z) = u(z) + iv(z)$ is
-[holomorphic](#complex-analysis/holomorphic-function), then
+[holomorphic](#complex-analysis/holomorphic-functions), then
 
 $$
 \frac{\partial u}{\partial x}=\frac{\partial v}{\partial y}

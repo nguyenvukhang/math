@@ -1,5 +1,5 @@
 ---
-title: 'Definition 1.4.1 (Holomorphic function)'
+title: 'Definition 1.4.1 (Holomorphic functions)'
 ---
 
 Let $U\subset\mathbb C$ be open. Let $f:U\to\C$ be in $C^1(U)$. $f$ is

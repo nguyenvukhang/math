@@ -17,12 +17,11 @@ export const renderAll = (posts: Post[]) =>
 export const groupByFolder = (posts: Post[]): [string, Post[]][] => {
   const dict = posts.reduce(
     (a, p) => {
-      const folder = p.slug.slice(0, p.slug.indexOf('/'))
+      if (p.id.includes('template.md')) return a
+      const i = p.slug.indexOf('/')
+      const folder = i < 0 ? 'unsorted' : p.slug.slice(0, i)
       if (!a[folder]) a[folder] = []
       a[folder].push(p)
-      if (p.slug.includes('propo')) {
-        console.log(p)
-      }
       return a
     },
     {} as Record<string, Post[]>,
