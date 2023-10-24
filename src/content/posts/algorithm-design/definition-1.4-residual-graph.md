@@ -1,6 +1,5 @@
 ---
 title: 'Definition 1.4 (Residual graph)'
-open: true
 ---
 
 Let $G$ be a flow network and let $f$ be a flow on $G$. The _residual
