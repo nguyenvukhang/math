@@ -1,6 +1,5 @@
 ---
-title: 'Definition 1.1'
-open: true
+title: 'Definition 1.1 (Flow network)'
 ---
 
 A _flow network_ is a direct graph $G=(V,E)$ with a single _source
