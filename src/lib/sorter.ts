@@ -49,9 +49,11 @@ const semver = (v: string, index: number) => {
  * If no semver found, send it to the back
  */
 export const sorter = (a: Post, b: Post) => {
-  const sa = semver(a.data.title, 1)
-  const sb = semver(b.data.title, 1)
-  if (!sa && !sb) return a.data.title.localeCompare(b.data.title)
+  const keyA = a.data.sorter || a.data.title
+  const keyB = b.data.sorter || b.data.title
+  const sa = semver(keyA, a.data.sorter ? 0 : 1)
+  const sb = semver(keyB, b.data.sorter ? 0 : 1)
+  if (!sa && !sb) return keyA.localeCompare(keyB)
   if (!sa) return 1 // sort B first
   if (!sb) return -1 // sort A first
   return sa.localeCompare(sb)
