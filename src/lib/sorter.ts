@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 type Post = CollectionEntry<'posts'>
 
 const NUM3_REGEX = new RegExp('\\d+\\.\\d+\\.\\d+')
+const NUM2_REGEX = new RegExp('\\d+\\.\\d+')
 
 export const renderAll = (posts: Post[]) =>
   Promise.all(posts.map((v) => v.render())).then((renders) =>
@@ -34,7 +35,11 @@ export const groupByFolder = (posts: Post[]): [string, Post[]][] => {
 
 const semver = (v: string, index: number) => {
   const p = v.split(' ')
-  return p.length <= index || !NUM3_REGEX.test(p[index]) ? null : p[index]
+  if (p.length <= index) return null
+  const word = p[index]
+  if (NUM3_REGEX.test(word)) return word
+  if (NUM2_REGEX.test(word)) return word
+  return null
 }
 
 /**
