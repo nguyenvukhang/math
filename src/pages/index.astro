@@ -6,6 +6,9 @@ import '../lib/katex.css'
 const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
 const EXPAND_ALL_JS = `const d=document.getElementsByTagName('details');for(let i=0;i<d.length;i++)d[i].setAttribute('open',true)`
 const CLOSE_ALL_JS = `const d=document.getElementsByTagName('details');for(let i=0;i<d.length;i++)d[i].removeAttribute('open')`
+const SCROLLEND_JS = `
+console.log("hi")
+`
 
 const unrenderedPosts = await getCollection('posts')
 const posts = await renderAll(unrenderedPosts)
@@ -21,6 +24,22 @@ const IS_DEVELOPMENT = import.meta.env.DEV
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
+    <script>
+      /**
+       * When scrolling ends, get a handle to the current section that the
+       * user's viewport is currently looking at
+       */
+      const summaries = document.getElementsByTagName('summary')
+      document.addEventListener('scrollend', (e) => {
+        for (let i = 0; i < summaries.length; i++) {
+          if (summaries[i].offsetTop >= window.scrollY) {
+            const target = summaries[i == 0 ? 0 : i - 1]
+            console.log('>>>', target.innerHTML)
+            break
+          }
+        }
+      })
+    </script>
   </head>
   <body class="markdown-body">
     <h1>{SITE_TITLE}</h1>
