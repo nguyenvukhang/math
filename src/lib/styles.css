@@ -1,0 +1,89 @@
+body {
+  word-wrap: break-word;
+}
+/**
+   * headers
+   */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+}
+h1::before,
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+  font-size: smaller;
+  margin-right: 0.3em;
+  color: #b7c2cd;
+}
+h1::before {
+  content: '⠁';
+}
+h2::before {
+  content: '⠉';
+}
+h3::before {
+  content: '⠋';
+}
+h4::before {
+  content: '⠛';
+}
+h5::before {
+  content: '⠟';
+}
+h6::before {
+  content: '⠿';
+}
+
+/** other CSS */
+ul,
+ol,
+blockquote {
+  margin-top: 0px;
+}
+p {
+  margin-top: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+summary,
+.expand-line {
+  cursor: pointer;
+}
+.expand-line {
+  background-clip: content-box;
+  width: 3px;
+  min-width: 3px;
+  padding: 0 0.4rem 0 0.4em;
+  margin: 0 0.4rem 0 -0.4em;
+  background-color: #d1d7dd;
+}
+.expand-line:hover {
+  background-color: #adb8c2;
+}
+a {
+  color: #3b82f6;
+}
+.content {
+  overflow-x: auto;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+}
+d,
+th {
+  padding: 0;
+}
+table th,
+table td {
+  padding: 6px 13px;
+  border: 1px solid #d0d7de;
+}

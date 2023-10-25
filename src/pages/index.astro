@@ -2,19 +2,18 @@
 import { getCollection } from 'astro:content'
 import { groupByFolder, renderAll } from '../lib/sorter'
 import '../lib/katex.css'
+import '../lib/styles.css'
 
 const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
 const EXPAND_ALL_JS = `const d=document.getElementsByTagName('details');for(let i=0;i<d.length;i++)d[i].setAttribute('open',true)`
 const CLOSE_ALL_JS = `const d=document.getElementsByTagName('details');for(let i=0;i<d.length;i++)d[i].removeAttribute('open')`
-const SCROLLEND_JS = `
-console.log("hi")
-`
 
 const unrenderedPosts = await getCollection('posts')
 const posts = await renderAll(unrenderedPosts)
 const grouped = groupByFolder(posts)
 
 const SITE_TITLE = 'Minimath'
+const YEAR = new Date().getFullYear()
 ---
 
 <html lang="en">
@@ -23,26 +22,9 @@ const SITE_TITLE = 'Minimath'
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
-    <script>
-      /**
-       * When scrolling ends, get a handle to the current section that the
-       * user's viewport is currently looking at
-       */
-      const summaries = document.getElementsByTagName('summary')
-      document.addEventListener('scrollend', (e) => {
-        for (let i = 0; i < summaries.length; i++) {
-          if (summaries[i].offsetTop >= window.scrollY) {
-            const target = summaries[i == 0 ? 0 : i - 1]
-            console.log('>>>', target.innerHTML)
-            break
-          }
-        }
-      })
-    </script>
   </head>
-  <body class="markdown-body">
+  <body>
     <h1>{SITE_TITLE}</h1>
-
     <p>with love from past khang to present everyone.</p>
     <code style="font-size:small">
       <a href="https://www.github.com/nguyenvukhang/math">source</a>
@@ -51,23 +33,21 @@ const SITE_TITLE = 'Minimath'
       {' | '}
       <a href="https://www.linkedin.com/in/khang-nguyen-746a86204/">linkedin</a>
     </code>
-
     <div style="display:flex;flex-direction:row;margin:1rem 0rem;">
       <button onclick={EXPAND_ALL_JS}>expand all</button>
-      <div style="width: 0.5rem"></div>
+      <div style="width:0.5rem"></div>
       <button onclick={CLOSE_ALL_JS}>close all</button>
     </div>
-
     {
       grouped.map(([header, posts]) => (
         <>
           <h2>{header}</h2>
           {posts.map(({ Content, data, href }) => (
-            <details id={href} open={data.open}>
-              <summary>{data.title}</summary>
+            <details open={data.open}>
+              <summary id={href}>{data.title}</summary>
               <div style="display:flex;flex-direction:row">
                 <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
-                <div style="overflow-x:auto">
+                <div class="content">
                   <Content />
                 </div>
               </div>
@@ -76,78 +56,9 @@ const SITE_TITLE = 'Minimath'
         </>
       ))
     }
+    <div style="margin:10px 0;">
+      <code>---</code>
+    </div>
+    <p style="margin-bottom:32px">Khang, {YEAR}</p>
   </body>
 </html>
-
-<style is:global>
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-bottom: 0.5rem;
-  }
-  ul,
-  ol,
-  blockquote {
-    margin-top: 0px;
-  }
-  p {
-    margin-top: 0.6rem;
-    margin-bottom: 0.4rem;
-  }
-  .markdown-body {
-    word-wrap: break-word;
-  }
-  summary,
-  .expand-line {
-    cursor: pointer;
-  }
-  .expand-line {
-    background-clip: content-box;
-    width: 3px;
-    min-width: 3px;
-    padding: 0 0.4rem 0 0.4em;
-    margin: 0 0.4rem 0 -0.4em;
-    background-color: #cccccc;
-  }
-  .expand-line:hover {
-    background-color: #aaaaaa;
-  }
-  a {
-    color: #3b82f6;
-  }
-
-  /**
-   * H1-H6 depth markers
-   */
-  h1::before,
-  h2::before,
-  h3::before,
-  h4::before,
-  h5::before,
-  h6::before {
-    font-size: smaller;
-    margin-right: 0.3em;
-    color: #aaaaaa;
-  }
-  h1::before {
-    content: '⠁';
-  }
-  h2::before {
-    content: '⠉';
-  }
-  h3::before {
-    content: '⠋';
-  }
-  h4::before {
-    content: '⠛';
-  }
-  h5::before {
-    content: '⠟';
-  }
-  h6::before {
-    content: '⠿';
-  }
-</style>

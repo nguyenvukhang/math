@@ -4,6 +4,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
+    "test": "yarn close-all && yarn checkhealth",
     "checkhealth": "node ./scripts/checkhealth.js",
     "close-all": "node ./scripts/close-all.js",
     "dev": "astro dev",

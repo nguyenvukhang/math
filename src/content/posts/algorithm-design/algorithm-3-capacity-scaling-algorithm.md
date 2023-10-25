@@ -1,5 +1,5 @@
 ---
-title: 'Algorithm 3 (Capacity Scaling Algorithm)'
+title: 'Algorithm 3. (Capacity Scaling Algorithm)'
 sorter: '1.16.1'
 ---
 

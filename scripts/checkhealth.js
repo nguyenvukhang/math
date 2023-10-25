@@ -29,9 +29,7 @@ function criteria(v) {
 getPosts().forEach((filepath) => {
   const relpath = relative(POSTS_DIR, filepath)
   const contents = readFileSync(filepath)
-  /** @type {Node} */
-  const tree = fromMarkdown(contents)
-  flatten(tree)
+  flatten(fromMarkdown(contents))
     .filter(criteria)
     .filter((v) => v.url && v.url.startsWith('#'))
     .forEach((v) => {
