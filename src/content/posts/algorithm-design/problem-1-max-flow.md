@@ -1,9 +1,7 @@
 ---
-title: 'Core problems'
-sorter: '0.0.0'
+title: 'Problem 1. Max Flow'
+sorter: '1.3.1'
 ---
-
-### Problem 1. Max Flow
 
 **Input:** A flow network $G$ with source $s$, target $t$, and positive
 edge capacities $c(e)$ for $e\in E$.  
