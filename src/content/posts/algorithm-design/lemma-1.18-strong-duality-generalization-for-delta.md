@@ -1,6 +1,5 @@
 ---
 title: 'Lemma 1.18 (Strong Duality generalization for Δ)'
-open: true
 ---
 
 Let $G=(V,E)$ be a flow network and let $\Delta$ be any positive
