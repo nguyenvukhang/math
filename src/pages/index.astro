@@ -122,4 +122,36 @@ const IS_DEVELOPMENT = import.meta.env.DEV
   a {
     color: #3b82f6;
   }
+
+  /**
+   * H1-H6 depth markers
+   */
+  h1::before,
+  h2::before,
+  h3::before,
+  h4::before,
+  h5::before,
+  h6::before {
+    font-size: smaller;
+    margin-right: 0.3em;
+    color: #aaaaaa;
+  }
+  h1::before {
+    content: '⠁';
+  }
+  h2::before {
+    content: '⠉';
+  }
+  h3::before {
+    content: '⠋';
+  }
+  h4::before {
+    content: '⠛';
+  }
+  h5::before {
+    content: '⠟';
+  }
+  h6::before {
+    content: '⠿';
+  }
 </style>
