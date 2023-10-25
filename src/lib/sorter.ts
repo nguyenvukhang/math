@@ -33,13 +33,41 @@ export const groupByFolder = (posts: Post[]): [string, Post[]][] => {
   return sorted
 }
 
+class Semver {
+  maj: number
+  min: number
+  patch: number
+
+  constructor(maj: number, min: number, patch: number) {
+    this.maj = maj
+    this.min = min
+    this.patch = patch
+  }
+
+  static from_str(v: string) {
+    if (NUM3_REGEX.test(v)) {
+      const a = v.split('.').map((v) => parseInt(v))
+      return new Semver(a[0], a[1], a[2])
+    } else if (NUM2_REGEX.test(v)) {
+      const a = v.split('.').map((v) => parseInt(v))
+      return new Semver(a[0], a[1], 0)
+    }
+    return null
+  }
+
+  compare(rhs: Semver) {
+    let c = this.maj - rhs.maj
+    if (c !== 0) return c
+    c = this.min - rhs.min
+    if (c !== 0) return c
+    return this.patch - rhs.patch
+  }
+}
+
 const semver = (v: string, index: number) => {
   const p = v.split(' ')
   if (p.length <= index) return null
-  const word = p[index]
-  if (NUM3_REGEX.test(word)) return word
-  if (NUM2_REGEX.test(word)) return word
-  return null
+  return Semver.from_str(p[index])
 }
 
 /**
@@ -56,5 +84,5 @@ export const sorter = (a: Post, b: Post) => {
   if (!sa && !sb) return keyA.localeCompare(keyB)
   if (!sa) return 1 // sort B first
   if (!sb) return -1 // sort A first
-  return sa.localeCompare(sb)
+  return sa.compare(sb)
 }
