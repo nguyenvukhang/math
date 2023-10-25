@@ -4,25 +4,11 @@ import { fromMarkdown } from 'mdast-util-from-markdown'
 import chalk from 'chalk'
 import { POSTS_DIR, getPosts } from './utils.js'
 
-// UTILITIES {{{
-
-/**
- * @typedef {Object} Node
- * @property {string} type
- * @property {Node[]} children
- */
-
-/**
- * @param {Node} node
- * @returns {Node[]}
- */
 function flatten({ children, ...rest }, acc = []) {
   acc.push(rest)
   if (children) children.forEach((c) => flatten(c, acc))
   return acc
 }
-
-// }}}
 
 /**
  * #nonlinear-optimization/step-size-rule ->
@@ -34,13 +20,19 @@ function internalUrlToFilename(url) {
 
 let hasError = false
 
+function criteria(v) {
+  if (v.type === 'link') return true
+  if (v.type === 'definition' && v.url) return true
+  return false
+}
+
 getPosts().forEach((filepath) => {
   const relpath = relative(POSTS_DIR, filepath)
   const contents = readFileSync(filepath)
   /** @type {Node} */
   const tree = fromMarkdown(contents)
   flatten(tree)
-    .filter((v) => v.type === 'link')
+    .filter(criteria)
     .filter((v) => v.url && v.url.startsWith('#'))
     .forEach((v) => {
       const targetFile = internalUrlToFilename(v.url)
@@ -48,7 +40,7 @@ getPosts().forEach((filepath) => {
       if (!exists) {
         hasError = true
         console.warn(chalk.yellow('[Warning: broken link]'))
-        console.log(`'${relpath}' has broken link:\n${v.url}`)
+        console.log(`FILE:\t${relpath}\nLINK:\t${v.url}\n`)
       }
     })
 })
