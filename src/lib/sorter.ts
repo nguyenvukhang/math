@@ -5,6 +5,8 @@ type Post = CollectionEntry<'posts'>
 const NUM3_REGEX = new RegExp('\\d+\\.\\d+\\.\\d+')
 const NUM2_REGEX = new RegExp('\\d+\\.\\d+')
 
+const lexicomp = (a: string, b: string) => a.localeCompare(b)
+
 export const renderAll = (posts: Post[]) =>
   Promise.all(posts.map((v) => v.render())).then((renders) =>
     posts.map(({ render, id, ...v }, i) => ({
@@ -29,7 +31,7 @@ export const groupByFolder = (posts: Post[]): [string, Post[]][] => {
   )
   Object.keys(dict).forEach((k) => dict[k].sort(sorter))
   const sorted = Object.entries(dict)
-  sorted.sort((a, b) => a[0].localeCompare(b[0]))
+  sorted.sort((a, b) => lexicomp(a[0], b[0]))
   return sorted
 }
 
@@ -81,7 +83,7 @@ export const sorter = (a: Post, b: Post) => {
   const keyB = b.data.sorter || b.data.title
   const sa = semver(keyA, a.data.sorter ? 0 : 1)
   const sb = semver(keyB, b.data.sorter ? 0 : 1)
-  if (!sa && !sb) return keyA.localeCompare(keyB)
+  if (!sa && !sb) return lexicomp(keyA, keyB)
   if (!sa) return 1 // sort B first
   if (!sb) return -1 // sort A first
   return sa.compare(sb)
