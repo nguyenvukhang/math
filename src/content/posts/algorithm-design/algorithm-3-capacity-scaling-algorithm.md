@@ -1,6 +1,6 @@
 ---
 title: 'Algorithm 3. (Capacity Scaling Algorithm)'
-sorter: '1.16.1'
+sorter: 1.16.1
 ---
 
 **Input:** A flow network $G=(V,E)$ with source node $s$, target node
