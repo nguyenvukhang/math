@@ -1,6 +1,5 @@
 ---
 title: 'Definition 2.5 (Dual linear program)'
-open: true
 ---
 
 Let

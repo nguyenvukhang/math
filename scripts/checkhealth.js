@@ -21,8 +21,8 @@ function internalUrlToFilename(url) {
 let hasError = false
 
 function criteria(v) {
-  if (v.type === 'link') return true
-  if (v.type === 'definition' && v.url) return true
+  if (!v.url || !v.url.startsWith('#')) return false
+  if (['link', 'definition'].includes(v.type)) return true
   return false
 }
 
@@ -31,7 +31,6 @@ getPosts().forEach((filepath) => {
   const contents = readFileSync(filepath)
   flatten(fromMarkdown(contents))
     .filter(criteria)
-    .filter((v) => v.url && v.url.startsWith('#'))
     .forEach((v) => {
       const targetFile = internalUrlToFilename(v.url)
       const exists = existsSync(join(POSTS_DIR, targetFile))
