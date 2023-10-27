@@ -13,3 +13,11 @@ the dual Min-LP. Then $x^*$ and $y^*$ are both optimal if and only if
 That is, if $x^*\neq0$ then the corresponding dual constriant is
 tight, and if $y^*\neq0$ then the corresponding primal constraint is
 tight.
+
+_Proof._ By the Complementary Slackness equations
+
+$$
+(A^Ty^*-c)\cdot x^*=0\\(Ax^*-b)\cdot y^*=0
+$$
+
+clearly.
