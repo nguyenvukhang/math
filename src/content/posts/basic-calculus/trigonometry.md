@@ -1,6 +1,5 @@
 ---
 title: 'Remark 1.1.1 (Trigonometric identities)'
-open: true
 ---
 
 $\sin2x=2\sin x\cos x$
@@ -9,9 +8,7 @@ $\cos2x=\cos^2x-\sin^2x=1-2\sin^2x=2\cos^2x-1$
 
 $\displaystyle\sin^2x=\frac{1-\cos2x}2$
 
-$\displaystyle\cos^2x=\frac{\cos2x-1}2$
-
-<div id='mark' />
+$\displaystyle\cos^2x=\frac{\cos2x+1}2$
 
 $\sin(A\pm B)=\sin A\cos B\pm\cos A\sin B$
 
