@@ -14,6 +14,7 @@ const grouped = groupByFolder(posts)
 
 const SITE_TITLE = 'Minimath'
 const YEAR = new Date().getFullYear()
+const IS_DEV = import.meta.env.DEV
 ---
 
 <html lang="en">
@@ -37,6 +38,14 @@ const YEAR = new Date().getFullYear()
       <button onclick={EXPAND_ALL_JS}>expand all</button>
       <div style="width:0.5rem"></div>
       <button onclick={CLOSE_ALL_JS}>close all</button>
+      {
+        IS_DEV ? (
+          <>
+            <div style="width:0.5rem" />
+            <button onclick="location.href='#mark'">go to mark</button>
+          </>
+        ) : null
+      }
     </div>
     {
       grouped.map(([header, posts]) => (
