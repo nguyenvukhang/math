@@ -10,3 +10,6 @@ a $C^1$ curve.
 
 $\gamma$ is a piecewise $C^1$ curve in an open set $U$ if
 $\gamma([a,b])\subseteq U$.
+
+Note that while joining $C^1(\R)$ curves may not lead to a piecewise
+$C^1(\R)$ curve, doing it in $\C$ somehow works.
