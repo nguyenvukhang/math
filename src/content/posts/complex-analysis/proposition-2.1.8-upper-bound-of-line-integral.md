@@ -1,5 +1,5 @@
 ---
-title: 'Definition 2.1.8 (Upper bound of line integral)'
+title: 'Proposition 2.1.8 (Upper bound of line integral)'
 ---
 
 Let $U\subseteq\C$ be open and $f\in C^0(U)$. Let $\gamma:[a,b]\to U$

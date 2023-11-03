@@ -1,5 +1,5 @@
 ---
-title: "Definition 2.1.7 (Moving || into integral)"
+title: "Proposition 2.1.7 (Moving || into integral)"
 ---
 
 Let $\phi:[a,b]\to\C$ be continuous. Then

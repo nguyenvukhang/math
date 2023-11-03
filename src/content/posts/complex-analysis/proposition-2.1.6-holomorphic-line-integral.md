@@ -1,5 +1,5 @@
 ---
-title: "Definition 2.1.6 (Holomorphic line integral)"
+title: "Proposition 2.1.6 (Holomorphic line integral)"
 ---
 
 Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let
