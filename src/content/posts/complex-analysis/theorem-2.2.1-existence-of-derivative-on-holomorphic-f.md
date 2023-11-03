@@ -10,3 +10,6 @@ f'(z)=\frac{\partial f}{\partial z}
 $$
 
 for all $z\in U$.
+
+As a result of this theorem, we often will write $f'=\frac{\partial
+f}{\partial z}$ when $f$ is holomorphic.
