@@ -49,7 +49,10 @@ function create(cwd) {
     ])
     .then((answers) => {
       const { kind, id, name, filename } = answers
-      const path = resolve(cwd, `${kind.toLowerCase()}-${id}-${filename}.md`)
+      const path = resolve(
+        cwd,
+        `${kind.toLowerCase()}-${id}${filename ? '-' + filename : ''}.md`,
+      )
       writeFileSync(path, template(title(kind, id, name)))
       child.spawn('nvim', [path], { stdio: 'inherit' })
     })
