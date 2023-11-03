@@ -12,8 +12,6 @@ $(uv)'=u'v+uv'$
 
 ### Quotient rule
 
-
-
 $\displaystyle
 \left(\frac uv\right)'=\frac{u'v-uv'}{v^2}
 $

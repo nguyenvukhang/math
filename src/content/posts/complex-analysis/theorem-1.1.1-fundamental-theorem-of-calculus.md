@@ -1,5 +1,5 @@
 ---
-title: "Theorem 1.1.1 (Fundamental theorem of calculus)"
+title: 'Theorem 1.1.1 (Fundamental theorem of calculus)'
 ---
 
 ### First part

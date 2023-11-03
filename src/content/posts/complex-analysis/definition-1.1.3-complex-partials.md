@@ -1,5 +1,5 @@
 ---
-title: "Definition 1.1.3 (Complex partial derivatives)"
+title: 'Definition 1.1.3 (Complex partial derivatives)'
 ---
 
 $$

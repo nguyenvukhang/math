@@ -1,5 +1,5 @@
 ---
-title: "Lemma 2.1.2 (Directional derivative and gradient)"
+title: 'Lemma 2.1.2 (Directional derivative and gradient)'
 ---
 
 Let $D\subset \R^n$ be open and $f:D\to\R$

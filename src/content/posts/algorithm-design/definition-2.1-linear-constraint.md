@@ -1,5 +1,5 @@
 ---
-title: "Definition 2.1 (Linear constraint)"
+title: 'Definition 2.1 (Linear constraint)'
 ---
 
 A _linear constraint_ on $n$ variables $x_1,\ldots,x_n\in\R$ is a

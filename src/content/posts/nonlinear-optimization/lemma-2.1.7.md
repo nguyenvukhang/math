@@ -1,5 +1,5 @@
 ---
-title: "Lemma 2.1.7"
+title: 'Lemma 2.1.7'
 ---
 
 Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
@@ -11,4 +11,3 @@ $$
 d^T\nabla^2f(x)d\geq\mu\norm{d}^2_2\quad\forall(d\in\R^n,\
 x\in B_\epsilon(\bar x))
 $$
-
