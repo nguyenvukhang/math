@@ -9,9 +9,18 @@ const macros = {
 }
 
 export default defineConfig({
-  server: { port: 3000 },
+  server: {
+    port: 3000,
+  },
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [() => rehypeKatex({ output: 'html', macros })],
+    rehypePlugins: [
+      () =>
+        rehypeKatex({
+          macros,
+          output: 'html',
+          strict: false,
+        }),
+    ],
   },
 })
