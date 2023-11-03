@@ -4,6 +4,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
+    "new": "node ./scripts/new.js",
     "test": "yarn close-all && yarn checkhealth",
     "checkhealth": "node ./scripts/checkhealth.js",
     "close-all": "node ./scripts/close-all.js",
@@ -19,7 +20,9 @@
     "remark-math": "^5.1.1"
   },
   "devDependencies": {
+    "@types/inquirer": "^9.0.6",
     "chalk": "^5.3.0",
+    "inquirer": "^9.2.11",
     "mdast-util-from-markdown": "^2.0.0",
     "prettier-plugin-astro": "^0.12.0"
   },
