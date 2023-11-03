@@ -62,8 +62,6 @@ function main() {
   const print = console.log // lmao I'm probably gonna regret this
   const cwd = process.argv[2]
 
-  if (!cwd) return print('Please re-run with "yarn new $PWD"')
-
   print('\nSending new file to', chalk.green(cwd), '\n')
 
   if (!existsSync(TEMPLATE_FILE)) return print("Template file doesn't exist.")

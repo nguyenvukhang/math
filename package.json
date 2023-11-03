@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
-    "new": "node ./scripts/new.js",
+    "new": "node ./scripts/new.js $INIT_CWD",
     "test": "yarn close-all && yarn checkhealth",
     "checkhealth": "node ./scripts/checkhealth.js",
     "close-all": "node ./scripts/close-all.js",
