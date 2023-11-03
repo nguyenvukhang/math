@@ -1,7 +1,5 @@
 ---
 title: "Definition 1.1.4 (Chain rule)"
-open: true
-draft: true
 ---
 
 In all the following scenarios, let $h:=f\circ g$.
