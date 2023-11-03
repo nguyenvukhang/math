@@ -69,3 +69,8 @@ function main() {
 }
 
 main()
+
+// ? Kind: Theorem
+// ? Number: 2.2.2
+// ? Name: Holomorphic by existence of derivative
+// ? Filename: holomorphic-by-existence-of-derivative
