@@ -2,7 +2,7 @@
 title: 'Definition 1.4.2 (Cauchy-Riemann Equations)'
 ---
 
-If $f(z) = u(z) + iv(z)$ is [holomorphicmorphic][holomorphic], then
+If $f(z) = u(z) + iv(z)$ is [holomorphic][holomorphic], then
 
 $$
 \frac{\partial u}{\partial x}=\frac{\partial v}{\partial y}

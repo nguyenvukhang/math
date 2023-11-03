@@ -23,6 +23,16 @@ const IS_DEV = import.meta.env.DEV
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
+
+    <!-- Opens the details/summary section upon navigating to it -->
+    <!-- <script>
+      window.addEventListener('hashchange', () => {
+        const hash = location.hash.substring(1)
+        if (!hash) return
+        const x = document.getElementById(hash)
+        if (x) x.parentNode.setAttribute('open', true)
+      })
+    </script> -->
   </head>
   <body>
     <h1>{SITE_TITLE}</h1>
