@@ -6,6 +6,8 @@ getPosts()
   .forEach((filepath) => {
     const text = readFileSync(filepath, 'utf-8')
     const lines = text.split('\n')
-    const output = lines.filter((v) => v.replace(/\s/g, '') !== 'open:true')
+    let output = lines
+    output = output.filter((v) => v.replace(/\s/g, '') !== 'open:true')
+    output = output.filter((v) => v.replace(/\s/g, '') !== 'draft:true')
     writeFileSync(filepath, output.join('\n'))
   })
