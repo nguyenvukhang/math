@@ -1,7 +1,5 @@
 ---
 title: 'Theorem 2.3.3 (Existence of holomorphic antiderivative)'
-open: true
-draft: true
 ---
 
 Let $U\subseteq\C$ be either an open rectangle or an open disc. Let
