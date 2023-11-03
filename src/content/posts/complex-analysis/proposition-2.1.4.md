@@ -32,4 +32,4 @@ rule][chain-rule].
 $f\circ\gamma:\R\to\R$)
 
 [2.1.3]: #complex-analysis/definition-2.1.3-complex-integration
-[chain-rule]: #basic-calculus/chain-rule
+[chain-rule]: #calculus/chain-rule
