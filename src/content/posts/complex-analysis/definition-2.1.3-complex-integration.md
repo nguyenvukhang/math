@@ -1,7 +1,5 @@
 ---
 title: 'Definition 2.1.3 (Complex integration)'
-open: true
-draft: true
 ---
 
 Let $\psi:[a,b]\to\C$ be continous on $[a,b]$. Write

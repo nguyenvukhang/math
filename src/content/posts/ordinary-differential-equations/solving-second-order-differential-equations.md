@@ -1,7 +1,6 @@
 ---
 title: 'Solving 2nd order differential equations'
 sorter: 0.0.2
-draft: true
 ---
 
 ### Method of undetermined coefficients
