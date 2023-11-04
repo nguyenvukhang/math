@@ -3,7 +3,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 
 const macros = {
-  '\\norm': '\\lVert{#1}\\rVert',
+  '\\norm': '\\left\\lVert{#1}\\right\\rVert',
   '\\R': '\\mathbb{R}',
   '\\C': '\\mathbb{C}',
 }
