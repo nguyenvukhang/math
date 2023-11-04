@@ -79,5 +79,12 @@ const IS_DEV = import.meta.env.DEV
       <code>---</code>
     </div>
     <p style="margin-bottom:32px">Khang, {YEAR}</p>
+    <!-- START: a tall vertical bar so that all ID href links align -->
+    {
+      IS_DEV ? (
+        <div style="height:999px;width:2px;background-color:#ec4899" />
+      ) : null
+    }
+    <!-- END: a tall vertical bar so that all ID href links align -->
   </body>
 </html>

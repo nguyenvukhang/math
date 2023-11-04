@@ -22,37 +22,27 @@ const title = (kind, id, name) => {
   return t.slice(1)
 }
 
+const KINDS = [
+  'Definition',
+  'Lemma',
+  'Proposition',
+  'Corollary',
+  'Theorem',
+  'Example',
+]
+
 function create(cwd) {
   inquirer
     .prompt([
-      {
-        name: 'kind',
-        type: 'list',
-        choices: ['Definition', 'Proposition', 'Lemma', 'Theorem', 'Example'],
-        message: 'Kind:',
-      },
-      {
-        name: 'id',
-        type: 'input',
-        message: 'Number:',
-      },
-      {
-        name: 'name',
-        type: 'input',
-        message: 'Name:',
-      },
-      {
-        name: 'filename',
-        type: 'input',
-        message: 'Filename:',
-      },
+      { name: 'kind', type: 'list', choices: KINDS, message: 'Kind:' },
+      { name: 'id', type: 'input', message: 'Number:' },
+      { name: 'name', type: 'input', message: 'Name:' },
+      { name: 'filename', type: 'input', message: 'Filename:' },
     ])
     .then((answers) => {
-      const { kind, id, name, filename } = answers
-      const path = resolve(
-        cwd,
-        `${kind.toLowerCase()}-${id}${filename ? '-' + filename : ''}.md`,
-      )
+      let { kind, id, name, filename: f } = answers
+      f = `${kind.toLowerCase()}-${id}${f ? '-' + f : ''}.md`
+      const path = resolve(cwd, f)
       writeFileSync(path, template(title(kind, id, name)))
       child.spawn('nvim', [path], { stdio: 'inherit' })
     })
@@ -61,17 +51,9 @@ function create(cwd) {
 function main() {
   const print = console.log // lmao I'm probably gonna regret this
   const cwd = process.argv[2]
-
   print('\nSending new file to', chalk.green(cwd), '\n')
-
   if (!existsSync(TEMPLATE_FILE)) return print("Template file doesn't exist.")
-
   create(cwd)
 }
 
 main()
-
-// ? Kind: Theorem
-// ? Number: 2.2.2
-// ? Name: Holomorphic by existence of derivative
-// ? Filename: holomorphic-by-existence-of-derivative
