@@ -1,7 +1,5 @@
 ---
 title: 'Theorem 3.1.3'
-open: true
-draft: true
 ---
 
 If $\phi$ is a continuous function on $\{\zeta:|\zeta-P|=r\}$, then

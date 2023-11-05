@@ -15,6 +15,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.0.2",
     "astro": "^3.3.1",
     "rehype-katex": "^7.0.0",
     "remark-math": "^5.1.1"
