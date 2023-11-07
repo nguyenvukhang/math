@@ -29,6 +29,7 @@ const KINDS = [
   'Corollary',
   'Theorem',
   'Example',
+  'Result',
 ]
 
 function create(cwd) {
