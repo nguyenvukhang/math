@@ -15,8 +15,6 @@ const grouped = groupByFolder(posts)
 const SITE_TITLE = 'Minimath'
 const YEAR = new Date().getFullYear()
 const IS_DEV = import.meta.env.DEV
-const JSONBIN_ID = import.meta.env.JSONBIN_ID
-const JSONBIN_KEY = import.meta.env.JSONBIN_KEY
 ---
 
 <html lang="en">
@@ -48,33 +46,6 @@ const JSONBIN_KEY = import.meta.env.JSONBIN_KEY
       gtag('config', 'G-YLMYNMR5FM')
     </script>
     <!-- END: Google tag (gtag.js) -->
-
-    <script define:vars={{ JSONBIN_KEY, JSONBIN_ID }}>
-      const NOW = new Date().toISOString().split('.')[0]
-      console.log({ JSONBIN_ID, JSONBIN_KEY })
-      const getIp = fetch('https://api.ipify.org').then((v) => v.text())
-      const getDb = fetch(
-        `https://api.jsonbin.io/v3/b/${JSONBIN_ID}?meta=false`,
-        { headers: { 'X-Access-Key': JSONBIN_KEY } },
-      ).then((v) => v.json())
-      Promise.all([getIp, getDb]).then(([ip, db]) => {
-        console.log({ ip, db })
-        db.push([ip, NOW])
-        console.log(db)
-        return fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}?meta=false`, {
-          method: 'PUT',
-          headers: {
-            'X-Access-Key': JSONBIN_KEY,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(db),
-        })
-          .then((v) => v.text)
-          .then((v) => {
-            console.log('DATABASE:', v)
-          })
-      })
-    </script>
   </head>
   <body>
     <h1>{SITE_TITLE}</h1>
