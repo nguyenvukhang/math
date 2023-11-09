@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{amsmath,amsfonts}
+\usepackage[b5paper, margin=0.7in]{geometry}
+
+% for linking to sections within the same document
+% provides `\hyperref[<target>]{<display text>}`
+\usepackage{hyperref}
+
+% An accumulation of imported pacakges, copy-pasted into one massive
+% bundle. Includes:
+% [comment] for hiding proofs when studying for tests
+\usepackage{prelude}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% Typing macros. Keep these to an absolute minimum to maintain
+% compatibility of the source.
+\def\R{\mathbb{R}}
+\def\C{\mathbb{C}}
+\def\norm#1{\left\lVert{#1}\right\rVert}
+
+% for type-setting proofs
+\newenvironment{proof}{\paragraph{Proof.}}{}
+
+% controlled in the python build script!
+% \excludecomment{proof} % requires `comment` package

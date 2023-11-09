@@ -1,0 +1,32 @@
+\section{Nonlinear Optimization}\label{d1c9db1}
+
+\subsubsection{Convex sets}
+
+A set $C\subset\R^n$ is called convex if
+
+$$
+	\lambda x  + (1-\lambda ) y \in C
+	\quad
+	\forall(x,y\in C,\ \lambda \in (0, 1))
+$$
+
+or simply a set which contains all connecting lines of points from the
+set.
+
+\subsubsection{Convex functions}
+
+Let $C\subset\R^n$ be convex. Let $\lambda\in(0,1)$ and $x,y\in C$ and
+let
+
+Then $f:C\to\R$ is said to be
+
+\begin{itemize}
+	\item convex on $C$ if
+	      $$f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)$$
+	\item strictly convex on $C$ if
+	      $$f(\lambda x+(1-\lambda)y)<\lambda f(x)+(1-\lambda)f(y)$$
+	\item strongly convex on $C$ if $\exists\mu>0$ such that
+	      $$f(\lambda x+(1-\lambda)y)+\frac{\mu}{2}\lambda(1-\lambda)\norm{x-y}^2\leq\lambda f(x)+(1-\lambda)f(y)$$
+\end{itemize}
+
+% vim:ft=tex

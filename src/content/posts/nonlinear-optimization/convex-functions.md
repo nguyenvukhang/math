@@ -14,7 +14,7 @@ Then $f:C\to\R$ is said to be
   $$
 - strictly convex on $C$ if
   $$
-  f(\lambda x  + (1-\lambda) y) < \lambda f(x)  + (1-\lambda) f(y)
+  f(\lambda x + (1-\lambda) y) < \lambda f(x)  + (1-\lambda) f(y)
   $$
 - strongly convex on $C$ if $\exists\mu>0$ such that
   $$
