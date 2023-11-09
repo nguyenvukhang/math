@@ -6,20 +6,22 @@ TEX_FILES += nonlinear-optimization.tex
 # TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += plenary.tex
 
+SETUP := python3 setup.py
+
 build:
-	python3 build.py $(TEX_FILES)
+	@$(SETUP) build $(TEX_FILES)
 
 test:
-	python3 checkhealth.py
+	@$(SETUP) checkhealth
 
 sha:
-	python3 sha.py | pbcopy
+	@$(SETUP) sha | pbcopy
 
 sha-bash:
 	@date +%s%N | openssl dgst -sha256 | cut -b1-7 | pbcopy
 
 clean:
-	rm -f *.aux *.log *.out
+	rm -rf .build
 
 open:
 	open minimath.pdf
