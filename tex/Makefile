@@ -1,6 +1,10 @@
 TEX_FILES += nonlinear-optimization.tex
 TEX_FILES += complex-analysis.tex
 
+test:
+	python3 checkhealth.py
+
+
 build:
 	python3 build.py $(TEX_FILES)
 
