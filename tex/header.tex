@@ -20,6 +20,23 @@
 \def\C{\mathbb{C}}
 \def\norm#1{\left\lVert{#1}\right\rVert}
 
+% Parts of the document
+\def\Corollary#1{\paragraph{Corollary {#1}}}
+\def\Definition#1{\paragraph{Definition {#1}}}
+\def\Example#1{\paragraph{Example {#1}}}
+\def\Lemma#1{\paragraph{Lemma {#1}}}
+\def\Proposition#1{\paragraph{Proposition {#1}}}
+\def\Result#1{\paragraph{Result {#1}}}
+\def\Theorem#1{\paragraph{Theorem {#1}}}
+
+% force the section counter to this new state
+\def\forcecount#1#2#3{
+	\setcounter{section}{#1}
+	\setcounter{subsection}{#2}
+	\setcounter{subsubsection}{#3}
+	\addtocounter{subsubsection}{-1}
+}
+
 % for type-setting proofs
 \newenvironment{proof}{\paragraph{Proof.}}{}
 

@@ -22,8 +22,11 @@ def build(tex_files, verbose=False):
     tex = lambda e: x.stdin.write(e)
 
     tex(read_file("header.tex"))
+
+    # config inserts
     if not SHOW_PROOFS:
         tex(b"\\excludecomment{proof}")
+
     tex(b"\\begin{document}")
     [tex(read_file(f)) for f in tex_files]
     tex(b"\\end{document}")

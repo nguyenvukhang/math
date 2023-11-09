@@ -1,5 +1,10 @@
+# TEX_FILES += algorithm-design.tex
+# TEX_FILES += palculus.tex
+# TEX_FILES += pomplex-analysis.tex
+# TEX_FILES += header.tex
 TEX_FILES += nonlinear-optimization.tex
-TEX_FILES += complex-analysis.tex
+# TEX_FILES += ordinary-differential-equations.tex
+# TEX_FILES += plenary.tex
 
 build:
 	python3 build.py $(TEX_FILES)
