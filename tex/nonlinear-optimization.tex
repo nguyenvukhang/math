@@ -8,7 +8,7 @@ A set $C\subset\R^n$ is called convex if
 
 $$
 	\lambda x+(1-\lambda)y\in C\quad
-	\forall(x,y\in C,\ \lambda \in(0,1))
+	\forall(x,y\in C,\ \lambda\in(0,1))
 $$
 
 or simply a set which contains all connecting lines of points from the
@@ -81,7 +81,7 @@ $$
 \Theorem{2.1.5}{Fermat's rule}
 
 Let $X\subset\R^n$ be open and $f:X\to\R$ differentiable at $\bar x\in
-X$. If $\bar x$ is a local minimizer (or maximizer) of $f$ over $X$
+	X$. If $\bar x$ is a local minimizer (or maximizer) of $f$ over $X$
 then $\nabla f(\bar x)=0$.
 
 \Theorem{2.1.6}{Second-order necessary condition}
@@ -89,3 +89,48 @@ then $\nabla f(\bar x)=0$.
 Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
 differentiable. If $\bar x$ is a local minimizer (maximizer) of $f$
 over $X$ then $\nabla^2f(\bar x)$ is positive (negative) semidefinite.
+
+\Lemma{2.1.7}{}
+
+Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
+differentiable. If $\bar x\in\R^n$ is such that $\nabla^2f(\bar x)$
+positive definite then $\exists\,\mu,\epsilon>0$ such that
+$B_\epsilon(\bar x)\subset X$ and
+$$
+	d^T\nabla^2f(x)d\geq\mu\norm d^2_2\quad\forall(d\in\R^n,\
+	x\in B_\epsilon(\bar x))
+$$
+
+\Theorem{2.1.8}{Sufficient optimality condition}
+
+Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
+differentiable. Moreover, let $\bar x$ be a stationary point of $f$
+such that $\nabla^2f(\bar x)$ is positive definite. Then $\bar x$ is a
+strict local minimizer of $f$.
+
+\Definition{3.1.4}{Step-size rule}\label{ae4eac6}
+
+Let $f:{\R}^n\to{\R}$ be continuously differentiable and
+let $\mathcal A_f:=\{(x,d)\mid\nabla f(x)^Td<0\}$. A set-valued
+mapping
+$$
+	T:(x,d)\in\mathcal A_f\mapsto T(x,d)\subset\R_{++}
+$$
+
+is called a step-size rule for $f$.
+
+We call it well-defined for $f$ if $T(x,d)\neq0$ for all
+$(x,d)\in\mathcal{A}_f$.
+
+If the step-size rule is well-defined for all continuously
+differentiable functions ${\R}^n\to{\R}$, we simply call it
+well-defined.
+
+\Definition{3.1.5}{Efficient step-size}
+
+Let $f:\R^n\to\R$ be continuously differentiable. The
+\hyperref[ae4eac6]{step-size rule} $T$ is called efficient for $f$ if
+there exists $\theta>0$ such that
+$$
+	f(x+td)\leq f(x)-\theta\left(\frac{\nabla f(x)^Td}{\norm d}\right)^2
+$$
