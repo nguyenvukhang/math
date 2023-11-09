@@ -34,7 +34,6 @@ def build(tex_files, verbose=False):
     x.stdin.flush()
     x.stdin.close()
     x.wait()
-    pass
 
 
 def clean():
@@ -43,5 +42,6 @@ def clean():
     [os.remove(x) for x in files]
 
 
+# clean()
 build(tex_files, verbose=VERBOSE)
-clean()
+# clean()

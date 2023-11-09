@@ -40,7 +40,7 @@ Then $f:C\to\R$ is said to be
 	      and $g:\R^m\to\R^n$ affine. Then $f\circ G$ is convex.
 \end{enumerate}
 
-\Definition{2.1.1}{Directional derivative}
+\paragraph{2.1.1}\label{37eb747}{Directional derivative}
 
 Let $D\subset \R$ be open. $f:D\to\R$ is directionally differentiable
 at $\bar x\in\R^n$ in the direction $d\in\R^n$ if
@@ -57,7 +57,7 @@ $d\in\R^n$, we call $f$ directionally differentiable at $\bar x$.
 If $f$ is directionally differentiable at every $\bar x\in\R^n$, we
 call it directionally differentiable.
 
-% \lemma{2.1.2}{Directional derivative and gradient}
+\Lemma{2.1.2}{Directional derivative and gradient}
 
 Let $D\subset \R^n$ be open and $f:D\to\R$
 differentiable at $x\in D$. Then $f$ is directionally differentiable
@@ -68,3 +68,12 @@ $$
 
 Where $f'(x;d)$ is the directional derivative of $f$ at $x$ in the
 direction $d$.
+
+\Lemma{2.1.4}{Basic optimality condition}
+
+Let $X\subset\R^n$ be open and $f:X\to\R$. If $\bar x$ is a local
+minimizer of $f$ over $X$ and $f$ is \hyperref[37eb747]{directionally
+differentiable} at $\bar x$ then
+$$
+	f'(x;d)\geq 0\quad\forall(d\in\R^n)
+$$

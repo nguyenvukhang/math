@@ -20,3 +20,6 @@ sha-bash:
 
 clean:
 	rm -f *.aux *.log *.out
+
+open:
+	open minimath.pdf
