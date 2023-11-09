@@ -1,6 +1,6 @@
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-import { resolve } from 'path'
+import { dirname, resolve } from 'path'
 import { existsSync, writeFileSync } from 'fs'
 import child from 'child_process'
 
@@ -23,13 +23,13 @@ const title = (kind, id, name) => {
 }
 
 const KINDS = [
+  'Corollary',
   'Definition',
+  'Example',
   'Lemma',
   'Proposition',
-  'Corollary',
-  'Theorem',
-  'Example',
   'Result',
+  'Theorem',
 ]
 
 function create(cwd) {
@@ -45,6 +45,7 @@ function create(cwd) {
       f = `${kind.toLowerCase()}-${id}${f ? '-' + f : ''}.md`
       const path = resolve(cwd, f)
       writeFileSync(path, template(title(kind, id, name)))
+      process.chdir(dirname(path))
       child.spawn('nvim', [path], { stdio: 'inherit' })
     })
 }
