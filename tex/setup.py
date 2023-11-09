@@ -2,9 +2,10 @@ import sys, os, re
 
 from subprocess import Popen, PIPE
 
+BUILD_DIR = ".build"
 VERBOSE = True
-SHOW_PROOFS = False
-SHOW_COMPUTES = False
+SHOW_PROOFS = True
+SHOW_COMPUTES = True
 JOBNAME = "minimath"
 
 
@@ -13,34 +14,62 @@ def read_file(f, flags="r") -> str:
         return f.read()
 
 
+def debug():
+    data = read_file("ordinary-differential-equations.tex", flags="rb")
+    remove_in_between(data, b"\\begin{compute}", b"\\end{compute}")
+
+
+# remove all bytes including and within a start and end marker
+def remove_in_between(data: bytes, start: bytes, end: bytes):
+    buffer, r = [], data.find(start)
+    while r >= 0:
+        buffer.extend(data[:r])
+        data = data[data.find(end) + len(end) :]
+        r = data.find(start)
+    buffer.extend(data)
+    return bytes(buffer)
+
+
+def build_one_file(path) -> bytes:
+    b = read_file(path, flags="rb")
+    if not SHOW_COMPUTES:
+        b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
+    if not SHOW_PROOFS:
+        b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
+    return b
+
+
+class PdfLatex:
+    # start a subprocess of `pdflatex` ready to take a latex file in
+    # from stdin
+    def __init__(self, verbose=False):
+        p = None if verbose else PIPE
+        args = ("pdflatex", "--output-directory", BUILD_DIR, f"--jobname={JOBNAME}")
+        self.x = Popen(args, stdin=PIPE, stdout=p, stderr=p)
+
+    def write(self, e: bytes):
+        self.x.stdin.write(e)
+
+    def close(self):
+        self.x.stdin.flush()
+        self.x.stdin.close()
+        self.x.wait()
+
+
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
 def build(tex_files, verbose=False):
-    BUILD_DIR = ".build"
     if not os.path.isdir(BUILD_DIR):
         os.mkdir(BUILD_DIR)
-    x = Popen(
-        ["pdflatex", "--output-directory", BUILD_DIR, f"--jobname={JOBNAME}"],
-        stdin=PIPE,
-        stdout=None if verbose else PIPE,
-        stderr=None if verbose else PIPE,
-    )
-    tex = lambda e: x.stdin.write(e)
 
-    tex(read_file("header.tex", flags="rb"))
+    pdflatex = PdfLatex(verbose=verbose)
+    pdflatex.write(read_file("header.tex", flags="rb"))
 
-    # config inserts
-    if not SHOW_PROOFS:
-        tex(b"\\excludecomment{proof}")
-    if not SHOW_COMPUTES:
-        tex(b"\\excludecomment{compute}")
+    pdflatex.write(b"\\begin{document}")
+    list(map(pdflatex.write, map(build_one_file, tex_files)))
+    pdflatex.write(b"\\end{document}")
 
-    tex(b"\\begin{document}")
-    [tex(read_file(f, flags="rb")) for f in tex_files]
-    tex(b"\\end{document}")
+    pdflatex.close()
 
-    x.stdin.flush()
-    x.stdin.close()
-    x.wait()
     pdf_basename = f"{JOBNAME}.pdf"
     os.rename(os.path.join(BUILD_DIR, pdf_basename), pdf_basename)
 
@@ -63,7 +92,8 @@ def sha():
     print(l + "".join([c() for _ in range(6)]), end="")
 
 
-def get_labels(data: str):
+# get all instances of `\label{...}` in a file buffer
+def get_labels(data: str) -> list[str]:
     res, ids = re.search("\\\label{([0-9a-z]{7})}", data), []
     while res != None:
         ids.append(res.groups()[0])
@@ -124,3 +154,5 @@ elif c == "sha":
     sha()
 elif c == "checkhealth":
     checkhealth()
+else:
+    debug()
