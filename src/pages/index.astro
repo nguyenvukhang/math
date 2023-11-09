@@ -92,7 +92,7 @@ const IS_DEV = import.meta.env.DEV
         <>
           <h2>{header}</h2>
           {posts.map(({ Content, data, href }) => (
-            <details id={data.draft ? 'mark' : null} open={data.open}>
+            <details id={data.open ? 'mark' : null} open={data.open}>
               <summary id={href}>{data.title}</summary>
               <div style="display:flex;flex-direction:row">
                 <div class="expand-line" onclick={CLOSE_DETAIL_JS} />
