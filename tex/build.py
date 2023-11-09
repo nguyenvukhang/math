@@ -36,12 +36,11 @@ def build(tex_files, verbose=False):
     x.wait()
 
 
+# don't clean to make sure that links are well-formed
 def clean():
     RM = [".aux", ".out", ".log"]
     files = list(filter(lambda x: any([x.endswith(r) for r in RM]), os.listdir()))
     [os.remove(x) for x in files]
 
 
-# clean()
 build(tex_files, verbose=VERBOSE)
-# clean()
