@@ -5,8 +5,8 @@ import '../lib/katex.css'
 import '../lib/styles.css'
 
 const CLOSE_DETAIL_JS = "this.parentNode.parentNode.removeAttribute('open')"
-const EXPAND_ALL_JS = `const d=document.getElementsByTagName('details');for(let i=0;i<d.length;i++)d[i].setAttribute('open',true)`
-const CLOSE_ALL_JS = `const d=document.getElementsByTagName('details');for(let i=0;i<d.length;i++)d[i].removeAttribute('open')`
+const EXPAND_ALL_JS = `for(let i=0;i<d.length;i++)d[i].setAttribute('open',true)`
+const CLOSE_ALL_JS = `for(let i=0;i<d.length;i++)d[i].removeAttribute('open')`
 
 const unrenderedPosts = await getCollection('posts')
 const posts = await renderAll(unrenderedPosts)
@@ -24,6 +24,14 @@ const IS_DEV = import.meta.env.DEV
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_TITLE}</title>
 
+    <!--
+      One-shot load all the details into global scope
+      required for CLOSE_ALL_JS, EXPAND_ALL_JS, and probably more
+    -->
+    <script>
+      window.d = document.getElementsByTagName('details')
+    </script>
+
     <!-- Opens the details/summary section upon navigating to it -->
     <!-- <script>
       window.addEventListener('hashchange', () => {
@@ -33,6 +41,15 @@ const IS_DEV = import.meta.env.DEV
         if (x) x.parentNode.setAttribute('open', true)
       })
     </script> -->
+
+    <!-- closes all tags -->
+    <script>
+      document.onkeypress = (e) => {
+        if (e.key === 'c') {
+          for (let i = 0; i < d.length; i++) d[i].removeAttribute('open')
+        }
+      }
+    </script>
 
     <!-- START: Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YLMYNMR5FM"
