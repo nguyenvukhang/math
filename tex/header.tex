@@ -29,6 +29,7 @@
 \def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont #2}}}
 \def\Example#1#2{\subsubsection{Example {#1}\quad{\normalfont #2}}}
 \def\Lemma#1#2{\subsubsection{Lemma {#1}\quad{\normalfont #2}}}
+\def\Problem#1#2{\subsubsection{Problem {#1}\quad{\normalfont #2}}}
 \def\Proposition#1#2{\subsubsection{Proposition {#1}\quad{\normalfont #2}}}
 \def\Result#1#2{\subsubsection{Result {#1}\quad{\normalfont #2}}}
 \def\Theorem#1#2{\subsubsection{Theorem {#1}\quad{\normalfont #2}}}
@@ -37,8 +38,8 @@
 % `\section{}` behaves like `\section*{}` now
 \setcounter{secnumdepth}{0}
 
-\def\section#1{\subsubsection*{\LARGE #1}}
-\def\subsection#1{\subsubsection*{\Large #1}}
+\def\section#1{\subsubsection{\LARGE #1}}
+\def\subsection#1{\subsubsection{\Large #1}}
 
 % for enabling/disabling specific fields
 \newenvironment{proof}{\paragraph{Proof.}} {}

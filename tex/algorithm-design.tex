@@ -1,3 +1,55 @@
 % vim:ft=tex
 
 \section{Algorithm Design}\label{41ab460}
+
+\Definition{1.1}{Flow network}
+
+A \textit{flow network} is a directed graph $G=(V,E)$ with a single
+\textit{source node} $s$ and a single \textit{target node} $t$, as
+well as a positive number $c(e)$ for each edge $e\in E$, called the
+capacity of $e$.
+
+\Definition{1.3}{Flow}
+
+Let $G$ be a flow network. A \textit{flow} on $G$ is given by a positive
+number $f(e)$ for each edge $e$ in $G$ satisfying the following two
+constraints:
+\begin{itemize}
+	\item \textbf{Capacity constraints.} For each edge $e\in E$, we have
+	      $0\leq f(e)\leq c(e)$
+	\item \textbf{Flow conservation.} For each vertex $v\in V$ that is
+	      not the source or target vertex,
+\end{itemize}
+$$
+	\sum_{e\text{ into }v}f(e)=\sum_{e\text{ leaving }v}f(e)
+$$
+
+The \textit{value} of flow $f$ is all of the flow leaving $s$:
+$$
+	\text{val}(f):=\sum_{e\text{ leaving }s}f(e)
+$$
+
+where $s$ is the source node of $G$.
+
+\Problem{1}{Max Flow}
+
+\textbf{Input:} A flow network $G$ with source $s$, target $t$, and positive
+edge capacities $c(e)$ for $e\in E$.
+
+\textbf{Output:} A flow $f$ with the maximum value.
+
+\Definition{1.4}{Residual graph}
+
+Let $G$ be a flow network and let $f$ be a flow on $G$. The
+\textit{residual graph} of $G$ and $f$, denoted by $G_f$, is the
+directed graph defined as follows:
+
+The vertices of $G_f$ are the same as the vertices of $G$.
+
+For each edge $e=(u,v)$ in $G$, if $f(e)<c(e)$ then we add the edge
+$(u,v)$ to $G_f$, labelled with the number $c(e)-f(e)$. If $f(e)>0$,
+then we also add the edge $(v,u)$ to $G_f$, labelled with the number
+$f(e)$.
+
+All paths from $s$ to $t$ in the residual graph correspond to a
+sequence where flow can be re-routed to increase its value.
