@@ -1,3 +1,186 @@
 % vim:ft=tex
 
 \section{Ordinary Differential Equations}\label{82569c2}
+
+\subsection{First order differential equations}
+
+\Result{1.1.1}{Separable}
+
+$$\frac{dy}{dx}=\frac{p(x)}{q(y)}$$
+
+To solve, we do
+$$
+	\int p(x)\,dx=\int q(y)\,dy
+$$
+
+\Result{1.1.2}{Homogeneous}
+
+$$\frac{dy}{dx}=g\left(\frac yx\right)$$
+
+An easier way to check if $\displaystyle\frac{dy}{dx}$ satisfies this
+form is by letting $f(x,y):=\displaystyle\frac{dy}{dx}$ and verifying
+that $f(x,y)=f(kx,ky)$.
+
+To solve, let $u:=y/x$ and rewrite the DE in terms of $u$ and $x$.
+
+\Result{1.1.3}{Linear}\label{b8c7e19}
+
+$$\frac{dy}{dx}+p(x)y=q(x)$$
+
+To solve, let $\ln u:=\int p(x)\,dx$ and jump to
+$$
+	\frac d{dx}uy=u\cdot q(x)
+$$
+
+(which is just the product rule of differentiation)
+
+\Result{1.1.4}{Bernoulli}
+
+$$\frac{dy}{dx}+p(x)y=q(x)\cdot y^n$$
+
+If $n\in\{0,1\}$, we have the \hyperref[b8c7e19]{linear case}.
+
+Use $u:=y^{1-n}$, eliminate all $y$s, and reduce to a linear DE in
+$u$:
+
+$$\frac{du}{dx}+(1-n)p(x)u=(1-n)q(x)$$
+
+\Result{1.1.5}{Riccati}
+
+$$\frac{dy}{dx}=p(x)y^2+q(x)y+r(x)$$
+
+To solve, first find a basic solution $y_1$. (By inspection,
+hopefully. Usually a solution will be given as part of the homework
+problem)
+
+Then let $\displaystyle y_2:=y_1+\frac1u$, substitute it into the
+original DE, and reduce it to a linear DE in $u$:
+
+$$-u'=(2py_1+q)u+p$$
+
+\begin{compute}
+	First we obtain $\displaystyle y_2'=y_1'-\frac{u'}{u^2}$. Then substitute into the original DE:
+	\begin{align*}
+		y_2' & = py_2^2+qy_2+r                                                                  \\
+		y_1'-\frac{u'}{u^2}
+		     & = p\left(y_1+\frac1u\right)^2+q\left(y_1+\frac1u\right)+r                        \\
+		     & = p\left(y_1^2+\frac{2y_1}{u}+\frac1{u^2}\right)+q\left(y_1+\frac1u\right)+r     \\
+		     & = (py_1^2+qy_1+r)+p\left(\frac{2y_1}{u}+\frac1{u^2}\right)+q\left(\frac1u\right)
+	\end{align*}
+	Since $y_1$ is a solution to the original DE,
+	\begin{align*}
+		-\frac{u'}{u^2} & = p\left(\frac{2y_1}{u}+\frac1{u^2}\right)+q\left(\frac1u\right) \\
+		-u'             & =(2py_1+q)u+p
+	\end{align*}
+	\QED
+\end{compute}
+
+\Result{1.1.6}{Exact}
+
+$$M(x,y)+N(x,y)\frac{dy}{dx}=0$$
+
+Criteria: $M_y=N_x$.
+
+The idea is to work towards a function $F$ where $F_x=M$, and $F_y=N$.
+(Because then based on the original DE we'll have $F_x=0$)
+
+To solve, integrate to find $F(x,y)=\int M(x,y)\,dx=\int N(x,y)\,dy$.
+
+Then we have $F(x,y)=C$ for some constant $C$.
+
+\Definition{2.1.1}{Wronskian}\label{b70073b}
+
+The Wronskian of two differentiable functions $f$ and $g$ is
+$W(f,g):=fg'-gf'$.
+
+More generally, for $n$ complex-valued functions $f_1,\ldots,f_n$
+which are $n-1$ times differentiable on an interval $I$, the Wronskian
+$W(f_1,\ldots,f_n)$ is a function on $x\in I$ defined by
+
+$$
+	W(f_1,\ldots,f_n)(x):=\det\begin{bmatrix}
+		f_1(x)         & f_2(x)         & \ldots & f_n(x)         \\
+		f_1'(x)        & f_2'(x)        & \ldots & f_n'(x)        \\
+		\vdots         & \vdots         & \ddots & \vdots         \\
+		f_1^{(n-1)}(x) & f_2^{(n-1)}(x) & \ldots & f_n^{(n-1)}(x) \\
+	\end{bmatrix}
+$$
+
+\Result{2.1.2}{Method of undetermined coefficients}
+
+$$ay''+by'+cy=g(t)$$
+
+Define $\Sigma_{n,t}(A):=A_0t^n+A_1t^{n-1}+\ldots+A_n$.
+
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		$g(t)$                                                               & $y(t)$                                                                                       \\
+		\hline
+		$P_n(t) = a_0t^n + a_1t^{n-1} + \ldots + a_n$                        & $\Sigma_{n,t}(A)$                                                                            \\
+		\hline
+		$P_n(t)e^{\alpha t}$                                                 & $t^se^{\alpha t}\cdot\Sigma_{n,t}(A)$                                                        \\
+		\hline
+		$P_n(t)e^{\alpha t}\begin{cases}\sin\beta t\\\cos\beta t\end{cases}$ & $t^s\big[\Sigma_{n,t}(A)e^{\alpha t}\cos\beta t+\Sigma_{n,t}(B)e^{\alpha t}\sin\beta t\big]$ \\
+		\hline
+	\end{tabular}
+\end{center}
+
+Here, $s$ is the smallest non-negative integer that ensures that no
+term in $y(t)$ is a solution of the corresponding homogeneous
+equation.
+
+\Result{2.1.3}{Variation of parameters}
+
+import \hyperref[b70073b]{Wronskian} for $W$.
+
+$$y''+p(x)y'+q(x)y=r(x)$$
+
+Suppose we already know that $y_1$ and $y_2$ satisfy the corresponding
+homogeneous equation.
+
+Then we can jump to
+$$y_p=v_1y_1+v_2y_2$$
+
+where $\displaystyle v_1:=\frac{-y_2r}{W(y_1,y_2)}$ and $\displaystyle
+	v_2:=\frac{y_1r}{W(y_1,y_2)}$.
+
+
+\Result{2.1.4}{Using one solution to find another}
+
+$$y''+p(x)y'+q(x)y=r(x)$$
+
+Suppose we already know that $y_1$ is a solution. Then let
+$$y_2:=vy_1$$
+
+Then substituting $y_2$ back into the original DE, we have
+$$v''y_1+v'(2y_1'+py_1)=0$$
+
+\begin{compute}
+	$$y_2:=vy_1;\quad y_2'=v'y_1+vy_1';\quad y_2''=v''y_1+2v'y_1'+vy_1''$$
+
+	Substituting this back into the original DE:
+	$$(v''y_1+2v'y_1'+vy_1'')+p(v'y_1+vy_1')+q(vy_1)=r$$
+
+	But since $y_1$ is known to be a solution:
+	\begin{align*}
+		(v''y_1+2v'y_1')+p(v'y_1) & =0 \\
+		v''y_1+v'(2y_1'+py_1)     & =0
+	\end{align*}
+	\QED
+\end{compute}
+
+Which is a first-order linear equation in $v'$. Use $u:=v'$ to solve
+for $u$ and then substitute everything back to find $y$.
+
+\Result{2.0.4}{Euler equations}
+
+$$ax^2y''+bxy'+cy=0$$
+
+Try $y=x^r$ for some $r\in\C$ to be found.
+
+If two distinct roots: $y:=Ax^{r_1}+Bx^{r_2}$.
+
+If one distinct root: $y:=Ax^r+B\ln(x)x^r$.
+
+If complex roots ($r=\alpha\pm\beta i$): $y:=Ax^\alpha\cos(\beta\ln x)+Bx^\alpha\sin(\beta\ln x)$

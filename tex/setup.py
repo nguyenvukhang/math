@@ -4,6 +4,7 @@ from subprocess import Popen, PIPE
 
 VERBOSE = True
 SHOW_PROOFS = False
+SHOW_COMPUTES = False
 JOBNAME = "minimath"
 
 
@@ -30,6 +31,8 @@ def build(tex_files, verbose=False):
     # config inserts
     if not SHOW_PROOFS:
         tex(b"\\excludecomment{proof}")
+    if not SHOW_COMPUTES:
+        tex(b"\\excludecomment{compute}")
 
     tex(b"\\begin{document}")
     [tex(read_file(f, flags="rb")) for f in tex_files]
@@ -54,8 +57,10 @@ def clean():
 def sha():
     from random import randint
 
+    l = "abcdef"[randint(0, 5)]
+
     s, c = "0123456789abcdef", lambda: s[randint(0, len(s) - 1)]
-    print("".join([c() for _ in range(7)]), end="")
+    print(l + "".join([c() for _ in range(6)]), end="")
 
 
 def get_labels(data: str):

@@ -2,8 +2,8 @@
 # TEX_FILES += palculus.tex
 # TEX_FILES += pomplex-analysis.tex
 # TEX_FILES += header.tex
-TEX_FILES += nonlinear-optimization.tex
-# TEX_FILES += ordinary-differential-equations.tex
+# TEX_FILES += nonlinear-optimization.tex
+TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += plenary.tex
 
 SETUP := python3 setup.py
