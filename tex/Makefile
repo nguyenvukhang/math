@@ -24,7 +24,7 @@ clean:
 	rm -rf .build
 
 open:
-	open minimath.pdf
+	open .build/minimath.pdf
 
 dev:
 	@$(SETUP) dev

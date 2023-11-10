@@ -90,6 +90,15 @@ Then we have $F(x,y)=C$ for some constant $C$.
 
 \subsection{Second order differential equations}
 
+\begin{itemize}
+	\item $ay''+by'+cy=g(t)$ : \hyperref[af8932c]{Method of undetermined
+		      coefficients}
+	\item $ax^2y''+bxy'+cy=0$ : \hyperref[c15a777]{Euler equations}
+	\item $y''+p(x)y'+q(x)y=r(x)$ : Variation of parameters for either a
+	      \hyperref[cc51fcb]{particular} or
+	      \hyperref[d359b97]{complementary} solution.
+\end{itemize}
+
 \Definition{2.1.1}{Wronskian}\label{b70073b}
 
 The Wronskian of two differentiable functions $f$ and $g$ is
@@ -108,22 +117,24 @@ $$
 	\end{bmatrix}
 $$
 
-\Result{2.1.2}{Method of undetermined coefficients}
+\Result{2.1.2}{Method of undetermined coefficients}\label{af8932c}
 
 $$ay''+by'+cy=g(t)$$
 
-Define $\Sigma_{n,t}(A):=A_0t^n+A_1t^{n-1}+\ldots+A_n$.
+Define $\Sigma_{n,t}(A):=A_0t^n+A_1t^{n-1}+\ldots+A_n$ and $P_n(t):=a_0t^n+a_1t^{n-1}+\ldots+a_n$.
 
 \begin{center}
+	\def\squirl{\begin{cases}\sin\beta t\\\cos\beta t\end{cases}}
+	\def\S#1{\Sigma_{n,t}({#1})}
 	\begin{tabular}{|c|c|}
 		\hline
-		$g(t)$                                                               & $y(t)$                                                                                       \\
+		$g(t)$                      & $y(t)$                                                                 \\
 		\hline
-		$P_n(t) = a_0t^n + a_1t^{n-1} + \ldots + a_n$                        & $\Sigma_{n,t}(A)$                                                                            \\
+		$P_n(t)$                    & $\S A$                                                                 \\
 		\hline
-		$P_n(t)e^{\alpha t}$                                                 & $t^se^{\alpha t}\cdot\Sigma_{n,t}(A)$                                                        \\
+		$P_n(t)e^{\alpha t}$        & $t^se^{\alpha t}\cdot\S A$                                             \\
 		\hline
-		$P_n(t)e^{\alpha t}\begin{cases}\sin\beta t\\\cos\beta t\end{cases}$ & $t^s\big[\Sigma_{n,t}(A)e^{\alpha t}\cos\beta t+\Sigma_{n,t}(B)e^{\alpha t}\sin\beta t\big]$ \\
+		$P_n(t)e^{\alpha t}\squirl$ & $t^s\big[\S Ae^{\alpha t}\cos\beta t+\S Be^{\alpha t}\sin\beta t\big]$ \\
 		\hline
 	\end{tabular}
 \end{center}
@@ -132,7 +143,7 @@ Here, $s$ is the smallest non-negative integer that ensures that no
 term in $y(t)$ is a solution of the corresponding homogeneous
 equation.
 
-\Result{2.1.3}{Variation of parameters}
+\Result{2.1.3}{Variation of parameters (particular: $y_p$)}\label{cc51fcb}
 
 import \hyperref[b70073b]{Wronskian} for $W$.
 
@@ -148,7 +159,7 @@ where $\displaystyle v_1:=\frac{-y_2r}{W(y_1,y_2)}$ and $\displaystyle
 	v_2:=\frac{y_1r}{W(y_1,y_2)}$.
 
 
-\Result{2.1.4}{Using one solution to find another}
+\Result{2.1.4}{Variation of parameters (complementary: $y_c$)}\label{d359b97}
 
 $$y''+p(x)y'+q(x)y=r(x)$$
 
@@ -175,7 +186,7 @@ $$v''y_1+v'(2y_1'+py_1)=0$$
 Which is a first-order linear equation in $v'$. Use $u:=v'$ to solve
 for $u$ and then substitute everything back to find $y$.
 
-\Result{2.1.5}{Euler equations}
+\Result{2.1.5}{Euler equations}\label{c15a777}
 
 $$ax^2y''+bxy'+cy=0$$
 
