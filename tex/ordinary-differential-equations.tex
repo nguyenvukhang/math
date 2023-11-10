@@ -197,3 +197,34 @@ If two distinct roots: $y:=Ax^{r_1}+Bx^{r_2}$.
 If one distinct root: $y:=Ax^r+B\ln(x)x^r$.
 
 If complex roots ($r=\alpha\pm\beta i$): $y:=Ax^\alpha\cos(\beta\ln x)+Bx^\alpha\sin(\beta\ln x)$
+
+\subsection{Higher order differential equations}
+
+\begin{equation*}\def\y#1{y^{(#1)}}
+	\y n+p_1\y{n-1}+p_2\y{n-2}+\ldots+p_{n-1}y'+p_ n y=q
+\end{equation*}
+
+where $\iter{p_1}{p_n},q:\R\to\R$.
+
+\Result{3.1.1}{Constant coefficients}
+
+\begin{equation*}\def\y#1{y^{(#1)}}
+	\y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ n y=0 \tag*{($*$)}
+\end{equation*}
+
+where $\iter{a_1}{a_n}\in\R$ fixed.
+
+Then try $y=e^{rt}$. Substituting that into $(*)$, we'll obtain
+$$a_0t^n+a_1r^{n-1}+\ldots+a_n=0$$
+
+Since $\iter{a_1}{a_n}$ are given, we can solve for $r$.
+
+If all the roots of $r$ are real and no two are equal, then we have
+$n$ distinct solutions $\iter{e^{r_1t}}{e^{r_nt}}$ of equation $(*)$.
+
+Moreover, if these solutions are linearly independent, then the
+general solution to $(*)$ is
+$$y_g=c_1e^{r_1t}+c_2e^{r_2t}+\ldots+c_ne^{r_nt}$$
+
+One way to establish the linear independence is to evaluate their
+\hyperref[b70073b]{Wronskian}.
