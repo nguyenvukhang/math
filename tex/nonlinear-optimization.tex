@@ -135,6 +135,37 @@ $$
 	f(x+td)\leq f(x)-\theta\left(\frac{\nabla f(x)^Td}{\norm d}\right)^2
 $$
 
+\Definition{3.2.0}{Armijo rule and sufficient decrease}\label{fefb024}
+
+Choose $\beta,\sigma\in(0,1)$. For $x,d\in\hyperref[ae4eac6]{\mathcal
+		A_f}$ the Armijo rule $T_A$ is defined by
+$$
+	T_A(x,d)=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq
+	f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}
+$$
+
+The inequality
+$$
+	f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k
+$$
+
+is called the \textit{Armijo condition}. It ensures a
+\textbf{sufficient decrease} on the objective function.
+
+\Example{3.2.1}{Insufficient decrease}
+
+Consider the function $f(x)=(x-1)^2-1$ with optimal value $f^*=-1$.
+
+The sequence $\{x_k\}$ with $x_k:=-\frac1k$ has
+$f(x_k)=\frac{1+2k}{k^2}$ and
+$$
+	f(x_{k+1})-f(x_k)=\frac{2k^2+4k+1}{k^2(k+1^2)}<0
+$$
+
+Hence we've found a case where the objective value decreases, but
+$f(x_k)$ converges to a non-optimal value. ($f(x_k)\to0$, but we want
+$f(x_k)\to-1$)
+
 \Remark{x.x.x}{Collection of unconstrained minimization methods}
 
 \begin{enumerate}
@@ -145,6 +176,10 @@ $$
 \end{enumerate}
 
 \Algorithm{3.1.1}{General line-search descent algorithm}
+
+Goal is to solve
+$$\min_{x\in\R^n}f(x).$$
+
 \begin{enumerate}
 	\item [\textbf{(S0)}] \textit{Initialization}: Choose $x^0\in\R^n$ and put $k:=0$.
 	\item [\textbf{(S1)}] \textit{Termination}: If $x^k$ satisfies a termination criterion: STOP.
@@ -154,11 +189,70 @@ $$
 \end{enumerate}
 
 \Algorithm{3.2.1}{Gradient method with Armijo rule}
+
+Goal is to solve
+$$\min_{x\in\R^n}f(x).$$
+
 \begin{enumerate}
 	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\sigma,\beta\in(0,1)$, $\epsilon\geq0$ and put $k:=0$.
 	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
 	\item [\textbf{(S2)}] Put $d^k:=-\nabla f(x^k)$.
 	\item [\textbf{(S3)}] Determine $t_k>0$ by
+	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
+	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+\end{enumerate}
+
+\Algorithm{3.3.1}{Local Newton's method for equations}\label{abbc9be}
+
+Goal is to solve
+$$F(x)=0$$
+
+where $F:\R^n\to\R^n$ and $F$ is assumed to be continuously differentiable.
+
+\begin{enumerate}
+	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\epsilon\geq0$ and put $k:=0$.
+	\item [\textbf{(S1)}] If $\norm{F(x^k)}\leq\epsilon$, STOP.
+	\item [\textbf{(S2)}] Compute $d^k$ as a solution of
+	      $$F'(x^k)d=-F(x^k)$$
+	\item [\textbf{(S3)}] Put $x^{k+1}:=x^k+d^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+\end{enumerate}
+
+\Algorithm{3.3.2}{Local Newton's method for unconstrained optimization}
+
+Goal is to solve
+$$\min_{x\in\R^n}f(x).$$
+
+The following is obtained by substituting $F$ for $\nabla f$ in the
+\hyperref[abbc9be]{local Newton's method for equations}.
+
+\begin{enumerate}
+	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\epsilon\geq0$ and put $k:=0$.
+	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
+	\item [\textbf{(S2)}] Compute $d^k$ as a solution of
+	      $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
+	\item [\textbf{(S3)}] Put $x^{k+1}:=x^k+d^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+\end{enumerate}
+
+\Algorithm{3.3.3}{Globalized Newton's method for unconstrained optimization}
+
+Goal is to solve
+$$\min_{x\in\R^n}f(x).$$
+
+The following is obtained by substituting $F$ for $\nabla f$ in the
+\hyperref[abbc9be]{local Newton's method for equations}.
+
+\begin{enumerate}
+	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\rho>0$, $p>2$, $\beta\in(0,1)$, $\sigma\in(0,\frac12)$, $\epsilon\geq0$ and put $k:=0$.
+	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
+	\item [\textbf{(S2)}] Try to compute $d^k$ as a solution of
+	      $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
+	      If no solution can be found or if
+	      \begin{gather*}
+		      \nabla f(x^k)^Td^k>-\rho\norm{d^k}^p\\
+		      \text{\small{(\hyperref[fefb024]{insufficient decrease})}}
+	      \end{gather*}
+	      then fall back to $d^k:=-\nabla f(x^k)$
+	\item [\textbf{(S3)}] Determine $t_k$ by
 	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
 	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
