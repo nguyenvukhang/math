@@ -47,8 +47,8 @@
 \def\subsection#1{\subsubsection{\Large #1}}
 
 % for enabling/disabling specific fields
-\newenvironment{proof}{\paragraph{Proof.}} {}
-\newenvironment{compute}{\paragraph{Compute.}} {}
+\newenvironment{proof}{\paragraph{Proof.}} {\QED}
+\newenvironment{compute}{\paragraph{Compute.}} {\QED}
 
 % controlled in the python build script!
 % \excludecomment{proof} % requires `comment` package

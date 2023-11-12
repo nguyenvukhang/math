@@ -1,5 +1,14 @@
 % vim:ft=tex
 
+\def\NP{\mathsf{NP}}
+\def\P{\mathsf{P}}
+\def\coNP{\mathsf{coNP}}
+\def\SAT{\mathsf{SAT}}
+\def\VC{\mathsf{VC}}
+\def\CONT{\mathsf{CONT}}
+\def\Yes{\text{Yes}}
+\def\No{\text{No}}
+
 \section{Algorithm Design}\label{41ab460}
 
 \Definition{0.0.1}{Vertex cover}\label{b530c81}
@@ -114,7 +123,7 @@ Choice of encoding is important and definitely affects runtime.
 However, for discussion we will assume that the most natural and
 succint encoding is chosen.
 
-\Definition{3.2}{Polynomial-time algorithms}
+\Definition{3.2}{Polynomial-time algorithms}\label{ee3be28}
 
 An algorithm $A$ runs in \textit{polynomial time} if $\exists c\in\R$
 s.t. $\forall x\in\binrep$, $A$ terminates after $O(|x|^c)$
@@ -122,21 +131,21 @@ computation steps.
 
 A decision problem $L$ is \textit{polynomial-time computable} if there
 exists a polynomial-time $A$ s.t. $\forall x\in\binrep$, $x\in L\iff
-	A(x)=\text{Yes}$.
+	A(x)=\Yes$.
 
 We define
 $$
-	\mathsf P:=\{L\subseteq\binrep\mid L\text{ is polynomial-time computable}\}
+	\P:=\{L\subseteq\binrep\mid L\text{ is polynomial-time computable}\}
 $$
 
-The complexity class $\mathsf P$ is our proxy for \textit{efficiently
+The complexity class $\P$ is our proxy for \textit{efficiently
 	computable languages}. (``language" is another way to refer to $L$, in
 addition to ``problem".)
 
 \Definition{3.3.1}{Vertex Cover Problem}
 
 $$
-	\mathsf{VC}:=\{(G,k)\mid G\text{ is a graph with a
+	\VC:=\{(G,k)\mid G\text{ is a graph with a
 		\hyperref[b530c81]{vertex cover} of size}\leq k\}
 $$
 
@@ -146,18 +155,54 @@ $$
 	\mathsf{FORMSAT}:=\{F\mid F\text{ is a satisfiable boolean formula}\}
 $$
 
-\Definition{3.3}{Nondeterministic polynomial-time algorithms}
+\Definition{3.3}{Nondeterministic polynomial-time algorithms}\label{d93050e}
 
 A decision problem $L$ has a polynomial-time verifier if there is a
-polynomial time algorithm $A$ taking two strings $x,y$ as input, and a
+polynomial time algorithm $B$ taking two strings $x,y$ as input, and a
 polynomial $p(n)$ such that
 $$
-	x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):A(x,y)=\text{Yes}
+	x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
 $$
 The complexity class
 $$
 	\mathsf{NP}:=\{L\subseteq\binrep\mid L\text{ has a polynomial-time verifier}\}
 $$
+
+\begin{itemize}
+	\item A polynomial-time verifier for $\VC$ would take a graph
+	      $(G,k)$ and a proposed vertex cover $U$ and check if $|U|\leq k$
+	      and that $U$ is a vertex cover.
+	\item A polynomial-time verifier for $\SAT$ would take in a boolean
+	      formula $F$ and a proposed assignment $x$ and check if $F(x)=\Yes$.
+\end{itemize}
+
+Observe that $\P\subseteq\NP$. If $L$ has a polynomial-time algorithm,
+then it also has a polynomial-time verifier.
+
+\begin{proof}
+	If $L\in\P$, then \hyperref[ee3be28]{by definition} there exists a polynomial-time algorithm $A$ with
+	$$x\in L\iff A(x)=\Yes$$
+
+	Then, following the \hyperref[d93050e]{defintion of $\NP$}, we need
+	to find a polynomial-time verifier $B$ such that
+	$$
+		x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
+	$$
+	But we can simply use $B(x,y):=A(x)$.
+\end{proof}
+% \begin{itemize}
+%   \item A polynomial-time verifier for $L$ would take an input $x$ and
+%     a proposed certificate $y$ and can check if $y$ is valid by
+%     running $L(y)$
+% \end{itemize}
+
+% Find the longest slice in an array that sums up to 10
+%
+% Decision problem:
+% There is a window in the array whose sum adds up to 10 exactly
+% Input: Array of numbers
+% Output: Yes/No
+
 
 \Definition{3.4}{Complement of a decision problem}
 
@@ -168,7 +213,7 @@ $$
 
 Note that $\binrep=L\cup\bar L$ for any decision problem $L$.
 
-\Exercise{3.5}{} Prove that if $L\in\mathsf P$ then $\bar L\notin\mathsf P$
+\Exercise{3.5}{} Prove that if $L\in\P$ then $\bar L\notin\P$
 
 % TODO: compute this
 
@@ -182,10 +227,26 @@ $$
 For example, recall that $\mathsf{\hyperref[d6893fe]{SAT}}=\{F\mid
 	F\text{ is a satisfiable boolean formula}\}$. Then
 $$
-	\overline{\mathsf{SAT}}=\left\{x\in\binrep\, \middle\vert
+	\overline{\SAT}=\left\{x\in\binrep\, \middle\vert
 	\begin{array}{l}
 		\text{$x$ is an invalid encoding of a formula, or} \\
 		\text{$x$ encodes an unsatisfiable boolean formula}
 	\end{array}
 	\right\}
 $$
+
+But given $x\in\binrep$, it is easy to test its validity as a boolean
+formula, hence we focus on the second constraint:
+$$
+	\CONT:=\{F\mid F\text{ is an unsatisfiable boolean formula}\}
+$$
+
+Note that since $\overline{\CONT}=\SAT\in\NP$, we have that
+$\overline{\CONT}\in\NP$.
+
+However, is $\CONT\in\NP$? Observe that $F\in\CONT$ if and only if
+\textit{for every} assignment $x$ to the variables of $F$, we have
+that $F(x)=\No$. Since there are $2^n$ assigments to check, it is not
+clear how to encode this checking procedure into a single
+polynomial-sized certificate. For this reason, many researchers
+conjecture that $\NP\neq\coNP$.
