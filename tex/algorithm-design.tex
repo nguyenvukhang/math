@@ -140,7 +140,7 @@ $$
 		\hyperref[b530c81]{vertex cover} of size}\leq k\}
 $$
 
-\Definition{3.3.2}{Satisfiability Problem}
+\Definition{3.3.2}{Satisfiability Problem}\label{d6893fe}
 
 $$
 	\mathsf{FORMSAT}:=\{F\mid F\text{ is a satisfiable boolean formula}\}
@@ -163,7 +163,29 @@ $$
 
 The complement of a decision problem $L$ is defined as
 $$
-  \bar L=\binrep\setminus L:=\{x\in\binrep\mid x\notin L\}
+	\bar L=\binrep\setminus L:=\{x\in\binrep\mid x\notin L\}
 $$
 
+Note that $\binrep=L\cup\bar L$ for any decision problem $L$.
+
 \Exercise{3.5}{} Prove that if $L\in\mathsf P$ then $\bar L\notin\mathsf P$
+
+% TODO: compute this
+
+\Definition{3.6}{coNP}
+
+The complexity class $\mathsf{coNP}$ is defined as
+$$
+	\mathsf{coNP}:=\{L\mid\bar L\in\mathsf{NP}\}
+$$
+
+For example, recall that $\mathsf{\hyperref[d6893fe]{SAT}}=\{F\mid
+	F\text{ is a satisfiable boolean formula}\}$. Then
+$$
+	\overline{\mathsf{SAT}}=\left\{x\in\binrep\, \middle\vert
+	\begin{array}{l}
+		\text{$x$ is an invalid encoding of a formula, or} \\
+		\text{$x$ encodes an unsatisfiable boolean formula}
+	\end{array}
+	\right\}
+$$
