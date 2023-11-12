@@ -2,6 +2,17 @@
 
 \section{Algorithm Design}\label{41ab460}
 
+\Definition{0.0.1}{Vertex cover}\label{b530c81}
+
+Let $G=(V,E)$ be an undirected graph. A vertex cover $U\subseteq V$ satisfies
+$$
+	(u,v)\in E\implies u\in U\lor u\in U.
+$$
+
+In other words, every edge in $E$ has at least one endpoint in the
+vertex cover $U$. Such a set is said to \textit{cover} the edges of
+$G$.
+
 \Definition{1.1}{Flow network}
 
 A \textit{flow network} is a directed graph $G=(V,E)$ with a single
@@ -119,5 +130,12 @@ $$
 $$
 
 The class $\mathsf P$ is our proxy for \textit{efficiently computable
-languages}. (``language" is another way to refer to $L$, in addition
+	languages}. (``language" is another way to refer to $L$, in addition
 to ``problem".)
+
+\Definition{3.3.1}{Vertex Cover Problem}
+
+$$
+	\mathsf{VC}:=\{(G,k)\mid G\text{ is a graph with a
+		\hyperref[b530c81]{vertex cover} of size}\leq k\}
+$$
