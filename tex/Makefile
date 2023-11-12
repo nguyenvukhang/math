@@ -11,6 +11,9 @@ SETUP := python3 setup.py
 build:
 	@$(SETUP) build $(TEX_FILES)
 
+build-all:
+	@$(SETUP) build --all
+
 test:
 	@$(SETUP) checkhealth
 

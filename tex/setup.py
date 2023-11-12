@@ -4,10 +4,25 @@ from os import path
 from subprocess import Popen, PIPE
 
 BUILD_DIR = ".build"
-VERBOSE = True
 SHOW_PROOFS = True
 SHOW_COMPUTES = True
 JOBNAME = "minimath"
+
+ALL_TEX_FILES = """
+
+algorithm-design.tex
+calculus.tex
+complex-analysis.tex
+nonlinear-optimization.tex
+ordinary-differential-equations.tex
+plenary.tex
+
+"""
+
+ALL_TEX_FILES = ALL_TEX_FILES.strip().split("\n")
+
+# get index `i` form list `l`, None if not found
+get = lambda l, i: l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else None
 
 
 def read_file(f, mode="r") -> str:
@@ -42,18 +57,59 @@ def build_one_file(path) -> bytes:
 class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, verbose=False, build_dir=BUILD_DIR):
+    def __init__(self, build_dir=BUILD_DIR):
         args = ("pdflatex", "--output-directory", build_dir, f"--jobname={JOBNAME}")
-        p = None if verbose else PIPE
-        self.x = Popen(args, stdin=PIPE, stdout=p, stderr=p)
+        self.x = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        self.files = []
 
     def write(self, e: bytes):
         self.x.stdin.write(e)
 
+    def add_file(self, filepath: str):
+        self.files.append(filepath)
+
+    def add_files(self, filepaths: list[str]):
+        self.files.extend(filepaths)
+
+    def __compile__(self, filepath: str) -> bytes:
+        b = read_file(filepath, mode="rb")
+        if not SHOW_COMPUTES:
+            b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
+        if not SHOW_PROOFS:
+            b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
+        return b
+
+    def process_files(self):
+        pipe = map(self.__compile__, self.files)
+        pipe = map(self.write, pipe)
+        list(pipe)
+
     def close(self):
+        self.write(read_file("header.tex", mode="rb"))
+        self.write(b"\\begin{document}")
+        self.process_files()
+        self.write(b"\\end{document}")
         self.x.stdin.flush()
         self.x.stdin.close()
+        self.monitor()
         self.x.wait()
+
+    def monitor(self):
+        hyperref_flag = False
+
+        for line in iter(self.x.stdout.readline, b""):
+            line = line.removesuffix(b"\n")
+            if line == b"*" or b"(Please type a command or say `\end')" in line:
+                continue
+            if line.startswith(b"Package hyperref Warning"):
+                hyperref_flag = True
+                continue
+            if hyperref_flag and line.startswith(b"(hyperref)"):
+                continue
+            elif hyperref_flag:
+                hyperref_flag = False
+            if line:
+                print(line.decode("utf8"))
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
@@ -61,16 +117,8 @@ def build(tex_files, build_dir=BUILD_DIR):
     if not path.isdir(build_dir):
         os.mkdir(build_dir)
 
-    pdflatex = PdfLatex(verbose=VERBOSE, build_dir=build_dir)
-
-    pdflatex.write(read_file("header.tex", mode="rb"))
-
-    pdflatex.write(b"\\begin{document}")
-    pipe = map(build_one_file, tex_files)
-    pipe = map(pdflatex.write, pipe)
-    list(pipe)
-    pdflatex.write(b"\\end{document}")
-
+    pdflatex = PdfLatex(build_dir=build_dir)
+    pdflatex.add_files(tex_files)
     pdflatex.close()
 
     pdf_basename = f"{JOBNAME}.pdf"
@@ -151,9 +199,10 @@ def checkhealth():
         print("All checks passed!")
 
 
-c = sys.argv[1]
+c = get(sys.argv, 1)
 if c == "build":
-    build(sys.argv[2:])
+    files = ALL_TEX_FILES if get(sys.argv, 2) == "--all" else sys.argv[2:]
+    build(files)
 elif c == "sha":
     sha()
 elif c == "checkhealth":
