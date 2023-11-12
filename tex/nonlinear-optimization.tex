@@ -143,3 +143,22 @@ $$
 	\item Globalized BFGS method
 	\item Globalized inexact Newton's method
 \end{enumerate}
+
+\Algorithm{3.1.1}{General line-search descent algorithm}
+\begin{enumerate}
+	\item [\textbf{(S0)}] \textit{Initialization}: Choose $x^0\in\R^n$ and put $k:=0$.
+	\item [\textbf{(S1)}] \textit{Termination}: If $x^k$ satisfies a termination criterion: STOP.
+	\item [\textbf{(S2)}] \textit{Search direction}: Determine $d^k$ such that $\nabla f(x^k)^Td^k<0$.
+	\item [\textbf{(S3)}] \textit{Step-size}: Determine $t_k>0$ such that $f(x^k+t_kd^k)<f(x^k)$.
+	\item [\textbf{(S4)}] \textit{Update}: Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+\end{enumerate}
+
+\Algorithm{3.2.1}{Gradient method with Armijo rule}
+\begin{enumerate}
+	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\sigma,\beta\in(0,1)$, $\epsilon\geq0$ and put $k:=0$.
+	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
+	\item [\textbf{(S2)}] Put $d^k:=-\nabla f(x^k)$.
+	\item [\textbf{(S3)}] Determine $t_k>0$ by
+	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
+	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+\end{enumerate}
