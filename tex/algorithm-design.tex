@@ -195,20 +195,31 @@ then it also has a polynomial-time verifier.
 
 The complement of a decision problem $L$ is defined as
 $$
-	\bar L=\binrep\setminus L:=\{x\in\binrep\mid x\notin L\}
+	\overline L=\binrep\setminus L:=\{x\in\binrep\mid x\notin L\}
 $$
 
-Note that $\binrep=L\cup\bar L$ for any decision problem $L$.
+Note that $\binrep=L\cup\overline L$ for any decision problem $L$.
 
-\Exercise{3.5}{} Prove that if $L\in\P$ then $\bar L\notin\P$
+\Exercise{3.5}{}
 
-% TODO: compute this
+Prove that if $L\in\P$ then $\overline L\in\P$.
+
+\begin{proof}
+	If $L\in\P$, then \hyperref[ee3be28]{by definition} there exists a polynomial-time algorithm $A$ with
+	$$x\in L\iff A(x)=\Yes$$
+
+	Then, following the \hyperref[ee3be28]{defintion of $\P$}, we need
+	to find a polynomial-time algorithm $B$ such that
+	$$x\in\overline L\iff B(x)=\Yes$$
+
+	But we can simply use $B(x):=\neg A(x)$.
+\end{proof}
 
 \Definition{3.6}{coNP}
 
 The complexity class $\mathsf{coNP}$ is defined as
 $$
-	\mathsf{coNP}:=\{L\mid\bar L\in\mathsf{NP}\}
+	\mathsf{coNP}:=\{L\mid\overline L\in\mathsf{NP}\}
 $$
 
 For example, recall that $\mathsf{\hyperref[d6893fe]{SAT}}=\{F\mid
@@ -237,3 +248,10 @@ that $F(x)=\No$. Since there are $2^n$ assigments to check, it is not
 clear how to encode this checking procedure into a single
 polynomial-sized certificate. For this reason, many researchers
 conjecture that $\NP\neq\coNP$.
+
+\Remark{3.6.1}{The complexity class $\NP\cap\coNP$}
+
+Since $\P\subseteq\NP$, we can show that $\P\subseteq\coNP$ by
+$$
+	L\in\P\implies\overline L\in\P\implies\overline L\in\NP\implies L\in\coNP
+$$
