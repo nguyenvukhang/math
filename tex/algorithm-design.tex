@@ -53,3 +53,50 @@ $f(e)$.
 
 All paths from $s$ to $t$ in the residual graph correspond to a
 sequence where flow can be re-routed to increase its value.
+
+\Definition{3.0}{Binary representation}
+\def\binrep{\{0,1\}^*}
+
+Let
+$$\binrep:=\{\epsilon,0,1,00,01,10,11,100,101,\ldots\}$$
+
+be the set of all finite binary strings. (where $\epsilon$ is the
+empty string.)
+
+\Definition{3.1}{Decision problem}
+
+A decision problem $L$ is a subset of $\binrep$. The computational
+task corresponding to deciding if $L$ is ``Given a string
+$x\in\binrep$, is $x\in L$?"
+
+\Problem{8}{$L$-membership problem}
+
+\textbf{Input:} A boolean string $x$.
+
+\textbf{Output:} Decide if $x\in L$.
+
+\Example{3.1.1}{Rewriting problems as $L$-membership problems}
+
+\begin{itemize}
+	\item\textit{Graph Connectivity.} Given a graph $G=(V,E)$, is it
+	      connected?
+	      \begin{align*}
+		      L & =\{x\in\binrep\mid x\text{ encodes a connected graph}\} \\
+		        & =\{G \mid G \text{ is a connected graph}\}
+	      \end{align*}
+	\item\textit{Max Flow (Decision Version).} Given a flow network
+	      $G$ and a postive integer $k$, does the max flow on $G$ have
+	      value $\geq k$?
+	      \begin{align*}
+		      L & =\{x\in\binrep\mid x\text{ encodes a $(G,k)$ such that $\text{val}(G)\geq k$}\} \\
+		        & =\{(G,k)\mid\text{val}(G)\geq k \}
+	      \end{align*}
+	\item\textit{Sum.} Given $a,b,c\in\Z$, does $a+b=c$?
+	      \begin{align*}
+		      L & =\{x\in\binrep\mid x\text{ encodes $(a,b,c)$ such that $a+b=c$}\} \\
+		        & =\{(a,b,c)\mid a+b=c\}
+	      \end{align*}
+\end{itemize}
+Choice of encoding is important and definitely affects runtime.
+However, for discussion we will assume that the most natural and
+succint encoding is chosen.
