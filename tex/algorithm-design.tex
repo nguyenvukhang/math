@@ -114,7 +114,7 @@ Choice of encoding is important and definitely affects runtime.
 However, for discussion we will assume that the most natural and
 succint encoding is chosen.
 
-\Definition{3.2}{Polynomial time algorithms}
+\Definition{3.2}{Polynomial-time algorithms}
 
 An algorithm $A$ runs in \textit{polynomial time} if $\exists c\in\R$
 s.t. $\forall x\in\binrep$, $A$ terminates after $O(|x|^c)$
@@ -124,18 +124,37 @@ A decision problem $L$ is \textit{polynomial-time computable} if there
 exists a polynomial-time $A$ s.t. $\forall x\in\binrep$, $x\in L\iff
 	A(x)=\text{Yes}$.
 
-The class
+We define
 $$
 	\mathsf P:=\{L\subseteq\binrep\mid L\text{ is polynomial-time computable}\}
 $$
 
-The class $\mathsf P$ is our proxy for \textit{efficiently computable
-	languages}. (``language" is another way to refer to $L$, in addition
-to ``problem".)
+The complexity class $\mathsf P$ is our proxy for \textit{efficiently
+	computable languages}. (``language" is another way to refer to $L$, in
+addition to ``problem".)
 
 \Definition{3.3.1}{Vertex Cover Problem}
 
 $$
 	\mathsf{VC}:=\{(G,k)\mid G\text{ is a graph with a
 		\hyperref[b530c81]{vertex cover} of size}\leq k\}
+$$
+
+\Definition{3.3.2}{Satisfiability Problem}
+
+$$
+	\mathsf{FORMSAT}:=\{F\mid F\text{ is a satisfiable boolean formula}\}
+$$
+
+\Definition{3.3}{Nondeterministic polynomial-time algorithms}
+
+A decision problem $L$ has a polynomial-time verifier if there is a
+polynomial time algorithm $A$ taking two strings $x,y$ as input, and a
+polynomial $p(n)$ such that
+$$
+	x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):A(x,y)=\text{Yes}
+$$
+The complexity class
+$$
+	\mathsf{NP}:=\{L\subseteq\binrep\mid L\text{ has a polynomial-time verifier}\}
 $$

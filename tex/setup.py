@@ -1,4 +1,5 @@
 import sys, os, re
+from os import path
 
 from subprocess import Popen, PIPE
 
@@ -9,14 +10,13 @@ SHOW_COMPUTES = True
 JOBNAME = "minimath"
 
 
-def read_file(f, flags="r") -> str:
-    with open(f, flags) as f:
+def read_file(f, mode="r") -> str:
+    with open(f, mode) as f:
         return f.read()
 
 
 def debug():
-    data = read_file("ordinary-differential-equations.tex", flags="rb")
-    remove_in_between(data, b"\\begin{compute}", b"\\end{compute}")
+    pass
 
 
 # remove all bytes including and within a start and end marker
@@ -31,7 +31,7 @@ def remove_in_between(data: bytes, start: bytes, end: bytes):
 
 
 def build_one_file(path) -> bytes:
-    b = read_file(path, flags="rb")
+    b = read_file(path, mode="rb")
     if not SHOW_COMPUTES:
         b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
     if not SHOW_PROOFS:
@@ -42,9 +42,9 @@ def build_one_file(path) -> bytes:
 class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, verbose=False):
+    def __init__(self, verbose=False, build_dir=BUILD_DIR):
+        args = ("pdflatex", "--output-directory", build_dir, f"--jobname={JOBNAME}")
         p = None if verbose else PIPE
-        args = ("pdflatex", "--output-directory", BUILD_DIR, f"--jobname={JOBNAME}")
         self.x = Popen(args, stdin=PIPE, stdout=p, stderr=p)
 
     def write(self, e: bytes):
@@ -57,21 +57,24 @@ class PdfLatex:
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def build(tex_files, verbose=False):
-    if not os.path.isdir(BUILD_DIR):
-        os.mkdir(BUILD_DIR)
+def build(tex_files, build_dir=BUILD_DIR):
+    if not path.isdir(build_dir):
+        os.mkdir(build_dir)
 
-    pdflatex = PdfLatex(verbose=verbose)
-    pdflatex.write(read_file("header.tex", flags="rb"))
+    pdflatex = PdfLatex(verbose=VERBOSE, build_dir=build_dir)
+
+    pdflatex.write(read_file("header.tex", mode="rb"))
 
     pdflatex.write(b"\\begin{document}")
-    list(map(pdflatex.write, map(build_one_file, tex_files)))
+    pipe = map(build_one_file, tex_files)
+    pipe = map(pdflatex.write, pipe)
+    list(pipe)
     pdflatex.write(b"\\end{document}")
 
     pdflatex.close()
 
     pdf_basename = f"{JOBNAME}.pdf"
-    os.rename(os.path.join(BUILD_DIR, pdf_basename), pdf_basename)
+    os.rename(path.join(BUILD_DIR, pdf_basename), pdf_basename)
 
 
 # don't clean to make sure that links are well-formed
@@ -93,23 +96,23 @@ def sha():
 
 
 # get all instances of `\label{...}` in a file buffer
-def get_labels(data: str) -> list[str]:
-    res, ids = re.search("\\\label{([0-9a-z]{7})}", data), []
+def get_labels(data: str, pattern: re.Pattern[str]) -> list[str]:
+    res, ids = pattern.search(data), []
     while res != None:
         ids.append(res.groups()[0])
         data = data[res.span()[1] :]  # seek forward
-        res = re.search("\\\label{([0-9a-z]{7})}", data)
+        res = pattern.search(data)
     return ids
 
 
 # Get all files ending with '.tex' in the directory that contains this
 # script
 def get_tex_files():
-    files, cwd = [], os.path.dirname(__file__)
+    files, cwd = [], path.dirname(__file__)
     for root, _, f in os.walk(cwd):
         f = filter(lambda f: f.endswith(".tex"), f)
-        f = map(lambda f: os.path.join(root, f), f)
-        f = map(lambda f: os.path.relpath(f, cwd), f)
+        f = map(lambda f: path.join(root, f), f)
+        f = map(lambda f: path.relpath(f, cwd), f)
         files.extend(f)
     return files
 
@@ -117,9 +120,10 @@ def get_tex_files():
 # Assert that all id definitions of the form `\label{cbae218}` are
 # unique in the files supplied
 def assert_unique_ids(tex_files):
+    pattern = re.compile("\\\label{([0-9a-z]{7})}")
     ok, ids = True, {}
     for f in tex_files:
-        labels = get_labels(read_file(f))
+        labels = get_labels(read_file(f), pattern)
         for label in labels:
             t = ids.get(label, [])
             t.append(f)
@@ -149,7 +153,7 @@ def checkhealth():
 
 c = sys.argv[1]
 if c == "build":
-    build(sys.argv[2:], verbose=VERBOSE)
+    build(sys.argv[2:])
 elif c == "sha":
     sha()
 elif c == "checkhealth":
