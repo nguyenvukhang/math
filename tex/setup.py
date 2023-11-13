@@ -10,12 +10,12 @@ JOBNAME = "minimath"
 
 ALL_TEX_FILES = """
 
-algorithm-design.tex
+plenary.tex
 calculus.tex
+algorithm-design.tex
 complex-analysis.tex
 nonlinear-optimization.tex
 ordinary-differential-equations.tex
-plenary.tex
 
 """
 
