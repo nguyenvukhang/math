@@ -79,7 +79,8 @@ Every bounded sequence has a convergent subsequence.
 
 % proof for MATH 378
 
-\Theorem{1.1.5}{Monotone sequence with a convergent subsequence is convergent}
+\Theorem{1.1.5}{Monotone sequence with a convergent subsequence is
+	convergent}\label{aaf3ba6}
 
 Let $\{x_n\}$ be a monotone sequence with a subsequence $\{x_{n_k}\}$
 that converges to $L$. Then $\{x_n\}$ converges to $L$.
@@ -93,9 +94,9 @@ that converges to $L$. Then $\{x_n\}$ converges to $L$.
 
 	Since $\{x_{n_k}\}$ is decreasing and converges to $L$, we can find
 	(and fix) a $k_\epsilon$ such that
-  \begin{equation*}
-    0<x_{n_k}-L<\epsilon\quad\forall(k\geq k_\epsilon)\tag*{($*$)}
-  \end{equation*}
+	\begin{equation*}
+		0<x_{n_k}-L<\epsilon\quad\forall(k\geq k_\epsilon)\tag*{($*$)}
+	\end{equation*}
 	So we take $N_\epsilon=n_{k_\epsilon}$. Then since $\{x_n\}$ is
 	decreasing,
 	$$
@@ -103,8 +104,37 @@ that converges to $L$. Then $\{x_n\}$ converges to $L$.
 	$$
 	Moreover, $L\leq x_n\leq x_{n_{k_\epsilon}}$, and hence
 	$$0\leq x_n-L\leq x_{n_{k_\epsilon}}-L$$
-  and from $(*)$, we have that this entire inequality $<\epsilon$, and hence
-  $$0\leq x_n-L<\epsilon$$
-  and finally
-  $$|x_n-L|<\epsilon$$
+	and from $(*)$, we have that this entire inequality $<\epsilon$, and hence
+	$$0\leq x_n-L<\epsilon$$
+	and finally
+	$$|x_n-L|<\epsilon$$
 \end{proof}
+
+\Theorem{1.1.6}{Mean value theorem}
+
+Let $f:[a,b]\to\R$ be continuous on the $[a,b]$, and differentiable on
+$(a,b)$. Then there exists $c\in(a,b)$ such that
+$$
+	f'(c)=\frac{f(b)-f(a)}{b-a}
+$$
+
+Generalized to multiple variables, the mean value theorem can be
+written as:
+
+Let $f:[a,b]\to\R$, where $a,b\in\R^n$, and $[a,b]$ refers to the line
+segment connecting $a$ and $b$, namely
+$$
+	[a,b]:=\{\lambda a+(1-\lambda)b\mid\lambda\in[0,1]\}
+$$
+
+Suppose $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$.
+Then there exists $c\in[a,b]$ such that
+$$
+	\nabla f(c)^T(b-a)=f(b)-f(a)
+$$
+
+In some arguments, we use $f:[x,x+td]\to\R$ and write that there
+exists $\eta\in[x,x+td]$ such that
+$$
+	\nabla f(\eta)^Td=\frac{f(x+td)-f(x)}t
+$$
