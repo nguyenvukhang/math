@@ -3,3 +3,51 @@
 \section{Plenary}\label{80eeafc}
 
 All the proofs and results I don't want to write twice.
+
+\textbf{1.x.x)} Real analysis
+
+\Definition{1.1.1}{Monotone sequences}\label{d5142a8}
+
+A sequence $\{x_k\}$ is said to be \textbf{increasing} if $x_0\leq
+	x_1\leq x_2\leq\ldots$ and \textbf{decreasing} if $x_0\geq x_1\geq
+	x_2\geq\ldots$ and \textbf{monotone} if it is either increasing or
+decreasing.
+
+\Theorem{1.1.2}{Monotone subsequence theorem}\label{dddb70e}
+
+Every sequence has a monotone subsequence.
+
+\begin{proof}
+	\def\xk{\{x_k\}}
+
+	Let $\xk$ be a sequence. We call a term $x_p$ a \textbf{peak term}
+	of $\xk$ if
+	$$x_p\geq x_n\quad(\forall n\geq p)$$
+
+  That is, all terms after $x_p$ never go above $x_p$ again. Then
+  there are only two cases:
+
+  \textbf{Case 1:} $\xk$ has infinitely many peak terms.
+
+  Then the subsequence formed by all the peak terms form a decreasing
+  subsequence of $\xk$.
+
+  \textbf{Case 2:} $\xk$ has finitely many peak terms.
+
+  Let $x_{p_1},x_{p_2},\ldots,x_{p_j}$ be \textbf{all} the peak terms.
+
+  Let $n_1=p_j+1$ be the first term after the last peak term.
+
+  Since $x_{n_1}$ is not a peak term. $\implies\exists n_2>n_1$ such
+  that $x_{n_1}<x_{n_2}$.
+
+  Since $x_{n_2}$ is not a peak term, $\implies\exists n_3>n_2$ such
+  that $x_{n_2}<x_{n_3}$.
+
+  Continuing indefinitely, we can form an increasing subsequence
+  $\{x_{n_k}\}$.
+\end{proof}
+
+\Theorem{1.1.1}{Convergence of a monotone subsequence}
+
+Let $\{x_k\}$ be a \hyperref[d5142a8]{monotone sequence}
