@@ -8,31 +8,42 @@ All the proofs and results I don't want to write twice.
 
 \Definition{1.1.1}{Monotone sequences}\label{d5142a8}
 
-A sequence $\{x_k\}$ is said to be \textbf{increasing} if $x_0\leq
+A sequence $\{x_n\}$ is said to be \textbf{increasing} if $x_0\leq
 	x_1\leq x_2\leq\ldots$ and \textbf{decreasing} if $x_0\geq x_1\geq
 	x_2\geq\ldots$ and \textbf{monotone} if it is either increasing or
 decreasing.
 
-\Theorem{1.1.2}{Monotone subsequence theorem}\label{dddb70e}
+\Theorem{1.1.2}{Monotone convergence theorem}\label{ca25eb7}
+
+If $\{x_n\}$ is monotone and bounded, then $\{x_n\}$ converges.
+
+$$
+\lim_{n\to\infty}=\begin{cases}
+  \sup\{x_n:n\in\N\} & \text{if $\{x_n\}$ is increasing} \\
+  \inf\{x_n:n\in\N\} & \text{if $\{x_n\}$ is decreasing}
+\end{cases}
+$$
+
+\Theorem{1.1.3}{Monotone subsequence theorem}\label{dddb70e}
 
 Every sequence has a monotone subsequence.
 
 \begin{proof}
-	\def\xk{\{x_k\}}
+	\def\xn{\{x_n\}}
 
-	Let $\xk$ be a sequence. We call a term $x_p$ a \textbf{peak term}
-	of $\xk$ if
+	Let $\xn$ be a sequence. We call a term $x_p$ a \textbf{peak term}
+	of $\xn$ if
 	$$x_p\geq x_n\quad(\forall n\geq p)$$
 
   That is, all terms after $x_p$ never go above $x_p$ again. Then
   there are only two cases:
 
-  \textbf{Case 1:} $\xk$ has infinitely many peak terms.
+  \textbf{Case 1:} $\xn$ has infinitely many peak terms.
 
   Then the subsequence formed by all the peak terms form a decreasing
-  subsequence of $\xk$.
+  subsequence of $\xn$.
 
-  \textbf{Case 2:} $\xk$ has finitely many peak terms.
+  \textbf{Case 2:} $\xn$ has finitely many peak terms.
 
   Let $x_{p_1},x_{p_2},\ldots,x_{p_j}$ be \textbf{all} the peak terms.
 
@@ -48,6 +59,24 @@ Every sequence has a monotone subsequence.
   $\{x_{n_k}\}$.
 \end{proof}
 
-\Theorem{1.1.1}{Convergence of a monotone subsequence}
+\Theorem{1.1.4}{Bolzano-Weierstrass Theorem}
+
+Every bounded sequence has a convergent subsequence.
+
+\begin{proof}
+	\def\xn{\{x_n\}}
+  \def\xnk{\{x_{n_k}\}}
+
+  Let $\xn$ be a bounded sequence. By the monotone subsequence
+  theorem, $\xn$ has a monotone subsequence $\xnk$.
+
+  Since $\xn$ is bounded, so is $\xnk$.
+
+  Since $\xnk$ is both monotone and bounded, it follows from the
+  \hyperref[ca25eb7]{monotone convergence theorem} that $\xnk$
+  converges.
+\end{proof}
+
+% proof for MATH 378
 
 Let $\{x_k\}$ be a \hyperref[d5142a8]{monotone sequence}
