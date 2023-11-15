@@ -352,3 +352,385 @@ The following is obtained by substituting $F$ for $\nabla f$ in the
 	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
 	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
+
+\Theorem{5.1.5}{}
+
+Let $\bar x$ be a local minimum of $f\in C^1$ over $S$. Then
+$$
+	\nabla f(\bar x)^Td\geq0\quad\forall(d\in T_S(\bar x))
+$$
+% In whichever direction you choose to walk from x bar, you will
+% increase the objective value
+
+\Theorem{5.1.9}{Farkas Lemma}
+
+Let $B\in\R^{m\times n}$, and $h\in\R^n$. The following are equivalent:
+\begin{enumerate}
+	\item The system $B^Tx=h$ where $x\geq0$ (element-wise) has a solution
+	\item $\forall d: Bd\geq0\implies h^Td\geq0$
+\end{enumerate}
+
+\begin{proof}
+	Proving that (1) implies (2).
+
+	Let $x\geq0$ such that $B^Tx=h$.
+
+	Then for any $d$ such that $Bd\geq0$, we have
+	$$
+		h^Td = (B^Tx)^Td = x^TBd
+	$$
+
+	But $x^TBd\geq0$ because $x\geq0$ and $Bd\geq0$.
+
+	Proving that (2) implies (1) by contrapositive.
+
+	Assume that (1) is false. Then
+	$$
+		h\notin\{B^Tx \mid x\geq0\}=:K
+	$$
+
+	% TODO: add this lemma
+	$K$ is a closed convex cone. (closedness follows from Lemma 5.1.8)
+
+	Set $\bar s:=P_K(h)$ and $\bar d:=\bar s-h\neq0$. (Note that $\bar
+		s\in K$)
+
+	By Proposition 5.1.7(c),
+	$$
+		\bar d^T(s-\bar s)\geq0\quad\forall(s\in K)
+	$$
+
+	So then with $s:=0$, we get $\bar d^T\bar s\leq0$, and with
+	$s:=2\bar s$, we get $\bar d^T\bar s\geq0$ and hence
+	$$
+		\bar d^T\bar s=0
+	$$
+
+	And hence
+	$$
+		\bar d^Ts\geq0
+	$$
+
+	Then by definition of cone $K$,
+	\begin{align*}
+		\bar d^T B^Tx         & \geq0\quad\forall(x\geq0) \\
+		\implies (B\bar d)^Tx & \geq 0
+	\end{align*}
+
+
+	Inserting $x:=e_i$ (where $e_i$ is the $i^\text{th}$ component
+	vector) for $i=\iter1n$ implies $(B\bar d)^T\geq0$
+
+	On the other hand
+	\begin{align*}
+		h^T\bar d & = (\bar s-\bar d)^T\bar d        \\
+		          & = \bar s^T\bar d-\norm{\bar d}^2 \\
+		          & = -\norm{\bar d}^2 \leq 0
+	\end{align*}
+
+	But since $\bar d\neq0$, we have the strict inequality $h^T\bar d<0$.
+
+	Therefore, $B\bar d\geq0$, but $h^T\bar d<0$, i.e. (2) does not
+	hold.
+\end{proof}
+
+\Definition{5.1.10}{Karush-Kuhn-Tucker conditions}\label{b38093d}
+
+Consider the (standard) NLP:
+
+\begin{equation*}
+	\min_{x\in\R^n} f(x)\quad\text{s.t.}\quad\begin{array}{l}
+		g_i(x)\leq0 \quad\forall i=\iter1m \\
+		h_j(x)=0    \quad\forall j=\iter1p
+	\end{array}
+	\tag*{(1)}
+\end{equation*}
+
+\begin{enumerate}
+	\item The function $L:\R^n\times\R^m\times\R^p\to\R$ defined by
+	      $$
+		      L(x,\lambda,\mu)=f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x)
+	      $$
+	      is called the Langrangian (function) of \textbf{(1)}.
+	\item The set of conditions
+	      \begin{align*}
+		      \nabla_xL(x,\lambda,\mu)                 & = 0 \\
+		      h(x)                                     & = 0 \\
+		      \lambda\geq0,\ g(x)\leq0,\ \lambda^Tg(x) & =0
+	      \end{align*}
+	      are called the Karush-Kuhn-Tucker conditions for \textbf{(1)},
+	      where
+	      $$\nabla_xL(x,\lambda,\mu)=\nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x)$$
+	\item A triple $(\bar x,\bar\lambda,\bar\mu)$ that satisfies the
+	      KKT conditions is called a KKT point.
+	\item Give $\bar x$, feasible for \textbf{(1)}, we define
+	      $$
+		      M(\bar x):=\{(\lambda,\mu)\mid(\bar x,\lambda,\mu)\text{ is a KKT point of \textbf{(1)}} \}
+	      $$
+	      the set of all KKT multipliers at $\bar x$.
+\end{enumerate}
+
+\Definition{5.1.11}{Linearized cone}\label{ca4f471}
+
+Let $X$ be the feasible set of \textbf{(1)}. The linearized cone (of
+$X$) at $\bar x\in X$ is defined by
+$$
+	L_X(\bar x):=\left\{ d\in\R^n\ \middle\vert
+	\begin{array}{l l}
+		\nabla g_i(x)^Td\leq0 & \forall i=\iter1m \\
+		\nabla h_j(x)=0       & \forall j=\iter1p
+	\end{array}
+	\right\}
+$$
+
+\Definition{5.1.12}{Abadie constraint qualification}\label{adc266e}
+
+We say that the Abadie constraint qualification (ACQ) holds at $\bar
+	x\in X$ if
+$$
+	T_X(\bar x)=L_X(\bar x)
+$$
+
+\Theorem{5.1.13}{\hyperref[b38093d]{KKT} under \hyperref[adc266e]{ACQ}}
+
+Let $\bar x\in X$ (where $X$ is the feasible set) be a local minimum
+of \textbf{(1)} such that \hyperref[adc266e]{ACQ} holds at $\bar x$.
+Then there exists $(\bar\lambda,\bar\mu)\in\R^m\times\R^p$ such that
+$(\bar x,\bar\lambda,\bar\mu)$ is a \hyperref[b38093d]{KKT} point of
+\textbf{(1)}
+
+\begin{proof}
+	\def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
+	By Theorem 5.1.5,
+	\begin{equation*}
+		\nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\tag*{($*$)}
+	\end{equation*}
+
+	Set
+	$$
+		B:=\begin{pmatrix}
+			-\nabla g_i(\bx)^T\quad(i=\iter1m) \\
+			-\nabla h_j(\bx)^T\quad(j=\iter1p) \\
+			\nabla h_j(\bx)^T\quad(j=\iter1p)
+		\end{pmatrix}\in\R^{(m+2p)\times{n}}
+	$$
+	%TODO: check the sign of the 2nd and 3rd row
+
+	Then $d\in L_X(\bx)\iff Bd\geq0$.
+
+	By ACQ, we have $d\in T_X(\bx)\iff Bd\geq0$
+
+	Combined with $(*)$, we have
+	$$
+		\nabla f(\bx)^Td\geq0\quad\forall(d:Bd\geq0)
+	$$
+
+	(Think $h=\nabla f(\bx)$ and apply the Farkas Lemma.)
+
+	By the Farkas Lemma,
+	$$
+		\exists y=\begin{pmatrix}y^1\in\R^m\\y^2\in\R^p\\y^3\in\R^p\end{pmatrix}
+	$$
+
+	such that $y\geq0$, and $B^Ty=\nabla f(\bx)$
+
+	Define $\bl\in\R^n,\bm\in\R^p$ by
+	$$
+		\bl_i=\begin{cases}
+			y^1_i & \text{if $i=\iter1m$} \\
+			0     & \text{otherwise}
+		\end{cases}
+	$$
+	and
+	$$
+		\bm_i=\begin{cases}
+			y^2_j - y^3_j & \text{if $j=\iter{m+1}{m+2p}$} \\
+			0             & \text{otherwise}
+		\end{cases}
+	$$
+
+	Then $(\bx,\bl,\bm)$ is a KKT point.
+
+	MORE NOTES
+
+	\begin{align*}
+		0
+		 & = \nabla f(\bx)
+		+\sum_{i=0}^my^1_i\nabla g_i(\bx)
+		+\sum_{j=m+1}^{m+2p}(y^2_j-y^3_j)\nabla h_j(\bx) \\
+		 & = \nabla f(\bx)
+		+\sum_{i=0}^m \bl_i\nabla g_i(\bx)
+		+\sum_{j=m+1}^{m+2p}\bm_j\nabla h_j(\bx)
+	\end{align*}
+
+	and then there is a line with a tick/check next to it:
+	$$
+		\bl^Tg(\bx)=\sum_{i=0}^m\bl_ig_i(\bx)=0
+	$$
+\end{proof}
+
+\Definition{}{Standard NLP}
+\begin{equation*}
+	\min_{x\in\R^n} f(x)\quad\text{s.t.}\quad\begin{array}{l}
+		g_i(x)\leq0 \quad\forall i=\iter1m \\
+		h_j(x)=0    \quad\forall j=\iter1p
+	\end{array}
+	\tag*{(1)}
+\end{equation*}
+
+Let $I:=\iter1m$ and $J:=\iter1p$.
+
+We define the active set $I(\bar x)$ as
+$$
+	I(\bar x):=\{i\in I\mid g_i(x) = 0\}
+$$
+
+Recall:
+$$
+	T_X(\bar x):=\left\{
+	d\in\R^n \;\middle\vert\; \exists \{x^k\in X\}\to\bar x,\{t_k\}\downarrow0:\frac{x^k-\bar x}{t_k}\to d
+	\right\}
+$$
+This is the space where you can take a miniscule step from $\bar x$
+and still remain in the feasible set. (The tangent cone)
+
+Also recall:
+$$
+	L_X(\bar x):=\left\{
+	d\in\R^n
+	\;\middle\vert\;
+	\begin{array}{l l}
+		g_i(\bar x)\leq0 & \forall i\in I(\bar x) \\
+		h_j(\bar x)=0    & \forall j\in J
+	\end{array}
+	\right\}
+$$
+This is the linearized cone.
+
+\Definition{5.1.14}{Constraint qualifications}
+
+A condition of $X$ (i.e. on $g$ and $h$) that ensures that the KKT
+conditions hold at a local minimizer is called a constraint
+qualification.
+
+\Definition{5.1.15}{}
+
+Let $\bar x$ be feasible for (1). We say that
+
+\begin{enumerate}\renewcommand{\theenumi}{\alph{enumi}}
+	\item the linear independence constraint qualification (LICQ) holds
+	      at $\bar x$ if
+	      $$
+		      \nabla g_i(\bar x)\quad\forall(i\in I(\bar x)),\ \nabla h_j(\bar x)\quad\forall(j\in J)
+	      $$
+	      are linearly indepdendent
+	\item the Mangasarian-Fromovitz constraint qualification (MFCQ)
+	      holds at $\bar x$ if
+	      $$
+		      \nabla h_j(\bar x)\quad\forall(j\in J)
+	      $$
+	      are linearly indepdendent, and
+	      \begin{gather*}
+		      \nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
+		      \nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
+	      \end{gather*}
+\end{enumerate}
+
+\Proposition{5.1.16}{LICQ $\implies$ MFCQ}
+
+Let $\bar x$ be feasible for (1) such that LICQ holds at $\bar x$.
+Then $MFCQ$ holds.
+
+\Lemma{5.1.17}{}
+
+Let $\bar x$ be feasible for (1) such that there exists $d\in\R^n$
+such that
+$$
+	\nabla h_j(\bar x)\quad\forall(j\in J)
+$$
+are linearly indepdendent, and
+\begin{gather*}
+	\nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
+	\nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
+\end{gather*}
+
+Then there exists $\epsilon>0$ and a $C^1$-curve
+$\gamma:(-\epsilon,\epsilon)\to\R^n$ such that
+\begin{gather*}
+	\gamma(t) \in X\quad\forall(t\in(-\epsilon,\epsilon)) \\
+	\gamma(0) = \bar x \\
+	\gamma'(0)=d
+\end{gather*}
+
+
+\Lemma{5.1.18}{}
+
+Let $\bar x$ be feasible for (1). Then
+$$
+	T_X(\bar x)\subset L_X(\bar x)
+$$
+
+\begin{proof}
+	Exercise 9.3
+\end{proof}
+
+\Proposition{5.1.19}{MFCQ $\implies$ ACQ}
+
+Let $\bar x$ be feasible for (1) such that MFCQ holds at $\bar x$.
+Then ACQ holds at $\bar x$.
+
+\begin{proof}
+	Only need to show $L_X(\bar x)\subset T_X(\bar x)$.
+
+	Let $d\in L_X(\bar x)$. By MFCQ, there exists $\hat d$ such that
+  % Note: we can't use d directly instead of d(∂) because d doesn't
+  % have the strict inequality required by Lemma 5.1.17
+	\begin{gather*}
+		\nabla g_i(\bar x)^T\hat d<0\quad\forall(i\in I(\bar x)) \\
+		\nabla h_j(\bar x)^T\hat d=0\quad\forall(j\in J)
+	\end{gather*}
+	and $\nabla h_j(\bar x)\ \forall(j\in J)$ are linearly indepdendent.
+
+	Set $d(\delta):= d + \delta\hat d$. Then, $\forall\delta>0$:
+	\begin{gather*}
+		\nabla g_i(\bar x)^T{d(\delta)}<0\quad\forall(i\in I(\bar x)) \\
+		\nabla h_j(\bar x)^T{d(\delta)}=0\quad\forall(j\in J)
+	\end{gather*}
+
+	Applying Lemma 5.1.17 to $d(\delta)$ yields a $C^1$-curve
+	$\gamma:(-\epsilon,\epsilon)\to\R^n$ such that
+	\begin{gather*}
+		\gamma(t) \in X\quad\forall(t\in(-\epsilon,\epsilon)) \\
+		\gamma(0) = \bar x \\
+		\gamma'(0)=d(\delta)
+	\end{gather*}
+
+	Let $\{t_k\}\downarrow0$ and set $x^k:=\gamma(t_k)$. Then
+	$\{x^k\in X\}\to\bar x$.
+
+	And $d(\delta)=\gamma'(0)$ and hence
+	$$
+		d(\delta)=\lim_{k\to\infty}\frac{\gamma(t_k)-\gamma(0)}{t_k}=
+		\lim_{k\to\infty}\frac{x^k-\bar x}{t_k}
+	$$
+
+	And since
+	$$
+		\lim_{\delta\to0} d(\delta) = d
+	$$
+	and both lie in $T_X(\bar x)$ due to an unproved argument using
+	closedness.
+
+	this completes the proof with
+	$$
+		\lim_{k\to\infty}\frac{x^k-\bar x}{t_k}=d
+	$$
+\end{proof}
+
+% 		     
+% $$
+% are linearly indepdendent, and
+% \begin{gather*}
+% 		      \nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
+% 		      \nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
+% Proving that MFCQ implies LICQ is hard.
