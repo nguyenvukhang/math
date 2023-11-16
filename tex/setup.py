@@ -140,7 +140,15 @@ def sha():
     l = "abcdef"[randint(0, 5)]
 
     s, c = "0123456789abcdef", lambda: s[randint(0, len(s) - 1)]
-    print(l + "".join([c() for _ in range(6)]), end="")
+    gen = lambda: l + "".join([c() for _ in range(6)])
+    _, ids = get_unique_ids(ALL_TEX_FILES)
+    ids = set(ids)
+
+    x = gen()
+    while x in ids:
+        x = gen()
+
+    print(x, end="")
 
 
 # get all instances of `\label{...}` in a file buffer
@@ -165,11 +173,9 @@ def get_tex_files():
     return files
 
 
-# Assert that all id definitions of the form `\label{cbae218}` are
-# unique in the files supplied
-def assert_unique_ids(tex_files):
+def get_unique_ids(tex_files):
     pattern = re.compile("\\\label{([0-9a-z]{7})}")
-    ok, ids = True, {}
+    ids = {}
     for f in tex_files:
         labels = get_labels(read_file(f), pattern)
         for label in labels:
@@ -178,7 +184,15 @@ def assert_unique_ids(tex_files):
             ids[label] = t
 
     dups = [(k, v) for k, v in ids.items() if len(v) > 1]
-    ok &= len(dups) == 0
+    ids = list(ids.keys())
+
+    return (dups, ids)
+
+
+# Assert that all id definitions of the form `\label{cbae218}` are
+# unique in the files supplied
+def assert_unique_ids(tex_files):
+    dups, _ = get_unique_ids(tex_files)
 
     if len(dups) > 0:
         print("Duplicate ids found:")
@@ -186,7 +200,7 @@ def assert_unique_ids(tex_files):
             print(f"{k}")
             [print("\t*", v) for v in v]
 
-    return ok
+    return len(dups) == 0
 
 
 # [SUBCOMMAND] checks if everything is in a healthy state
