@@ -1,3 +1,118 @@
 % vim:ft=tex
 
 \section{Calculus}\label{02c738a}
+
+\Remark{1.1.1}{Trigonometric identities}
+
+\begin{alignat*}{3}
+	\sin2x & =2\sin x\cos x & \sin^2x                        & =\frac{1-\cos2x}2 \\
+	\cos2x & =1-2\sin^2x    & \cos^2x                        & =\frac{\cos2x+1}2 \\
+	       & =2\cos^2x-1    & \quad\quad\quad\quad\quad\quad &
+\end{alignat*}
+\begin{align*}
+	\sin(A\pm B) & =\sin A\cos B\pm\cos A\sin B \\
+	\cos(A\pm B) & =\cos A\cos B\mp\sin A\sin B
+\end{align*}
+\begin{center}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{c|c}
+		$\sin A+\sin B =2\sin(\frac{A+B}2)\cos(\frac{A-B}2)$  & $2\sin A\cos B=\sin(\frac{A+B}2)+\sin(\frac{A-B}2)$  \\
+		$\sin A-\sin B =2\cos(\frac{A+B}2)\sin(\frac{A-B}2)$  & $2\cos A\sin B=\sin(\frac{A+B}2)-\sin(\frac{A-B}2)$  \\
+		$\cos A+\cos B =2\cos(\frac{A+B}2)\cos(\frac{A-B}2)$  & $2\cos A\cos B=\cos(\frac{A+B}2)+\cos(\frac{A-B}2)$  \\
+		$\cos A-\cos B =-2\sin(\frac{A+B}2)\sin(\frac{A-B}2)$ & $-2\sin A\sin B=\cos(\frac{A+B}2)-\cos(\frac{A-B}2)$
+	\end{tabular}
+\end{center}
+
+\Remark{1.1.2}{Differentiation identities}
+
+\paragraph{Product rule} $(uv)'=u'v+uv'$
+
+% \frac{d}{dx}(uv)=u\cdot\frac{dv}{dx}+v\cdot\frac{du}{dx}
+
+\paragraph{Quotient rule} $\displaystyle\left(\frac
+	uv\right)'=\frac{u'v-uv'}{v^2}$
+
+(can be derived from product rule using $u$ and $\frac1v$)
+
+\Remark{1.1.3}{Integration identities}
+\begin{center}
+	\renewcommand{\arraystretch}{2.1}\def\d{\displaystyle}
+	\begin{tabular}{c|c l}
+		$f(x)$                    & $\int f(x)\,dx$                               &                    \\\hline
+		$\dfrac1{x^2+a^2}$        & $\dfrac1a\tan^{-1}\left(\dfrac xa\right)$     &                    \\
+		$\dfrac1{\sqrt{a^2-x^2}}$ & $\sin^{-1}\left(\dfrac xa\right)$             & $(|x|>a)$          \\
+		$\dfrac1{x^2-a^2}$        & $\dfrac1{2a}\ln\left(\dfrac{x-a}{x+a}\right)$ & $(x>a)$            \\
+		$\dfrac1{a^2-x^2}$        & $\dfrac1{2a}\ln\left(\dfrac{a+x}{a-x}\right)$ & $(|x|>a)$          \\
+		$\tan x$                  & $\ln(\sec x)$                                 & $(|x|>\dfrac\pi2)$ \\
+		$\cot x$                  & $\ln(\sin x)$                                 & $(0>x>\pi)$        \\
+		$\sec x$                  & $-\ln(\sec x+\tan x)$                         & $(|x|>\dfrac\pi2)$ \\
+		$\csc x$                  & $-\ln(\csc x+\cot x)$                         & $(0>x>\pi)$
+	\end{tabular}
+\end{center}
+
+\Remark{1.1.4}{Chain rule}\label{d969d46}
+
+In all the following scenarios, let $h:=f\circ g$.
+
+\paragraph{When $f$ takes a scalar} Let $f,g:\R\to\R$. Then
+$h:\R\to\R$ and we have
+$$h'(t)=f'(g(t))\cdot g'(t)$$
+
+And $f',g':\R\to\R$.
+
+\paragraph{When $f$ takes a vector} Let $g:\R\to\R^n$ and
+$f:\R^n\to\R$. Then $h:\R\to\R$ and we have
+$$h'(t)=\nabla f(g(t))^Tg'(t)$$
+
+Note that $\nabla f(g(t))\in\R^n$ and $g'(t)\in\R^n$.
+
+\paragraph{When $f$ takes a complex number} Let $g:\R\to\C$ and
+$f:\C\to\R$. Then $h:\R\to\R$.
+
+In particular, we write $g(t)=g_1(t)+ig_2(t)$ and $f:x+iy\mapsto
+	f(x+iy)$.
+
+Interestingly, we still have
+$$
+	(f\circ g)'(t) =
+	f_x(g(t))\cdot {g_1}'(t)+f_y(g(t))\cdot {g_2}'(t)
+$$
+
+Note the lack of $i$ terms on the term with ${g_2}'$. This is
+intentional.
+
+Remember anyway that $f\circ g:\R\to\R$, and so we must have $(f\circ
+	g)':\R\to\R$.
+
+\Definition{1.1.5}{Differentiability}\label{c62315d}
+
+In single-variable calculus, $f:\R\to\R$ is differentiable if
+$$
+	\lim_{h\to0}\frac{f(a+h)-f(a)}h
+$$
+
+exists (and if so, is denoted as $f'(a)$).
+
+In multivariable calculus, $f:\R^n\to\R$ is differentiable if there
+exists a \textbf{linear map} $J:\R^n\to\R$ such that
+$$
+	\lim_{h\to0}\frac{f(a+h)-f(a)-J(h)}{\norm{h}}=0
+$$
+
+Then from this perspective, differentiability of single-variable
+complex functions can be written as:
+$f:\C\to\C$ is differentiable if there is a linear map $J:\C\to\C$ such that
+$$
+	\lim_{h\to0}\frac{|f(z+h)-f(z)-J(h)|}{|h|}=0
+$$
+
+\paragraph{Comment}
+
+All of these cases are equivalent to saying that there exists a
+$k\in\R$ such that.
+$$
+	\lim_{h\to0}\frac{f(a+h)-f(a)}h=k
+$$
+
+Essentially, that there exists a local \textbf{linearization} to the
+function.

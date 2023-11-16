@@ -5,6 +5,7 @@
 All the proofs and results I don't want to write twice.
 
 \textbf{1.x.x)} Real analysis
+\textbf{2.x.x)} Calculus
 
 \Definition{1.1.1}{Monotone sequences}\label{d5142a8}
 
@@ -110,7 +111,7 @@ that converges to $L$. Then $\{x_n\}$ converges to $L$.
 	$$|x_n-L|<\epsilon$$
 \end{proof}
 
-\Theorem{1.1.6}{Mean value theorem}
+\Theorem{1.1.6}{Mean value theorem}\label{d37aa2b}
 
 Let $f:[a,b]\to\R$ be continuous on the $[a,b]$, and differentiable on
 $(a,b)$. Then there exists $c\in(a,b)$ such that
@@ -138,3 +139,26 @@ exists $\eta\in[x,x+td]$ such that
 $$
 	\nabla f(\eta)^Td=\frac{f(x+td)-f(x)}t
 $$
+
+\Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
+
+\paragraph{First part} Let $f:[a,b]\to\R$ be continuous. Let
+$F:[a,b]\to\R$ be defined by
+$$F(x)=\int_a^xf(t)\,dt$$
+
+Then $F$ is uniformly continuous on $[a,b]$ and differentiable on
+$(a,b)$, and
+$$F'(x)=f(x)$$
+
+on $(a,b)$ so $F$ is an antiderivative of $f$.
+
+\paragraph{Corollary}
+$$\int_a^bf(t)\,dt=F(b)-F(a)$$
+
+\paragraph{Second part} Let $f:[a,b]\to\R$. Let $F:[a,b]\to\R$ be
+continuous and also the antiderivative of $f$ in $(a,b)$. If $f$ is
+Riemann integrable on $[a,b]$, then
+$$\int_a^bf(t)\,dt=F(b)-F(a)$$
+
+This is stronger than the corollary because it does not assume that
+$f$ is continuous.

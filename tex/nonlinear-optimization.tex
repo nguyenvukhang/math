@@ -176,8 +176,8 @@ $$
 $$
 
 \begin{proof}
-	By the mean value theorem, for all $k\in\N$, there exists
-	$\eta^k\in[x^k,x^k+t_kd^k]$ such that
+	By the \hyperref[c1594c9]{mean value theorem}, for all $k\in\N$,
+	there exists $\eta^k\in[x^k,x^k+t_kd^k]$ such that
 	$$
 		f(x^k+t_kd^k)-f(x^k)=t_k\nabla f(\eta^k)^Td^k
 	$$
@@ -816,19 +816,19 @@ Let $\bar x$ be a local minimum of (1) such that LICQ holds at $\bar
 
 	Assume that $(\tilde\lambda,\tilde\mu)\in M(\bar x)$. Then
 	\begin{align*}
-		0          & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)+\sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x) \\
-		           & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}\bar\lambda_i\nabla g_i(\bar x)+\sum_{j\in J}\bar\mu_j\nabla h_j(\bar x)     \\
-    \implies 0 & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}(\tilde\lambda_i-\bar\lambda_i)\nabla g_i(\bar x)+\sum_{j\in J}(\tilde\mu_j-\bar\mu_j)\nabla h_j(\bar x)
+		0          & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)+\sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)                             \\
+		           & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}\bar\lambda_i\nabla g_i(\bar x)+\sum_{j\in J}\bar\mu_j\nabla h_j(\bar x)                                 \\
+		\implies 0 & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}(\tilde\lambda_i-\bar\lambda_i)\nabla g_i(\bar x)+\sum_{j\in J}(\tilde\mu_j-\bar\mu_j)\nabla h_j(\bar x)
 	\end{align*}
 
-  Then by LICQ,
-  \begin{gather*}
-    \tilde\lambda_i - \bar\lambda_i = 0\quad\forall(i\in I(\bar x)) \\
-    \tilde\mu_j - \bar\mu_j = 0\quad\forall(j\in J) \\
-  \end{gather*}
+	Then by LICQ,
+	\begin{gather*}
+		\tilde\lambda_i - \bar\lambda_i = 0\quad\forall(i\in I(\bar x)) \\
+		\tilde\mu_j - \bar\mu_j = 0\quad\forall(j\in J) \\
+	\end{gather*}
 
-  Then since $\tilde\lambda_i = \bar\lambda_i\ \forall(i\notin I(\bar
-  x))$, this shows $\tilde\lambda=\bar\lambda$ and $\tilde\mu=\bar\mu$.
+	Then since $\tilde\lambda_i = \bar\lambda_i\ \forall(i\notin I(\bar
+		x))$, this shows $\tilde\lambda=\bar\lambda$ and $\tilde\mu=\bar\mu$.
 \end{proof}
 
 
