@@ -683,8 +683,8 @@ Then ACQ holds at $\bar x$.
 	Only need to show $L_X(\bar x)\subset T_X(\bar x)$.
 
 	Let $d\in L_X(\bar x)$. By MFCQ, there exists $\hat d$ such that
-  % Note: we can't use d directly instead of d(∂) because d doesn't
-  % have the strict inequality required by Lemma 5.1.17
+	% Note: we can't use d directly instead of d(∂) because d doesn't
+	% have the strict inequality required by Lemma 5.1.17
 	\begin{gather*}
 		\nabla g_i(\bar x)^T\hat d<0\quad\forall(i\in I(\bar x)) \\
 		\nabla h_j(\bar x)^T\hat d=0\quad\forall(j\in J)
@@ -726,6 +726,113 @@ Then ACQ holds at $\bar x$.
 		\lim_{k\to\infty}\frac{x^k-\bar x}{t_k}=d
 	$$
 \end{proof}
+
+\Corollary{3.1.20}{KKT under MFCQ}
+
+Let $\bar x$ be a local minimum of (1) such that MFCQ holds at $\bar x$. Then:
+
+\begin{enumerate}\renewcommand{\theenumi}{\alph{enumi}}
+	\item There exists $(\bar\lambda, \bar\mu)\in\R^m\times\R^p$  such
+	      that $(\bar x,\bar\lambda, \bar\mu)$ is a KKT point of (1).
+	\item $M(\bar x)$ is bounded where
+	      $$
+		      M(\bar x):=\{(\lambda,\mu)\mid(\bar x,\lambda,\mu)\text{ is a KKT point of \textbf{(1)}} \}
+	      $$
+\end{enumerate}
+
+\begin{proof}
+	Proving (a) requires Proposition 5.1.19 (MFCQ $\implies$ ACQ) and
+	Theorem 5.1.13
+
+	Proving (b):
+
+	Suppose $M(\bar x)$ were unbounded, i.e. there exists
+	$$
+		\{(\lambda^k,\mu^k)\in M(\bar x)\} : \norm{(\lambda^k,\mu^k)}\to+\infty
+	$$
+
+	Then WLOG,
+	$$
+		\frac{(\lambda^k,\mu^k)}{\norm{(\lambda^k,\mu^k)}}\to(\tilde\lambda,\tilde\mu)
+	$$
+
+	Note that every element in the above sequence has norm 1. And hence
+	we know that it doesn't converge to the zero vector, since that has
+	norm 0.
+
+	Since $(\bar x,\lambda^k,\mu^k)$ is a KKT point of (1), we have
+	$$
+		0 = \frac{\nabla f(\bar x) + \sum_{i\in I(\bar x)}\lambda^k_i\nabla g_i(\bar x)
+			+ \sum_{j\in J}\mu^k_j\nabla h_j(\bar x)}{\norm{(\lambda^k,\mu^k)}}
+	$$
+
+	Then as $h\to\infty$,
+
+	\begin{equation*}
+		0=\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)
+		+ \sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)
+	\end{equation*} % cognitive, but just raw algebra
+
+	% Note: taking ||.|| of a product space (X × Y)
+	% ||(a,b)|| = ||a||+||b||
+\end{proof}
+
+Now multiply with $d$ from MFCQ at $\bar x$.
+\begin{equation*}
+	0=\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)^Td
+	+ \sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)^Td \tag*{($*$)}
+\end{equation*}
+
+And by MFCQ, the second term is $=0$. Hence
+$$
+	0=\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)^Td
+$$
+
+\textbf{Case 1} $\exists i_0 \in I(\bar x): \tilde\lambda_{i_0}>0$. Then
+$0<0$. Contradiction!
+$$
+	0=\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)^Td
+	\;\leq\;\tilde\lambda_{i_0}\nabla g_{i_0}(\bar x)^Td<0
+$$
+\textbf{Case 2} $\forall i\in I(\bar x):\tilde\lambda_i=0$. Then ($*$) reads
+$$
+	0=\sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)^Td
+$$
+which is a contradiction against MFCQ.
+
+\Corollary{5.1.21}{}
+
+Let $\bar x$ be a local minimum of (1) such that LICQ holds at $\bar
+	x$. Then:
+\begin{enumerate}\renewcommand{\theenumi}{\alph{enumi}}
+	\item There exists $(\bar\lambda,\bar\mu)\in M(\bar x)$.
+	\item $M(\bar x) = \{(\bar\lambda,\bar\mu)\}$.
+\end{enumerate}
+
+\begin{proof}
+	(a) follows from Proposition 5.1.16 + Corollary 5.1.19
+
+	(b)
+
+	Assume that $(\tilde\lambda,\tilde\mu)\in M(\bar x)$. Then
+	\begin{align*}
+		0          & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)+\sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x) \\
+		           & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}\bar\lambda_i\nabla g_i(\bar x)+\sum_{j\in J}\bar\mu_j\nabla h_j(\bar x)     \\
+    \implies 0 & =\nabla f(\bar x)+\sum_{i\in I(\bar x)}(\tilde\lambda_i-\bar\lambda_i)\nabla g_i(\bar x)+\sum_{j\in J}(\tilde\mu_j-\bar\mu_j)\nabla h_j(\bar x)
+	\end{align*}
+
+  Then by LICQ,
+  \begin{gather*}
+    \tilde\lambda_i - \bar\lambda_i = 0\quad\forall(i\in I(\bar x)) \\
+    \tilde\mu_j - \bar\mu_j = 0\quad\forall(j\in J) \\
+  \end{gather*}
+
+  Then since $\tilde\lambda_i = \bar\lambda_i\ \forall(i\notin I(\bar
+  x))$, this shows $\tilde\lambda=\bar\lambda$ and $\tilde\mu=\bar\mu$.
+\end{proof}
+
+
+
 
 % 		     
 % $$

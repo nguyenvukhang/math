@@ -1,4 +1,14 @@
 \documentclass{article}
+
+% An accumulation of imported pacakges, copy-pasted into one massive
+% bundle located at `./prelude.sty`. Includes:
+% [comment] for hiding proofs when studying for tests (DEPRECATED)
+% [enumitem] for adding super powers to lists {itemize,enumerate}
+\usepackage{prelude}
+
+% requires [enumitem]
+\setlist[itemize]{itemsep=1pt, topsep=0pt}
+
 \usepackage{amsmath,amsfonts}
 \usepackage[b5paper, margin=0.7in]{geometry}
 
@@ -8,11 +18,6 @@
 % for linking to sections within the same document
 % provides `\hyperref[<target>]{<display text>}`
 \usepackage[colorlinks=true,linkcolor={magenta}]{hyperref}
-
-% An accumulation of imported pacakges, copy-pasted into one massive
-% bundle located at `./prelude.sty`. Includes:
-% [comment] for hiding proofs when studying for tests (DEPRECATED)
-% \usepackage{prelude}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}

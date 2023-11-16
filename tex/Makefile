@@ -1,8 +1,8 @@
 TEX_FILES += plenary.tex
 # TEX_FILES += algorithm-design.tex
 # TEX_FILES += calculus.tex
-# TEX_FILES += complex-analysis.tex
-TEX_FILES += nonlinear-optimization.tex
+TEX_FILES += complex-analysis.tex
+# TEX_FILES += nonlinear-optimization.tex
 # TEX_FILES += ordinary-differential-equations.tex
 
 SETUP := python3 setup.py
@@ -26,7 +26,7 @@ clean:
 	rm -rf .build
 
 open:
-	open .build/minimath.pdf
+	open minimath.pdf
 
 dev:
 	@$(SETUP) dev
