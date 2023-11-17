@@ -237,3 +237,126 @@ $$
 This comes from using a holomorphic function on
 \hyperref[f37b676]{Proposition 2.1.4}, and then applying
 \hyperref[b1e96fc]{Definition 2.1.5}.
+
+\Proposition{2.1.7}{Moving $||$ into integral}
+
+Let $\phi:[a,b]\to\C$ be continuous. Then
+$$
+	\left|\int_a^b\phi(t)\,dt\right|\leq\int_a^b|\phi(t)|\,dt
+$$
+
+\Proposition{2.1.8}{Upper bound of line integral}
+
+Let $U\subseteq\C$ be open and $f\in C^0(U)$. Let $\gamma:[a,b]\to U$
+be a $C^1$ curve, and let $\ell(\gamma)$ be given by
+$$
+	\ell(\gamma):=\int_a^b\left|\frac{d\gamma}{dt}(t)\right|\,dt
+$$
+
+Then we have
+$$
+	\left|\oint_\gamma f(z)\,dz\right|\leq
+	\Big(\sup_{t\in[a,b]}|f(\gamma(t))|\Big)\cdot\ell(\gamma)
+$$
+
+(Note that $\ell(\gamma)$ is the length of $\gamma$.)
+
+\Proposition{2.1.9}{Parameterization-independence of line integrals}
+
+Let $U\subseteq\C$ be open and $f:U\to\C$ be a continuous function.
+Let $\gamma:[a,b]\to U$ be a $C^1$ curve. Suppose that
+$\phi:[c,d]\to[a,b]$ is a bijective increasing $C^1$ with a $C^1$
+inverse.
+
+% TODO: Is the inverse of a continuous bijective function continuous?
+% NO.
+% https://math.stackexchange.com/questions/368824/is-the-inverse-of-a-continuous-bijective-function-also-continuous
+
+Let $\tilde\gamma=\gamma\circ\phi$. Then
+$$\oint_{\tilde\gamma}f(z)\,dz=\oint_\gamma f(z)\,dz$$
+
+The proof involves the standard change of variable formula from
+calculus.
+
+\Theorem{2.2.1}{Existence of $f'$ on holomorphic $f$}\label{f75e43c}
+
+Let $U\subseteq\C$ be open and let $f$ be holomorphic on $U$. Then
+$f'$ exists at each point of $U$ and
+$$f'(z)=\frac{\partial f}{\partial z}$$
+
+for all $z\in U$.
+
+As a result of this theorem, we often will write $f'=\dfrac{\partial
+		f}{\partial z}$ when $f$ is holomorphic.
+
+\Theorem{2.2.2}{Holomorphic by existence of derivative}
+
+Let $U\subseteq\C$ be open. If $f\in C^1(U)$ and $f$ has a complex
+derivative at each point of $U$, then $f$ is holomorphic on $U$.
+
+In other words, if a continuous, complex-valued function $f$ on $U$ has
+a complex derivative at each point and if $f'$ is continuous on $U$,
+then $f$ is holomorphic on $U$.
+
+\Theorem{2.2.3}{Holomorphism and directional derivatives}
+
+Let $f$ be holomorphic in a neighborhood $P\in\C$. Let $w_1,w_2\in\C$
+have unit modulus. Consider the directional derivatives
+\begin{align*}
+	D_{w_1}f(P) & :=\lim_{t\to0}\frac{f(P+tw_1)-f(P)}t \\
+	D_{w_2}f(P) & :=\lim_{t\to0}\frac{f(P+tw_2)-f(P)}t
+\end{align*}
+Then
+\begin{enumerate}[label=(\alph*)]
+	\item $|D_{w_1}f(P)|=|D_{w_2}f(P)|$
+	\item if $|f'(P)|\neq0$, then the directed angle from $w_1$ to
+	      $w_2$ equals the directed angle from $D_{w_1}f(P)$ to $D_{w_2}f(P)$.
+\end{enumerate}
+Note:
+\begin{itemize}
+	\item 2.2.3(a) alone implies that $f$ is holomorphic.
+	\item 2.2.3(b) alone implies that $f$ is holomorphic.
+\end{itemize}
+
+\Lemma{2.3.1}{}
+
+Let $(\alpha,\beta)\subseteq\R$ be an open interval and let
+$H,F:(\alpha,\beta)\to\R$ be continuous functions. Let
+$p\in(\alpha,\beta)$ and suppose that $dH/dx$ exists and equals $F(x)$
+for all $x\in(\alpha,\beta)\setminus\{p\}$. Then $(dH/dx)(p)$ exists
+and $(dH/dx)(x)=F(x)$ for all $x\in(\alpha,\beta)$.
+$$
+	\forall_{x\in(\alpha,\beta)\setminus\{p\}}:\frac{dH}{dx}(x)=F(x)\implies
+	\forall_{x\in(\alpha,\beta)}:\frac{dH}{dx}(x)=F(x)
+$$
+
+It's as if the continuity fills in the gap at $p$.
+
+\Theorem{2.3.2}{}
+
+Let $U\subseteq\C$ be either an open rectangle or an open disc and let
+$P\in U$. Let $f$ and $g$ be continuous, real-valued functions on $U$
+which are continuously differentiable on $U\setminus\{P\}$. Suppose
+further that
+$$
+	\frac{\partial f}{\partial y}=\frac{\partial g}{\partial x}
+	\quad\text{on }U\setminus\{P\}
+$$
+
+Then there exists a $C^1$ function $h:U\to\R$ such that
+$$
+	\frac{\partial h}{\partial x}=f,\quad
+	\frac{\partial h}{\partial y}=g
+$$
+
+at every point of $U$ (including $P$).
+
+\Theorem{2.3.3}{Existence of holomorphic antiderivative}
+
+Let $U\subseteq\C$ be either an open rectangle or an open disc. Let
+$P\in U$ be fixed. Suppose that $F$ is continuous on $U$ and
+holomorphic on $U\setminus\{P\}$. Then there is a holomorphic $H$ on
+$U$ such that $\partial H/\partial z=F$.
+
+Note that since $H$ is holomorphic, by \hyperref[f75e43c]{Theorem
+2.2.1}, we can write $H'=F$.

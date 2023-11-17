@@ -122,7 +122,9 @@ def build(tex_files, build_dir=BUILD_DIR):
     pdflatex.close()
 
     pdf_basename = f"{JOBNAME}.pdf"
-    os.rename(path.join(BUILD_DIR, pdf_basename), pdf_basename)
+    pdf_output = path.join(BUILD_DIR, pdf_basename)
+    if path.isfile(pdf_output):
+        os.rename(pdf_output, pdf_basename)
 
 
 # don't clean to make sure that links are well-formed
