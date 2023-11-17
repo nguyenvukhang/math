@@ -120,7 +120,7 @@ $$
 on $U$. If $f$ and $g$ are real-valued, then we may take $h$ to be
 real-valued also.
 
-\Theorem{1.5.3}{}
+\Theorem{1.5.3}{}\label{e7808d1}
 
 Let $U\subset\C$ be either an open rectangle or open disc, and let $F$
 be holomorphic on $U$. Then there exists a holomorphic function $H$ on
@@ -225,7 +225,7 @@ $$
 	\oint_\gamma F(z)\,dz:=\int_a^bF(\gamma(t))\cdot\frac{d\gamma}{dt}\,dt
 $$
 
-\Proposition{2.1.6}{Holomorphic line integral}
+\Proposition{2.1.6}{Holomorphic line integral}\label{c526c09}
 
 Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let
 $\gamma:[a,b]\to U$ be a $C^1$ curve. If $f$ is a holomorphic function
@@ -359,4 +359,53 @@ holomorphic on $U\setminus\{P\}$. Then there is a holomorphic $H$ on
 $U$ such that $\partial H/\partial z=F$.
 
 Note that since $H$ is holomorphic, by \hyperref[f75e43c]{Theorem
-2.2.1}, we can write $H'=F$.
+	2.2.1}, we can write $H'=F$.
+
+\Lemma{2.4.1}{}
+
+Let $\gamma$ be the boundary of a disc $D(z_0,r)$ in the complex
+plane, equipped with the counterclockwise orientation. Let $z$ be a
+point inside the circle $\partial D(z_0,r)$. Then
+$$
+	\frac1{2\pi i}\oint_\gamma\frac1{\zeta-z}\,d\zeta=1
+$$
+
+The proof involves considering the function
+$$
+	I(z):=\oint_\gamma\frac1{\zeta-z}\,d\zeta
+$$
+and showing that $I(z)$ is independent of $z$, and that $I(z_0)=2\pi i$.
+
+\Theorem{2.4.2}{Cauchy integral formula}
+
+Suppose that $U\subseteq\C$ is open and that $f$ is a holomorphic
+function on $U$. Let $z_0\in U$ and let $r>0$ such that $\bar
+	D(z_0,r)\subseteq U$ . Let $\gamma:[0,1]\to\C$ be the $C^1$ curve
+$\gamma(t)=z_0+r\cos(2\pi t)+ir\sin(2\pi t)$. Then, for each $z\in
+	D(z_0,r)$,
+$$
+	f(z)=\frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta
+$$
+
+The converse of this theorem is true too: if $f$ is given by the
+Cauchy integral formula, then $f$ is holomorphic.
+
+\Theorem{2.4.3}{Cauchy integral theorem}
+
+If $f$ is a holomorphic function on an open disc $U\subseteq\C$, and
+if $\gamma:[a,b]\to U$ is a $C^1$ curve in $U$ with
+$\gamma(a)=\gamma(b)$, then
+$$\oint_\gamma f(z)\,dz=0$$
+
+\begin{proof}
+  By \hyperref[e7808d1]{Theorem 1.5.3}, there is a holomorphic
+  function $G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$,
+  we have that
+	$$0=G(\gamma(b))-G(\gamma(a))$$
+
+  By \hyperref[c526c09]{Proposition 2.1.6}, this equals
+	$$\oint_\gamma G'(z)\,dz=\oint_\gamma f(z)\,dz$$
+
+	(Reminder that since $G$ is holomorphic, $G'=\dfrac{\partial
+			G}{\partial z}$ by \hyperref[f75e43c]{Theorem 2.2.1})
+\end{proof}
