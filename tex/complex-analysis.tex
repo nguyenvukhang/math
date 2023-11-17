@@ -189,7 +189,7 @@ $$
 	\gamma(b)-\gamma(a)=\int_a^b\gamma'(t)\,dt
 $$
 
-\Proposition{2.1.4}{}
+\Proposition{2.1.4}{}\label{f37b676}
 
 Let $U\subseteq\C$ be open and let $\gamma:[a,b]\to U$ be a $C^1$
 curve. If $f:U\to\R$ and $f\in C^1(U)$ and we write
@@ -215,3 +215,25 @@ This follows from \hyperref[c511702]{Definition 2.1.3} and the
 
 (the lack of an $i$ term is intentional. Remember that
 $f\circ\gamma:\R\to\R$)
+
+\Definition{2.1.5}{Complex line integral}\label{b1e96fc}
+
+Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let
+$\gamma:[a,b]\to U$ be a $C^1$ curve. Then we define the complex line
+integral
+$$
+	\oint_\gamma F(z)\,dz:=\int_a^bF(\gamma(t))\cdot\frac{d\gamma}{dt}\,dt
+$$
+
+\Proposition{2.1.6}{Holomorphic line integral}
+
+Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let
+$\gamma:[a,b]\to U$ be a $C^1$ curve. If $f$ is a holomorphic function
+on $U$, then
+$$
+	f(\gamma(b))-f(\gamma(a))=\oint_\gamma\frac{\partial f}{\partial z}(z)\,dz
+$$
+
+This comes from using a holomorphic function on
+\hyperref[f37b676]{Proposition 2.1.4}, and then applying
+\hyperref[b1e96fc]{Definition 2.1.5}.

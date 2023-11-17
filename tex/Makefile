@@ -10,7 +10,11 @@ SETUP := python3 setup.py
 build:
 	@$(SETUP) build $(TEX_FILES)
 
-build-all:
+monitor:
+	@$(SETUP) monitor $(TEX_FILES)
+
+
+all:
 	@$(SETUP) build --all
 
 test:

@@ -1,4 +1,4 @@
-import sys, os, re
+import sys, os, re, time, datetime
 from os import path
 
 from subprocess import Popen, PIPE
@@ -213,10 +213,32 @@ def checkhealth():
         print("All checks passed!")
 
 
+def monitor(files):
+    now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
+    build2 = lambda: (build(files), print("\n[Last build: %s]" % now()))
+
+    build2()
+
+    cached = [os.stat(f).st_mtime for f in files]
+    N = range(len(files))
+
+    while True:
+        for i in N:
+            t = os.stat(files[i]).st_mtime
+            if cached[i] != t:
+                cached[i] = t
+                build2()
+                break
+        time.sleep(1)
+
+
 c = get(sys.argv, 1)
 if c == "build":
     files = ALL_TEX_FILES if get(sys.argv, 2) == "--all" else sys.argv[2:]
     build(files)
+elif c == "monitor":
+    files = ALL_TEX_FILES if get(sys.argv, 2) == "--all" else sys.argv[2:]
+    monitor(files)
 elif c == "sha":
     sha()
 elif c == "checkhealth":
