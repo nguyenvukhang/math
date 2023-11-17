@@ -161,7 +161,6 @@ $$
 $$
 
 \Theorem{1.1.8}{Bernoulli's inequality}\label{d44713f}
-
 $$
 	(1+x)^r\geq 1+rx
 $$
@@ -181,6 +180,28 @@ $$
 	(1+x)^r\leq 1+rx
 $$
 for every $r\in\R,0\leq r\leq 1$ and $x\geq-1$.
+
+\Result{1.1.9}{Limit to infinity of a rational function}
+
+Let $P,Q$ be polynomial functions, where $Q$ is of a higher degree.
+Then
+$$
+	\lim_{x\to\infty}\frac{P(x)}{Q(x)}=0
+$$
+
+\begin{compute}
+	Consider the example of
+	$$
+    \lim_{x\to\infty}\frac{x^2 - 3x}{x^3 + 2x + 5}
+	$$
+  We can divide both numerator and denominator by $x^2$ to obtain
+  $$
+    \lim_{x\to\infty}\frac{1 - \frac3x}{x + \frac2x + \frac5{x^2}}
+  $$
+
+  And we can see that the numerator $\to1$ while the denominator
+  $\to\infty$.
+\end{compute}
 
 \Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
 
