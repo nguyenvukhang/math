@@ -398,14 +398,148 @@ $\gamma(a)=\gamma(b)$, then
 $$\oint_\gamma f(z)\,dz=0$$
 
 \begin{proof}
-  By \hyperref[e7808d1]{Theorem 1.5.3}, there is a holomorphic
-  function $G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$,
-  we have that
+	By \hyperref[e7808d1]{Theorem 1.5.3}, there is a holomorphic
+	function $G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$,
+	we have that
 	$$0=G(\gamma(b))-G(\gamma(a))$$
 
-  By \hyperref[c526c09]{Proposition 2.1.6}, this equals
+	By \hyperref[c526c09]{Proposition 2.1.6}, this equals
 	$$\oint_\gamma G'(z)\,dz=\oint_\gamma f(z)\,dz$$
 
 	(Reminder that since $G$ is holomorphic, $G'=\dfrac{\partial
 			G}{\partial z}$ by \hyperref[f75e43c]{Theorem 2.2.1})
 \end{proof}
+
+\Definition{2.6.1}{Piecewise $C^1$ curve}\label{baf22ac}
+
+A piecewise $C^1$ curve $\gamma:[a,b]\to\C$ is a continuous function
+such that there exists a finitne set of numbers $a_1\leq
+	a_2\leq\ldots\leq a_k$ satisfying $a_1=a$ and $a_k=b$, and with the
+property that for every $i\leq j\leq k-1,\ \gamma|_{[a_j,a_{j+1}]}$ is
+a $C^1$ curve.
+
+$\gamma$ is a piecewise $C^1$ curve in an open set $U$ if
+$\gamma([a,b])\subseteq U$.
+
+Note that while joining $C^1(\R)$ curves may not lead to a piecewise
+$C^1(\R)$ curve, doing it in $\C$ somehow works.
+
+\Definition{2.6.2}{Integrating over a piecewise $C^1$ curve}
+
+If $U\subseteq\C$ is open and $\gamma:[a,b]\to U$ is a piecewise $C^1$
+curve in $U$ and if $f:U\to\C$ is a continuous function on $U$, then
+
+$$
+	\oint_\gamma f(z)\,dz:=\sum_{j=1}^k\oint_{\gamma|_{[a_j,a_{j+1}]}}
+	f(z)\,dz
+$$
+
+where $a_1,a_2,\ldots,a_k$ are as in \hyperref[baf22ac]{Definition
+	2.6.1}.
+
+\Lemma{2.6.3}{}
+
+Let $U\subseteq\C$ be open. Let $\gamma:[a,b]\to U$ be a piecewise
+$C^1$ curve. Let $\phi:[c,d]\to[a,b]$ be a piecewise $C^1$ strictly
+monotone increasing function with $\phi(c)=a$ and $\phi(d)=b$. Let
+$f:U\to\C$ be a continuous function on $U$. Then the function
+$\gamma\circ\phi:[c,d]\to U$ is a piecewise $C^1$ curve and
+$$\oint_\gamma f(z)\,dz=\oint_{\gamma\circ\phi}f(z)\,dz$$
+
+(Really, $\{\gamma(t)\mid t\in[a,b]\}=\{(\gamma\circ\phi)(s)\mid s
+	\in[c,d]\}$, and there are no added crossovers on the parameterization
+of $\gamma\circ\phi$ because $\phi$ is strictly monotone increasing.)
+
+\Lemma{2.6.4}{}
+
+Let $U\subseteq\C$ be open, $f:U\to\C$ a holomorphic function and
+$\gamma:[a,b]\to U$ a piecewise $C^1$ curve. Then
+$$
+	f(\gamma(b))-f(\gamma(a))=\oint_\gamma f'(z)\,dz
+$$
+
+(This is really just \hyperref[c526c09]{Proposition 2.1.6} restated
+with a piecewise $C^1$ version of $\gamma$)
+
+\Proposition{2.6.5}{}
+
+If $f:\C\setminus\{0\}\to\C$ is a holomorphic function, and if
+$\gamma_r$ describes the circle of radius $r$ around $0$, tranversed
+once around counterclockwise, then, for any two positive numbers
+$r_1<r_2$,
+$$
+	\oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
+$$
+
+\Proposition{2.6.6}{}
+
+Let $0<r<R<\infty$ and define the annulus $\mathcal
+	A:=\{z\in\C:r<|z|<R\}$. Let $f:\mathcal A\to\C$ be a holomorphic
+function. If $r<r_1<r_2<R$ and if for each $j$ the curve
+$\gamma_{r_j}$ describes the circle of radius $r_j$ around 0,
+traversed once counterclockwise, then we have
+$$
+	\oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
+$$
+
+(On this annulus (donut), integrating a holomorphic $f$ along any two
+circles centered at zero will yield the same value.)
+
+\Theorem{2.6.7}{Cauchy integral formula and theorem: general form}
+
+Let $U\subseteq\C$ be open. Let $f:U\to\C$ be holomorphic. Then
+$$\oint_\gamma f(z)\,dz=0$$
+
+for any piecewise $C^1$ closed curve $\gamma$ in $U$ that can be
+deformed in $U$ through closed curves to a closed curve lying entirely
+in a disc contained in $U$.
+
+In addition, suppose that $\bar D(z,r)\subseteq U$. Then
+$$
+	\frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta=f(z)
+$$
+
+for any piecewise $C^1$ closed curve $\gamma$ in $U\setminus\{z\}$
+that can be continuously deformed in $U\setminus\{z\}$ to $\partial
+	D(z,r)$ equipped with counterclockwise orientation.
+
+\Theorem{3.1.1}{Analyticity of holomorphic functions}
+
+Let $U\subseteq\C$ be open and let $f$ be a holomorphic on $U$. Then
+$f\in C^\infty(U)$. Moreover, if $\bar D(P,r)\subseteq U$ and $z\in
+	D(P,r)$, then
+$$
+	\left(\frac\partial{\partial z}\right)^kf(z)=\frac{k!}{2\pi i}
+	\oint_{|\zeta-P|=r}\frac{f(\zeta)}{(\zeta-z)^{k+1}}\,d\zeta
+$$
+
+for all $k\in\mathbb{N}_0$.
+
+\Corollary{3.1.2}{Derivative of a holomorphic function is holomorphic}
+
+Let $U\subseteq\C$ be open. If $f:U\to\C$ is holomorphic, then
+$f':U\to\C$ is holomorphic.
+
+\Theorem{3.1.3}{}
+
+If $\phi$ is a continuous function on $\{\zeta:|\zeta-P|=r\}$, then
+the function $f$ given by
+$$
+	f(z):=\frac1{2\pi i}\oint_{|\zeta-P|=r}\frac{\phi(\zeta)}{\zeta-z}\,d\zeta
+$$
+
+is defined and holomorphic on $D(P,r)$.
+
+This theorem induces a very strong way to create a holomorphic
+function. Instead of differentiability, we only need a continuous
+$\phi$ to build a holomorphic $f$.
+
+\Theorem{3.1.4}{Morera's Theorem}
+
+Let $U\subseteq\C$ be open. Let $f:U\to\C$ be a continuous function on
+a connected open subset $U$ of $\C$. Suppose that for every closed,
+piecewise $C^1$ curve $\gamma:[0,1]\to U$, with $\gamma(0)=\gamma(1)$,
+we have
+$$\oint_\gamma f(\zeta)\,d\zeta=0$$
+
+Then $f$ is holomorphic on $U$.
