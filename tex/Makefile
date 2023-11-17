@@ -13,7 +13,6 @@ build:
 monitor:
 	@$(SETUP) monitor $(TEX_FILES)
 
-
 all:
 	@$(SETUP) build --all
 
@@ -38,3 +37,6 @@ dev:
 tag:
 	git tag -f latest
 	git push --tag --force
+
+mon:
+	@make monitor

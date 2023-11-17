@@ -5,7 +5,8 @@
 All the proofs and results I don't want to write twice.
 
 \textbf{1.x.x)} Real analysis \\
-\textbf{2.x.x)} Calculus
+\textbf{2.x.x)} Calculus \\
+\textbf{9.x.x)} General stuff \\
 
 \Definition{1.1.1}{Monotone sequences}\label{d5142a8}
 
@@ -140,6 +141,47 @@ $$
 	\nabla f(\eta)^Td=\frac{f(x+td)-f(x)}t
 $$
 
+\Result{1.1.7}{Preprocessed limits}\label{ffc8953}
+
+Let $k,\ell\in\N$ and $a,b,c\in\R$ be fixed.
+\begin{enumerate}[label=(\alph*)]
+	\def\li{\displaystyle\lim_{n\to\infty}}
+	\item $\li\frac1{n^k}=0$
+	\item $\li b^n=0$ \quad if \quad $|b|<1$
+	\item $\li c^{\frac1n}=1$ \quad if \quad $c>0$
+	\item $\li n^{\frac1n}=1$
+	\item $\li \left(1+\frac1n\right)^n=e$
+	\item $\li \left(1-\frac1n\right)^n=\frac1e$
+	\item $\li \frac{n^k}{c^n}=0$ \quad if \quad $c>0$
+\end{enumerate}
+
+if $k<\ell$ and $1<a<b$, we have
+$$
+	n^k << n^\ell << a^n << b^n << n!
+$$
+
+\Theorem{1.1.8}{Bernoulli's inequality}\label{d44713f}
+
+$$
+	(1+x)^r\geq 1+rx
+$$
+
+This holds under any of the following conditions:
+\begin{itemize}
+	\item $r\in\Z,r\geq1$ and $x\in\R,x\geq-1$ (inequality is strict if
+	      $x\neq0$ and $r\geq2$)
+	\item $r\in\Z,r\geq0$ and $x\in\R,x\geq-2$
+	\item $r\in\Z$, $r$ is even and $x\in\R$
+	\item $r\in\R,r\geq1$ and $x\in\R,x\geq-1$ (inequality is strict if
+	      $x\neq0$ and $r\neq1$)
+\end{itemize}
+
+and separately,
+$$
+	(1+x)^r\leq 1+rx
+$$
+for every $r\in\R,0\leq r\leq 1$ and $x\geq-1$.
+
 \Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
 
 \paragraph{First part} Let $f:[a,b]\to\R$ be continuous. Let
@@ -162,3 +204,23 @@ $$\int_a^bf(t)\,dt=F(b)-F(a)$$
 
 This is stronger than the corollary because it does not assume that
 $f$ is continuous.
+
+\Definition{9.1.1}{Gamma function}
+
+The gamma function is defined via a convergent improper integral:
+$$
+	\Gamma(z):=\int_0^\infty e^{-t}t^{z-1}\,dt\Quad(\Re(z)>0)
+$$
+
+Note that ``$\displaystyle\int_0^\infty$" is a shorthand for
+``$\displaystyle\lim_{k\to\infty}\int_0^k$".
+
+Observe that $\Gamma(1)=1$.
+$$\int_0^\infty e^{-t}\,dt=\Big[-e^{-t}\Big]_0^\infty=1$$
+
+And that $\Gamma(n+1)=n\Gamma(n)$.
+\begin{align*}
+	\int_0^\infty e^{-t}t^n\,dt
+	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt \\
+	 & = n\Gamma(n)
+\end{align*}
