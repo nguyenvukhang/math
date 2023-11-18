@@ -200,22 +200,30 @@ If complex roots ($r=\alpha\pm\beta i$): $y:=Ax^\alpha\cos(\beta\ln x)+Bx^\alpha
 
 \subsection{Higher order differential equations}
 
+% Lecture 12 page 6
+
 \begin{equation*}\def\y#1{y^{(#1)}}
 	\y n+p_1\y{n-1}+p_2\y{n-2}+\ldots+p_{n-1}y'+p_ n y=q
 \end{equation*}
 
 where $\iter{p_1}{p_n},q:\R\to\R$.
 
-\Result{3.1.1}{Constant coefficients}
+For these we split into a few cases:
+\begin{itemize}
+	\item\hyperref[cd8a29a]{Constant coefficients}
+	\item\hyperref[a0f8e0c]{Euler equations}
+	\item\hyperref[de785b7]{Variation of parameters}
+\end{itemize}
+
+\Result{3.1.1}{Constant coefficients}\label{cd8a29a}
 
 \begin{equation*}\def\y#1{y^{(#1)}}
-	\y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ n y=0 \tag*{($*$)}
+	\y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ny=0\tag*{($*$)}
 \end{equation*}
-
 where $\iter{a_1}{a_n}\in\R$ fixed.
 
 Then try $y=e^{rt}$. Substituting that into $(*)$, we'll obtain
-$$a_0t^n+a_1r^{n-1}+\ldots+a_n=0$$
+$$a_0r^n+a_1r^{n-1}+\ldots+a_n=0$$
 
 Since $\iter{a_1}{a_n}$ are given, we can solve for $r$.
 
@@ -228,3 +236,57 @@ $$y_g=c_1e^{r_1t}+c_2e^{r_2t}+\ldots+c_ne^{r_nt}$$
 
 One way to establish the linear independence is to evaluate their
 \hyperref[b70073b]{Wronskian}.
+
+\Result{3.1.2}{Euler equations}\label{a0f8e0c}
+
+\begin{equation*}\def\y#1{x^{#1}y^{(#1)}}
+	a_0\y{n}+a_1\y{n-1}+\ldots+a_ny=0\tag*{($*$)}
+\end{equation*}
+where $\iter{a_1}{a_n}\in\R$ fixed.
+
+Then try $y=x^{r}$. Substituting that into $(*)$, we'll obtain
+$$
+	\sum_{i=0}^n\left(\prod_{j=r-i+1}^rj\right) a_ix^r=0
+$$
+
+Which is then
+$$
+	\sum_{i=0}^n\left(\prod_{j=r-i+1}^rj\right) a_i=0
+$$
+
+\Result{3.1.3}{Variation of parameters}\label{de785b7}
+
+\Result{3.1.4}{Radius of convergence of power series}\label{ea9daf1}
+
+Consider the power series
+$$
+	\sum_{k=0}^n(ax)^k=1+ax+a^2x^2+a^3x^3+\ldots
+$$
+
+As $n\to\infty$,
+$$
+	\sum_{k=0}^n(ax)^k\begin{cases}
+		\text{is convergent on }\dfrac1{1-ax} & \text{if }|ax|<1 \\
+		\text{is divergent}                   & \text{otherwise}
+	\end{cases}
+$$
+
+We use this as a benchmark to check for convergence of an arbitrary
+power series:
+$$
+	\sum_{k=0}^\infty b_kx^k
+$$
+where $b_1,b_2,\ldots\in\R$.
+
+If for all $k\in\N_0$ we have $|b_k|<a^k$, and the geometric series
+converges for $x$, then the arbitrary series converges too.
+% TODO: prove why |bₖ|<aᵏ implies convergence of the arbitrary series
+
+This is the same as requiring $(b_k)^{1/k}<a$ and $|x|<\frac1{|a|}$,
+and hence we obtain the radius of convergence of the arbitrary power
+series:
+$$
+	R:=\frac{1}{\displaystyle\lim_{k\to\infty}(b_k)^{1/k}}
+$$
+
+The series converges if $|x|<R$, and diverges if $|x|>R$.
