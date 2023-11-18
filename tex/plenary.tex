@@ -192,16 +192,88 @@ $$
 \begin{compute}
 	Consider the example of
 	$$
-    \lim_{x\to\infty}\frac{x^2 - 3x}{x^3 + 2x + 5}
+		\lim_{x\to\infty}\frac{x^2 - 3x}{x^3 + 2x + 5}
 	$$
-  We can divide both numerator and denominator by $x^2$ to obtain
-  $$
-    \lim_{x\to\infty}\frac{1 - \frac3x}{x + \frac2x + \frac5{x^2}}
-  $$
-
-  And we can see that the numerator $\to1$ while the denominator
-  $\to\infty$.
+	We can divide both numerator and denominator by $x^2$ to obtain
+	$$
+		\lim_{x\to\infty}\frac{1 - \frac3x}{x + \frac2x + \frac5{x^2}}
+	$$
+	And we can see that the numerator $\to1$ while the denominator
+	$\to\infty$.
 \end{compute}
+
+\Result{1.1.10}{Limit of $\frac{e^x}x$ as $x\to\infty$}\label{b905ee7}
+$$
+	\lim_{x\to\infty}\frac{e^x}x=\infty
+$$
+
+\begin{proof}
+	% TODO: add Taylor series
+	Since $e^x$ can be written as a Taylor series
+	$$
+		e^x=1 + x + \frac{x^2}2 +\ldots
+	$$
+	We have $e^x\geq 1 + x + x^2$ and hence
+	\begin{align*}
+		\lim_{x\to\infty}\frac{e^x}x
+		 & \geq\lim_{x\to\infty}\frac{1+x+\frac{x^2}2}x \\
+		 & =\lim_{x\to\infty}\frac1x + 1 + \frac{x}2    \\
+		 & = \infty
+	\end{align*}
+\end{proof}
+
+
+\Result{1.1.11}{Limit of $\frac{\ln x}{x}$ as $x\to\infty$}\label{e2e1632}
+$$
+	\lim_{x\to\infty}\frac{\ln x}x = 0
+$$
+
+\begin{proof}
+	Given any $\epsilon$, we have to find a $N\in\N$ such that
+	$$
+		n\geq N\implies\frac{\ln x}x<\epsilon
+	$$
+
+	But, if you've been paying attention,
+	$$
+		\frac{\ln x}x<\epsilon\iff\frac{e^{\epsilon x}}{\epsilon x}>\frac1\epsilon
+	$$
+
+	And since $\epsilon x\to+\infty$, using \hyperref[b905ee7]{Result
+		1.1.10} with $\epsilon x$ as the limiting variable tells us that
+	indeed there exists such an $N$, hence completing the proof.
+\end{proof}
+
+\Result{1.1.12}{Limit of a polynomial divided by an exponential}\label{f3540b0}
+
+Let $a,b\in\R$ be fixed, with $b>1$. Then we have
+$$
+	\lim_{x\to\infty}\frac{x^a}{b^x}=0
+$$
+
+\begin{proof}
+	Given any $\epsilon$ we want to find a $N\in\N$ such that
+	$$
+		n\geq N\implies\frac{x^a}{b^x}<\epsilon
+	$$
+	But this is equivalent to
+	$$
+		a\ln x-x\ln b<\ln\epsilon
+	$$
+	So it suffices to prove that
+	$$
+		a\ln x-x\ln b\to-\infty.
+	$$
+	Rewriting, we have
+	\begin{align*}
+		a\ln x-x\ln b
+		 & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right) \\
+     & = \infty(-\ln b) \Quad\because\hyperref[e2e1632]{\frac{\ln x}{x}\to0} \\
+     & = -\infty
+	\end{align*}
+
+  This completes the proof.
+\end{proof}
 
 \Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
 
@@ -243,5 +315,6 @@ And that $\Gamma(n+1)=n\Gamma(n)$.
 \begin{align*}
 	\int_0^\infty e^{-t}t^n\,dt
 	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt \\
+   & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \hyperref[f3540b0]{Result 1.1.12})} \\
 	 & = n\Gamma(n)
 \end{align*}
