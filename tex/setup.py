@@ -36,22 +36,13 @@ def debug():
 
 # remove all bytes including and within a start and end marker
 def remove_in_between(data: bytes, start: bytes, end: bytes):
-    buffer, r = [], data.find(start)
+    buffer, r, n = [], data.find(start), len(end)
     while r >= 0:
         buffer.extend(data[:r])
-        data = data[data.find(end) + len(end) :]
+        data = data[data.find(end) + n :]
         r = data.find(start)
     buffer.extend(data)
     return bytes(buffer)
-
-
-def build_one_file(path) -> bytes:
-    b = read_file(path, mode="rb")
-    if not SHOW_COMPUTES:
-        b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
-    if not SHOW_PROOFS:
-        b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
-    return b
 
 
 class PdfLatex:
