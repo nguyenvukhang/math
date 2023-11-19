@@ -13,6 +13,7 @@ TEX_FILES += ordinary-differential-equations.tex
 
 # --- [BUILD_ARGS] ---
 BUILD_ARGS += -Hheader.tex
+BUILD_ARGS += -Jminimath
 # BUILD_ARGS += --no-proof
 # BUILD_ARGS += --no-compute
 
