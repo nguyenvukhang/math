@@ -3,7 +3,7 @@ TEX_FILES += plenary.tex
 TEX_FILES += calculus.tex
 # TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization.tex
-# TEX_FILES += ordinary-differential-equations.tex
+TEX_FILES += ordinary-differential-equations.tex
 
 SETUP := python3 pytex.py
 BUILD_ARGS += -Hheader.tex

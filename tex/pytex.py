@@ -2,6 +2,8 @@ from argparse import ArgumentParser
 import os, re, time, datetime
 from os import path
 from subprocess import Popen, PIPE
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 JOBNAME = "minimath"
 
@@ -87,10 +89,11 @@ class PdfLatex:
         self.write(b"\\end{document}")
         self.x.stdin.flush()
         self.x.stdin.close()
-        self.monitor()
+        self.monitor_stdout()
         self.x.wait()
 
-    def monitor(self):
+    # helps to monitor stdout in a less cluttered way
+    def monitor_stdout(self):
         hyperref_flag = False
 
         for line in iter(self.x.stdout.readline, b""):
@@ -205,9 +208,8 @@ def assert_unique_ids(tex_files):
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def test():
-    tex_files = get_tex_files()
     ALL_OK = True
-    ALL_OK &= assert_unique_ids(tex_files)
+    ALL_OK &= assert_unique_ids(get_tex_files())
 
     if ALL_OK:
         print("All checks passed!")
@@ -215,33 +217,42 @@ def test():
 
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
 # changed.
-def monitor(args):
+def dev(args):
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: (
-        build(args.header_files, args.tex_files),
-        print("\n[Last build: %s]" % now()),
-    )
-    build2()
-    files = [*args.header_files, *args.tex_files]
-    cached = [os.stat(f).st_mtime for f in files]
-    while True:
-        for i in range(len(files)):
-            t = os.stat(files[i]).st_mtime
-            if cached[i] != t:
-                cached[i] = t
-                build2()
-                break
-        time.sleep(1)
+    build2 = lambda: build(args)
+    [build2(), print("\n[Last build: %s]" % now())]
+
+    class EventHandler(FileSystemEventHandler):
+        def __init__(self, args):
+            self.args = args
+
+        def on_any_event(self, event):
+            if event.event_type == "modified":
+                file = event.src_path
+                if file.endswith(".tex"):
+                    [build2(), print("\n[Last build: %s]" % now())]
+
+    observer = Observer()
+    observer.schedule(EventHandler(args), os.curdir, recursive=True)
+    observer.start()
+    try:
+        while True:
+            time.sleep(1)
+    finally:
+        observer.stop()
+        observer.join()
 
 
 def main():
     args = get_parser().parse_args()
     if args.action == "build":
         build(args)
-    if args.action == "dev":
-        monitor(args)
+    elif args.action == "dev":
+        dev(args)
     elif args.action == "sha":
         sha()
+    elif args.action == "test":
+        test()
 
 
 if __name__ == "__main__":
