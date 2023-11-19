@@ -3,7 +3,7 @@ MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
 PYTEX := pytex
 TEX_FILES += main.tex
-BUILD_ARGS += -H../../header.tex
+BUILD_ARGS += -H$(MAKEFILE_DIR)../../header.tex
 
 build:
 	$(PYTEX) $(BUILD_ARGS) build $(TEX_FILES)
