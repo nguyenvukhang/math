@@ -12,7 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: yarn
+        working-directory: web
       - run: yarn checkhealth
+        working-directory: web
   build-pdf:
     runs-on: ubuntu-latest
     steps:
@@ -21,8 +23,8 @@ jobs:
         with:
           scheme: small
           run: |
-            make all
-            make all
+            make PYTEX=bin/pytex all
+            make PYTEX=bin/pytex all
       - name: Release PDF
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
