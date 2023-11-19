@@ -21,7 +21,6 @@ jobs:
         with:
           scheme: small
           run: |
-            cd tex
             make all
             make all
       - name: Release PDF
