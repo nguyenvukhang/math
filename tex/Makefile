@@ -1,4 +1,5 @@
-SETUP := python3 pytex.py
+# PYTEX := python3 pytex.py
+PYTEX := pytex
 
 
 # --- [TEX_FILES] ---
@@ -17,13 +18,13 @@ BUILD_ARGS += -Hheader.tex
 
 
 build:
-	$(SETUP) $(BUILD_ARGS) build $(TEX_FILES)
+	$(PYTEX) $(BUILD_ARGS) build $(TEX_FILES)
 
 dev:
-	$(SETUP) $(BUILD_ARGS) dev $(TEX_FILES)
+	$(PYTEX) $(BUILD_ARGS) dev $(TEX_FILES)
 
 all:
-	$(SETUP) $(BUILD_ARGS) build \
+	$(PYTEX) $(BUILD_ARGS) build \
 		plenary.tex \
 		calculus.tex \
 		algorithm-design.tex \
@@ -32,10 +33,10 @@ all:
 		ordinary-differential-equations.tex
 
 test:
-	@$(SETUP) test
+	@$(PYTEX) test
 
 sha:
-	@$(SETUP) sha | pbcopy
+	@$(PYTEX) sha | pbcopy
 
 clean:
 	rm -rf .build
