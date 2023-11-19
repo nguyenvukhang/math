@@ -3,7 +3,6 @@ import os, re, time, datetime
 from os import path
 from subprocess import Popen, PIPE
 
-BUILD_DIR = ".build"
 JOBNAME = "minimath"
 
 
@@ -120,7 +119,7 @@ def build(args):
     pdflatex.close()
 
     pdf_basename = f"{JOBNAME}.pdf"
-    pdf_output = path.join(BUILD_DIR, pdf_basename)
+    pdf_output = path.join(args.build_dir, pdf_basename)
     if path.isfile(pdf_output):
         os.rename(pdf_output, pdf_basename)
 
