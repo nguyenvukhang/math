@@ -300,5 +300,110 @@ $$
 
 Then we must have
 $$
-a_k=0\quad\forall(k\in\N_0)
+	a_k=0\quad\forall(k\in\N_0)
 $$
+
+\Definition{3.1.6}{Laplace transform}
+
+The Laplace transform of a function $f(t)$, defined for all $t\in\R$,
+$t>0$, is the function $F(s)$, a unilateral transform defined by
+$$
+	F(s):=\int_0^\infty f(t)e^{-st}\,dt
+$$
+
+Here's a few fundamental Laplace transforms:
+\begin{center}
+	\def\L#1{\mathcal L\{{#1}\}(s)}
+	\def\a{\alpha}\def\b{\beta}
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{|c|c|}
+		\hline
+		$f(t)$                   & $F(s)$                       \\\hline
+		$1$                      & $\frac1s$                    \\\hline
+		$t$                      & $\frac1{s^2}$                \\\hline
+		$t^n$                    & $\frac{n!}{s^{n+1}}$         \\\hline
+		$e^{\a t}$               & $\frac1{s-\a}$               \\\hline
+		$te^{\a t}$              & $\frac1{(s-\a)^2}$           \\\hline
+		$\cos(\b t)$             & $\frac{s}{s^2-\b^2}$         \\\hline
+		$\sin(\b t)$             & $\frac{\b}{s^2-\b^2}$        \\\hline
+		$e^{\alpha t}\cos(\b t)$ & $\frac{s-\a}{(s-\a)^2+\b^2}$ \\\hline
+		$e^{\alpha t}\sin(\b t)$ & $\frac{\b}{(s-\a)^2+\b^2}$   \\\hline
+	\end{tabular}
+\end{center}
+
+Let $\mathcal L(f):=\mathcal L\{f\}(s)$. Then we have
+$$
+	\mathcal L(f')=-f(0)+s\mathcal L(f)
+$$
+
+\begin{compute}
+	Let's work through a few examples together.
+
+	Let $f(t):=1$. Then
+	$$
+		\mathcal L\{f\}(s)
+		=\int_0^\infty e^{-st}\,dt
+		=\left[-\frac1se^{-st}\right]_0^\infty
+		=\frac1s
+	$$
+
+	Next, let $f(t):=t$. Then
+	\begin{align*}
+		\mathcal L\{f\}(s)
+		 & =\int_0^\infty te^{-st}\,dt                                                    \\
+		 & =\left[-\frac1se^{-st}\cdot t\right]_0^\infty-\int_0^\infty-\frac1se^{-st}\,dt \\
+		 & =\frac1{s^2}
+	\end{align*}
+\end{compute}
+
+\newpage
+\Exercise{3.1.7}{}
+
+Solve the differential equation
+$$
+	y'' + 2ty' - 4y = 5\Quad y(0)=9,y'(0)=0
+$$
+
+\begin{compute}
+	\def\L{\mathcal L}
+
+	Let $u(s):=\L(y)$
+
+	Let's start by preprocessing some Laplace transforms:
+	\begin{alignat*}{2}
+		\L(y')  & =-f(0)+su          &  & = 9+su     \\
+		\L(y'') & =-f'(0)-sf(0)+s^2u &  & = -9s+s^2u
+	\end{alignat*}
+	And then,
+	$$
+		\L(ty')=-\frac{d}{ds}\L(y')=-u-su'
+	$$
+	So then applying the Laplace transform on both sides:
+	\begin{align*}
+		(-9s+s^2u)+2(-u-su')-4(u)         & =5                                \\
+		(-2s)u'+(s^2-6)u                  & =9s+5                             \\
+		u'+\frac{6-s^2}{2s}u              & =-\frac92-\frac5{2s}              \\
+		u'+\left(\frac3s-\frac s2\right)u & =-\frac92-\frac5{2s} \tag*{($*$)}
+	\end{align*}
+
+	This is a first-order linear equation in $u$.
+
+	Let $\displaystyle\ln v:=\int\left(\frac3s-\frac s2\right)\,ds$
+	$$
+		\ln v = 3\ln s-\frac{s^2}4
+		= \ln s^3-\ln e^{(s^2/4)}
+		= \ln (s^3e^{-(s^2/4)})
+	$$
+	$\implies v=s^3e^{-(s^2/4)}$. Substituting back to ($*$), we have
+	\begin{align*}
+		uv & =\int\frac{9s+5}{-2s}\cdot s^3e^{-(s^2/4)}\,ds           \\
+		   & =\int\left(-\frac92s^2-\frac5{2}s\right)e^{-(s^2/4)}\,ds
+	\end{align*}
+	\begin{align*}
+		\int xe^{-(x^2/4)}\,dx   & = -2e^{-(x^2/4)}                           \\
+		\int x^2e^{-(x^2/4)}\,dx & = x(-2e^{-(x^2/4)})-\int-2e^{-(x^2/4)}\,dx \\
+		& = x(-2e^{-(x^2/4)})+\int2e^{-(x^2/4)}\,dx \\
+	\end{align*}
+
+
+\end{compute}

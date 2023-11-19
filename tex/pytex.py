@@ -1,25 +1,25 @@
-import sys, os, re, time, datetime
+from argparse import ArgumentParser
+import os, re, time, datetime
 from os import path
-
 from subprocess import Popen, PIPE
 
 BUILD_DIR = ".build"
-SHOW_PROOFS = True
-SHOW_COMPUTES = True
 JOBNAME = "minimath"
 
-ALL_TEX_FILES = """
 
-plenary.tex
-calculus.tex
-algorithm-design.tex
-complex-analysis.tex
-nonlinear-optimization.tex
-ordinary-differential-equations.tex
+def get_parser():
+    p = ArgumentParser(
+        prog="pytex",
+        description="Custom pdflatex build script with Python3",
+    )
+    p.add_argument("action", choices=["build", "dev", "sha", "test"])
+    p.add_argument("-H", dest="header_files", action="append", default=[])
+    p.add_argument("--no-proof", dest="show_proofs", action="store_false")
+    p.add_argument("--no-compute", dest="show_computes", action="store_false")
+    p.add_argument("--build-dir", default=".build")
+    p.add_argument("tex_files", nargs="*")
+    return p
 
-"""
-
-ALL_TEX_FILES = ALL_TEX_FILES.strip().split("\n")
 
 # get index `i` form list `l`, None if not found
 get = lambda l, i: l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else None
@@ -48,35 +48,41 @@ def remove_in_between(data: bytes, start: bytes, end: bytes):
 class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, build_dir=BUILD_DIR):
-        args = ("pdflatex", "--output-directory", build_dir, f"--jobname={JOBNAME}")
-        self.x = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        self.files = []
+    def __init__(self, args):
+        cmd = (
+            "pdflatex",
+            f"--output-directory={args.build_dir}",
+            f"--jobname={JOBNAME}",
+        )
+        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        self.tex_files, self.header_files = [], []
+        self.show_computes = args.show_computes
+        self.show_proofs = args.show_proofs
 
     def write(self, e: bytes):
         self.x.stdin.write(e)
 
-    def add_file(self, filepath: str):
-        self.files.append(filepath)
+    def add_headers(self, filepaths: list[str]):
+        self.header_files.extend(filepaths)
 
     def add_files(self, filepaths: list[str]):
-        self.files.extend(filepaths)
+        self.tex_files.extend(filepaths)
 
     def __compile__(self, filepath: str) -> bytes:
         b = read_file(filepath, mode="rb")
-        if not SHOW_COMPUTES:
+        if not self.show_computes:
             b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
-        if not SHOW_PROOFS:
+        if not self.show_proofs:
             b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
         return b
 
     def process_files(self):
-        pipe = map(self.__compile__, self.files)
+        pipe = map(self.__compile__, self.tex_files)
         pipe = map(self.write, pipe)
         list(pipe)
 
     def close(self):
-        self.write(read_file("header.tex", mode="rb"))
+        [self.write(read_file(fp, "rb")) for fp in self.header_files]
         self.write(b"\\begin{document}")
         self.process_files()
         self.write(b"\\end{document}")
@@ -104,12 +110,13 @@ class PdfLatex:
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def build(tex_files, build_dir=BUILD_DIR):
-    if not path.isdir(build_dir):
-        os.mkdir(build_dir)
+def build(args):
+    if not path.isdir(args.build_dir):
+        os.mkdir(args.build_dir)
 
-    pdflatex = PdfLatex(build_dir=build_dir)
-    pdflatex.add_files(tex_files)
+    pdflatex = PdfLatex(args)
+    pdflatex.add_headers(args.header_files)
+    pdflatex.add_files(args.tex_files)
     pdflatex.close()
 
     pdf_basename = f"{JOBNAME}.pdf"
@@ -125,16 +132,17 @@ def clean():
     [os.remove(x) for x in files]
 
 
-# [SUBCOMMAND] returns a 7-char SHA hash that Make can send to
-# clipboard
+# [SUBCOMMAND] prints a 7-char SHA hash that the user can copy to
+# clipboard. This SHA is unique in all ".tex" files that are in the
+# current directory and all the current subdirectories.
+#
+# opinionated quirk: all generated SHAs will start with a letter.
 def sha():
-    from random import randint
+    from random import randint as r
 
-    l = "abcdef"[randint(0, 5)]
-
-    s, c = "0123456789abcdef", lambda: s[randint(0, len(s) - 1)]
-    gen = lambda: l + "".join([c() for _ in range(6)])
-    _, ids = get_unique_ids(ALL_TEX_FILES)
+    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
+    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
+    _, ids = get_unique_ids(get_tex_files())
     ids = set(ids)
 
     x = gen()
@@ -154,10 +162,9 @@ def get_labels(data: str, pattern: re.Pattern[str]) -> list[str]:
     return ids
 
 
-# Get all files ending with '.tex' in the directory that contains this
-# script
+# Get all files ending with '.tex' in the user's current directory
 def get_tex_files():
-    files, cwd = [], path.dirname(__file__)
+    files, cwd = [], os.curdir
     for root, _, f in os.walk(cwd):
         f = filter(lambda f: f.endswith(".tex"), f)
         f = map(lambda f: path.join(root, f), f)
@@ -197,7 +204,8 @@ def assert_unique_ids(tex_files):
 
 
 # [SUBCOMMAND] checks if everything is in a healthy state
-def checkhealth():
+# 1. checks that no two labels have the same SHA
+def test():
     tex_files = get_tex_files()
     ALL_OK = True
     ALL_OK &= assert_unique_ids(tex_files)
@@ -206,17 +214,19 @@ def checkhealth():
         print("All checks passed!")
 
 
-def monitor(files):
+# [SUBCOMMAND] runs a server that rebuilds the pdf if any file
+# changed.
+def monitor(args):
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: (build(files), print("\n[Last build: %s]" % now()))
-
+    build2 = lambda: (
+        build(args.header_files, args.tex_files),
+        print("\n[Last build: %s]" % now()),
+    )
     build2()
-
+    files = [*args.header_files, *args.tex_files]
     cached = [os.stat(f).st_mtime for f in files]
-    N = range(len(files))
-
     while True:
-        for i in N:
+        for i in range(len(files)):
             t = os.stat(files[i]).st_mtime
             if cached[i] != t:
                 cached[i] = t
@@ -225,16 +235,15 @@ def monitor(files):
         time.sleep(1)
 
 
-c = get(sys.argv, 1)
-if c == "build":
-    files = ALL_TEX_FILES if get(sys.argv, 2) == "--all" else sys.argv[2:]
-    build(files)
-elif c == "monitor":
-    files = ALL_TEX_FILES if get(sys.argv, 2) == "--all" else sys.argv[2:]
-    monitor(files)
-elif c == "sha":
-    sha()
-elif c == "checkhealth":
-    checkhealth()
-else:
-    debug()
+def main():
+    args = get_parser().parse_args()
+    if args.action == "build":
+        build(args)
+    if args.action == "dev":
+        monitor(args)
+    elif args.action == "sha":
+        sha()
+
+
+if __name__ == "__main__":
+    main()

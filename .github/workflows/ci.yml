@@ -22,8 +22,8 @@ jobs:
           scheme: small
           run: |
             cd tex
-            python3 setup.py build --all
-            python3 setup.py build --all
+            make all
+            make all
       - name: Release PDF
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

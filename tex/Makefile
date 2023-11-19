@@ -3,21 +3,31 @@ TEX_FILES += plenary.tex
 TEX_FILES += calculus.tex
 # TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization.tex
-TEX_FILES += ordinary-differential-equations.tex
+# TEX_FILES += ordinary-differential-equations.tex
 
-SETUP := python3 setup.py
+SETUP := python3 pytex.py
+BUILD_ARGS += -Hheader.tex
+# BUILD_ARGS += --no-proof
+# BUILD_ARGS += --no-compute
+
 
 build:
-	@$(SETUP) build $(TEX_FILES)
+	$(SETUP) $(BUILD_ARGS) build $(TEX_FILES)
 
-monitor:
-	@$(SETUP) monitor $(TEX_FILES)
+dev:
+	$(SETUP) $(BUILD_ARGS) dev $(TEX_FILES)
 
 all:
-	@$(SETUP) build --all
+	$(SETUP) $(BUILD_ARGS) build \
+		plenary.tex \
+		calculus.tex \
+		algorithm-design.tex \
+		complex-analysis.tex \
+		nonlinear-optimization.tex \
+		ordinary-differential-equations.tex
 
 test:
-	@$(SETUP) checkhealth
+	@$(SETUP) test
 
 sha:
 	@$(SETUP) sha | pbcopy
@@ -31,12 +41,6 @@ clean:
 open:
 	open minimath.pdf
 
-dev:
-	@$(SETUP) dev
-
 tag:
 	git tag -f latest
 	git push --tag --force
-
-mon:
-	@make monitor
