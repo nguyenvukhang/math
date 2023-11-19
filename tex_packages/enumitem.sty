@@ -12,40 +12,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{enumitem}[2019/06/20 v3.9 Customized lists]
 
-% Notes
-% ~~~~~
-%
-% The tag enit@ is used through the style
-%
-% To do:
-% ~~~~~~
-% - ref*, for adding stuff in the same fashion as label*
-% - labelled descriptions (ie, label, title, body)
-% - A true nextline (far from trivial and perhaps solved with
-%   labelled descriptions).
-% - Improved \AddEnumerateCounter
-% - Compatibility with interfaces and zref-enumitem
-% - "Pausing" somehow inline boxed text.
-% - \@enumctr <-> \@listctr?
-% - Define keys with values
-% - Revise @nobreak
-% - bottomsep
-% - \SetEnumerateCounter - must define syntax
-% - option verbose
-% - collect sizes in \SetEnumitemSizes?
-% - series=explicit / resume
-% - package option inlinenew, to define "new" inline lists
-%
-% +=============================+
-% |      EMULATING KEYVAL       |
-% +=============================+
-%
-% "Thanks" to xkeyval, which uses the same macro names as keyval :-(,
-% the latter has to be replicated in full here to ensure it works as
-% intended. The original work is by David Carlisle, under license LPPL.
-% Once the code is here, it could be optimized by adapting it to the
-% specific needs of enumitem (to do).
-
 \def\enitkv@setkeys#1#2{%
   \def\enitkv@prefix{enitkv@#1@}%
   \let\@tempc\relax
