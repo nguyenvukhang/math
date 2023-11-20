@@ -174,7 +174,7 @@ $$
 $$
 
 \begin{proof}
-	By the \hyperref[c1594c9]{mean value theorem}, for all $k\in\N$,
+	By the \hyperref[d37aa2b]{mean value theorem}, for all $k\in\N$,
 	there exists $\eta^k\in[x^k,x^k+t_kd^k]$ such that
 	$$
 		f(x^k+t_kd^k)-f(x^k)=t_k\nabla f(\eta^k)^Td^k
@@ -373,6 +373,12 @@ By convention, we let the feasible set of $(*)$ be denoted by $X$, with
 \end{equation*}
 
 By the continuity of the constraint functions, $X$ is closed.
+
+We will use $I:=\{\iter1m\}$ and $J:=\{\iter1p\}$, and define the
+\textbf{active set} at $\bar x\in X$ as
+$$
+	I(\bar x):=\Set{i\in I}{g_i(\bar x)=0}
+$$
 
 \Theorem{5.1.5}{}\label{c8e5836}
 

@@ -16,6 +16,7 @@ shas = set()
 
 markers = None  # type: list[bytes]
 LABEL_REGEX = re.compile(b"{([a-z0-9]{7})}$")
+REFERENCE_REGEX = re.compile(b"\\\\hyperref\[([a-z0-9]{7})\]")
 
 
 def get_markers():  # type: () -> list[bytes]
@@ -42,10 +43,13 @@ def for_each(files, fn):  # type: (list[tuple[str, list[bytes]]], Any) -> None
             fn(fp, data, i)
 
 
-def get_labels(_, data, i):  # type: (str, list[bytes], int) -> None
+def get_labels(fp, data, i):  # type: (str, list[bytes], int) -> None
     line = data[i]
     if not is_marker(line):
         return
+    pairs = (line.count(b"{"), line.count(b"}"))
+    if pairs[0] < 3 or pairs[1] < 3:
+        raise Exception(f"Title spread across multiple lines in [{fp}] line {i}")
     hit = LABEL_REGEX.search(line)
     if hit is None:
         return
@@ -53,6 +57,16 @@ def get_labels(_, data, i):  # type: (str, list[bytes], int) -> None
     if label in shas:
         raise Exception(f"Found a duplicate label: {label}")
     shas.add(label)
+
+
+def check_references(_, data, i):  # type: (str, list[bytes], int) -> None
+    line = data[i]
+    hit = REFERENCE_REGEX.search(line)
+    if hit is None:
+        return
+    ref = hit.groups()[0]
+    if ref not in shas:
+        print("undefined reference:", ref)
 
 
 def add_labels(_, data, i):  # type: (str, list[bytes], int) -> None
@@ -64,7 +78,7 @@ def add_labels(_, data, i):  # type: (str, list[bytes], int) -> None
 
 def write(fp, data, _):  # type: (str, list[bytes], int) -> None
     with open(fp, "wb") as f:
-        f.write(b'\n'.join(data))
+        f.write(b"\n".join(data))
 
 
 def new_sha():  # type: () -> bytes
@@ -81,9 +95,6 @@ def new_sha():  # type: () -> bytes
 
 
 for_each(tex_files, get_labels)
+for_each(tex_files, check_references)
 for_each(tex_files, add_labels)
 for_each(tex_files, write)
-
-
-# for fp in tex_files:
-#     add_labels(fp, markers)

@@ -79,8 +79,7 @@ Every bounded sequence has a convergent subsequence.
 
 % proof for MATH 378
 
-\Theorem{1.1.5}{Monotone sequence with a convergent subsequence is\label{db9529b}
-	convergent}\label{aaf3ba6}
+\Theorem{1.1.5}{Monotone sequence with a convergent subsequence is convergent}\label{aaf3ba6}
 
 Let $\{x_n\}$ be a monotone sequence with a subsequence $\{x_{n_k}\}$
 that converges to $L$. Then $\{x_n\}$ converges to $L$.
@@ -265,12 +264,12 @@ $$
 	Rewriting, we have
 	\begin{align*}
 		a\ln x-x\ln b
-		 & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right) \\
-     & = \infty(-\ln b) \Quad\because\hyperref[e2e1632]{\frac{\ln x}{x}\to0} \\
-     & = -\infty
+		 & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right)                           \\
+		 & = \infty(-\ln b) \Quad\because\hyperref[e2e1632]{\frac{\ln x}{x}\to0} \\
+		 & = -\infty
 	\end{align*}
 
-  This completes the proof.
+	This completes the proof.
 \end{proof}
 
 \Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
@@ -312,7 +311,7 @@ $$\int_0^\infty e^{-t}\,dt=\Big[-e^{-t}\Big]_0^\infty=1$$
 And that $\Gamma(n+1)=n\Gamma(n)$.
 \begin{align*}
 	\int_0^\infty e^{-t}t^n\,dt
-	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt \\
-   & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \hyperref[f3540b0]{Result 1.1.12})} \\
+	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt                  \\
+	 & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \hyperref[f3540b0]{Result 1.1.12})} \\
 	 & = n\Gamma(n)
 \end{align*}
