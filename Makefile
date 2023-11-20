@@ -25,7 +25,7 @@ dev:
 	$(PYTEX) $(BUILD_ARGS) dev $(TEX_FILES)
 
 all:
-	$(PYTEX) $(BUILD_ARGS) build \
+	$(PYTEX) $(BUILD_ARGS) $(ARGS) build \
 		plenary.tex \
 		calculus.tex \
 		algorithm-design.tex \

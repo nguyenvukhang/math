@@ -4,8 +4,6 @@ from argparse import ArgumentParser
 import os, re, time, datetime
 from os import path
 from subprocess import Popen, PIPE
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 
 
 def get_parser():
@@ -226,6 +224,9 @@ def test():
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
 # changed.
 def dev(args):
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler
+
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
     build2 = lambda: build(args)
     [build2(), print("\n[Last build: %s]" % now())]
