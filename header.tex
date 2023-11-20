@@ -44,7 +44,7 @@
 % Parts of the document
 \def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont #2}}}
 \def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont #2}}}
-\def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont #2}}}
+\def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont \ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Example#1#2{\subsubsection{Example {#1}\quad{\normalfont #2}}}
 \def\Exercise#1#2{\subsubsection{Exercise {#1}\quad{\normalfont #2}}}
 \def\Lemma#1#2{\subsubsection{Lemma {#1}\quad{\normalfont #2}}}
