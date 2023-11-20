@@ -10,7 +10,7 @@ jobs:
   checkhealth:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: yarn
         working-directory: web
       - run: yarn checkhealth
@@ -18,7 +18,11 @@ jobs:
   build-pdf:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tex_packages
+            bin
       - uses: xu-cheng/texlive-action@v2
         with:
           scheme: small
