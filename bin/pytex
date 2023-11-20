@@ -4,6 +4,8 @@ from argparse import ArgumentParser
 import os, re, time, datetime
 from os import path
 from subprocess import Popen, PIPE
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 
 def get_parser():
@@ -51,6 +53,7 @@ class PdfLatex:
     def __init__(self, args):
         cmd = (
             "pdflatex",
+            "-halt-on-error",
             f"--output-directory={args.build_dir}",
             f"--jobname={args.jobname}",
         )
@@ -59,8 +62,13 @@ class PdfLatex:
         self.show_computes = args.show_computes
         self.show_proofs = args.show_proofs
 
+    def send_to_file(self):
+        f = open("build.tex", "wb")
+        self.x.stdin = f
+
     def write(self, e: bytes):
         self.x.stdin.write(e)
+        self.x.stdin.write(b"\n\n")
 
     def add_headers(self, filepaths: list[str]):
         self.header_files.extend(filepaths)
@@ -218,9 +226,6 @@ def test():
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
 # changed.
 def dev(args):
-    from watchdog.observers import Observer
-    from watchdog.events import FileSystemEventHandler
-
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
     build2 = lambda: build(args)
     [build2(), print("\n[Last build: %s]" % now())]
