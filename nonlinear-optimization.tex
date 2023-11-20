@@ -351,7 +351,30 @@ The following is obtained by substituting $F$ for $\nabla f$ in the
 	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
 
-\Theorem{5.1.5}{}
+\Definition{5.0.0}{Standard Nonlinear Program}\label{bbe9993}
+
+\begin{equation*}
+	\begin{array}{l l l l}
+		\displaystyle \min_{x\in\R^n}f(x)
+		 & \text{s.t.} & g_i(x)\leq0 & \forall i\in I \\
+		 &             & h_j(x)=0    & \forall j\in J
+	\end{array}\Tag{*}
+\end{equation*}
+Where $f,g_i,h_j:\R^n\to\R$ are continuously differentiable.
+
+We call $(*)$ a nonlinear program (NLP) in standard form.
+
+By convention, we let the feasible set of $(*)$ be denoted by $X$, with
+\begin{equation*}
+	X:=\Set{x\in\R^n}{\begin{array}{l l}
+			g_i(x)\leq0 & \forall i\in I \\
+			h_j(x)=0    & \forall j\in J
+		\end{array}\Tag{**}}
+\end{equation*}
+
+By the continuity of the constraint functions, $X$ is closed.
+
+\Theorem{5.1.5}{}\label{c8e5836}
 
 Let $\bar x$ be a local minimum of $f\in C^1$ over $S$. Then
 $$
