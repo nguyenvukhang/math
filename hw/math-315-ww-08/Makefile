@@ -11,9 +11,5 @@ build:
 dev:
 	$(PYTEX) $(BUILD_ARGS) dev $(TEX_FILES)
 
-clean:
-	rm -rf .build
-	rm -rf hw.pdf
-
 open:
-	open hw.pdf
+	open out.pdf
