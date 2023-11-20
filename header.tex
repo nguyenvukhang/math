@@ -41,19 +41,6 @@
 % brackets in increasing size:
 % \big( \Big( \bigg( \Bigg(
 
-% Parts of the document
-\def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont #2}}}
-\def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont #2}}}
-\def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont \ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Example#1#2{\subsubsection{Example {#1}\quad{\normalfont #2}}}
-\def\Exercise#1#2{\subsubsection{Exercise {#1}\quad{\normalfont #2}}}
-\def\Lemma#1#2{\subsubsection{Lemma {#1}\quad{\normalfont #2}}}
-\def\Problem#1#2{\subsubsection{Problem {#1}\quad{\normalfont #2}}}
-\def\Proposition#1#2{\subsubsection{Proposition {#1}\quad{\normalfont #2}}}
-\def\Remark#1#2{\subsubsection{Remark {#1}\quad{\normalfont #2}}}
-\def\Result#1#2{\subsubsection{Result {#1}\quad{\normalfont #2}}}
-\def\Theorem#1#2{\subsubsection{Theorem {#1}\quad{\normalfont #2}}}
-
 % don't number sections at all
 % `\section{}` behaves like `\section*{}` now
 \setcounter{secnumdepth}{0}
@@ -65,6 +52,17 @@
 \newenvironment{proof}{\paragraph{Proof.}} {\QED}
 \newenvironment{compute}{\paragraph{Compute.}} {\QED}
 
-% controlled in the python build script!
-% \excludecomment{proof} % requires `comment` package
-% \excludecomment{compute} % requires `comment` package
+\def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Example#1#2{\subsubsection{Example {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Exercise#1#2{\subsubsection{Exercise {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Lemma#1#2{\subsubsection{Lemma {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Problem#1#2{\subsubsection{Problem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Proposition#1#2{\subsubsection{Proposition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Remark#1#2{\subsubsection{Remark {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Result#1#2{\subsubsection{Result {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Theorem#1#2{\subsubsection{Theorem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+
+% custom math operators
+\DeclareMathOperator*{\argmin}{argmin}

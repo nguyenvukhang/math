@@ -95,6 +95,6 @@ def new_sha():  # type: () -> bytes
 
 
 for_each(tex_files, get_labels)
-for_each(tex_files, check_references)
-for_each(tex_files, add_labels)
-for_each(tex_files, write)
+# for_each(tex_files, check_references)
+# for_each(tex_files, add_labels)
+# for_each(tex_files, write)
