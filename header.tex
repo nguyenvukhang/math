@@ -33,14 +33,10 @@
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{%
 	\fancyhf{} % clear all header and footer fields
-  \fancyfoot[R]{\footnotesize\lightgray[\gray{\thepage}\lightgray]}
+	\fancyfoot[R]{\footnotesize\lightgray[\gray{\thepage}\lightgray]}
 	\renewcommand{\headrulewidth}{0pt}
 	\renewcommand{\footrulewidth}{0pt}}
 \pagestyle{plain}
-
-% disable equation numbering, so \begin{equation} now behaves like
-% \begin{equation*}
-\makeatletter\renewcommand\tagform@[1]{}\makeatother
 
 % remove paragraph indent
 \setlength{\parindent}{0pt}
@@ -72,10 +68,6 @@
 
 % brackets in increasing size:
 % \big( \Big( \bigg( \Bigg(
-
-% don't number sections at all
-% `\section{}` behaves like `\section*{}` now
-\setcounter{secnumdepth}{0}
 
 \def\section#1{\subsubsection{\LARGE #1}}
 \def\subsection#1{\subsubsection{\Large #1}}

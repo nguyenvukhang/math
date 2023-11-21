@@ -117,17 +117,16 @@ class PdfLatex:
             sw = lambda x: any(map(lambda l: l.startswith(x), buf))
 
             if len(buf) <= 1:
-                if buf[0] in (b"*\n", b"*(Please type a command or say `\end')\n"):
-                    return
-                if num_only.match(buf[0]):
+                if buf[0] in (b"*\n") or num_only.match(buf[0]):
                     return
             if (
                 sw(b"This is pdfTeX")
                 or sw(b"*geometry*")
                 or sw(b"**entering extended mode")
-                # or sw(b"Package hyperref Warning")
+                or sw(b"Package hyperref Warning")
                 or sw(b"Underfull \hbox (badness 10000)")
                 or inc((b"texlive", b"texmf"))
+                or inc((b"(Please type a command or say `\end')\n"))
                 or sw(b"LaTeX Warning: You have requested package")
             ):
                 return

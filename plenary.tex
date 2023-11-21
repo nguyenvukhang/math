@@ -95,9 +95,9 @@ that converges to $L$. Then $\{x_n\}$ converges to $L$.
 
 	Since $\{x_{n_k}\}$ is decreasing and converges to $L$, we can find
 	(and fix) a $k_\epsilon$ such that
-	\begin{equation}
+	\begin{equation*}
 		0<x_{n_k}-L<\epsilon\quad\forall(k\geq k_\epsilon)\tag*{($*$)}
-	\end{equation}
+	\end{equation*}
 	So we take $N_\epsilon=n_{k_\epsilon}$. Then since $\{x_n\}$ is
 	decreasing,
 	$$
@@ -213,12 +213,12 @@ $$
 		e^x=1 + x + \frac{x^2}2 +\ldots
 	$$
 	We have $e^x\geq 1 + x + x^2$ and hence
-	\begin{align}
+	\begin{align*}
 		\lim_{x\to\infty}\frac{e^x}x
 		 & \geq\lim_{x\to\infty}\frac{1+x+\frac{x^2}2}x \\
 		 & =\lim_{x\to\infty}\frac1x + 1 + \frac{x}2    \\
 		 & = \infty
-	\end{align}
+	\end{align*}
 \end{proof}
 
 
@@ -264,12 +264,12 @@ $$
 		a\ln x-x\ln b\to-\infty.
 	$$
 	Rewriting, we have
-	\begin{align}
+	\begin{align*}
 		a\ln x-x\ln b
 		 & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right)                       \\
 		 & = \infty(-\ln b) \Quad\because\href{e2e1632}{\frac{\ln x}{x}\to0} \\
 		 & = -\infty
-	\end{align}
+	\end{align*}
 
 	This completes the proof.
 \end{proof}
@@ -372,9 +372,9 @@ Observe that $\Gamma(1)=1$.
 $$\int_0^\infty e^{-t}\,dt=\Big[-e^{-t}\Big]_0^\infty=1$$
 
 And that $\Gamma(n+1)=n\Gamma(n)$.
-\begin{align}
+\begin{align*}
 	\int_0^\infty e^{-t}t^n\,dt
 	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt              \\
 	 & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.1.12})} \\
 	 & = n\Gamma(n)
-\end{align}
+\end{align*}

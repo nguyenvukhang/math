@@ -58,18 +58,18 @@ $$-u'=(2py_1+q)u+p$$
 
 \begin{compute}
 	First we obtain $\displaystyle y_2'=y_1'-\frac{u'}{u^2}$. Then substitute into the original DE:
-	\begin{align}
+	\begin{align*}
 		y_2' & = py_2^2+qy_2+r                                                                  \\
 		y_1'-\frac{u'}{u^2}
 		     & = p\left(y_1+\frac1u\right)^2+q\left(y_1+\frac1u\right)+r                        \\
 		     & = p\left(y_1^2+\frac{2y_1}{u}+\frac1{u^2}\right)+q\left(y_1+\frac1u\right)+r     \\
 		     & = (py_1^2+qy_1+r)+p\left(\frac{2y_1}{u}+\frac1{u^2}\right)+q\left(\frac1u\right)
-	\end{align}
+	\end{align*}
 	Since $y_1$ is a solution to the original DE,
-	\begin{align}
+	\begin{align*}
 		-\frac{u'}{u^2} & = p\left(\frac{2y_1}{u}+\frac1{u^2}\right)+q\left(\frac1u\right) \\
 		-u'             & =(2py_1+q)u+p
-	\end{align}
+	\end{align*}
 	\QED
 \end{compute}
 
@@ -174,10 +174,10 @@ $$v''y_1+v'(2y_1'+py_1)=0$$
 	$$(v''y_1+2v'y_1'+vy_1'')+p(v'y_1+vy_1')+q(vy_1)=r$$
 
 	But since $y_1$ is known to be a solution:
-	\begin{align}
+	\begin{align*}
 		(v''y_1+2v'y_1')+p(v'y_1) & =0 \\
 		v''y_1+v'(2y_1'+py_1)     & =0
-	\end{align}
+	\end{align*}
 	\QED
 \end{compute}
 
@@ -200,9 +200,9 @@ If complex roots ($r=\alpha\pm\beta i$): $y:=Ax^\alpha\cos(\beta\ln x)+Bx^\alpha
 
 % Lecture 12 page 6
 
-\begin{equation}\def\y#1{y^{(#1)}}
+\begin{equation*}\def\y#1{y^{(#1)}}
 	\y n+p_1\y{n-1}+p_2\y{n-2}+\ldots+p_{n-1}y'+p_ n y=q
-\end{equation}
+\end{equation*}
 
 where $\iter{p_1}{p_n},q:\R\to\R$.
 
@@ -215,9 +215,9 @@ For these we split into a few cases:
 
 \Result{3.1.1}{Constant coefficients}\label{cd8a29a}
 
-\begin{equation}\def\y#1{y^{(#1)}}
+\begin{equation*}\def\y#1{y^{(#1)}}
 	\y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ny=0\tag*{($*$)}
-\end{equation}
+\end{equation*}
 where $\iter{a_1}{a_n}\in\R$ fixed.
 
 Then try $y=e^{rt}$. Substituting that into $(*)$, we'll obtain
@@ -237,9 +237,9 @@ One way to establish the linear independence is to evaluate their
 
 \Result{3.1.2}{Euler equations}\label{a0f8e0c}
 
-\begin{equation}\def\y#1{x^{#1}y^{(#1)}}
+\begin{equation*}\def\y#1{x^{#1}y^{(#1)}}
 	a_0\y{n}+a_1\y{n-1}+\ldots+a_ny=0\tag*{($*$)}
-\end{equation}
+\end{equation*}
 where $\iter{a_1}{a_n}\in\R$ fixed.
 
 Then try $y=x^{r}$. Substituting that into $(*)$, we'll obtain
@@ -346,12 +346,12 @@ $$
 	$$
 
 	Next, let $f(t):=t$. Then
-	\begin{align}
+	\begin{align*}
 		\mathcal L\{f\}(s)
 		 & =\int_0^\infty te^{-st}\,dt                                                    \\
 		 & =\left[-\frac1se^{-st}\cdot t\right]_0^\infty-\int_0^\infty-\frac1se^{-st}\,dt \\
 		 & =\frac1{s^2}
-	\end{align}
+	\end{align*}
 \end{compute}
 
 \newpage
@@ -377,12 +377,12 @@ $$
 		\L(ty')=-\frac{d}{ds}\L(y')=-u-su'
 	$$
 	So then applying the Laplace transform on both sides:
-	\begin{align}
+	\begin{align*}
 		(-9s+s^2u)+2(-u-su')-4(u)         & =5                                \\
 		(-2s)u'+(s^2-6)u                  & =9s+5                             \\
 		u'+\frac{6-s^2}{2s}u              & =-\frac92-\frac5{2s}              \\
 		u'+\left(\frac3s-\frac s2\right)u & =-\frac92-\frac5{2s} \tag*{($*$)}
-	\end{align}
+	\end{align*}
 
 	This is a first-order linear equation in $u$.
 
@@ -393,15 +393,15 @@ $$
 		= \ln (s^3e^{-(s^2/4)})
 	$$
 	$\implies v=s^3e^{-(s^2/4)}$. Substituting back to ($*$), we have
-	\begin{align}
+	\begin{align*}
 		uv & =\int\frac{9s+5}{-2s}\cdot s^3e^{-(s^2/4)}\,ds           \\
 		   & =\int\left(-\frac92s^2-\frac5{2}s\right)e^{-(s^2/4)}\,ds
-	\end{align}
-	\begin{align}
+	\end{align*}
+	\begin{align*}
 		\int xe^{-(x^2/4)}\,dx   & = -2e^{-(x^2/4)}                           \\
 		\int x^2e^{-(x^2/4)}\,dx & = x(-2e^{-(x^2/4)})-\int-2e^{-(x^2/4)}\,dx \\
 		& = x(-2e^{-(x^2/4)})+\int2e^{-(x^2/4)}\,dx \\
-	\end{align}
+	\end{align*}
 
 
 \end{compute}
