@@ -61,6 +61,7 @@ class PdfLatex:
             f"--output-directory={args.build_dir}",
             f"--jobname={args.jobname}",
         )
+        self.dev_mode = args.action == "dev"
         self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=env)
         self.pretty = args.pretty
         self.verbose = verbose
@@ -150,7 +151,7 @@ class PdfLatex:
         for l in lines:
             excl, ast = s(l, b"!"), s(l, b"*")
             if excl or ast:
-                if is_err:
+                if is_err and not self.dev_mode:
                     raise Exception(
                         "PYTEX ERROR\n" + b"".join(buf).strip().decode("utf8")
                     )
