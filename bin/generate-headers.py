@@ -1,3 +1,6 @@
+from .consts import *
+
+
 def generate_section(t):  # type: (str) -> str
     c = lambda v: rf"\ifx&#2&\else{v}\fi"
     space = r"\hspace{0.7em}"
@@ -7,19 +10,6 @@ def generate_section(t):  # type: (str) -> str
     return buf
 
 
-SECTION_TITLES = (
-    "Algorithm",
-    "Corollary",
-    "Definition",
-    "Example",
-    "Exercise",
-    "Lemma",
-    "Problem",
-    "Proposition",
-    "Remark",
-    "Result",
-    "Theorem",
-)
 l = map(generate_section, SECTION_TITLES)
 l = map(print, l)
 list(l)
