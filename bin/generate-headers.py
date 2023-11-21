@@ -1,6 +1,6 @@
 def generate_section(t):  # type: (str) -> str
     c = lambda v: rf"\ifx&#2&\else{v}\fi"
-    buf = f"\def\{t}#1#2" + "{\subsubsection{" + t + r" {#1}\quad{\normalfont"
+    buf = f"\def\{t}#1#2" + "{\subsubsection*{" + t + r" {#1}\quad{\normalfont"
     buf += c("(") + "#2" + c(")") + "}}}"
     return buf
 
