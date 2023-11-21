@@ -57,4 +57,8 @@ edit:
 	cp `which pytex` bin/pytex
 
 head:
-	python3 bin/generate-headers.py >> header.tex
+	python3 bin/gen.py headers >> header.tex
+
+syntax:
+	python3 bin/gen.py syntax > tex.vim
+	cat tex.vim >> ~/dots/nvim/after/syntax/tex.vim
