@@ -60,11 +60,11 @@ complicated functions are holomorphic too):
 (I really thought this list was gonna be longer. To be continued.)
 
 All these can be proved using a destructuring of $z:=x+iy$ and using
-\hyperref[ffea0ed]{Definition 1.1.3}.
+\href{ffea0ed}{Definition 1.1.3}.
 
 \Definition{1.4.2}{Cauchy-Riemann Equations}\label{fb10fd3}
 
-If $f(z) = u(z) + iv(z)$ is \hyperref[e1e08f7]{holomorphic}, then
+If $f(z) = u(z) + iv(z)$ is \href{e1e08f7}{holomorphic}, then
 $$
 	\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y}
 	\quad\text{and}\quad
@@ -154,7 +154,7 @@ we have
 	 & =\lim_{\epsilon\to0^+}\int_{a+\epsilon}^{b-\epsilon}\phi'(t)\,dt  \\
 	 & =\int_a^b\phi'(t)\,dt
 \end{align*}
-and hence have the \hyperref[b869dc0]{fundamental theorem of calculus}
+and hence have the \href{b869dc0}{fundamental theorem of calculus}
 hold for $\phi\in C^1([a,b])$.
 
 \Definition{2.1.2}{Continuous complex curve}\label{e4132bc}
@@ -180,8 +180,8 @@ $$
 	\int_a^b\psi(t)\,dt:=\int_a^b\psi_1(t)\,dt+i\int_a^b\psi_2(t)\,dt
 $$
 
-Using this definition along with Definitions \hyperref[c1f6d35]{2.1.1}
-and \hyperref[e4132bc]{2.1.2}, we have that if $\gamma\in C^1([a,b])$
+Using this definition along with Definitions \href{c1f6d35}{2.1.1}
+and \href{e4132bc}{2.1.2}, we have that if $\gamma\in C^1([a,b])$
 is complex-valued, then
 $$
 	\gamma(b)-\gamma(a)=\int_a^b\gamma'(t)\,dt
@@ -208,8 +208,8 @@ then
 	\,dt
 \end{align*}
 
-This follows from \hyperref[c511702]{Definition 2.1.3} and the
-\hyperref[d969d46]{chain rule}.
+This follows from \href{c511702}{Definition 2.1.3} and the
+\href{d969d46}{chain rule}.
 
 (the lack of an $i$ term is intentional. Remember that
 $f\circ\gamma:\R\to\R$)
@@ -233,8 +233,8 @@ $$
 $$
 
 This comes from using a holomorphic function on
-\hyperref[f37b676]{Proposition 2.1.4}, and then applying
-\hyperref[b1e96fc]{Definition 2.1.5}.
+\href{f37b676}{Proposition 2.1.4}, and then applying
+\href{b1e96fc}{Definition 2.1.5}.
 
 \Proposition{2.1.7}{Moving $||$ into integral}\label{bcec8b1}
 
@@ -308,7 +308,7 @@ Then
 \begin{enumerata}
 	\item $|D_{w_1}f(P)|=|D_{w_2}f(P)|$
 	\item if $|f'(P)|\neq0$, then the directed angle from $w_1$ to
-	      $w_2$ equals the directed angle from $D_{w_1}f(P)$ to $D_{w_2}f(P)$.
+	$w_2$ equals the directed angle from $D_{w_1}f(P)$ to $D_{w_2}f(P)$.
 \end{enumerata}
 Note:
 \begin{itemize}
@@ -356,8 +356,8 @@ $P\in U$ be fixed. Suppose that $F$ is continuous on $U$ and
 holomorphic on $U\setminus\{P\}$. Then there is a holomorphic $H$ on
 $U$ such that $\partial H/\partial z=F$.
 
-Note that since $H$ is holomorphic, by \hyperref[f75e43c]{Theorem
-	2.2.1}, we can write $H'=F$.
+Note that since $H$ is holomorphic, by \href{f75e43c}{Theorem 2.2.1},
+we can write $H'=F$.
 
 \Lemma{2.4.1}{}\label{c6c594a}
 
@@ -396,16 +396,18 @@ $\gamma(a)=\gamma(b)$, then
 $$\oint_\gamma f(z)\,dz=0$$
 
 \begin{proof}
-	By \hyperref[e7808d1]{Theorem 1.5.3}, there is a holomorphic
-	function $G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$,
-	we have that
-	$$0=G(\gamma(b))-G(\gamma(a))$$
+	By \href{e7808d1}{Theorem 1.5.3}, there is a holomorphic function
+	$G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$, we have
+	that
+	$$
+		0=G(\gamma(b))-G(\gamma(a))
+	$$
 
-	By \hyperref[c526c09]{Proposition 2.1.6}, this equals
+	By \href{c526c09}{Proposition 2.1.6}, this equals
 	$$\oint_\gamma G'(z)\,dz=\oint_\gamma f(z)\,dz$$
 
-	(Reminder that since $G$ is holomorphic, $G'=\dfrac{\partial
-			G}{\partial z}$ by \hyperref[f75e43c]{Theorem 2.2.1})
+  (Reminder that since $G$ is holomorphic, $G'=\dfrac{\partial
+  G}{\partial z}$ by \href{f75e43c}{Theorem 2.2.1})
 \end{proof}
 
 \Definition{2.6.1}{Piecewise $C^1$ curve}\label{baf22ac}
@@ -432,8 +434,7 @@ $$
 	f(z)\,dz
 $$
 
-where $a_1,a_2,\ldots,a_k$ are as in \hyperref[baf22ac]{Definition
-	2.6.1}.
+where $a_1,a_2,\ldots,a_k$ are as in \href{baf22ac}{Definition 2.6.1}.
 
 \Lemma{2.6.3}{}\label{b6b6d51}
 
@@ -456,7 +457,7 @@ $$
 	f(\gamma(b))-f(\gamma(a))=\oint_\gamma f'(z)\,dz
 $$
 
-(This is really just \hyperref[c526c09]{Proposition 2.1.6} restated
+(This is really just \href{c526c09}{Proposition 2.1.6} restated
 with a piecewise $C^1$ version of $\gamma$)
 
 \Proposition{2.6.5}{}\label{b52bca5}

@@ -144,7 +144,7 @@ addition to ``problem".)
 
 $$
 	\VC:=\{(G,k)\mid G\text{ is a graph with a
-		\hyperref[b530c81]{vertex cover} of size}\leq k\}
+		\href{b530c81}{vertex cover} of size}\leq k\}
 $$
 
 \Definition{3.3.2}{Satisfiability Problem}\label{d6893fe}
@@ -178,10 +178,10 @@ Observe that $\P\subseteq\NP$. If $L$ has a polynomial-time algorithm,
 then it also has a polynomial-time verifier.
 
 \begin{proof}
-	If $L\in\P$, then \hyperref[ee3be28]{by definition} there exists a polynomial-time algorithm $A$ with
+	If $L\in\P$, then \href{ee3be28}{by definition} there exists a polynomial-time algorithm $A$ with
 	$$x\in L\iff A(x)=\Yes$$
 
-	Then, following the \hyperref[d93050e]{defintion of $\NP$}, we need
+	Then, following the \href{d93050e}{defintion of $\NP$}, we need
 	to find a polynomial-time verifier $B$ such that
 	$$
 		x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
@@ -203,10 +203,10 @@ Note that $\binrep=L\cup\overline L$ for any decision problem $L$.
 Prove that if $L\in\P$ then $\overline L\in\P$.
 
 \begin{proof}
-	If $L\in\P$, then \hyperref[ee3be28]{by definition} there exists a polynomial-time algorithm $A$ with
-	$$x\in L\iff A(x)=\Yes$$
+  If $L\in\P$, then \href{ee3be28}{by definition} there exists a
+  polynomial-time algorithm $A$ with $$x\in L\iff A(x)=\Yes$$
 
-	Then, following the \hyperref[ee3be28]{defintion of $\P$}, we need
+	Then, following the \href{ee3be28}{defintion of $\P$}, we need
 	to find a polynomial-time algorithm $B$ such that
 	$$x\in\overline L\iff B(x)=\Yes$$
 
@@ -220,7 +220,7 @@ $$
 	\mathsf{coNP}:=\{L\mid\overline L\in\mathsf{NP}\}
 $$
 
-For example, recall that $\mathsf{\hyperref[d6893fe]{SAT}}=\{F\mid
+For example, recall that $\mathsf{\href{d6893fe}{SAT}}=\{F\mid
 	F\text{ is a satisfiable boolean formula}\}$. Then
 $$
 	\overline{\SAT}=\left\{x\in\binrep\, \middle\vert
