@@ -1,5 +1,12 @@
 \documentclass{article}
 
+% for coloring links in hyperref
+\usepackage{xcolor}
+\definecolor{blue}{HTML}{0284C7}
+\definecolor{green}{HTML}{10B981}
+\def\blue#1{\textcolor{blue}{#1}}
+\def\green#1{\textcolor{green}{#1}}
+
 % for linking to sections within the same document
 % provides `\hyperref[<target>]{<display text>}`
 \usepackage[colorlinks=true,linkcolor={magenta}]{hyperref}
@@ -11,10 +18,7 @@
 \setlist[itemize]{itemsep=1pt,topsep=0pt}
 
 \usepackage{amsmath,amsfonts,amssymb}
-\usepackage[b5paper, margin=0.7in]{geometry}
-
-% for coloring links in hyperref
-\usepackage{color}
+\usepackage[b5paper,margin=0.7in]{geometry}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
@@ -29,7 +33,7 @@
 \def\Quad{\quad\quad}
 \def\quadd{\quad\quad\quad}
 \def\Quadd{\quad\quad\quad\quad}
-\def\with{\Quad}
+\def\with{\quad}
 \def\norm#1{\left\lVert{#1}\right\rVert}
 \def\QED{\hfill$\square$}
 \def\iter#1#2{{#1},\ldots,{#2}}

@@ -4,6 +4,7 @@ All the proofs and results I don't want to write twice.
 
 \textbf{1.x.x)} Real analysis \\
 \textbf{2.x.x)} Calculus \\
+\textbf{3.x.x)} One-liner definitions \\
 \textbf{9.x.x)} General stuff \\
 
 \Definition{1.1.1}{Monotone sequences}\label{d5142a8}
@@ -294,6 +295,27 @@ $$\int_a^bf(t)\,dt=F(b)-F(a)$$
 
 This is stronger than the corollary because it does not assume that
 $f$ is continuous.
+
+\Definition{3.1.1}{Affine functions}\label{dcb7f73}
+
+An affine function $f:\R^n\to\R^m$ is of the form
+$$
+	f(x)=Ax-b\with(A\in\R^{m\times n},b\in\R^m)
+$$
+
+\Definition{3.1.2}{Coercive functions}
+
+A function $f:\R^n\to\R$ is coercive if
+$$
+  \lim_{\norm x\to\infty}f(x)=+\infty
+$$
+
+\Definition{3.1.3}{Supercoercive functions}
+
+A function $f:\R^n\to\R$ is supercoercive if
+$$
+  \lim_{\norm x\to\infty}\frac{f(x)}{\norm x}=+\infty
+$$
 
 \Definition{9.1.1}{Gamma function}\label{ce1fa3f}
 

@@ -157,6 +157,40 @@ differentiable. Moreover, let $\bar x$ be a stationary point of $f$
 such that $\nabla^2f(\bar x)$ is positive definite. Then $\bar x$ is a
 strict local minimizer of $f$.
 
+\Theorem{2.2.1}{First-order characterizations}\label{cd9cea7}
+
+Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be
+differentiable on $C$. Then the following hold for all $x,\bar x\in
+	C$:
+\begin{enumerata}
+	\item $f$ is convex on $C$ iff
+	\begin{equation*}
+		f(x)\geq f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Tag{*}
+	\end{equation*}
+	\item $f$ is strictly convex on $C$ iff $(*)$ holds with strict
+	inequality whenever $x\neq\bar x$.
+	\item $f$ is strongly convex with modulus $\mu$ on $C$ iff
+	$$
+		f(x)\geq\Big[f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Big]
+		+\frac\mu2\norm{x-\bar x}^2
+	$$
+\end{enumerata}
+
+\Corollary{2.2.2}{}\label{aa63a8a}
+
+Let $f:\R^n\to\R$ be convex and differentiable. Then the following
+hold:
+\begin{enumerata}
+	\item \textit{(Affine minorization)} There exists an
+	\hyperref[dcb7f73]{affine} function $g:\R^n\to\R$ which minorizes
+	$f$ everywhere, i.e.
+	$$
+		g(x)\leq f(x)\with(x\in\R^n)
+	$$
+	\item If $f$ is strongly convex then it is strictly convex and
+	coercive (level-bounded).
+\end{enumerata}
+
 \Definition{3.1.4}{Step-size rule}\label{ae4eac6}
 
 Let $f:{\R}^n\to{\R}$ be continuously differentiable and
@@ -915,14 +949,3 @@ Let $\bar x$ be a local minimum of (1) such that LICQ holds at $\bar
 	Then since $\tilde\lambda_i = \bar\lambda_i\ \forall(i\notin I(\bar
 		x))$, this shows $\tilde\lambda=\bar\lambda$ and $\tilde\mu=\bar\mu$.
 \end{proof}
-
-
-
-
-% 		     
-% $$
-% are linearly indepdendent, and
-% \begin{gather*}
-% 		      \nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
-% 		      \nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
-% Proving that MFCQ implies LICQ is hard.
