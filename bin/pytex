@@ -51,7 +51,7 @@ class PdfLatex:
     def __init__(self, args, verbose=True):
         cmd = (
             "pdflatex",
-            "-halt-on-error",
+            "--halt-on-error",
             f"--output-directory={args.build_dir}",
             f"--jobname={args.jobname}",
         )

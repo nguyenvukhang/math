@@ -274,7 +274,7 @@ $$
 	This completes the proof.
 \end{proof}
 
-\Definition{1.1.13}{Norm properties}
+\Definition{1.1.13}{Norm properties}\label{e0fff96}
 
 Given a vector space $X$ over a subfield $F$ of the complex numbers
 $\C$, a \textbf{norm} on $X$ is a real-valued function $p:X\to\R$ with
@@ -333,7 +333,7 @@ $$
 	\lim_{\norm x\to\infty}\frac{f(x)}{\norm x}=+\infty
 $$
 
-\Remark{4.1.1}{Thinking about matrix dimensions}
+\Remark{4.1.1}{Thinking about matrix dimensions}\label{d8bd136}
 
 Let $A\in\R^{m\times n}$, $x\in\R^n$, and $b\in\R^m$. We can validly
 write
@@ -345,6 +345,18 @@ So $A$ is a gadget that takes a $n$-dim vector and returns a $m$-dim
 vector.
 
 ($A$ has $m$ rows and $n$ columns)
+
+\Definition{4.1.2}{Positive (semi)definiteness}\label{e25e722}
+
+A symmetric matrix $A\in\R^{n\times n}$ is positive definite if
+$$
+	x^TAx>0\with\forall(x\in\R^n)
+$$
+
+and positive semidefinite if
+$$
+	x^TAx\geq0\with\forall(x\in\R^n)
+$$
 
 \Definition{9.1.1}{Gamma function}\label{ce1fa3f}
 

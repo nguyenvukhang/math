@@ -6,6 +6,7 @@
 \definecolor{green}{HTML}{10B981}
 \definecolor{gray}{HTML}{CBD5E1}
 \definecolor{lightgray}{HTML}{E2E8F0}
+\definecolor{pink}{HTML}{DB2777}
 \def\blue#1{\textcolor{blue}{#1}}
 \def\green#1{\textcolor{green}{#1}}
 \def\gray#1{\textcolor{gray}{#1}}
@@ -13,7 +14,8 @@
 
 % for linking to sections within the same document
 % provides `\hyperref[<target>]{<display text>}`
-\usepackage[colorlinks=true,linkcolor={magenta}]{hyperref}
+\usepackage[colorlinks=true,linkcolor=pink]{hyperref}
+\hypersetup{pageanchor=false}
 
 % for adding super powers to lists {itemize,enumerate}
 \usepackage{tex_packages/enumitem}
@@ -25,7 +27,7 @@
 \usepackage[b5paper,
 	left=0.7in,right=0.7in,
 	top=0.5in,bottom=0.5in,
-	footskip=0in
+	footskip=10.25pt
 ]{geometry}
 
 \usepackage{fancyhdr}
@@ -37,10 +39,13 @@
 \pagestyle{plain}
 
 % disable equation numbering, so \begin{equation} now behaves like
-% \begin{equation&}
+% \begin{equation*}
 \makeatletter\renewcommand\tagform@[1]{}\makeatother
 
+% remove paragraph indent
 \setlength{\parindent}{0pt}
+
+% set line spacing
 \setlength{\parskip}{0.5em}
 
 % Typing macros. Keep these to an absolute minimum to maintain
@@ -79,8 +84,9 @@
 \newenvironment{proof}{\paragraph{Proof.}} {\QED}
 \newenvironment{compute}{\paragraph{Compute.}} {\QED}
 \newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
-\newenvironment{enumeratr}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
+\newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 
+% auto-generated from bin/generate-headers.py
 \def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
