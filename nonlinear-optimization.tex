@@ -11,11 +11,32 @@ $$
 
 Let $X\subset\R^n$ and $f:\R^n\to\R$. Then $\bar x\in X$ is called a
 \begin{itemize}
-
 	\item global minimizer of $f$ over $X$ if $\bar x\in\argmin_Xf$,
 	      i.e. $\forall x\in X:f(\bar x)\leq f(x)$
-
+	\item local minimizer of $f$ over $X$ if $\exists\epsilon>0$ such
+	      that $\forall x\in X\cap B_\epsilon(\bar x):f(\bar x)\leq f(x)$
 \end{itemize}
+For strict global/local minimizers, the above conditions hold with
+strict inequality.
+
+\Definition{1.1.4}{Level sets and Lower level sets}\label{d6589cc}
+
+For $f:\R^n\to\R$ the level set for the level $c\in R$ is given by
+$$
+	f^{-1}(\{c\})=\Set{x\in\R^n}{f(x)=c}
+$$
+
+The lower level set (or \textit{sublevel} set) of $f$ to the level
+$c\in\R$ is
+$$
+	\text{lev}_cf:=f^{-1}((-\infty,c])=\Set{x\in\R^n}{f(x)\leq c}
+$$
+
+\Proposition{1.1.5}{}\label{bd1eec0}
+
+Let $f:\R^n\to\R$ be continuous. If $\exists c\in\R$ such that
+$\text{lev}_cf$ is non-empty and bounded then $f$ takes its minimum
+over $\R^n$.
 
 \Definition{1.2.1}{Convex sets}\label{e012971}
 
@@ -44,6 +65,19 @@ Then $f:C\to\R$ is said to be
 	\item strongly convex on $C$ if $\exists\mu>0$ such that
 	      $$f(\lambda x+(1-\lambda)y)+\frac{\mu}{2}\lambda(1-\lambda)\norm{x-y}^2\leq\lambda f(x)+(1-\lambda)f(y)$$
 \end{itemize}
+
+\Example{1.2.5}{Convex functions}\label{f96c8ae}
+
+\begin{enumerata}
+	\item $\exp:\R\to\R$ and $-\log:(0,\infty)\to\R$ are convex.
+	\item \textit{(Affine functions)} $f:\R^n\to\R^m$ of the form
+	$$
+		f(x)=Ax-b\with(A\in\R^{m\times n},b\in\R^m)
+	$$
+	is called \textbf{affine} (linear). All affine functions, hence
+	all linear functions ($b=0$) $\R^n\to\R$ are convex.
+	\item \textit{(Norms)} Any norm $\norm\cdot$ on $\R^n$ is convex.
+\end{enumerata}
 
 \Proposition{1.2.6}{Convexity preserving operations}\label{ddce2a7}
 
@@ -668,24 +702,24 @@ qualification.
 
 Let $\bar x$ be feasible for (1). We say that
 
-\begin{enumerate}[label=(\alph*)]
+\begin{enumerata}
 	\item the linear independence constraint qualification (LICQ) holds
-	      at $\bar x$ if
-	      $$
-		      \nabla g_i(\bar x)\quad\forall(i\in I(\bar x)),\ \nabla h_j(\bar x)\quad\forall(j\in J)
-	      $$
-	      are linearly indepdendent
+	at $\bar x$ if
+	$$
+		\nabla g_i(\bar x)\quad\forall(i\in I(\bar x)),\ \nabla h_j(\bar x)\quad\forall(j\in J)
+	$$
+	are linearly indepdendent
 	\item the Mangasarian-Fromovitz constraint qualification (MFCQ)
-	      holds at $\bar x$ if
-	      $$
-		      \nabla h_j(\bar x)\quad\forall(j\in J)
-	      $$
-	      are linearly indepdendent, and
-	      \begin{gather*}
-		      \nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
-		      \nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
-	      \end{gather*}
-\end{enumerate}
+	holds at $\bar x$ if
+	$$
+		\nabla h_j(\bar x)\quad\forall(j\in J)
+	$$
+	are linearly indepdendent, and
+	\begin{gather*}
+		\nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
+		\nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
+	\end{gather*}
+\end{enumerata}
 
 \Proposition{5.1.16}{LICQ $\implies$ MFCQ}\label{a7ef3f5}
 
@@ -855,10 +889,10 @@ which is a contradiction against MFCQ.
 
 Let $\bar x$ be a local minimum of (1) such that LICQ holds at $\bar
 	x$. Then:
-\begin{enumerate}[label=(\alph*)]
+\begin{enumerata}
 	\item There exists $(\bar\lambda,\bar\mu)\in M(\bar x)$.
 	\item $M(\bar x) = \{(\bar\lambda,\bar\mu)\}$.
-\end{enumerate}
+\end{enumerata}
 
 \begin{proof}
 	(a) follows from Proposition 5.1.16 + Corollary 5.1.19

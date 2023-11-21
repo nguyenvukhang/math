@@ -29,6 +29,7 @@
 \def\Quad{\quad\quad}
 \def\quadd{\quad\quad\quad}
 \def\Quadd{\quad\quad\quad\quad}
+\def\with{\Quad}
 \def\norm#1{\left\lVert{#1}\right\rVert}
 \def\QED{\hfill$\square$}
 \def\iter#1#2{{#1},\ldots,{#2}}
@@ -50,6 +51,8 @@
 % for enabling/disabling specific fields
 \newenvironment{proof}{\paragraph{Proof.}} {\QED}
 \newenvironment{compute}{\paragraph{Compute.}} {\QED}
+\newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newenvironment{enumeratr}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 
 \def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
