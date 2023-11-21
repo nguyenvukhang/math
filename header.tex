@@ -38,10 +38,6 @@
 	\renewcommand{\footrulewidth}{0pt}}
 \pagestyle{plain}
 
-% disable equation numbering, so \begin{equation} now behaves like
-% \begin{equation*}
-\makeatletter\renewcommand\tagform@[1]{}\makeatother
-
 % remove paragraph indent
 \setlength{\parindent}{0pt}
 
@@ -85,6 +81,9 @@
 \newenvironment{compute}{\paragraph{Compute.}} {\QED}
 \newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
 \newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
+\renewenvironment{align}{\begin{align*}}{\end{align*}}
+\renewenvironment{gather}{\begin{gather*}}{\end{gather*}}
+\renewenvironment{equation}{\begin{equation*}}{\end{equation*}}
 
 % auto-generated from bin/generate-headers.py
 \def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
