@@ -1,5 +1,8 @@
 \section{Nonlinear Optimization}\label{d1c9db1}
 
+\def\pd{\succ} % positive definite
+\def\psd{\succeq} % positive semidefinite
+
 \Definition{1.1.2}{The argmin set}\label{b27e478}
 
 The set which minimizes values of $f$ over a domain $X$ is denoted by
@@ -169,7 +172,7 @@ differentiable on $C$. Then the following hold for all $x,\bar x\in
 	\end{equation}
 	\item $f$ is strictly convex on $C$ iff $(*)$ holds with strict
 	inequality whenever $x\neq\bar x$.
-	\item $f$ is strongly convex with modulus $\mu$ on $C$ iff
+	\item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff
 	$$
 		f(x)\geq\Big[f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Big]
 		+\frac\mu2\norm{x-\bar x}^2
@@ -214,9 +217,56 @@ differentiable on $C$. Then the following hold for all $x,y\in C$
 \begin{enumerata}
 	\item $f$ is convex on $C$ iff
 	\begin{equation}
-		\inner{\nabla f(x)-\nabla f(y)}{x-y}\geq0
+		\inner{\nabla f(x)-\nabla f(y)}{x-y}\geq0\Tag{*}
 	\end{equation}
+	\item $f$ is strictly convex on $C$ iff $(*)$ holds with a strict
+	inequality whenever $x\neq y$.
+	\item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff
+	$$
+		\inner{\nabla f(x)-\nabla f(y)}{x-y}\geq\mu\norm{x-y}^2
+	$$
 \end{enumerata}
+
+\Theorem{2.2.5}{Twice differentiable convex functions}\label{eeb9c30}
+
+Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be twice
+continuously differentiable on $C$. Then the following hold:
+\begin{enumerata}
+	\def\allx{\forall x\in C}
+	\def\hessian{\nabla^2f(x)}
+	\item $f$ is convex on $C$ iff $\hessian$ is positive
+	semidefinite $\allx$.
+	\item If $\hessian$ is positive definite $\allx$ then $f$ is
+	strictly convex on $C$.
+	\item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff,
+	$\allx$, the smallest eigenvalue of $\hessian$ is bounded by $\mu$
+	from below.
+\end{enumerata}
+
+\Corollary{2.2.6}{Convexity of quadratic functions}\label{de25005}
+
+Let $A\in\R^{n\times n}$ be symmetric and $b\in\R^n$, $\gamma\in\R$,
+and define $f:\R^n\to\R$ by
+$$
+	f(x)=\frac12x^TAx+b^Tx+\gamma
+$$
+Then the following hold:
+\begin{enumerata}
+	\item $f$ is convex if and only if $A$ is positive semidefinite
+	\item $f$ is strongly convex if and only if $A$ is positive definite
+\end{enumerata}
+
+\begin{proof}
+	% TODO: come back here and show that f is twice cont diff.
+
+	In view of \href{eeb9c30}{Theorem 2.2.5}, it suffices to show that $f$ is
+	twice continuously differentiable.
+	\begin{align}
+		\nabla f(x)  & = Ax + b \\
+		\nabla^2f(x) & = A
+	\end{align}
+	and we are done.
+\end{proof}
 
 \Definition{3.1.4}{Step-size rule}\label{ae4eac6}
 
@@ -460,10 +510,10 @@ The following is obtained by substituting $F$ for $\nabla f$ in the
 	\item [\textbf{(S2)}] Try to compute $d^k$ as a solution of
 	      $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
 	      If no solution can be found or if
-	      \begin{gather*}
+	      \begin{gather}
 		      \nabla f(x^k)^Td^k>-\rho\norm{d^k}^p\\
 		      \text{\small{(\href{fefb024}{insufficient decrease})}}
-	      \end{gather*}
+	      \end{gather}
 	      then fall back to $d^k:=-\nabla f(x^k)$
 	\item [\textbf{(S3)}] Determine $t_k$ by
 	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
@@ -776,10 +826,10 @@ Let $\bar x$ be feasible for (1). We say that
 		\nabla h_j(\bar x)\quad\forall(j\in J)
 	$$
 	are linearly indepdendent, and
-	\begin{gather*}
+	\begin{gather}
 		\nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
 		\nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
-	\end{gather*}
+	\end{gather}
 \end{enumerata}
 
 \Proposition{5.1.16}{LICQ $\implies$ MFCQ}\label{a7ef3f5}
@@ -795,18 +845,18 @@ $$
 	\nabla h_j(\bar x)\quad\forall(j\in J)
 $$
 are linearly indepdendent, and
-\begin{gather*}
+\begin{gather}
 	\nabla g_i(\bar x)^T < 0  \quad\forall(i\in I(\bar x))\\
 	\nabla h_j(\bar x)^Td = 0 \quad\forall(j\in J)
-\end{gather*}
+\end{gather}
 
 Then there exists $\epsilon>0$ and a $C^1$-curve
 $\gamma:(-\epsilon,\epsilon)\to\R^n$ such that
-\begin{gather*}
+\begin{gather}
 	\gamma(t) \in X\quad\forall(t\in(-\epsilon,\epsilon)) \\
 	\gamma(0) = \bar x \\
 	\gamma'(0)=d
-\end{gather*}
+\end{gather}
 
 
 \Lemma{5.1.18}{}\label{a08cd35}
@@ -831,25 +881,25 @@ Then ACQ holds at $\bar x$.
 	Let $d\in L_X(\bar x)$. By MFCQ, there exists $\hat d$ such that
 	% Note: we can't use d directly instead of d(∂) because d doesn't
 	% have the strict inequality required by Lemma 5.1.17
-	\begin{gather*}
+	\begin{gather}
 		\nabla g_i(\bar x)^T\hat d<0\quad\forall(i\in I(\bar x)) \\
 		\nabla h_j(\bar x)^T\hat d=0\quad\forall(j\in J)
-	\end{gather*}
+	\end{gather}
 	and $\nabla h_j(\bar x)\ \forall(j\in J)$ are linearly indepdendent.
 
 	Set $d(\delta):= d + \delta\hat d$. Then, $\forall\delta>0$:
-	\begin{gather*}
+	\begin{gather}
 		\nabla g_i(\bar x)^T{d(\delta)}<0\quad\forall(i\in I(\bar x)) \\
 		\nabla h_j(\bar x)^T{d(\delta)}=0\quad\forall(j\in J)
-	\end{gather*}
+	\end{gather}
 
 	Applying Lemma 5.1.17 to $d(\delta)$ yields a $C^1$-curve
 	$\gamma:(-\epsilon,\epsilon)\to\R^n$ such that
-	\begin{gather*}
+	\begin{gather}
 		\gamma(t) \in X\quad\forall(t\in(-\epsilon,\epsilon)) \\
 		\gamma(0) = \bar x \\
 		\gamma'(0)=d(\delta)
-	\end{gather*}
+	\end{gather}
 
 	Let $\{t_k\}\downarrow0$ and set $x^k:=\gamma(t_k)$. Then
 	$\{x^k\in X\}\to\bar x$.
@@ -968,10 +1018,10 @@ Let $\bar x$ be a local minimum of (1) such that LICQ holds at $\bar
 	\end{align}
 
 	Then by LICQ,
-	\begin{gather*}
+	\begin{gather}
 		\tilde\lambda_i - \bar\lambda_i = 0\quad\forall(i\in I(\bar x)) \\
 		\tilde\mu_j - \bar\mu_j = 0\quad\forall(j\in J) \\
-	\end{gather*}
+	\end{gather}
 
 	Then since $\tilde\lambda_i = \bar\lambda_i\ \forall(i\notin I(\bar
 		x))$, this shows $\tilde\lambda=\bar\lambda$ and $\tilde\mu=\bar\mu$.
