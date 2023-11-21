@@ -34,7 +34,7 @@ dev:
 	$(PYTEX) $(BUILD_ARGS) --pretty dev $(TEX_FILES)
 
 all:
-	python3 bin/build
+	python3 bin/build-all.py
 
 test:
 	@$(PYTEX) test
@@ -44,7 +44,7 @@ sha:
 
 clean:
 	rm -rf .build
-	rm -rf *.pdf
+	rm -rf minimath*.pdf
 
 open:
 	open minimath.pdf

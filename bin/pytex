@@ -142,16 +142,22 @@ class PdfLatex:
                 return
             buf_to_stdout(buf)
 
-        buf = []
+        buf, is_err = [], False
         lines = iter(self.x.stdout.readline, b"")
         lines = filter(lambda v: v.removesuffix(b"\n"), lines)
 
         s = lambda l, x: l.startswith(x)
         for l in lines:
-            if s(l, b"*") or s(l, b"!"):
+            excl, ast = s(l, b"!"), s(l, b"*")
+            if excl or ast:
+                if is_err:
+                    raise Exception(
+                        "PYTEX ERROR\n" + b"".join(buf).strip().decode("utf8")
+                    )
                 if len(buf) > 0:
                     try_print(buf)
                 buf.clear()
+            is_err |= excl
             buf.append(l)
 
 

@@ -14,14 +14,16 @@ ALL_TEX_FILES = (
 
 def build(job, no_proof=False, no_compute=False):
     print(f"[JOB: {job}]")
-    pytex = ["python3", "bin/pytex", f"-J{job}", "-Hheader.tex"]
+    pytex = ["python3", "bin/pytex", "--pretty", f"-J{job}", "-Hheader.tex"]
     no_proof and pytex.append("--no-proof")
     no_compute and pytex.append("--no-compute")
     pytex.append("build")
     pytex.extend(ALL_TEX_FILES)
     # run twice to generate document references correctly
-    subprocess.run(pytex)
-    subprocess.run(pytex)
+    # only report errors on the second one, since the first one will have
+    # undefined references anyway
+    subprocess.run(pytex, stdout=subprocess.PIPE)
+    subprocess.check_output(pytex)
 
 
 build("minimath")
