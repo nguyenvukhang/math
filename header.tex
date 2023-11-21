@@ -66,11 +66,15 @@
 \def\href#1#2{\hyperref[#1]{#2}}
 \def\inner#1#2{\langle{#1},{#2}\rangle}
 
+% don't number sections at all
+% `\section{}` behaves like `\section*{}` now
+\setcounter{secnumdepth}{0}
+
 % brackets in increasing size:
 % \big( \Big( \bigg( \Bigg(
 
-\def\section#1{\subsubsection*{\LARGE #1}}
-\def\subsection#1{\subsubsection*{\Large #1}}
+\def\section#1{\subsubsection{\LARGE #1}}
+\def\subsection#1{\subsubsection{\Large #1}}
 
 % for enabling/disabling specific fields
 \newenvironment{proof}{\paragraph{Proof.}} {\QED}
@@ -79,17 +83,17 @@
 \newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 
 % auto-generated from bin/generate-headers.py
-\def\Algorithm#1#2{\subsubsection*{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Corollary#1#2{\subsubsection*{Corollary {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Definition#1#2{\subsubsection*{Definition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Example#1#2{\subsubsection*{Example {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Exercise#1#2{\subsubsection*{Exercise {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Lemma#1#2{\subsubsection*{Lemma {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Problem#1#2{\subsubsection*{Problem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Proposition#1#2{\subsubsection*{Proposition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Remark#1#2{\subsubsection*{Remark {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Result#1#2{\subsubsection*{Result {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Theorem#1#2{\subsubsection*{Theorem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Example#1#2{\subsubsection{Example {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Exercise#1#2{\subsubsection{Exercise {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Lemma#1#2{\subsubsection{Lemma {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Problem#1#2{\subsubsection{Problem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Proposition#1#2{\subsubsection{Proposition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Remark#1#2{\subsubsection{Remark {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Result#1#2{\subsubsection{Result {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Theorem#1#2{\subsubsection{Theorem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 
 % custom math operators
 \DeclareMathOperator*{\argmin}{argmin}
