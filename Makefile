@@ -17,16 +17,21 @@ TEX_FILES += nonlinear-optimization.tex
 # --- [BUILD_ARGS] ---
 BUILD_ARGS += -Hheader.tex
 BUILD_ARGS += -Jminimath
-BUILD_ARGS += --pretty
 # BUILD_ARGS += --no-proof
 # BUILD_ARGS += --no-compute
 
 
 build:
+	$(PYTEX) $(BUILD_ARGS) --pretty build $(TEX_FILES)
+
+build-pre:
+	$(PYTEX) -Hheader.tex -Jplenary --pretty build plenary.tex calculus.tex
+
+v:
 	$(PYTEX) $(BUILD_ARGS) build $(TEX_FILES)
 
 dev:
-	$(PYTEX) $(BUILD_ARGS) dev $(TEX_FILES)
+	$(PYTEX) $(BUILD_ARGS) --pretty dev $(TEX_FILES)
 
 all:
 	python3 bin/build
@@ -50,3 +55,6 @@ label:
 edit:
 	nvim `which pytex`
 	cp `which pytex` bin/pytex
+
+head:
+	python3 bin/generate-headers.py >> header.tex

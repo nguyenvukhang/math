@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            tex_packages
+            tex_modules
             bin
 
       - uses: xu-cheng/texlive-action@v2

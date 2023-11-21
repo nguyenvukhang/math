@@ -50,15 +50,20 @@ class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
     def __init__(self, args, verbose=True):
+        env = os.environ.copy()
+
+        # tells latex compiler to search for .sty packages in this folder.
+        env["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
+
         cmd = (
             "pdflatex",
             "--halt-on-error",
             f"--output-directory={args.build_dir}",
             f"--jobname={args.jobname}",
         )
+        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=env)
         self.pretty = args.pretty
         self.verbose = verbose
-        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         self.tex_files, self.header_files = [], []
         self.show_computes = args.show_computes
         self.show_proofs = args.show_proofs
@@ -110,39 +115,44 @@ class PdfLatex:
                 print(line.decode("utf-8"), end="")
             return
 
-        num_only = re.compile(b"^\*\[\d+\]")
+        num_only = re.compile(b"^\*\[\d+\]$")
 
-        def print_buf(buf):  # type: (list[bytes]) -> None
+        def buf_to_stdout(buf):  # type: (list[bytes]) -> None
+            for l in buf:
+                print(l.decode("utf8"), end="")
+
+        def try_print(buf):  # type: (list[bytes]) -> None
             inc = lambda x: any(map(lambda l: all(map(lambda x: x in l, x)), buf))
             sw = lambda x: any(map(lambda l: l.startswith(x), buf))
 
-            if len(buf) <= 1:
-                if buf[0] in (b"*\n") or num_only.match(buf[0]):
-                    return
+            if len(buf) < 2 and buf[0] in (b"*\n") or num_only.match(buf[0]):
+                return
+
             if (
                 sw(b"This is pdfTeX")
                 or sw(b"*geometry*")
                 or sw(b"**entering extended mode")
                 or sw(b"Package hyperref Warning")
                 or sw(b"Underfull \hbox (badness 10000)")
-                or inc((b"texlive", b"texmf"))
+                or inc((b"texlive", b"texmf", b"latex"))  # system package
+                or inc((b"texlive", b"texmf", b"pdftex"))  # system package
                 or inc((b"(Please type a command or say `\end')\n"))
                 or sw(b"LaTeX Warning: You have requested package")
             ):
                 return
-            for l in range(len(buf)):
-                print(buf[l].decode("utf8"), end="")
+            buf_to_stdout(buf)
 
         buf = []
         lines = iter(self.x.stdout.readline, b"")
         lines = filter(lambda v: v.removesuffix(b"\n"), lines)
 
-        for line in lines:
-            if line.startswith(b"*"):
+        s = lambda l, x: l.startswith(x)
+        for l in lines:
+            if s(l, b"*") or s(l, b"!"):
                 if len(buf) > 0:
-                    print_buf(buf)
+                    try_print(buf)
                 buf.clear()
-            buf.append(line)
+            buf.append(l)
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order

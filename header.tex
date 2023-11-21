@@ -12,24 +12,35 @@
 \def\gray#1{\textcolor{gray}{#1}}
 \def\lightgray#1{\textcolor{lightgray}{#1}}
 
+% for customizing the behavior of titles
+\usepackage{titlesec}
+% removes newline after \subsubsection
+% \titleformat{\subsubsection}[runin]{}{}{}{}[]
+
+\titleformat{\subsubsection}[runin]
+{\normalsize\bfseries\color{black}}
+{\thesubsubsection}{1em}{}
+
 % for linking to sections within the same document
 % provides `\hyperref[<target>]{<display text>}`
 \usepackage[colorlinks=true,linkcolor=pink]{hyperref}
 \hypersetup{pageanchor=false}
 
 % for adding super powers to lists {itemize,enumerate}
-\usepackage{tex_packages/enumitem}
-
-% requires [enumitem]
+\usepackage{enumitem}
 \setlist[itemize]{itemsep=1pt,topsep=0pt}
 
+% for all the basic math symbols
 \usepackage{amsmath,amsfonts,amssymb}
+
+% for paper dimensions
 \usepackage[b5paper,
 	left=0.7in,right=0.7in,
 	top=0.5in,bottom=0.5in,
 	footskip=10.25pt
 ]{geometry}
 
+% for changing the page number appearance
 \usepackage{fancyhdr}
 \fancypagestyle{plain}{%
 	\fancyhf{} % clear all header and footer fields
@@ -82,18 +93,18 @@
 \newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
 \newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 
-% auto-generated from bin/generate-headers.py
-\def\Algorithm#1#2{\subsubsection{Algorithm {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Corollary#1#2{\subsubsection{Corollary {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Definition#1#2{\subsubsection{Definition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Example#1#2{\subsubsection{Example {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Exercise#1#2{\subsubsection{Exercise {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Lemma#1#2{\subsubsection{Lemma {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Problem#1#2{\subsubsection{Problem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Proposition#1#2{\subsubsection{Proposition {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Remark#1#2{\subsubsection{Remark {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Result#1#2{\subsubsection{Result {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Theorem#1#2{\subsubsection{Theorem {#1}\quad{\normalfont\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-
 % custom math operators
 \DeclareMathOperator*{\argmin}{argmin}
+
+% auto-generated headers
+\def\Algorithm#1#2{\subsubsection{Algorithm {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Corollary#1#2{\subsubsection{Corollary {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Definition#1#2{\subsubsection{Definition {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Example#1#2{\subsubsection{Example {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Exercise#1#2{\subsubsection{Exercise {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Lemma#1#2{\subsubsection{Lemma {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Problem#1#2{\subsubsection{Problem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Proposition#1#2{\subsubsection{Proposition {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Remark#1#2{\subsubsection{Remark {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Result#1#2{\subsubsection{Result {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Theorem#1#2{\subsubsection{Theorem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
