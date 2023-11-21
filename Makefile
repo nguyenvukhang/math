@@ -28,13 +28,7 @@ dev:
 	$(PYTEX) $(BUILD_ARGS) dev $(TEX_FILES)
 
 all:
-	$(PYTEX) $(BUILD_ARGS) $(ARGS) build \
-		plenary.tex \
-		calculus.tex \
-		algorithm-design.tex \
-		complex-analysis.tex \
-		nonlinear-optimization.tex \
-		ordinary-differential-equations.tex
+	python3 bin/build
 
 test:
 	@$(PYTEX) test
@@ -44,7 +38,7 @@ sha:
 
 clean:
 	rm -rf .build
-	rm -rf minimath.pdf
+	rm -rf *.pdf
 
 open:
 	open minimath.pdf

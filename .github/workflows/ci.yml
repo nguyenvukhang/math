@@ -15,6 +15,7 @@ jobs:
         working-directory: web
       - run: yarn checkhealth
         working-directory: web
+
   build-pdf:
     runs-on: ubuntu-latest
     steps:
@@ -24,23 +25,10 @@ jobs:
             tex_packages
             bin
 
-      # Build the core notes pdf. Ran twice because `hyperref` takes
-      # 2 runs to correctly generate references.
       - uses: xu-cheng/texlive-action@v2
         with:
           scheme: small
-          run: |
-            PYTEX='make PYTEX=bin/pytex'
-
-            ARGS='-Jminimath' ${PYTEX} all
-            ARGS='-Jminimath.np.nc --no-proof --no-compute' ${PYTEX} all
-            ARGS='-Jminimath.np --no-proof' ${PYTEX} all
-            ARGS='-Jminimath.nc --no-compute' ${PYTEX} all
-
-            ARGS='-Jminimath' ${PYTEX} all
-            ARGS='-Jminimath.np.nc --no-proof --no-compute' ${PYTEX} all
-            ARGS='-Jminimath.np --no-proof' ${PYTEX} all
-            ARGS='-Jminimath.nc --no-compute' ${PYTEX} all
+          run: python3 bin/build-all.py
 
       - name: Release PDF
         uses: softprops/action-gh-release@v1
