@@ -4,8 +4,12 @@
 \usepackage{xcolor}
 \definecolor{blue}{HTML}{0284C7}
 \definecolor{green}{HTML}{10B981}
+\definecolor{gray}{HTML}{CBD5E1}
+\definecolor{lightgray}{HTML}{E2E8F0}
 \def\blue#1{\textcolor{blue}{#1}}
 \def\green#1{\textcolor{green}{#1}}
+\def\gray#1{\textcolor{gray}{#1}}
+\def\lightgray#1{\textcolor{lightgray}{#1}}
 
 % for linking to sections within the same document
 % provides `\hyperref[<target>]{<display text>}`
@@ -18,7 +22,19 @@
 \setlist[itemize]{itemsep=1pt,topsep=0pt}
 
 \usepackage{amsmath,amsfonts,amssymb}
-\usepackage[b5paper,margin=0.7in]{geometry}
+\usepackage[b5paper,
+	left=0.7in,right=0.7in,
+	top=0.5in,bottom=0.5in,
+	footskip=0in
+]{geometry}
+
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%
+	\fancyhf{} % clear all header and footer fields
+  \fancyfoot[R]{\footnotesize\lightgray[\gray{\thepage}\lightgray]}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}}
+\pagestyle{plain}
 
 % disable equation numbering, so \begin{equation} now behaves like
 % \begin{equation&}

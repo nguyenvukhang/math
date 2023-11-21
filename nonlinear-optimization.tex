@@ -294,11 +294,41 @@ Then the following hold:
 Let $\norm\cdot_*$ be a (vector) norm on $\R^n$ and $\R^m$,
 respectively. Then for $A\in\R^{m\times n}$,
 $$
-  \norm A_*:=\sup_{x\neq0}\frac{\norm{Ax}_*}{\norm x_*}
+	\norm A_*:=\sup_{x\neq0}\frac{\norm{Ax}_*}{\norm x_*}
 $$
 is a norm on $\R^{m\times n}$ with
 $$
-  \norm A_*=\sup_{\norm x_*=1}\norm{Ax}_*=\sup_{\norm x_*\leq1}\norm{Ax}_*
+	\norm A_*=\sup_{\norm x_*=1}\norm{Ax}_*=\sup_{\norm x_*\leq1}\norm{Ax}_*
+$$
+
+\Proposition{2.3.2}{}
+
+Let $A\in\R^{m\times n}$. Then we have
+$$
+	\begin{array}{l l l}
+		\norm{A}_1      & = \displaystyle\max_{j=\iter1n}\sum_{i=1}^m|a_{ij}| & \text{(maximum absolute column sum)} \\[1.5em]
+		\norm{A}_2      & = \displaystyle\sqrt{\lambda_{\max}(A^TA)}          & \text{(spectral norm)}               \\[1em]
+		\norm{A}_\infty & = \displaystyle\max_{i=\iter1m}\sum_{j=1}^n|a_{ij}| & \text{(maximum absolute row sum)}
+	\end{array}
+$$
+
+\Proposition{2.3.3}{}
+
+Let $\norm\cdot_*$ be a norm on $\R^n$, $\R^m$, and $\R^p$
+respectively. Then for all $A\in\R^{m\times n}$ and $B\in\R^{n\times
+		p}$ the following hold:
+\begin{itemize}
+	\def\nm#1{\norm{#1}_*}
+	\item $\nm{Ax}\leq\nm A\nm x$ for all $x\in\R^n$ \quad \textit{(compatibility)}
+	\item $\nm{AB}\leq\nm A\nm B$ \quad \textit{(submultiplicativity)}
+\end{itemize}
+
+\Proposition{2.3.4}{Banach Lemma}
+
+Let $C\in\R^{n\times n}$ with $\norm C<1$ where $\norm\cdot$ is a
+submultiplicative matrix norm. THen $I+C$ is invertible and we have
+$$
+  \norm{(I+C)^{-1}}\leq\frac1{1-\norm C}
 $$
 
 \Definition{3.1.4}{Step-size rule}\label{ae4eac6}
