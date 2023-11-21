@@ -1,5 +1,6 @@
 \documentclass{article}
 
+
 % for coloring links in hyperref
 \usepackage{xcolor}
 \definecolor{blue}{HTML}{0284C7}
@@ -19,6 +20,10 @@
 
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage[b5paper,margin=0.7in]{geometry}
+
+% disable equation numbering, so \begin{equation} now behaves like
+% \begin{equation&}
+\makeatletter\renewcommand\tagform@[1]{}\makeatother
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5em}
@@ -43,6 +48,7 @@
 \def\Tag#1{\tag*{($#1$)}}
 \def\notimplies{\;\not\nobreak\!\!\!\!\implies}
 \def\href#1#2{\hyperref[#1]{#2}}
+\def\inner#1#2{\langle{#1},{#2}\rangle}
 
 % brackets in increasing size:
 % \big( \Big( \bigg( \Bigg(

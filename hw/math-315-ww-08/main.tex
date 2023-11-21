@@ -20,14 +20,14 @@ $$
 (Draw a graph to convince yourself.)
 
 Manipulating, we get
-\begin{align*}
+\begin{align}
 	f(t) & = u_0(t)(e^{4t}) - u_5(t)(e^{4t}) - u_0(t) - u_5(t) + 1           \\
 	     & = u_0(t)(e^{4t}) - u_5(t)(e^{4(t-5)}e^{20}) - u_0(t) - u_5(t) + 1 \\
 	     & = u_0(t)(e^{4t}) - e^{20}u_5(t)(e^{4(t-5)}) - u_0(t) - u_5(t) + 1
-\end{align*}
+\end{align}
 
 Next, let's pre-process some Laplace transforms as building blocks:
-\begin{align*}
+\begin{align}
 	\L(e^{4t})           & =\frac1{s-4}          \\
 	\L(u(t-c)e^{4(t-c)}) & = \frac{e^{-cs}}{s-4} \\
 	\L(u(t)e^{4t})       & = \frac1{s-4}         \\
@@ -35,14 +35,14 @@ Next, let's pre-process some Laplace transforms as building blocks:
 	\L(u_0)              & = \frac1s             \\
 	\L(u_5)              & = \frac{e^{-5s}}s     \\
 	\L(1)                & = \frac1s
-\end{align*}
+\end{align}
 
 So then
-\begin{align*}
+\begin{align}
 	\L(f) & =\frac1{s-4}-e^{20}\frac{e^{-5s}}{s-4}-\frac1s-\frac{e^{-5s}}s+\frac1s \\
 	      & =\frac1{s-4}-e^{20}\frac{e^{-5s}}{s-4}-\frac{e^{-5s}}s                 \\
 	% & =1/(s-4)-e^(20-5s)/(s-4)-(e^(-5s))/s                 \\
-\end{align*}
+\end{align}
 
 \newpage\paragraph{Problem}
 Let
@@ -71,11 +71,11 @@ $$
 	g(t) = t - u(t-4\pi)(t-4\pi)
 $$
 Then, we pre-process some Laplace transforms.
-\begin{align*}
+\begin{align}
 	\L(t)                   & = \frac1{s^2}             \\
 	\L(u_{4\pi}(t)(t-4\pi)) & = e^{-4\pi s}\L(t)        \\
 	                        & = \frac{e^{-4\pi s}}{s^2}
-\end{align*}
+\end{align}
 And now for $Y(s):=\L(y)$;
 \begin{alignat*}{2}
 	\L(y')  & = -y(0)+sY(s)    &  & = -6+sY(s)      \\
@@ -83,34 +83,34 @@ And now for $Y(s):=\L(y)$;
 \end{alignat*}
 
 Applying the Laplace transform on the entire differential equation:
-\begin{align*}
+\begin{align}
 	-5-6s+s^2Y(s)+16Y(s) & = \frac1{s^2}-\frac{e^{-4\pi s}}{s^2}                                 \\
 	(s^2+16)Y(s)         & = \frac{1-e^{-4\pi s}}{s^2}+6s+5                                      \\
 	Y(s)                 & = \frac{1-e^{-4\pi s}}{(s^2)(s^2+16)}+\frac{6s+5}{s^2+16}\tag*{($*$)}
-\end{align*}
+\end{align}
 Breaking into a sub-problem:
-\begin{align*}
+\begin{align}
 	Y_1(s)      & =\frac1{(s^2)(s^2+16)}                                      \\
 	            & =\frac{1}{16s^2}-\frac{1}{16(s^2+16)}                       \\
 	Y_1(s)      & =\frac{1}{16}\left(\frac{1}{s^2}-\frac{1}{s^2+16}\right)    \\
 	\LI(Y_1(s)) & =\frac{1}{16}\left(t-\frac{\sin(4t)}{4}\right)\tag*{($**$)}
-\end{align*}
+\end{align}
 And another sub-problem:
-\begin{align*}
+\begin{align}
 	Y_2(s)      & =\frac{e^{-4\pi s}}{(s^2)(s^2+16)}                                                                                     \\
 	Y_2(s)      & =\frac{1}{16}\left(\frac{e^{-4\pi s}}{s^2}-\frac{e^{-4\pi s}}{s^2+16}\right)                                           \\
 	\LI(Y_2(s)) & \stackrel{\text{\href{c8f0f6e}{R1}}}{=}\frac{1}{16}\left(u_{4\pi}(t)(t-4\pi)-\frac{u_{4\pi}(t)\sin(4t)}{4}\right) \\
 	            & =\frac{u_{4\pi}(t)}{16}\left(t-4\pi-\frac{\sin(4t)}{4}\right)\tag*{($***$)}
-\end{align*}
+\end{align}
 Finally, using $(**)$ and $(***)$ on $(*)$, we have
-\begin{align*}
+\begin{align}
 	\LI(Y(s))
 	 & = -\frac{u_{4\pi}(t)}{16}\left(t-4\pi-\frac{\sin(4t)}{4}\right)+
 	\frac{1}{16}\left(t-\frac{\sin(4t)}{4}\right)+
 	\frac54\sin(4t)+6\cos(4t)                                           \\
 	 & = \frac{u_{4\pi}(t)}{16}\left(-t+4\pi+\frac{\sin(4t)}{4}\right)+
 	\frac{1}{16}\left(t+\frac{79\sin(4t)}{4}+96\cos(4t)\right)
-\end{align*}
+\end{align}
 
 To the left of $t=4\pi$, the step function $u_{4\pi}(t)$ evaluates to
 zero, and we have
@@ -118,14 +118,14 @@ $$
 	\LI(Y(s))=\frac{1}{16}\left(t+\frac{79\sin(4t)}{4}+96\cos(4t)\right)
 $$
 and to its right we have
-\begin{align*}
+\begin{align}
 	\LI(Y(s))
 	 & = \frac{1}{16}\left(-t+4\pi+\frac{\sin(4t)}{4}\right)+
 	\frac{1}{16}\left(t+\frac{79\sin(4t)}{4}+96\cos(4t)\right) \\
 	 & =\frac{1}{16}\big[4\pi+20\sin(4t)+96\cos(4t)\big]       \\
 	%(1/16)(t+(79/4)sin(4t)+96cos(4t))
 	%(1/16)(4pi+20sin(4t)+96cos(4t))
-\end{align*}
+\end{align}
 
 \Result{1}{}\label{c8f0f6e}
 

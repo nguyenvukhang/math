@@ -1,11 +1,11 @@
 With $I:=\iter1m$ and $J:=\iter1p$, the Standard NLP is
-\begin{equation*}
+\begin{equation}
 	\begin{array}{l l l l}
 		\displaystyle \min_{x\in\R^n}f(x)
 		 & \text{s.t.} & g_i(x)\leq0 & \forall i\in I \\
 		 &             & h_j(x)=0    & \forall j\in J
 	\end{array}\tag*{(5.1)}
-\end{equation*}
+\end{equation}
 
 We define the active set $I(\bar x)$ as
 $$
@@ -99,13 +99,13 @@ point.
 \textbf{5.1.5 CONVEX PROBLEMS}
 
 Consider
-\begin{equation*}
+\begin{equation}
 	\begin{array}{l l l l}
 		\min f(x) & \text{s.t.} & g_i(x)\leq0             & \forall i\in I \\
 		          &             & h_j(x)=b_j^Tx-\beta_j=0 & \forall j\in J
 	\end{array}
 	\tag*{(5.2)}
-\end{equation*}
+\end{equation}
 where $f,g_i,h_j\in\R^n\to\R$ are cont. diff \textbf{and convex}, and
 $b_j\in\R^n,\beta_j\in\R$. Then
 $$
@@ -154,9 +154,9 @@ Then (a) implies (b). Hence, if a CQ holds at $\bar x$, then (a) iff
 		\nabla f(\bx)=-\sum_{i\in\Act}^m\bl_i \nabla g_i(\bx)-\sum_{j=1}^p\bm_j\nabla h_j(\bx)
 	$$
 	So then
-	\begin{align*}
+	\begin{align}
 		f(x)\geq f(\bx)-\sum_{i\in\Act}^m\bl_i\nabla g_i(\bx)^T(x-\bx)-\sum_{j=1}^p\bm_j\nabla h_j(\bx)^T(x-\bx)\Tag{*}
-	\end{align*}
+	\end{align}
 
 	Again by Theorem 2.2.1, we have
 	$$
@@ -226,12 +226,12 @@ Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
 	sufficiently large.
 
 	For $j\in J$, $h_j(x^k)=b_j^Tx^k-\beta_j=t_k\nabla h_j(\bx)^Td-\beta_j$
-	\begin{align*}
+	\begin{align}
 		h_j(x^k) & =b_j^Tx^k-\beta_j                                 \\
 		         & =t_k\nabla h_j(\bx)^Td+\nabla h_j(\bx)\beta_j = 0
 		% !!! TODO: fix the line above! this was not read
 		% properly in class.
-	\end{align*}
+	\end{align}
 
 	Thus
 	$$
@@ -242,15 +242,15 @@ Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
 	let $\hat x$ be a Slater point.
 
 	Set $\hat d$ to be $\hat x-\bar x$. Then by Theorem 2.2.1,
-	\begin{equation*}
+	\begin{equation}
 		\nabla g_i(\bx)^T\hat d\leq g_i(\hat x) - g_i(\bx)<0\Quad\forall(i\in\Act)\Tag{*}
-	\end{equation*}
+	\end{equation}
 	$<0$ because of definitions of Slater and Active Set.
 
 	Moreover, by the affine-ness of $h_j$, we have
-	\begin{align*}
+	\begin{align}
 		\nabla h_j(\bx)^T\hat d = h_j(\hat x)-h_j(\bx)=0\Quad\forall(j\in J)\Tag{**}
-	\end{align*}
+	\end{align}
 
 	because both $h_j(\hat x)$ and $h_j(\bx)$ are zero.
 
@@ -259,10 +259,10 @@ Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
 		d(\delta):= d + \delta\hat d\Quad(\delta>0)
 	$$
 	Then $d(\delta)\in F(\bx)$, since
-	\begin{align*}
+	\begin{align}
 		\nabla g_i(\bx)^Td(\delta) & =\nabla g_i(\bx)^Td + \delta\nabla g_i(\bx)^T\hat d<0 \Quad\forall(i\in\Act) \\
 		\nabla h_j(\bx)^Td(\delta) & =\nabla h_j(\bx)^Td + \delta\nabla h_j(\bx)^T\hat d=0 \Quad\forall(j\in J)
-	\end{align*}
+	\end{align}
 	$<0$ because the 1st term $\leq0$ and 2nd term $<0$, because $d$ is
 	in the linearized cone, and $\hat d$...? \\
 	And $=0$ because both terms $=0$.
@@ -272,5 +272,5 @@ Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
 		d=\lim_{\delta\downarrow0}d(\delta) \subset clF(\bx)
 	$$
 \end{proof}
-% \begin{align*}
-% \end{align*}
+% \begin{align}
+% \end{align}
