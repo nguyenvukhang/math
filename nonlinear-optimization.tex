@@ -191,6 +191,22 @@ hold:
 	coercive (level-bounded).
 \end{enumerata}
 
+\Corollary{2.2.3}{}
+
+Let $f:\R^n\to\R$ be convex and differentiable. Then the following
+are equivalent:
+\begin{enumeratr}
+	\item $\bar x$ is a global minimizer of $f$, i.e. $\bar x\in\argmin f$;
+	\item $\bar x$ is a local minimizer;
+	\item $\bar x$ is a stationary point of $f$.
+\end{enumeratr}
+
+\begin{proof}
+  (i) $\implies$ (ii) is obvious. (ii) $\implies$ (iii) follows from
+  \hyperref[dc165c9]{Fermat's Theorem}. (iii) $\implies$ (i) follows
+  from \hyperref[cd9cea7]{Theorem 2.2.1 a)}.
+\end{proof}
+
 \Definition{3.1.4}{Step-size rule}\label{ae4eac6}
 
 Let $f:{\R}^n\to{\R}$ be continuously differentiable and
