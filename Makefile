@@ -1,3 +1,6 @@
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
+
 # PYTEX := python3 pytex.py
 PYTEX := pytex
 
@@ -45,3 +48,6 @@ clean:
 
 open:
 	open minimath.pdf
+
+label:
+	python3 $(MAKEFILE_DIR)bin/label.py

@@ -1,6 +1,8 @@
 import os, re
 from typing import Any
 
+cwd = os.path.abspath(os.curdir)
+
 
 def read_file(fp):  # type: (str) -> tuple[str, list[bytes]]
     with open(fp, "rb") as f:
@@ -8,7 +10,7 @@ def read_file(fp):  # type: (str) -> tuple[str, list[bytes]]
         return (fp, data)
 
 
-tex_files = filter(lambda v: v.endswith(".tex"), os.listdir())
+tex_files = filter(lambda v: v.endswith(".tex"), os.listdir(cwd))
 tex_files = list(map(read_file, tex_files))
 
 
@@ -23,7 +25,7 @@ def get_markers():  # type: () -> list[bytes]
     global markers
     if markers is not None:
         return markers
-    MATCHER = re.compile(b"^\\\\def(\\\\[A-Z][a-z]+)#1#2{\\\\subsubsection{.*#1.*#2}")
+    MATCHER = re.compile(b"^\\\\def(\\\\[A-Z][a-z]+)#1#2{\\\\subsubsection")
     with open("header.tex", "rb") as f:
         l = f.read().splitlines()
     l = map(lambda l: MATCHER.search(l), l)
@@ -43,13 +45,20 @@ def for_each(files, fn):  # type: (list[tuple[str, list[bytes]]], Any) -> None
             fn(fp, data, i)
 
 
+def section_is_one_line(line):  # type: (bytes) -> bool
+    stk, t = 0, {b"{": 1, b"}": -1}
+    for i in range(len(line)):
+        stk += t.get(line[i : i + 1], 0)
+    return stk == 0
+
+
 def get_labels(fp, data, i):  # type: (str, list[bytes], int) -> None
     line = data[i]
     if not is_marker(line):
         return
-    pairs = (line.count(b"{"), line.count(b"}"))
-    if pairs[0] < 3 or pairs[1] < 3:
-        raise Exception(f"Title spread across multiple lines in [{fp}] line {i}")
+    if not section_is_one_line(line):
+        print(f"[ERROR] Title spread across multiple lines in [{fp}] line {i}")
+        exit()
     hit = LABEL_REGEX.search(line)
     if hit is None:
         return
@@ -95,6 +104,6 @@ def new_sha():  # type: () -> bytes
 
 
 for_each(tex_files, get_labels)
-# for_each(tex_files, check_references)
-# for_each(tex_files, add_labels)
-# for_each(tex_files, write)
+for_each(tex_files, check_references)
+for_each(tex_files, add_labels)
+for_each(tex_files, write)
