@@ -440,14 +440,20 @@ Then every cluster point of $\{x^k\}$ is a stationary point of $f$.
 	$$
 	Putting $k:=c^2\theta$, the angle condition implies
 	\begin{equation*}
-    f(x^{k+1})\leq f(x^k)-k\norm{\nabla f(x^k)}^2\Tag{*}
+		f(x^{k+1})\leq f(x^k)-k\norm{\nabla f(x^k)}^2\Tag{*}
 	\end{equation*}
 
   Let $\bar x$ be a cluster point of $\{x^k\}$. As $\{f(x^k)\}$ is
-  monotonically decreasing (from ($*$)) and convergent to $f(\bar x)$
-  on a subsequence (since $\{x^k\}\to\bar x$ on a subsequence and $f$
-  is continuous), this implies that the whole sequence $\{f(x^k)\}$
-  converges to $f(\bar x)$. 
+  monotonically decreasing and convergent to $f(\bar x)$ on a
+  subsequence (since $\{x^k\}\to\bar x$ on a subsequence and $f$ is
+  continuous), \href{aaf3ba6}{this implies} that the whole sequence
+  $\{f(x^k)\}$ converges to $f(\bar x)$.
+
+	In particular, we have
+	$$
+		f(x^{k+1})-f(x^k)\to0
+	$$
+  Therefore, $(*)$ implies $\norm{\nabla f(x^k)}\to0$ by squeezing.
 \end{proof}
 
 \Definition{3.2.0}{Armijo rule and sufficient decrease}\label{fefb024}
