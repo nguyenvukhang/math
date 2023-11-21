@@ -51,3 +51,7 @@ open:
 
 label:
 	python3 $(MAKEFILE_DIR)bin/label.py
+
+edit:
+	nvim `which pytex`
+	cp `which pytex` bin/pytex

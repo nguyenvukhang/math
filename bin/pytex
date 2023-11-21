@@ -48,13 +48,14 @@ def remove_in_between(data: bytes, start: bytes, end: bytes):
 class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, args):
+    def __init__(self, args, verbose=True):
         cmd = (
             "pdflatex",
             "-halt-on-error",
             f"--output-directory={args.build_dir}",
             f"--jobname={args.jobname}",
         )
+        self.verbose = verbose
         self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         self.tex_files, self.header_files = [], []
         self.show_computes = args.show_computes
@@ -99,6 +100,8 @@ class PdfLatex:
 
     # helps to monitor stdout in a less cluttered way
     def monitor_stdout(self):
+        if not self.verbose:
+            return
         hyperref_flag = False
 
         for line in iter(self.x.stdout.readline, b""):
@@ -118,11 +121,11 @@ class PdfLatex:
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def build(args):
+def build(args, verbose=True):
     if not path.isdir(args.build_dir):
         os.mkdir(args.build_dir)
 
-    pdflatex = PdfLatex(args)
+    pdflatex = PdfLatex(args, verbose=verbose)
     pdflatex.add_headers(args.header_files)
     pdflatex.add_files(args.tex_files)
     pdflatex.close()
@@ -228,21 +231,27 @@ def dev(args):
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: build(args)
+    build2 = lambda: build(args, verbose=False)
     [build2(), print("\n[Last build: %s]" % now())]
 
     class EventHandler(FileSystemEventHandler):
         def __init__(self, args):
             self.args = args
+            self.last_trigger_time = time.time()
 
-        def on_any_event(self, event):
-            if event.event_type == "modified":
-                file = event.src_path
-                if file.endswith(".tex"):
-                    [build2(), print("\n[Last build: %s]" % now())]
+        def on_modified(self, event):
+            global last_trigger_time
+            file = event.src_path
+            if not file.endswith(".tex"):
+                return
+            current_time = time.time()
+            if (current_time - self.last_trigger_time) < 1:
+                return
+            self.last_trigger_time = current_time
+            [build2(), print("\n[Last build: %s]" % now())]
 
     observer = Observer()
-    observer.schedule(EventHandler(args), os.curdir, recursive=True)
+    observer.schedule(EventHandler(args), os.curdir, recursive=False)
     observer.start()
     try:
         while True:
