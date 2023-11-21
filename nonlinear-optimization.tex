@@ -268,6 +268,39 @@ Then the following hold:
 	and we are done.
 \end{proof}
 
+\Theorem{2.2.7}{Convex optimization}\label{f546fc9}
+
+Let $f:\R^n\to\R$ be a convex function and $X\subset\R^n$ be a
+non-empty convex set. Consider the convex optimization problem
+\begin{equation}
+	\begin{array}{l l l}
+		\min f(x) & \text{s.t.} & x\in X\Tag{*}
+	\end{array}
+\end{equation}
+Then the following hold:
+\begin{enumerata}
+	\item A point $\bar x$ is a global minimizer of $(*)$ if and only if
+	it is a local minimizer of $(*)$.
+	\item The solution set $\argmin_Xf$ of $(*)$ is convex (possibly
+	empty).
+	\item If $f$ is strictly convex, then the solution set has at most
+	one element.
+	\item If $f$ is strongly convex and differentiable and $X$ is closed, then $(*)$ has exactly
+	one solution ($\argmin_Xf$ is a singleton).
+\end{enumerata}
+
+\Proposition{2.3.1}{Operator norms}
+
+Let $\norm\cdot_*$ be a (vector) norm on $\R^n$ and $\R^m$,
+respectively. Then for $A\in\R^{m\times n}$,
+$$
+  \norm A_*:=\sup_{x\neq0}\frac{\norm{Ax}_*}{\norm x_*}
+$$
+is a norm on $\R^{m\times n}$ with
+$$
+  \norm A_*=\sup_{\norm x_*=1}\norm{Ax}_*=\sup_{\norm x_*\leq1}\norm{Ax}_*
+$$
+
 \Definition{3.1.4}{Step-size rule}\label{ae4eac6}
 
 Let $f:{\R}^n\to{\R}$ be continuously differentiable and
