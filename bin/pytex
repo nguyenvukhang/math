@@ -121,16 +121,16 @@ class PdfLatex:
                     return
                 if num_only.match(buf[0]):
                     return
-
-            if sw(b"Package hyperref Warning"):  # mostly harmless stuff
+            if (
+                sw(b"This is pdfTeX")
+                or sw(b"*geometry*")
+                or sw(b"**entering extended mode")
+                # or sw(b"Package hyperref Warning")
+                or sw(b"Underfull \hbox (badness 10000)")
+                or inc((b"texlive", b"texmf"))
+                or sw(b"LaTeX Warning: You have requested package")
+            ):
                 return
-            if sw(b"Underfull \hbox (badness 10000)"):  # visual warnings
-                return
-            if inc((b"texlive", b"texmf")):  # library files
-                return
-            if sw(b"LaTeX Warning: You have requested package"):
-                return  # ../tex_packages imports
-
             for l in range(len(buf)):
                 print(buf[l].decode("utf8"), end="")
 
@@ -257,8 +257,9 @@ def dev(args):
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: build(args, verbose=False)
-    [build2(), print("\n[Last build: %s]" % now())]
+    build2 = lambda: build(args, verbose=True)
+    report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
+    [build2(), report()]
 
     class EventHandler(FileSystemEventHandler):
         def __init__(self, args):
@@ -274,7 +275,7 @@ def dev(args):
             if (current_time - self.last_trigger_time) < 1:
                 return
             self.last_trigger_time = current_time
-            [build2(), print("\n[Last build: %s]" % now())]
+            [build2(), report()]
 
     observer = Observer()
     observer.schedule(EventHandler(args), os.curdir, recursive=False)

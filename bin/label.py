@@ -18,7 +18,7 @@ shas = set()
 
 markers = None  # type: list[bytes]
 LABEL_REGEX = re.compile(b"{([a-z0-9]{7})}$")
-REFERENCE_REGEX = re.compile(b"\\\\hyperref\[([a-z0-9]{7})\]")
+REFERENCE_REGEX = re.compile(b"\\\\href{([a-z0-9]{7})}")
 
 
 def get_markers():  # type: () -> list[bytes]

@@ -1,8 +1,8 @@
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
-# PYTEX := python3 pytex.py
-PYTEX := pytex
+PYTEX := python3 bin/pytex
+# PYTEX := pytex
 
 
 # --- [TEX_FILES] ---
