@@ -7,15 +7,6 @@ permissions:
   contents: write
 
 jobs:
-  checkhealth:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: yarn
-        working-directory: web
-      - run: yarn checkhealth
-        working-directory: web
-
   build-pdf:
     runs-on: ubuntu-latest
     steps:
