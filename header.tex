@@ -60,6 +60,7 @@
 \def\R{\mathbb{R}}
 \def\C{\mathbb{C}}
 \def\Re{\text{Re}}
+\def\then{\Rightarrow}
 \def\Quad{\quad\quad}
 \def\quadd{\quad\quad\quad}
 \def\Quadd{\quad\quad\quad\quad}
@@ -106,3 +107,6 @@
 \def\Remark#1#2{\subsubsection{Remark {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Result#1#2{\subsubsection{Result {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Theorem#1#2{\subsubsection{Theorem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+
+% global left-align text
+\AtBeginDocument{\raggedright}
