@@ -2,11 +2,16 @@
 
 All the proofs and results I don't want to write twice.
 
-\textbf{1.x.x)} Real analysis \\
-\textbf{2.x.x)} Calculus \\
-\textbf{3.x.x)} One-liner definitions \\
-\textbf{4.x.x)} Linear algebra \\
-\textbf{9.x.x)} General stuff \\
+\textbf{1.x.x)} Real analysis \\ %                   __real_analysis__
+\textbf{2.x.x)} Calculus \\ %                             __calculus__
+\textbf{3.x.x)} One-Liner Definitions \\ %         __one_liner_defns__
+\textbf{4.x.x)} Linear Algebra \\ %                 __linear_algebra__
+\textbf{5.x.x)} Discrete Mathematics \\ %           __discrete_maths__
+\textbf{9.x.x)} General Stuff \\ %                   __general_stuff__
+
+% ╭─────────────────────────────────────────────────────────────────╮
+% │ 1. REAL ANALYSIS                              __real_analysis__ │
+% ╰─────────────────────────────────────────────────────────────────╯
 
 \Definition{1.1.1}{Monotone sequences}\label{d5142a8}
 
@@ -289,6 +294,10 @@ scalar $k$.
 	      $p(x+y)\leq p(x)+p(y)$ for all $x,y\in X$
 \end{enumerate}
 
+% ╭─────────────────────────────────────────────────────────────────╮
+% │ 2. CALCULUS                                        __calculus__ │
+% ╰─────────────────────────────────────────────────────────────────╯
+
 \Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
 
 \paragraph{First part} Let $f:[a,b]\to\R$ be continuous. Let
@@ -312,6 +321,10 @@ $$\int_a^bf(t)\,dt=F(b)-F(a)$$
 This is stronger than the corollary because it does not assume that
 $f$ is continuous.
 
+% ╭─────────────────────────────────────────────────────────────────╮
+% │ 3. ONE-LINER DEFINITIONS                    __one_liner_defns__ │
+% ╰─────────────────────────────────────────────────────────────────╯
+
 \Definition{3.1.1}{Affine functions}\label{dcb7f73}
 
 An affine function $f:\R^n\to\R^m$ is of the form
@@ -332,6 +345,10 @@ A function $f:\R^n\to\R$ is supercoercive if
 $$
 	\lim_{\norm x\to\infty}\frac{f(x)}{\norm x}=+\infty
 $$
+
+% ╭─────────────────────────────────────────────────────────────────╮
+% │ 4. LINEAR ALGEBRA                            __linear_algebra__ │
+% ╰─────────────────────────────────────────────────────────────────╯
 
 \Remark{4.1.1}{Thinking about matrix dimensions}\label{d8bd136}
 
@@ -357,6 +374,83 @@ and positive semidefinite if
 $$
 	x^TAx\geq0\with\forall(x\in\R^n)
 $$
+
+% ╭─────────────────────────────────────────────────────────────────╮
+% │ 5. DISCRETE MATHEMATICS                      __discrete_maths__ │
+% ╰─────────────────────────────────────────────────────────────────╯
+
+\Definition{5.0.0}{Absolute basics of boolean algebra}\label{ba4e2fa}
+
+\begin{enumerata}
+	\item Literal: a boolean variable $x$ or $\neg x$ (or $\bar x$)
+	\item Conjunction: $\land$ (and)
+	\item Disjunction: $\lor$ (or)
+	\item Clause: a disjunction of \textbf{distinct} literals
+\end{enumerata}
+
+\Definition{5.1.1}{Conjunctive normal form}\label{ab60bb1}
+
+This is a \href{ba4e2fa}{conjunction} of one or more
+\href{ba4e2fa}{clauses}.
+$$
+	(A\lor B)\land (C\lor D\lor E)
+$$
+
+\Definition{5.1.2}{Disjunctive normal form}
+
+This is a \href{ba4e2fa}{disjunction} of one or more
+\href{ba4e2fa}{conjunctions}.
+$$
+	(A\land B)\lor (C\land D\land E)
+$$
+
+\Proposition{5.1.3}{Extending a CNF to 3 variables}
+
+Given a 1-variable or 2-variable \href{ab60bb1}{CNF}, we want to write
+a logically equivalent 3-variable CNF. (Useful for 3-SAT problems).
+Here's how:
+
+\paragraph{2-var CNF.} Say we have the expression $(x\lor y)$. This is
+logically equivalent to
+$$
+	(x\lor y\lor z)\land(x\lor y\lor\bar z)
+$$
+
+Notice that if $z$ is TRUE then we can drop the left branch because
+it's true and hence
+$$
+	(x\lor y\lor z)\land(x\lor y\lor\bar z) \equiv(x\lor y\lor\bar z) \equiv (x\lor y)
+$$
+
+Similarly if $z$ is FALSE then we drop the right branch and get
+$$
+	(x\lor y\lor z)\land(x\lor y\lor\bar z) \equiv(x\lor y\lor z) \equiv (x\lor y)
+$$
+
+\paragraph{1-var CNF.} Now consider the expression $x$. Instead of
+adding just one variable we now add two and get the logically
+equivalent expression
+\begin{equation*}
+	(x\lor y\lor z)\land
+	(x\lor y\lor\bar z)\land
+	(x\lor \bar y\lor z)\land
+	(x\lor \bar y\lor\bar z)
+\end{equation*}
+
+If $(y,z)=(\text{TRUE},\text{TRUE})$ we can drop all clauses
+containing $y$ or $z$, leaving us with
+$$
+	(x\lor \bar y\lor\bar z)
+$$
+
+but then $(\bar y,\bar z)=(\text{FALSE},\text{FALSE})$ and hence it is
+logically equivalent to just $x$.
+Repeating this logic for all combinations of $(y,z)$, we can see that
+$(*)$ is logically equivalent to $x$.
+
+% ╭─────────────────────────────────────────────────────────────────╮
+% │ 9. GENERAL STUFF                              __general_stuff__ │
+% ╰─────────────────────────────────────────────────────────────────╯
 
 \Definition{9.1.1}{Gamma function}\label{ce1fa3f}
 
