@@ -1,0 +1,90 @@
+\def\TC{T_X(\bar x)}
+\def\LC{L_X(\bar x)}
+\def\lk{\lim_{k\to\infty}}
+\def\nf{\nabla f}
+\def\n{\nabla}
+\def\f{\frac}
+\def\bx{\bar x}
+
+{\large\textbf{Q3}}
+
+% \Problem{3}{Linearized cone contains tangent cone} Let $\bar x\in X$.
+% show that
+% $$\TC\subset\LC$$
+%
+% \Definition{5.1.3}{Tangent cone}
+%
+% Let $X\subset\R^n$ and $\bar x\in X$. Then the set
+% $$
+% 	\TC:=\Set{d\in\R^n}{\exists\{x^k\in X\}\to\bar x,\{t_k\}\downarrow0:\frac{x^k-\bar x}{t_k}\to d}
+% $$
+%
+% is called the (Bouligand) tangent cone of $S$ at $\bar x$.
+%
+% \Definition{5.1.11}{Linearized cone}
+%
+% Let $X$ be the feasible set. The linearized cone at $\bar x\in X$ is
+% $$
+% 	\LC:=\left\{ d\in\R^n\ \middle\vert
+% 	\begin{array}{l l}
+% 		\nabla g_i(\bar x)^Td\leq0 & \forall i=I(\bar x) \\
+% 		\nabla h_j(\bar x)^Td=0    & \forall j=\iter1p
+% 	\end{array}
+% 	\right\}
+% $$
+%
+% \paragraph{Solution}
+
+Let $d\in\R^n$ be an arbitrary element of $T_X$. Then there exists a
+sequence $\{x^k\in X\}\to\bar x$ and a sequence $\{t_k\}\downarrow0$
+such that $\frac{x^k-\bar x}{t_k}\to d$.
+
+Rearranging, we have
+\begin{align*}
+	\lim_{k\to\infty}\frac{x^k-\bar x}{t_k}      & =d                              \\
+	\lim_{k\to\infty}\frac{x^k-\bar x-t_kd}{t_k} & =0                              \\
+	x^k-\bar x-t_kd                              & = o(t_k)                        \\
+	x^k                                          & = \bar x + t_kd + o(t_k)\Tag{*}
+\end{align*}
+
+Assume that $f$ is continuously differentiable. Then we have
+\begin{align*}
+	\nf(\bx)^Td
+	 & = \lk\f{f(\bx+t_kd)-f(\bx)}{t_k}                   \\
+	 & = \lk\f{f(\bx+t_k(d+\f{o(t_k)}{t_k}))-f(\bx)}{t_k}
+\end{align*}
+
+The last step is valid because $\f{o(t_k)}{t_k}\to0$ and hence we
+still have $\bx+t_k\left(d+\f{o(t_k)}{t_k}\right)\to\bar x$.
+\begin{align*}
+	\nf(\bx)^Td
+	       & =\lk\f{f(\bx+t_kd+o(t_k))-f(\bx)}{t_k} \\
+	       & =\lk\f{f(x^k)-f(\bx)}{t_k}             \\
+	o(t_k) & =f(x^k)-f(\bx)-t_k\nf(\bx)^Td          \\
+	f(x^k) & =f(\bx)+t_k\nf(\bx)^Td+o(t_k)\Tag{**}
+\end{align*}
+
+Now use $h_j$ in the place of $f$. $h_j$ is indeed continuously
+differentiable in the standard NLP. Moreover, we have we have
+$h_j(x)=0$ for all feasible $x$. In particular,
+\begin{align*} 0
+	 & = \frac{h_j(x^k)}{t_k}                                                \\
+	 & \stackrel{(**)}{=}\f1{t_k}\big(h_j(\bx)+t_k\n h_j(\bx)^Td+o(t_k)\big) \\
+	 & = \n h_j(\bx)^Td+\frac{o(t_k)}{t_k}
+\end{align*}
+
+Taking the limit as $k\to\infty$, we have $\n h_j(\bx)^Td=0$ as
+required.
+
+Next, use $g_i$ in the place of $f$, and use a very similar argument:
+\begin{align*} 0
+	 & \geq\frac{g_i(x^k)}{t_k}                                              \\
+	 & \stackrel{(**)}{=}\f1{t_k}\big(g_i(\bx)+t_k\n g_i(\bx)^Td+o(t_k)\big) \\
+	 & =\n g_i(\bx)^Td+\frac{o(t_k)}{t_k}
+\end{align*}
+
+This time we remove the $g_i(\bx)$ term because $i\in I(\bx)$. Again
+taking limit as $k\to\infty$, we have $\n g_i(\bx)^Td\leq0$ as
+required.
+
+And hence $\bx\in\LC$, completing the proof.

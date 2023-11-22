@@ -1,24 +1,172 @@
-% \Problem{2}{Tangent cone is a cone} Let
-% $S\subset\R^n$ and $\bar x\in S$. Show that $T_S(\bar x)$ is a cone.
-%
-% \Definition{5.1.1}{Cones}
-%
-% A non-empty set $K\subset\R^n$ is said to be a cone if
-% $$
-% 	\lambda v\in K\with(\lambda\geq0,\ v\in K)
-% $$
-%
-% \Definition{5.1.3}{Tangent cone}\label{add7a4b}
-%
-% Let $S\subset\R^n$ and $\bar x\in S$. Then the set
-% $$
-% 	T_S(\bar x):=\Set{d\in\R^n}
-% 	{\exists\{x^k\in S\}\to\bar x,\{t_k\}\downarrow0:\frac{x^k-\bar x}{t_k}\to d}
-% $$
-% is called the (Bouligand) tangent cone of $S$ at $\bar x$.
+% \paragraph{Problem} \textbf{(LICQ implies MFCQ)} Let $\bar x\in\R^n$
+% be feasible for the standard NLP such that LICQ holds at $\bar x$.
+% Show that MFCQ holds at $\bar x$.
 %
 % \paragraph{Solution}
 
+{\large\textbf{Q1}}
+
+Let LICQ hold at $\bar x$. Define $M\in\R^{l\times n}$ by
+$$
+	M:=\begin{bmatrix}
+		\nabla g_1(\bar x)^T \\
+		\vdots               \\
+		\nabla g_q(\bar x)^T \\
+		\nabla h_1(\bar x)^T \\
+		\vdots               \\
+		\nabla h_p(\bar x)^T \\
+	\end{bmatrix}
+$$
+where $q:=|I(\bar x)|$ is the cardinality of the active set, and $l:=p+q$.
+
+By LICQ, the rows of $M$ are linearly independent, and hence any
+system of the form
+$$
+	Md = b
+$$
+must have a solution for $d\in\R^n$, given any $b\in\R^l$. (It's the
+same setup as having $l$ (linearly independent) equations to solve for
+$l$ variables in a system of equations)
+
+Exploiting this, we set $b$ as
+$$
+	b:=\begin{bmatrix}
+		-1 & \ldots & -1 & 0 & \ldots & 0
+	\end{bmatrix}^T
+$$
+Where it has $q$ ``$-1$"s and $p$ ``0"s.
+
+We know that a solution $d\in\R^n$ is guaranteed to exist. Fix this
+$d$. Now since
+$$
+	\begin{bmatrix}
+		\nabla g_1(\bar x)^T \\
+		\vdots               \\
+		\nabla g_q(\bar x)^T \\
+		\nabla h_1(\bar x)^T \\
+		\vdots               \\
+		\nabla h_p(\bar x)^T \\
+	\end{bmatrix}d =
+	\begin{bmatrix}
+		\nabla g_1(\bar x)^Td \\
+		\vdots                \\
+		\nabla g_q(\bar x)^Td \\
+		\nabla h_1(\bar x)^Td \\
+		\vdots                \\
+		\nabla h_p(\bar x)^Td \\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		-1     \\
+		\vdots \\
+		-1     \\
+		0      \\
+		\vdots \\
+		0      \\
+	\end{bmatrix}
+$$
+
+We can inspect it row-wise and see that
+$$
+  \nabla g_i(\bar x)^Td=-1<0\with(i\in I(\bar x))
+$$
+
+and
+$$
+  \nabla h_j(\bar x)^Td=0\with(j\in J)
+$$
+
+And hence MFCQ holds.
+\def\TC{T_X(\bar x)}
+\def\LC{L_X(\bar x)}
+\def\lk{\lim_{k\to\infty}}
+\def\nf{\nabla f}
+\def\n{\nabla}
+\def\f{\frac}
+\def\bx{\bar x}
+
+\newpage
+{\large\textbf{Q3}}
+
+Let $d\in\R^n$ be an arbitrary element of $T_X$. Then there exists a
+sequence $\{x^k\in X\}\to\bar x$ and a sequence $\{t_k\}\downarrow0$
+such that $\frac{x^k-\bar x}{t_k}\to d$.
+
+Rearranging, we have
+\begin{align*}
+	\lim_{k\to\infty}\frac{x^k-\bar x}{t_k}      & =d                              \\
+	\lim_{k\to\infty}\frac{x^k-\bar x-t_kd}{t_k} & =0                              \\
+	x^k-\bar x-t_kd                              & = o(t_k)                        \\
+	x^k                                          & = \bar x + t_kd + o(t_k)\Tag{*}
+\end{align*}
+
+Assume that $f$ is continuously differentiable. Then we have
+\begin{align*}
+	\nf(\bx)^Td
+	 & = \lk\f{f(\bx+t_kd)-f(\bx)}{t_k}                   \\
+	 & = \lk\f{f(\bx+t_k(d+\f{o(t_k)}{t_k}))-f(\bx)}{t_k}
+\end{align*}
+
+The last step is valid because $\f{o(t_k)}{t_k}\to0$ and hence we
+still have $\bx+t_k\left(d+\f{o(t_k)}{t_k}\right)\to\bar x$.
+\begin{align*}
+	\nf(\bx)^Td
+	       & =\lk\f{f(\bx+t_kd+o(t_k))-f(\bx)}{t_k} \\
+	       & =\lk\f{f(x^k)-f(\bx)}{t_k}             \\
+	o(t_k) & =f(x^k)-f(\bx)-t_k\nf(\bx)^Td          \\
+	f(x^k) & =f(\bx)+t_k\nf(\bx)^Td+o(t_k)\Tag{**}
+\end{align*}
+
+Now use $h_j$ in the place of $f$. $h_j$ is indeed continuously
+differentiable in the standard NLP. Moreover, we have we have
+$h_j(x)=0$ for all feasible $x$. In particular,
+\begin{align*} 0
+	 & = \frac{h_j(x^k)}{t_k}                                                \\
+	 & \stackrel{(**)}{=}\f1{t_k}\big(h_j(\bx)+t_k\n h_j(\bx)^Td+o(t_k)\big) \\
+	 & = \n h_j(\bx)^Td+\frac{o(t_k)}{t_k}
+\end{align*}
+
+Taking the limit as $k\to\infty$, we have $\n h_j(\bx)^Td=0$ as
+required.
+
+Next, use $g_i$ in the place of $f$, and use a very similar argument:
+\begin{align*} 0
+	 & \geq\frac{g_i(x^k)}{t_k}                                              \\
+	 & \stackrel{(**)}{=}\f1{t_k}\big(g_i(\bx)+t_k\n g_i(\bx)^Td+o(t_k)\big) \\
+	 & =\n g_i(\bx)^Td+\frac{o(t_k)}{t_k}
+\end{align*}
+
+This time we remove the $g_i(\bx)$ term because $i\in I(\bx)$. Again
+taking limit as $k\to\infty$, we have $\n g_i(\bx)^Td\leq0$ as
+required.
+
+And hence $\bx\in\LC$, completing the proof.
+
+\newpage
+{\large\textbf{Q4}}
+
+Take any $v\in S$, and any $\lambda\geq0$. Our goal is to show that
+$\lambda v\in S$.
+
+Since $v\in S$, by definition of a tangent cone, there exists
+$\{x^k\in S\}\to\bar x$, $\{t_k\}\downarrow0$ such that
+\begin{equation*}
+	\frac{x^k-\bar x}{t_k}\to v
+\end{equation*}
+
+Multiplying by $\lambda$ on both sides we get
+\begin{equation*}
+  \frac{x^k-\bar x}{t_k/\lambda}\to\lambda v\Tag{*}
+\end{equation*}
+
+Since $\lambda\geq0$ and $t_k\geq0$ for all $k$, we have
+$t_k/\lambda\geq0$ for all $k$ and hence $\{t_k/\lambda\}\downarrow0$
+too.
+
+So now we've found a $\{x^k\in S\}\to\bar x$ and a
+$\{t_k/\lambda\}\downarrow0$ such that $(*)$.
+	
+By definition of tangent cone $S$, we have $\lambda v\in
+S$, completing the proof.
 {\large\textbf{Q4}}
 
 Take any $v\in S$, and any $\lambda\geq0$. Our goal is to show that

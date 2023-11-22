@@ -243,7 +243,7 @@ $$
 	L_X(\bar x):=\left\{ d\in\R^n\ \middle\vert
 	\begin{array}{l l}
 		\nabla g_i(\bar x)^Td\leq0 & \forall i=I(\bar x) \\
-		\nabla h_j(\bar x)=0       & \forall j=\iter1p
+		\nabla h_j(\bar x)^Td=0    & \forall j=\iter1p
 	\end{array}
 	\right\}
 $$
@@ -265,75 +265,75 @@ Let $\bar x\in X$ be a local minimizer of (1) such that
 $(\bar\lambda,\bar\mu)\in\R^m\times\R^p$ such that $(\bar
 	x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of (1).
 
-% \begin{proof}
-% 	\def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
-% 	By Theorem 5.1.5,
-% 	\begin{equation*}
-% 		\nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\tag*{($*$)}
-% 	\end{equation*}
+\begin{proof}
+	\def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
+	By Theorem 5.1.5,
+	\begin{equation*}
+		\nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\tag*{($*$)}
+	\end{equation*}
 
-% 	Set
-% 	$$
-% 		B:=\begin{pmatrix}
-% 			-\nabla g_i(\bx)^T\quad(i=\iter1m) \\
-% 			-\nabla h_j(\bx)^T\quad(j=\iter1p) \\
-% 			\nabla h_j(\bx)^T\quad(j=\iter1p)
-% 		\end{pmatrix}\in\R^{(m+2p)\times{n}}
-% 	$$
-% 	%TODO: check the sign of the 2nd and 3rd row
+	Set
+	$$
+		B:=\begin{pmatrix}
+			-\nabla g_i(\bx)^T\quad(i=\iter1m) \\
+			-\nabla h_j(\bx)^T\quad(j=\iter1p) \\
+			\nabla h_j(\bx)^T\quad(j=\iter1p)
+		\end{pmatrix}\in\R^{(m+2p)\times{n}}
+	$$
+	%TODO: check the sign of the 2nd and 3rd row
 
-% 	Then $d\in L_X(\bx)\iff Bd\geq0$.
+	Then $d\in L_X(\bx)\iff Bd\geq0$.
 
-% 	By ACQ, we have $d\in T_X(\bx)\iff Bd\geq0$
+	By ACQ, we have $d\in T_X(\bx)\iff Bd\geq0$
 
-% 	Combined with $(*)$, we have
-% 	$$
-% 		\nabla f(\bx)^Td\geq0\quad\forall(d:Bd\geq0)
-% 	$$
+	Combined with $(*)$, we have
+	$$
+		\nabla f(\bx)^Td\geq0\quad\forall(d:Bd\geq0)
+	$$
 
-% 	(Think $h=\nabla f(\bx)$ and apply the Farkas Lemma.)
+	(Think $h=\nabla f(\bx)$ and apply the Farkas Lemma.)
 
-% 	By the Farkas Lemma,
-% 	$$
-% 		\exists y=\begin{pmatrix}y^1\in\R^m\\y^2\in\R^p\\y^3\in\R^p\end{pmatrix}
-% 	$$
+	By the Farkas Lemma,
+	$$
+		\exists y=\begin{pmatrix}y^1\in\R^m\\y^2\in\R^p\\y^3\in\R^p\end{pmatrix}
+	$$
 
-% 	such that $y\geq0$, and $B^Ty=\nabla f(\bx)$
+	such that $y\geq0$, and $B^Ty=\nabla f(\bx)$
 
-% 	Define $\bl\in\R^n,\bm\in\R^p$ by
-% 	$$
-% 		\bl_i=\begin{cases}
-% 			y^1_i & \text{if $i=\iter1m$} \\
-% 			0     & \text{otherwise}
-% 		\end{cases}
-% 	$$
-% 	and
-% 	$$
-% 		\bm_i=\begin{cases}
-% 			y^2_j - y^3_j & \text{if $j=\iter{m+1}{m+2p}$} \\
-% 			0             & \text{otherwise}
-% 		\end{cases}
-% 	$$
+	Define $\bl\in\R^n,\bm\in\R^p$ by
+	$$
+		\bl_i=\begin{cases}
+			y^1_i & \text{if $i=\iter1m$} \\
+			0     & \text{otherwise}
+		\end{cases}
+	$$
+	and
+	$$
+		\bm_i=\begin{cases}
+			y^2_j - y^3_j & \text{if $j=\iter{m+1}{m+2p}$} \\
+			0             & \text{otherwise}
+		\end{cases}
+	$$
 
-% 	Then $(\bx,\bl,\bm)$ is a KKT point.
+	Then $(\bx,\bl,\bm)$ is a KKT point.
 
-% 	MORE NOTES
+	MORE NOTES
 
-% 	\begin{align*}
-% 		0
-% 		 & = \nabla f(\bx)
-% 		+\sum_{i=0}^my^1_i\nabla g_i(\bx)
-% 		+\sum_{j=m+1}^{m+2p}(y^2_j-y^3_j)\nabla h_j(\bx) \\
-% 		 & = \nabla f(\bx)
-% 		+\sum_{i=0}^m \bl_i\nabla g_i(\bx)
-% 		+\sum_{j=m+1}^{m+2p}\bm_j\nabla h_j(\bx)
-% 	\end{align*}
+	\begin{align*}
+		0
+		 & = \nabla f(\bx)
+		+\sum_{i=0}^my^1_i\nabla g_i(\bx)
+		+\sum_{j=m+1}^{m+2p}(y^2_j-y^3_j)\nabla h_j(\bx) \\
+		 & = \nabla f(\bx)
+		+\sum_{i=0}^m \bl_i\nabla g_i(\bx)
+		+\sum_{j=m+1}^{m+2p}\bm_j\nabla h_j(\bx)
+	\end{align*}
 
-% 	and then there is a line with a tick/check next to it:
-% 	$$
-% 		\bl^Tg(\bx)=\sum_{i=0}^m\bl_ig_i(\bx)=0
-% 	$$
-% \end{proof}
+	and then there is a line with a tick/check next to it:
+	$$
+		\bl^Tg(\bx)=\sum_{i=0}^m\bl_ig_i(\bx)=0
+	$$
+\end{proof}
 
 \Definition{5.1.14}{Constraint qualifications}\label{e8fa554}
 
