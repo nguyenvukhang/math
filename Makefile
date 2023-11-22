@@ -51,3 +51,7 @@ head:
 syntax:
 	python3 bin/gen.py syntax > tex.vim
 	cat tex.vim >> ~/dots/nvim/after/syntax/tex.vim
+
+sync:
+	rm -rf ~/uni/@/tex_modules
+	cp -r $(MAKEFILE_DIR)tex_modules ~/uni/@/tex_modules
