@@ -1,7 +1,7 @@
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
-PYTEX := python3 bin/pytex
+PYTEX := python3 $(MAKEFILE_DIR)bin/pytex
 # PYTEX += --no-proof
 # PYTEX += --no-compute
 
