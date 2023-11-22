@@ -19,16 +19,14 @@ TEX_FILES += nonlinear-optimization-constrained.tex
 
 build:
 	$(PYTEX) -J minimath \
-		--pretty \
 		build $(TEX_FILES)
 
 plenary:
 	$(PYTEX) -J plenary \
-		--pretty \
 		build plenary.tex calculus.tex
 
 dev:
-	$(PYTEX) -J minimath --pretty dev $(TEX_FILES)
+	$(PYTEX) -J minimath dev $(TEX_FILES)
 
 all:
 	python3 bin/build-all.py

@@ -17,7 +17,7 @@ def get_parser():
     p.add_argument("--no-proof", dest="show_proofs", action="store_false")
     p.add_argument("--no-compute", dest="show_computes", action="store_false")
     p.add_argument("--build-dir", default=".build")
-    p.add_argument("--pretty", action="store_true")
+    p.add_argument("--verbose", action="store_true")
     p.add_argument("tex_files", nargs="*")
     return p
 
@@ -49,7 +49,7 @@ def remove_in_between(data: bytes, start: bytes, end: bytes):
 class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, args, verbose=True):
+    def __init__(self, args):
         env = os.environ.copy()
 
         # tells latex compiler to search for .sty packages in this folder.
@@ -63,8 +63,7 @@ class PdfLatex:
         )
         self.dev_mode = args.action == "dev"
         self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=env)
-        self.pretty = args.pretty
-        self.verbose = verbose
+        self.verbose = args.verbose
         self.tex_files, self.header_files = [], []
         self.show_computes = args.show_computes
         self.show_proofs = args.show_proofs
@@ -97,8 +96,10 @@ class PdfLatex:
         list(pipe)
 
     def close(self):
+        self.write(b"\\documentclass{article}\n")
+        self.write(b"\\usepackage{nguyenvukhang}\n")
         [self.write(read_file(fp, "rb")) for fp in self.header_files]
-        self.write(b"\\begin{document}")
+        self.write(b"\\begin{document}\n")
         self.process_files()
         self.write(b"\\end{document}")
         self.x.stdin.flush()
@@ -111,7 +112,7 @@ class PdfLatex:
         if not self.verbose:
             return
 
-        if not self.pretty:
+        if self.verbose:
             for line in iter(self.x.stdout.readline, b""):
                 print(line.decode("utf-8"), end="")
             return
@@ -163,11 +164,11 @@ class PdfLatex:
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def build(args, verbose=True):
+def build(args):
     if not path.isdir(args.build_dir):
         os.mkdir(args.build_dir)
 
-    pdflatex = PdfLatex(args, verbose=verbose)
+    pdflatex = PdfLatex(args)
     pdflatex.add_headers(args.header_files)
     pdflatex.add_files(args.tex_files)
     pdflatex.close()
@@ -273,7 +274,7 @@ def dev(args):
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: build(args, verbose=True)
+    build2 = lambda: build(args)
     report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
     [build2(), report()]
 
