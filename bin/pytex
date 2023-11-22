@@ -64,24 +64,18 @@ class PdfLatex:
         self.dev_mode = args.action == "dev"
         self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=env)
         self.verbose = args.verbose
-        self.tex_files = []
+        self.tex_files = args.tex_files
         self.header = args.header
         self.show_computes = args.show_computes
         self.show_proofs = args.show_proofs
 
+    # write tex contents to a file instead of stdin
     def send_to_file(self):
-        f = open("build.tex", "wb")
-        self.x.stdin = f
+        self.x.stdin = open("build.tex", "wb")
 
     def write(self, e: bytes):
         self.x.stdin.write(e)
         self.x.stdin.write(b"\n\n")
-
-    def add_headers(self, filepaths: list[str]):
-        self.header_files.extend(filepaths)
-
-    def add_files(self, filepaths: list[str]):
-        self.tex_files.extend(filepaths)
 
     def __compile__(self, filepath: str) -> bytes:
         b = read_file(filepath, mode="rb")
@@ -96,12 +90,14 @@ class PdfLatex:
         pipe = map(self.write, pipe)
         list(pipe)
 
-    def close(self):
-        self.write(b"\\documentclass{article}\n")
-        self.write(b"\\usepackage{" + self.header.encode("utf-8") + b"}\n")
-        self.write(b"\\begin{document}\n")
+    def run(self):
+        w = self.write
+        w(b"\\documentclass{article}")
+        w(b"\\usepackage{" + self.header.encode("utf-8") + b"}")
+        w(b"\\begin{document}")
         self.process_files()
-        self.write(b"\\end{document}")
+        w(b"\\end{document}")
+
         self.x.stdin.flush()
         self.x.stdin.close()
         self.monitor_stdout()
@@ -161,13 +157,11 @@ class PdfLatex:
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def build(args):
+def __build__(args):
     if not path.isdir(args.build_dir):
         os.mkdir(args.build_dir)
 
-    pdflatex = PdfLatex(args)
-    pdflatex.add_files(args.tex_files)
-    pdflatex.close()
+    PdfLatex(args).run()
 
     pdf_basename = f"{args.jobname}.pdf"
     pdf_output = path.join(args.build_dir, pdf_basename)
@@ -187,7 +181,7 @@ def clean():
 # current directory and all the current subdirectories.
 #
 # opinionated quirk: all generated SHAs will start with a letter.
-def sha():
+def __sha__():
     from random import randint as r
 
     s, c = "abcdef0123456789", lambda e: s[r(0, e)]
@@ -255,7 +249,7 @@ def assert_unique_ids(tex_files):
 
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
-def test():
+def __test__():
     ALL_OK = True
     ALL_OK &= assert_unique_ids(get_tex_files())
 
@@ -265,12 +259,12 @@ def test():
 
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
 # changed.
-def dev(args):
+def __dev__(args):
     from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: build(args)
+    build2 = lambda: __build__(args)
     report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
     [build2(), report()]
 
@@ -304,13 +298,13 @@ def dev(args):
 def main():
     args = get_parser().parse_args()
     if args.action == "build":
-        build(args)
+        __build__(args)
     elif args.action == "dev":
-        dev(args)
+        __dev__(args)
     elif args.action == "sha":
-        sha()
+        __sha__()
     elif args.action == "test":
-        test()
+        __test__()
 
 
 if __name__ == "__main__":
