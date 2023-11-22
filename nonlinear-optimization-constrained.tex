@@ -213,7 +213,7 @@ where we let $X$ be the feasible set of (1).
 	      $$
 		      L(x,\lambda,\mu)=f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x)
 	      $$
-	      is called the Langrangian (function) of (1).
+	      is called the Lagrangian (function) of (1).
 	\item The set of conditions
 	      $$
 		      \begin{array}{l l}
@@ -558,3 +558,281 @@ at $\bar x$. Then \href{fed784a}{MFCQ} holds.
 % 	Then since $\tilde\lambda_i = \bar\lambda_i\ \forall(i\notin I(\bar
 % 		x))$, this shows $\tilde\lambda=\bar\lambda$ and $\tilde\mu=\bar\mu$.
 % \end{proof}
+
+% LAGRANGIAN DUALITY
+
+Consider the standard NLP:
+\begin{equation*}
+	\NlpStdForm\Tag{1}
+\end{equation*}
+But now assume that $f,g_i,h_j:\R^n\to\R$ with no smoothness.
+
+The Lagrangian of (1) is
+\begin{align*}
+	L(x,\lambda,\mu)
+	 & =f(x)+\sum_{i\in I}\lambda_ig_i(x) + \sum_{j\in J}\mu_jh_j(x) \\
+	 & =f(x)+\lambda^Tg(x)+\mu^Th(x)
+\end{align*}
+
+\textbf{The Dual Problem}
+
+Observe that if $x$ is a feasible point,
+\begin{align*}
+	\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}=
+	\begin{cases}
+		f(x)    & \text{if }x\in X,   \\
+		+\infty & \text{if }x\notin X
+	\end{cases}
+\end{align*}
+
+% Infinity because we can blow up both Lambda and Mu terms to
+% +infinity, and hence sup is infinity.
+%
+% 0 because Mu is 0 when feasible and Lambda maxes out at 0 when
+% feasible.
+
+Therefore the primal problem (1) is equivalent to
+$$
+	\min_{x\in\R^n}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)
+$$
+
+\textbf{Q.} When can we switch min(inf) and sup?
+
+\Definition{6.1.1}{Lagrangian dual}
+
+The Lagrangian dual of (1) is given by
+$$
+	\begin{array}{l l l l}
+		\max_{}d(\lambda,\mu) & \text{s.t.} & \lambda\geq0
+	\end{array}
+$$
+
+where the dual objective is given by
+$d:\R^m\times\R^p\to\R\cup\{+\infty\}$ and
+$$
+	d(\lambda,\mu):=\inf_{x\in\R^n}L(x,\lambda,\mu)
+$$
+
+The function $p:\R^n\to\R\cup\{+\infty\}$ given by
+$$
+	p(x):=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}
+	L(x,\lambda,\mu)
+$$
+
+is called the \textbf{primal objective}.
+
+\Example{6.1.2}{LP duality}
+
+Consider the standard linear program (LP):
+$$
+	\begin{array}{l l l}
+		\displaystyle \min_{x\in\R^n}c^Tx
+		 & \text{s.t.} & Ax=b   \\
+		 &             & x\geq0
+	\end{array}
+$$
+with $A\in\R^{m\times n}$, $b\in\R^m$, $c\in\R^n$.
+
+The Lagrangian reads
+\begin{align*}
+	L(x,\lambda,\mu)
+	 & =c^Tx-\lambda^Tx+\mu^T(b-Ax)         \\
+	 & =(c-\lambda-A^T\mu)^Tx + b^Tu\Tag{*}
+\end{align*}
+
+% so g_i corresponds to -x<=0
+% and h_j corresponds to Ax-b=0
+
+So then
+\begin{align*}
+	\nabla_xL(x,\lambda,\mu)
+	 & =c-\lambda-A^T\mu
+\end{align*}
+
+The function that takes $x\mapsto L(x,\lambda,\mu)$ is affine (from
+($*$)), and in particular it is convex. And hence it takes its minimum
+if and only if $\nabla_xL(x,\lambda,\mu)=0$, in which case,
+$$
+	\inf_{x\in\R^n}L(x,\lambda,\mu)=b^T\mu
+$$
+
+otherwise if $\nabla_xL(x,\lambda,\mu)\neq0$, the infimum must be
+$-\infty$.
+
+So then
+$$
+	d(\lambda,\mu)=\begin{cases}
+		b^T\mu  & \text{if }c=A^Tu+\lambda, \\
+		-\infty & \text{otherwise}
+	\end{cases}
+$$
+
+Therefore, the dual problem reads
+$$\begin{array}{l l l}\displaystyle
+		\max_{\lambda,\,\mu}d(\lambda,\mu) & \text{s.t.} & \lambda\geq0
+	\end{array}$$
+
+Which is the same as
+$$\begin{array}{l l l}\displaystyle
+		\max_{\lambda,\,\mu}b^T\mu & \text{s.t.} & \lambda\geq0,A^T\mu+\lambda=c
+	\end{array}$$
+
+and again,
+$$\begin{array}{l l l}\displaystyle
+		\max_\mu b^T\mu & \text{s.t.} & A^T\mu\leq c
+	\end{array}$$
+
+% WEAK AND STRONG DUALITY
+
+\Theorem{6.2.1}{Weak duality}
+
+Let $\hat x$ be feasible for (P) and $(\hat\lambda,\hat\mu)$ be
+feasible for (D). Then
+$$
+	p(\hat x)\geq d(\hat\lambda,\hat\mu)
+$$
+
+\begin{proof}
+	\def\hx{\hat x}
+	\def\hl{\hat\lambda}
+	\def\hm{\hat\mu}
+	We have
+	$$
+		p(\hx) = f(\hx)\with(\hx\in X)
+	$$
+
+	and hence
+	\begin{align*}
+		p(\hx) & \geq f(\hx) + \hl^Tg(\hx) + \hm^Th(\hx) \\
+		       & =L(\hx,\hl,\hm)                         \\
+		       & \geq\inf_{x\in\R^n}L(x,\hl,\hm)         \\
+		       & = d(\hl,\hm)
+	\end{align*}
+
+	\paragraph{Remark} If $p(\hx)=d(\hl,\hm)$, then $\hx$ solves (P),
+	and $(\hl,\hm)$ solves (D).
+\end{proof}
+
+From weak duality, if we define
+\begin{align*}
+	\bar p:=\inf_{x\in\R^n}p(x)\geq
+	\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}d(\lambda,\mu)
+	=:\bar d
+\end{align*}
+
+Then $\bar p-\bar d\geq0$
+
+\Example{6.2.2}{Non-zero duality gap}
+
+% Strong duality in LP but we don't have that in NLP
+
+Consider the following objective function:
+\begin{align*}
+	\min f(x):=\begin{cases}
+		           x^2-2x & x\geq0           \\
+		           x      & \text{otherwise}
+	           \end{cases}
+	\quad \text{s.t.}\quad g(x):=-x\leq0
+\end{align*}
+
+% Note that the global minimizer is at 1.
+% we already know that p_bar is 1. We will be computing d_bar now.
+
+The Lagrangian reads
+$$
+	L(x,\lambda)=\begin{cases}
+		x^2-(2+\lambda)x & \text{if } x\geq0 \\
+		(1-\lambda)x     & \text{otherwise}
+	\end{cases}
+$$
+% there is no mu because there is no equality constraints
+
+A short computation shows that
+$$
+	d(\lambda)=\begin{cases}
+		-\frac{(2+\lambda)^2}{4} & \text{if }\lambda\geq1 \\
+		-\infty                  & \text{otherwise}
+	\end{cases}
+$$
+
+Therefore,
+\begin{align*}
+	\bar d=d(1)=-\frac94<1=\bar p
+\end{align*}
+
+Hence the duality gap
+$$
+	\bar p-\bar d=\frac54>0
+$$
+
+\Definition{6.3.1}{Saddle point}
+
+The triple $(\bar x,\bar\lambda,\bar\mu)\in\R^n\times\R^m_+\times\R^p$
+is called a saddle point of the Lagrangian $L$ of (P) if
+$$
+	L(\bar x,\lambda,\mu)\leq
+	L(\bar x,\bar\lambda,\bar\mu)\leq
+	L(x,\bar\lambda,\bar\mu)
+$$
+
+\Theorem{6.3.2}{}
+
+The following are equivalent:
+\begin{enumerati}
+	\item $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P)
+	\item $\bar x$ solves (P); $(\bar\lambda,\bar\mu)$ solves (D)
+\end{enumerati}
+
+\begin{proof}
+	\paragraph{(i) $\implies$ (ii):}
+
+	If $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P), then
+	\begin{align*}
+		L(\bar x,\bar\lambda,\bar\mu)
+		 & \stackrel{\text{S.P.}}{\leq}\inf_{x}L(x,\bar\lambda,\bar\mu)      \\
+		 & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}\inf_{x}L(x,\lambda,\mu)  \\
+		 & \leq\inf_{x}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)  \\
+		 & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu)     \\
+		 & \stackrel{\text{S.P.}}{\leq} L(\bar x,\bar\lambda,\bar\mu)\Tag{*}
+	\end{align*}
+
+	% TODO: look for a problem in the notes that flip inf and sup and have
+	% a resulting inequality. This will convince you of the argument
+	% above.
+
+	Then,
+	\begin{align*}
+		d(\bar\lambda,\bar\mu)
+		 & =\inf_{x} (x,\bar\lambda,\bar\mu)                                        \\
+		 & \stackrel{(*)}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+		 & = p(\bar x) = \bar p<+\infty
+	\end{align*}
+
+	Hence if $x\in X$, and by weak duality, $\bar x$ solves (P), and
+	$(\bar\lambda,\bar\mu)$ solves (D).
+
+	\paragraph{(ii) $\implies$ (i):}
+
+	Observe that
+	\begin{align*}
+		L(\bar x,\bar\lambda,\bar\mu)
+		 & \stackrel{\bar x\in X}{\leq} f(\bar x)                                                 \\
+		 & \stackrel{\bar x\in X}= p(\bar x)                                                      \\
+		 & \stackrel{\text{defn. of }p}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+		 & =d(\bar\lambda,\bar\mu)                                                                \\
+		 & =\inf_{x} (x,\bar\lambda,\bar\mu)                                                      \\
+		 & \leq L(\bar x,\bar\lambda,\bar\mu)                                                     \\
+	\end{align*}
+
+	But that's just the original LHS value, and hence all lines are
+	equal. Hence
+	\begin{align*}
+		L(\bar x,\bar\lambda,\bar\mu)
+		 & =\inf_{x} (x,\bar\lambda,\bar\mu)                          \\
+		 & =\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+	\end{align*}
+
+  And hence $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point.
+\end{proof}
+
+% in class, Prof forgot to talk about strong duality in class.
