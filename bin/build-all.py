@@ -7,7 +7,8 @@ ALL_TEX_FILES = (
     "calculus.tex",
     "algorithm-design.tex",
     "complex-analysis.tex",
-    "nonlinear-optimization.tex",
+    "nonlinear-optimization-unconstrained.tex",
+    "nonlinear-optimization-constrained.tex",
     "ordinary-differential-equations.tex",
 )
 
