@@ -17,7 +17,7 @@ tex_files = list(map(read_file, tex_files))
 shas = set()
 
 markers = None  # type: list[bytes]
-LABEL_REGEX = re.compile(b"{([a-z0-9]{7})}$")
+LABEL_REGEX = re.compile(b"\\\\label{([a-z0-9]{7})}$")
 REFERENCE_REGEX = re.compile(b"\\\\href{([a-z0-9]{7})}")
 
 
@@ -25,13 +25,13 @@ def get_markers():  # type: () -> list[bytes]
     global markers
     if markers is not None:
         return markers
-    MATCHER = re.compile(b"^\\\\def(\\\\[A-Z][a-z]+)#1#2{\\\\subsubsection")
-    with open("header.tex", "rb") as f:
-        l = f.read().splitlines()
-    l = map(lambda l: MATCHER.search(l), l)
-    l = filter(bool, l)
-    l = map(lambda l: l.groups()[0], l)
-    markers = list(l)
+    with open("bin/gen.py", "rb") as f:
+        l = f.read()
+    st = l.index(b"SECTION_TITLES")
+    i = lambda c: l.index(c, st)
+    l = l[i(b"(") : i(b")")]
+    m = re.compile(rb'"([A-Z][a-z]+)"').findall(l)
+    markers = [b"\\" + x for x in m]
     return markers
 
 
