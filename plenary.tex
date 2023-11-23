@@ -473,18 +473,22 @@ And that $\Gamma(n+1)=n\Gamma(n)$.
 	 & = n\Gamma(n)
 \end{align*}
 
-\Definition{9.1.2}{Turing reduction}\label{e8ff6a1}
+\Definition{9.1.2}{Language reductions}\label{e009acb}
 
-Reducing $A$ to $B$ by Turing reduction is to find a function which
-mimics the behavior of $A$ using an oracle of $B$.
+If problem $A$ is reducible to problem $B$, we write $A\leq B$.
 
-\Definition{9.1.2}{Many-one reduction}\label{e009acb}
+Reducing $A$ to $B$ by a \textbf{Many-one reduction} is to find a
+function $f$ which converts inputs $x$ of $A$ into inputs $f(x)$ of
+$B$, such that $A(x)=B(f(x))$ under all values of $x$.
 
-Reducing $A$ to $B$ by Many-one reduction is to find a function $f$
-which converts inputs $x$ of $A$ into inputs $f(x)$ of $B$, such that
-$A(x)=B(f(x))$ under all values of $x$.
+Reducing $A$ to $B$ by a \textbf{Turing reduction} is to find a
+function which mimics the behavior of $A$ using an oracle of $B$.
+i.e., $A(x)=\text{TRUE}\iff B(f(x))=\text{TRUE}$.
 
-That is, $A(x)=\text{TRUE}\iff B(f(x))=\text{TRUE}$.
+$A$ being reducible to $B$ means solving $A$ cannot be harder than the
+combined difficulty of solving $B$ and executing the reduction. In
+particular, if the reduction runs in constant-time, $A$ cannot be
+harder than $B$. In order words, $\leq$ is referring to hardness.
 
 \Definition{9.1.3}{Everything $\mathsf P$-, $\mathsf{NP}$-related}\label{c8c65c8}
 
@@ -496,23 +500,25 @@ A problem $L$ is in $\mathsf P$ if it runs in polynomial time.
 
 A problem $L$ is in $\mathsf{NP}$ if has a polynomial-time verifier.
 
-Given problems $A,B$, we say that $A\leq_{\mathsf P}B$ if there exists
-a Turing Reduction from $A$ to $B$, or a Many-One Reduction from $A$
-to $B$.
+We say that $L_1\leq_{\mathsf P}L_2$ if there is a polynomial-time
+\href{e009acb}{reduction} from $L_1$ to $L_2$.
 
-An algorithm $A$ runs in \textit{polynomial time} if $\exists c\in\R$
-s.t. for all binary inputs $x$, $A$ terminates after $O(|x|^c)$
-computation steps.
-
-A decision problem $L$ is \textit{polynomial-time computable} if there
-exists a polynomial-time $A$ s.t. $\forall x$, $x\in L\iff
-	A(x)=\text{TRUE}$.
-
-We define
+A problem $L$ is $\mathsf{NP}$-complete when $L\in\mathsf{NP}$, and
+every problem $L'$ in $\mathsf{NP}$ has a polynomial-time reduction to
+it:
 $$
-	\mathsf P:=\{L\mid L\text{ is polynomial-time computable}\}
+	\forall L'\in\mathsf{NP}: L'\leq_{\mathsf P}L
 $$
 
-The complexity class $\mathsf P$ is our proxy for \textit{efficiently
-	computable languages}. (``language" is another way to refer to $L$, in
-addition to ``problem".)
+A problem $H$ is $\mathsf{NP}$-hard when for every $L\in\mathsf{NP}$,
+there is a polynomial-time reduction from $L$ to $H$:
+\begin{equation*}
+  \forall L\in\mathsf{NP}: L\leq_{\mathsf P}H\Tag{*}
+\end{equation*}
+
+The only difference between $\mathsf{NP}$-complete and
+$\mathsf{NP}$-hard is that $\mathsf{NP}$-complete has the extra
+constraint of having to be in $\mathsf{NP}$.
+
+($*$), based on a \href{c8c65c8}{previous remark}, also implies that
+$H$ is at least as hard as the hardest problem in $\mathsf{NP}$.
