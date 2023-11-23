@@ -1,3 +1,5 @@
+\section{Algorithm Design}\label{41ab460}
+
 \def\NP{\mathsf{NP}}
 \def\P{\mathsf{P}}
 \def\coNP{\mathsf{coNP}}
@@ -6,8 +8,6 @@
 \def\CONT{\mathsf{CONT}}
 \def\Yes{\text{Yes}}
 \def\No{\text{No}}
-
-\section{Algorithm Design}\label{41ab460}
 
 \Definition{0.0.1}{Vertex cover}\label{b530c81}
 
@@ -85,7 +85,7 @@ empty string.)
 
 A decision problem $L$ is a subset of $\binrep$. The computational
 task corresponding to $L$ is ``Given a string $x\in\binrep$, is $x\in
-L$?"
+	L$?"
 
 \Problem{8}{$L$-membership problem}\label{acff8f4}
 
@@ -203,8 +203,8 @@ Note that $\binrep=L\cup\overline L$ for any decision problem $L$.
 Prove that if $L\in\P$ then $\overline L\in\P$.
 
 \begin{proof}
-  If $L\in\P$, then \href{ee3be28}{by definition} there exists a
-  polynomial-time algorithm $A$ with $$x\in L\iff A(x)=\Yes$$
+	If $L\in\P$, then \href{ee3be28}{by definition} there exists a
+	polynomial-time algorithm $A$ with $$x\in L\iff A(x)=\Yes$$
 
 	Then, following the \href{ee3be28}{defintion of $\P$}, we need
 	to find a polynomial-time algorithm $B$ such that

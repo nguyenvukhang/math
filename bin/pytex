@@ -12,7 +12,7 @@ def get_parser():
         description="Custom pdflatex build script with Python3",
     )
     p.add_argument("action", choices=["build", "dev", "sha", "test"])
-    p.add_argument("-H", dest="header", default="nguyenvukhang")
+    p.add_argument("-H", dest="header", default="headers")
     p.add_argument("-J", "--jobname", default="out")
     p.add_argument("--no-proof", dest="show_proofs", action="store_false")
     p.add_argument("--no-compute", dest="show_computes", action="store_false")
@@ -73,9 +73,9 @@ class PdfLatex:
     def send_to_file(self):
         self.x.stdin = open("build.tex", "wb")
 
-    def write(self, e: bytes):
+    def write(self, e: bytes, end=b""):
         self.x.stdin.write(e)
-        self.x.stdin.write(b"\n\n")
+        self.x.stdin.write(b"\n\n" + end)
 
     def __compile__(self, filepath: str) -> bytes:
         b = read_file(filepath, mode="rb")
@@ -87,7 +87,7 @@ class PdfLatex:
 
     def process_files(self):
         pipe = map(self.__compile__, self.tex_files)
-        pipe = map(self.write, pipe)
+        pipe = map(lambda v: self.write(v, end=b"\\newpage"), pipe)
         list(pipe)
 
     def run(self):
