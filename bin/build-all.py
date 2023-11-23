@@ -14,13 +14,13 @@ ALL_TEX_FILES = (
 )
 
 
-def build(job, no_proof=False, no_compute=False):
+def build(job, no_proof=False, no_compute=False, files=ALL_TEX_FILES):
     print(f"[JOB: {job}]")
     pytex = ["python3", "bin/pytex", f"-J{job}"]
     no_proof and pytex.append("--no-proof")
     no_compute and pytex.append("--no-compute")
     pytex.append("build")
-    pytex.extend(ALL_TEX_FILES)
+    pytex.extend(files)
     # run twice to generate document references correctly
     # only report errors on the second one, since the first one will have
     # undefined references anyway
@@ -32,3 +32,4 @@ build("minimath")
 build("minimath.nc", no_compute=True)
 build("minimath.np", no_proof=True)
 build("minimath.np.nc", no_proof=True, no_compute=True)
+build("plenary", files=("plenary.tex", "calculus.tex"))
