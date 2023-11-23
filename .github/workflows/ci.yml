@@ -12,22 +12,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          path: main
           sparse-checkout: |
             tex_modules
             bin
 
+      - uses: actions/checkout@v4
+        with:
+          ref: pdf
+          path: pdf
+          sparse-checkout: .
+
       - uses: xu-cheng/texlive-action@v2
         with:
           scheme: small
-          run: python3 bin/build-all.py
+          run: cd main && python3 bin/build-all.py
+
+      - name: Push PDFs to pdf branch
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          GIT_HASH=${{ github.sha }}
+          GIT_HASH=${GIT_HASH:0:7}
+
+          rm -f *
+          cp ../main/*.pdf .
+
+          git add --all
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes found!"
+          else
+            git commit --amend --no-edit
+            git push -f
+          fi
+        working-directory: pdf
 
       - name: Release PDF
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           tag_name: ${{ github.ref_name }}
-          files: |
-            minimath.pdf
-            minimath.nc.pdf
-            minimath.np.pdf
-            minimath.np.nc.pdf
+          files: main/minimath*.pdf
