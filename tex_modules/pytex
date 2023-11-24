@@ -1,1 +1,463 @@
-../bin/pytex
+#!/usr/bin/env python3
+
+from argparse import ArgumentParser
+import os, re, time, datetime
+from os import path
+from subprocess import Popen, PIPE
+from typing import TypeVar, Literal, Callable
+import typing
+
+T = TypeVar("T")
+
+BUILD_ORDER = (
+    "toc.tex",
+    "plenary.tex",
+    "calculus.tex",
+    "algorithm-design.tex",
+    "complex-analysis.tex",
+    "nonlinear-optimization-unconstrained.tex",
+    "nonlinear-optimization-constrained.tex",
+    "ordinary-differential-equations.tex",
+)
+
+SECTION_TITLES = (
+    "Algorithm",
+    "Corollary",
+    "Definition",
+    "Example",
+    "Exercise",
+    "Lemma",
+    "Problem",
+    "Proposition",
+    "Remark",
+    "Result",
+    "Theorem",
+)
+
+
+class Regex:
+    LABEL = re.compile(b"\\\\label{([a-z0-9]{7})}")
+    LABEL_ENDL = re.compile(b"\\\\label{([a-z0-9]{7})}$")
+    HREF = re.compile(b"\\\\href{([a-z0-9]{7})}")
+
+
+class File:
+    def __init__(self, filepath):  # type: (str) -> None
+        self.filepath = filepath
+        self.data = read_file(filepath)
+        self.lines = self.data.splitlines()
+
+    # collect all labels into a set
+    # fails if a duplicate label is found
+    def get_labels(self, existing):  # type: (File,  set[bytes]) -> None
+        for i in range(len(self.lines)):
+            line = self.lines[i]
+            if not is_section_title(line):
+                continue
+            if not section_is_one_line(line):
+                print(f"[ERROR] Title spans multiple lines in")
+                print(f"| {self.filepath} | line {i} |")
+                exit()
+            hit = Regex.LABEL.search(line)
+            if hit is None:
+                continue
+            label = hit.groups()[0]
+            if label in existing:
+                raise Exception(f"Found a duplicate label: {label}")
+            existing.add(label)
+
+    # ensures that all references are pointed to a defined SHA.
+    def check_references(self, existing):  # type: (File, set[bytes]) -> None
+        for line in self.lines:
+            hit = Regex.HREF.search(line)
+            if hit is None:
+                return
+            ref = hit.groups()[0]
+            if ref not in existing:
+                print("undefined reference:", ref)
+
+    # add labels to unlabelled section titles
+    def add_labels(self, existing):  # type: (File, set[bytes]) -> None
+        for i in range(len(self.lines)):
+            l = self.lines[i]
+            if Regex.LABEL_ENDL.search(l) is not None or not is_section_title(l):
+                continue
+            self.lines[i] += b"\\label{" + new_sha(existing) + b"}"
+
+    def write(self):
+        write_file(self.filepath, self.lines)
+
+
+def new_sha(existing):  # type: (set[bytes]) -> bytes
+    from random import randint as r
+
+    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
+    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
+    x = gen()
+    while x in existing:
+        x = gen()
+    existing.add(x)
+    return x.encode("utf-8")
+
+
+def get_section_titles(prefix=b""):  # type: (bytes) -> list[bytes]
+    return [prefix + v.encode("utf8") for v in SECTION_TITLES]
+
+
+def is_section_title(line):  # type: (bytes) -> bool
+    return any(map(line.startswith, get_section_titles(prefix=b"\\")))
+
+
+# Checks if the entire section title
+# ```
+# \Theorem{3.1.4}{Cauchy integral theorem}\label{ab0cc7c}
+# ```
+# is in one line by making sure all open '{' are closed.
+def section_is_one_line(line):  # type: (bytes) -> bool
+    stk, t = 0, {b"{": 1, b"}": -1}
+    for i in range(len(line)):
+        stk += t.get(line[i : i + 1], 0)
+    return stk == 0
+
+
+class Args:
+    Action = Literal[
+        "build",
+        "dev",
+        "sha",
+        "test",
+        "label",
+        "generate-section-titles",
+    ]
+    action = None  # type: Args.Action
+    header = None  # type: str
+    jobname = None  # type: str
+    build_dir = None  # type: str
+    show_proofs = None  # type: bool
+    show_computes = None  # type: bool
+    verbose = None  # type: bool
+    tex_files = None  # type: list[str]
+
+    @staticmethod
+    def parse():  # type: () -> Args
+        p = ArgumentParser(
+            prog="pytex",
+            description="Custom pdflatex build script with Python3",
+        )
+        p.add_argument("action", choices=typing.get_args(Args.Action))
+        p.add_argument("-H", dest="header", default="headers")
+        p.add_argument("-J", "--jobname", default="out")
+        p.add_argument("--build-dir", default=".build")
+        p.add_argument("--no-proof", dest="show_proofs", action="store_false")
+        p.add_argument("--no-compute", dest="show_computes", action="store_false")
+        p.add_argument("--verbose", action="store_true")
+        p.add_argument("tex_files", nargs="*")
+        return p.parse_args()
+
+
+# get index `i` form list `l`, `d` if out of range
+def get(l, i, d=None):  # type: (list[T], int, T | None) -> T
+    return l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else d
+
+
+# quick routine to read a file into bytes
+def read_file(path):  # type: (str) -> list[bytes]
+    with open(path, "rb") as f:
+        return f.read()
+
+
+# lines should not end with newline characters
+def write_file(path, lines):  # type: (str, list[bytes]) -> None
+    with open(path, "wb") as f:
+        f.write(b"\n".join(lines))
+
+
+def debug():
+    pass
+
+
+# remove all bytes including and within a start and end marker
+def remove_in_between(data: bytes, start: bytes, end: bytes):
+    buffer, r, n = [], data.find(start), len(end)
+    while r >= 0:
+        buffer.extend(data[:r])
+        data = data[data.find(end) + n :]
+        r = data.find(start)
+    buffer.extend(data)
+    return bytes(buffer)
+
+
+class PdfLatex:
+    # start a subprocess of `pdflatex` ready to take a latex file in
+    # from stdin
+    def __init__(self, args):
+        env = os.environ.copy()
+
+        # tells latex compiler to search for .sty packages in this folder.
+        env["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
+
+        cmd = (
+            "pdflatex",
+            "--halt-on-error",
+            f"--output-directory={args.build_dir}",
+            f"--jobname={args.jobname}",
+        )
+        self.dev_mode = args.action == "dev"
+        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=env)
+        self.verbose = args.verbose
+        self.tex_files = args.tex_files
+        self.header = args.header
+        self.show_computes = args.show_computes
+        self.show_proofs = args.show_proofs
+
+    # write tex contents to a file instead of stdin
+    def send_to_file(self):
+        self.x.stdin = open("build.tex", "wb")
+
+    def write(self, e: bytes, end=b""):
+        self.x.stdin.write(e)
+        self.x.stdin.write(b"\n\n" + end)
+
+    def __compile__(self, filepath: str) -> bytes:
+        b = read_file(filepath)
+        if not self.show_computes:
+            b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
+        if not self.show_proofs:
+            b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
+        return b
+
+    def process_files(self):
+        pipe = map(self.__compile__, self.tex_files)
+        pipe = map(lambda v: self.write(v, end=b"\\newpage"), pipe)
+        list(pipe)
+
+    def run(self):
+        w = self.write
+        w(b"\\documentclass{article}")
+        w(b"\\usepackage{" + self.header.encode("utf8") + b"}")
+        w(b"\\begin{document}")
+        self.process_files()
+        w(b"\\end{document}")
+
+        self.x.stdin.flush()
+        self.x.stdin.close()
+        self.monitor_stdout()
+        self.x.wait()
+
+    # helps to monitor stdout in a less cluttered way
+    def monitor_stdout(self):
+        if self.verbose:
+            for line in iter(self.x.stdout.readline, b""):
+                print(line.decode("utf8"), end="")
+            return
+
+        num_only = re.compile(b"^\*\[\d+\]$")
+
+        def buf_to_stdout(buf):  # type: (list[bytes]) -> None
+            for l in buf:
+                print(l.decode("utf8"), end="")
+
+        def try_print(buf):  # type: (list[bytes]) -> None
+            inc = lambda x: any(map(lambda l: all(map(lambda x: x in l, x)), buf))
+            sw = lambda x: any(map(lambda l: l.startswith(x), buf))
+
+            if len(buf) < 2 and buf[0] in (b"*\n") or num_only.match(buf[0]):
+                return
+
+            if (
+                sw(b"This is pdfTeX")
+                or sw(b"*geometry*")
+                or sw(b"**entering extended mode")
+                or sw(b"Package hyperref Warning")
+                or sw(b"Underfull \hbox (badness 10000)")
+                or inc((b"texlive", b"texmf", b"latex"))  # system package
+                or inc((b"texlive", b"texmf", b"pdftex"))  # system package
+                or inc((b"(Please type a command or say `\end')\n"))
+                or sw(b"LaTeX Warning: You have requested package")
+            ):
+                return
+            buf_to_stdout(buf)
+
+        buf, is_err = [], False
+        lines = iter(self.x.stdout.readline, b"")
+        lines = filter(lambda v: v.removesuffix(b"\n"), lines)
+
+        s = lambda l, x: l.startswith(x)
+        for l in lines:
+            excl, ast = s(l, b"!"), s(l, b"*")
+            if excl or ast:
+                if is_err and not self.dev_mode:
+                    raise Exception(
+                        "PYTEX ERROR\n" + b"".join(buf).strip().decode("utf8")
+                    )
+                if len(buf) > 0:
+                    try_print(buf)
+                buf.clear()
+            is_err |= excl
+            buf.append(l)
+
+
+# [SUBCOMMAND] builds using all the tex_files supplied, in that order
+def __build__(args):
+    if not path.isdir(args.build_dir):
+        os.mkdir(args.build_dir)
+
+    PdfLatex(args).run()
+
+    pdf_basename = f"{args.jobname}.pdf"
+    pdf_output = path.join(args.build_dir, pdf_basename)
+    if path.isfile(pdf_output):
+        os.rename(pdf_output, pdf_basename)
+
+
+# [SUBCOMMAND] prints a 7-char SHA hash that the user can copy to
+# clipboard. This SHA is unique in all ".tex" files that are in the
+# current directory and all the current subdirectories.
+#
+# opinionated quirk: all generated SHAs will start with a letter.
+def __sha__(_):
+    from random import randint as r
+
+    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
+    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
+    _, ids = get_unique_ids(get_tex_files())
+    ids = set(ids)
+
+    x = gen()
+    while x in ids:
+        x = gen()
+
+    print(x, end="")
+
+
+# get all instances of `\label{...}` in a file buffer
+def get_labels(data):  # type: (bytes) -> list[bytes]
+    res, ids = Regex.LABEL.search(data), []
+    while res != None:
+        ids.append(res.groups()[0])
+        data = data[res.span()[1] :]  # seek forward
+        res = Regex.LABEL.search(data)
+    return ids
+
+
+# Get all files ending with '.tex' in the user's current directory
+def get_tex_files():  # type: () -> list[str]
+    files, cwd = [], os.curdir
+    for root, _, f in os.walk(cwd):
+        f = filter(lambda f: f.endswith(".tex"), f)
+        f = map(lambda f: path.join(root, f), f)
+        f = map(lambda f: path.relpath(f, cwd), f)
+        files.extend(f)
+    return files
+
+
+def get_unique_ids(files):
+    # key: id, value: list of files that id was defined in
+    ids = {}  # type: dict[bytes, list[bytes]]
+    for f in files:
+        for label in get_labels(read_file(f)):
+            t = ids.get(label, [])
+            t.append(f)
+            ids[label] = t
+    dups = [(k, v) for k, v in ids.items() if len(v) > 1]
+    return (dups, list(ids.keys()))
+
+
+# [TEST]
+# Assert that all id definitions of the form `\label{cbae218}` are
+# unique in the files supplied
+def assert_unique_ids():  # type: () -> bool
+    dups, _ = get_unique_ids(get_tex_files())
+
+    if len(dups) > 0:
+        print("Duplicate ids found:")
+        for k, v in dups:
+            print(k.decode("utf8"))
+            [print("\t*", v.decode("utf8")) for v in v]
+
+    return len(dups) == 0
+
+
+# [SUBCOMMAND] checks if everything is in a healthy state
+# 1. checks that no two labels have the same SHA
+def __test__(_):
+    ALL_OK = True
+    ALL_OK &= assert_unique_ids()
+
+    if ALL_OK:
+        print("All checks passed!")
+
+
+# [SUBCOMMAND] runs a server that rebuilds the pdf if any file
+# changed.
+def __dev__(args):
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler
+
+    now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
+    build = lambda: __build__(args)
+    report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
+    build()
+    report()
+
+    class EventHandler(FileSystemEventHandler):
+        def __init__(self, args):
+            self.args = args
+            self.last_trigger_time = time.time()
+
+        def on_modified(self, event):
+            if not event.src_path.endswith(".tex"):
+                return
+            current_time = time.time()
+            if (current_time - self.last_trigger_time) < 1:
+                return
+            self.last_trigger_time = current_time
+            build()
+            report()
+
+    observer = Observer()
+    observer.schedule(EventHandler(args), os.curdir, recursive=False)
+    observer.start()
+    try:
+        while True:
+            time.sleep(1)
+    finally:
+        observer.stop()
+        observer.join()
+
+
+def __label__(_):
+    shas = set()  # type: set[bytes]
+    for f in map(File, get_tex_files()):
+        f.get_labels(shas)
+        f.check_references(shas)
+        f.add_labels(shas)
+        f.write()
+
+
+def __generate_section_titles__(_):
+    def gen(t):  # type: (str) -> str
+        c, b = lambda v: rf"\ifx&#2&\else{v}\fi", lambda v: "{" + v + "}"
+        desc = c("(") + "#2" + c(")")
+        header, sp = "subsubsection", "\hspace{0.7em}"
+        return f"\def\{t}#1#2" + b(f"\{header}" + b(t + r" {#1}" + sp + b(desc)))
+
+    for l in map(gen, SECTION_TITLES):
+        print(l)
+
+
+def main():
+    args = Args.parse()
+    tbl = {
+        "build": __build__,
+        "sha": __sha__,
+        "dev": __dev__,
+        "test": __test__,
+        "label": __label__,
+        "generate-section-titles": __generate_section_titles__,
+    }  # type: dict[Args.Action, Callable]
+    tbl[args.action](args)
+
+
+if __name__ == "__main__":
+    main()

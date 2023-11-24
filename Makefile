@@ -1,7 +1,7 @@
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
-PYTEX := python3 $(MAKEFILE_DIR)bin/pytex
+PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
 # PYTEX += --no-proof
 # PYTEX += --no-compute
 
@@ -28,7 +28,7 @@ dev:
 	$(PYTEX) -J minimath dev $(TEX_FILES)
 
 all:
-	python3 bin/build-all.py
+	bash bin/build-all.sh
 
 test:
 	@$(PYTEX) test
@@ -36,22 +36,18 @@ test:
 sha:
 	@$(PYTEX) sha | pbcopy
 
-clean:
-	rm -rf .build
-	rm -rf minimath*.pdf
-
-open:
-	open minimath.pdf
-
 label:
 	$(PYTEX) label
 
 head:
 	$(PYTEX) generate-section-titles
 
-syntax:
-	python3 bin/gen.py syntax > tex.vim
-	cat tex.vim >> ~/dots/nvim/after/syntax/tex.vim
+clean:
+	rm -rf .build
+	rm -rf minimath*.pdf
+
+open:
+	open minimath.pdf
 
 sync:
 	rm -rf ~/uni/@/tex_modules

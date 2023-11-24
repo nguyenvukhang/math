@@ -13,20 +13,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: main
-          sparse-checkout: |
-            tex_modules
-            bin
 
       - uses: actions/checkout@v4
         with:
           ref: pdf
           path: pdf
-          sparse-checkout: .
 
       - uses: xu-cheng/texlive-action@v2
         with:
           scheme: small
-          run: cd main && python3 bin/build-all.py
+          run: cd main && bash .github/workflows/build-all.sh
 
       - name: Push PDFs to pdf branch
         run: |
