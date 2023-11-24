@@ -96,6 +96,9 @@
 % custom math operators
 \DeclareMathOperator*{\argmin}{argmin}
 
+% global left-align text
+\AtBeginDocument{\raggedright}
+
 % auto-generated headers
 \def\Algorithm#1#2{\subsubsection{Algorithm {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Corollary#1#2{\subsubsection{Corollary {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
@@ -108,6 +111,3 @@
 \def\Remark#1#2{\subsubsection{Remark {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Result#1#2{\subsubsection{Result {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
 \def\Theorem#1#2{\subsubsection{Theorem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-
-% global left-align text
-\AtBeginDocument{\raggedright}

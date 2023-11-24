@@ -44,10 +44,10 @@ open:
 	open minimath.pdf
 
 label:
-	python3 $(MAKEFILE_DIR)bin/label.py
+	$(PYTEX) label
 
 head:
-	python3 bin/gen.py headers >> header.tex
+	$(PYTEX) generate-section-titles
 
 syntax:
 	python3 bin/gen.py syntax > tex.vim

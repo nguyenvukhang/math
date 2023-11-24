@@ -4,31 +4,173 @@ from argparse import ArgumentParser
 import os, re, time, datetime
 from os import path
 from subprocess import Popen, PIPE
+from typing import TypeVar, Literal
+import typing
+
+T = TypeVar("T")
+
+BUILD_ORDER = (
+    "toc.tex",
+    "plenary.tex",
+    "calculus.tex",
+    "algorithm-design.tex",
+    "complex-analysis.tex",
+    "nonlinear-optimization-unconstrained.tex",
+    "nonlinear-optimization-constrained.tex",
+    "ordinary-differential-equations.tex",
+)
+
+SECTION_TITLES = (
+    "Algorithm",
+    "Corollary",
+    "Definition",
+    "Example",
+    "Exercise",
+    "Lemma",
+    "Problem",
+    "Proposition",
+    "Remark",
+    "Result",
+    "Theorem",
+)
 
 
-def get_parser():
-    p = ArgumentParser(
-        prog="pytex",
-        description="Custom pdflatex build script with Python3",
-    )
-    p.add_argument("action", choices=["build", "dev", "sha", "test"])
-    p.add_argument("-H", dest="header", default="headers")
-    p.add_argument("-J", "--jobname", default="out")
-    p.add_argument("--no-proof", dest="show_proofs", action="store_false")
-    p.add_argument("--no-compute", dest="show_computes", action="store_false")
-    p.add_argument("--build-dir", default=".build")
-    p.add_argument("--verbose", action="store_true")
-    p.add_argument("tex_files", nargs="*")
-    return p
+class Regex:
+    LABEL = re.compile(b"\\\\label{([a-z0-9]{7})}")
+    LABEL_ENDL = re.compile(b"\\\\label{([a-z0-9]{7})}$")
+    HREF = re.compile(b"\\\\href{([a-z0-9]{7})}")
 
 
-# get index `i` form list `l`, None if not found
-get = lambda l, i: l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else None
+class File:
+    def __init__(self, filepath):  # type: (str) -> None
+        self.filepath = filepath
+        self.data = read_file(filepath)
+        self.lines = self.data.splitlines()
+
+    # collect all labels into a set
+    # fails if a duplicate label is found
+    def get_labels(self, existing):  # type: (File,  set[bytes]) -> None
+        for i in range(len(self.lines)):
+            line = self.lines[i]
+            if not is_section_title(line):
+                continue
+            if not section_is_one_line(line):
+                print(f"[ERROR] Title spans multiple lines in")
+                print(f"| {self.filepath} | line {i} |")
+                exit()
+            hit = Regex.LABEL.search(line)
+            if hit is None:
+                continue
+            label = hit.groups()[0]
+            if label in existing:
+                raise Exception(f"Found a duplicate label: {label}")
+            existing.add(label)
+
+    # ensures that all references are pointed to a defined SHA.
+    def check_references(self, existing):  # type: (File, set[bytes]) -> None
+        for line in self.lines:
+            hit = Regex.HREF.search(line)
+            if hit is None:
+                return
+            ref = hit.groups()[0]
+            if ref not in existing:
+                print("undefined reference:", ref)
+
+    # add labels to unlabelled section titles
+    def add_labels(self, existing):  # type: (File, set[bytes]) -> None
+        for i in range(len(self.lines)):
+            l = self.lines[i]
+            if Regex.LABEL_ENDL.search(l) is not None or not is_section_title(l):
+                continue
+            self.lines[i] += b"\\label{" + new_sha(existing) + b"}"
+
+    def write(self):
+        write_file(self.filepath, self.lines)
 
 
-def read_file(f, mode="r") -> str:
-    with open(f, mode) as f:
+def new_sha(existing):  # type: (set[bytes]) -> bytes
+    from random import randint as r
+
+    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
+    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
+    x = gen()
+    while x in existing:
+        x = gen()
+    existing.add(x)
+    return x.encode("utf-8")
+
+
+def get_section_titles(prefix=b""):  # type: (bytes) -> list[bytes]
+    return [prefix + v.encode("utf8") for v in SECTION_TITLES]
+
+
+def is_section_title(line):  # type: (bytes) -> bool
+    return any(map(line.startswith, get_section_titles(prefix=b"\\")))
+
+
+# Checks if the entire section title
+# ```
+# \Theorem{3.1.4}{Cauchy integral theorem}\label{ab0cc7c}
+# ```
+# is in one line by making sure all open '{' are closed.
+def section_is_one_line(line):  # type: (bytes) -> bool
+    stk, t = 0, {b"{": 1, b"}": -1}
+    for i in range(len(line)):
+        stk += t.get(line[i : i + 1], 0)
+    return stk == 0
+
+
+class Args:
+    Action = Literal[
+        "build",
+        "build-all",
+        "dev",
+        "sha",
+        "test",
+        "label",
+        "generate-section-titles",
+    ]
+    action = None  # type: Args.Action
+    header = None  # type: str
+    jobname = None  # type: str
+    build_dir = None  # type: str
+    show_proofs = None  # type: bool
+    show_computes = None  # type: bool
+    verbose = None  # type: bool
+    tex_files = None  # type: list[str]
+
+    @staticmethod
+    def parse():  # type: () -> Args
+        p = ArgumentParser(
+            prog="pytex",
+            description="Custom pdflatex build script with Python3",
+        )
+        p.add_argument("action", choices=typing.get_args(Args.Action))
+        p.add_argument("-H", dest="header", default="headers")
+        p.add_argument("-J", "--jobname", default="out")
+        p.add_argument("--build-dir", default=".build")
+        p.add_argument("--no-proof", dest="show_proofs", action="store_false")
+        p.add_argument("--no-compute", dest="show_computes", action="store_false")
+        p.add_argument("--verbose", action="store_true")
+        p.add_argument("tex_files", nargs="*")
+        return p.parse_args()
+
+
+# get index `i` form list `l`, `d` if out of range
+def get(l, i, d=None):  # type: (list[T], int, T | None) -> T
+    return l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else d
+
+
+# quick routine to read a file into bytes
+def read_file(path):  # type: (str) -> list[bytes]
+    with open(path, "rb") as f:
         return f.read()
+
+
+# lines should not end with newline characters
+def write_file(path, lines):  # type: (str, list[bytes]) -> None
+    with open(path, "wb") as f:
+        f.write(b"\n".join(lines))
 
 
 def debug():
@@ -78,7 +220,7 @@ class PdfLatex:
         self.x.stdin.write(b"\n\n" + end)
 
     def __compile__(self, filepath: str) -> bytes:
-        b = read_file(filepath, mode="rb")
+        b = read_file(filepath)
         if not self.show_computes:
             b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
         if not self.show_proofs:
@@ -93,7 +235,7 @@ class PdfLatex:
     def run(self):
         w = self.write
         w(b"\\documentclass{article}")
-        w(b"\\usepackage{" + self.header.encode("utf-8") + b"}")
+        w(b"\\usepackage{" + self.header.encode("utf8") + b"}")
         w(b"\\begin{document}")
         self.process_files()
         w(b"\\end{document}")
@@ -107,7 +249,7 @@ class PdfLatex:
     def monitor_stdout(self):
         if self.verbose:
             for line in iter(self.x.stdout.readline, b""):
-                print(line.decode("utf-8"), end="")
+                print(line.decode("utf8"), end="")
             return
 
         num_only = re.compile(b"^\*\[\d+\]$")
@@ -169,11 +311,8 @@ def __build__(args):
         os.rename(pdf_output, pdf_basename)
 
 
-# don't clean to make sure that links are well-formed
-def clean():
-    RM = [".aux", ".out", ".log"]
-    files = list(filter(lambda x: any([x.endswith(r) for r in RM]), os.listdir()))
-    [os.remove(x) for x in files]
+def __build_all__(args):
+    pass
 
 
 # [SUBCOMMAND] prints a 7-char SHA hash that the user can copy to
@@ -197,17 +336,17 @@ def __sha__():
 
 
 # get all instances of `\label{...}` in a file buffer
-def get_labels(data: str, pattern: re.Pattern[str]) -> list[str]:
-    res, ids = pattern.search(data), []
+def get_labels(data):  # type: (bytes) -> list[bytes]
+    res, ids = Regex.LABEL.search(data), []
     while res != None:
         ids.append(res.groups()[0])
         data = data[res.span()[1] :]  # seek forward
-        res = pattern.search(data)
+        res = Regex.LABEL.search(data)
     return ids
 
 
 # Get all files ending with '.tex' in the user's current directory
-def get_tex_files():
+def get_tex_files():  # type: () -> list[str]
     files, cwd = [], os.curdir
     for root, _, f in os.walk(cwd):
         f = filter(lambda f: f.endswith(".tex"), f)
@@ -217,32 +356,29 @@ def get_tex_files():
     return files
 
 
-def get_unique_ids(tex_files):
-    pattern = re.compile("\\\label{([0-9a-z]{7})}")
-    ids = {}
-    for f in tex_files:
-        labels = get_labels(read_file(f), pattern)
-        for label in labels:
+def get_unique_ids(files):
+    # key: id, value: list of files that id was defined in
+    ids = {}  # type: dict[bytes, list[bytes]]
+    for f in files:
+        for label in get_labels(read_file(f)):
             t = ids.get(label, [])
             t.append(f)
             ids[label] = t
-
     dups = [(k, v) for k, v in ids.items() if len(v) > 1]
-    ids = list(ids.keys())
-
-    return (dups, ids)
+    return (dups, list(ids.keys()))
 
 
+# [TEST]
 # Assert that all id definitions of the form `\label{cbae218}` are
 # unique in the files supplied
-def assert_unique_ids(tex_files):
-    dups, _ = get_unique_ids(tex_files)
+def assert_unique_ids():  # type: () -> bool
+    dups, _ = get_unique_ids(get_tex_files())
 
     if len(dups) > 0:
         print("Duplicate ids found:")
         for k, v in dups:
-            print(f"{k}")
-            [print("\t*", v) for v in v]
+            print(k.decode("utf8"))
+            [print("\t*", v.decode("utf8")) for v in v]
 
     return len(dups) == 0
 
@@ -251,7 +387,7 @@ def assert_unique_ids(tex_files):
 # 1. checks that no two labels have the same SHA
 def __test__():
     ALL_OK = True
-    ALL_OK &= assert_unique_ids(get_tex_files())
+    ALL_OK &= assert_unique_ids()
 
     if ALL_OK:
         print("All checks passed!")
@@ -264,9 +400,10 @@ def __dev__(args):
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build2 = lambda: __build__(args)
+    build = lambda: __build__(args)
     report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
-    [build2(), report()]
+    build()
+    report()
 
     class EventHandler(FileSystemEventHandler):
         def __init__(self, args):
@@ -274,15 +411,14 @@ def __dev__(args):
             self.last_trigger_time = time.time()
 
         def on_modified(self, event):
-            global last_trigger_time
-            file = event.src_path
-            if not file.endswith(".tex"):
+            if not event.src_path.endswith(".tex"):
                 return
             current_time = time.time()
             if (current_time - self.last_trigger_time) < 1:
                 return
             self.last_trigger_time = current_time
-            [build2(), report()]
+            build()
+            report()
 
     observer = Observer()
     observer.schedule(EventHandler(args), os.curdir, recursive=False)
@@ -295,16 +431,42 @@ def __dev__(args):
         observer.join()
 
 
+def __label__():
+    shas = set()  # type: set[bytes]
+    for f in map(File, get_tex_files()):
+        f.get_labels(shas)
+        f.check_references(shas)
+        f.add_labels(shas)
+        f.write()
+
+
+def __generate_section__():
+    def gen(t):  # type: (str) -> str
+        c, b = lambda v: rf"\ifx&#2&\else{v}\fi", lambda v: "{" + v + "}"
+        desc = c("(") + "#2" + c(")")
+        header, sp = "subsubsection", "\hspace{0.7em}"
+        return f"\def\{t}#1#2" + b(f"\{header}" + b(t + r" {#1}" + sp + b(desc)))
+
+    for l in map(gen, SECTION_TITLES):
+        print(l)
+
+
 def main():
-    args = get_parser().parse_args()
+    args = Args.parse()
     if args.action == "build":
         __build__(args)
+    if args.action == "build":
+        __build_all__(args)
     elif args.action == "dev":
         __dev__(args)
     elif args.action == "sha":
         __sha__()
     elif args.action == "test":
         __test__()
+    elif args.action == "label":
+        __label__()
+    elif args.action == "generate-section-titles":
+        __generate_section__()
 
 
 if __name__ == "__main__":
