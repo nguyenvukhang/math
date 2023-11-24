@@ -9,17 +9,6 @@ import typing
 
 T = TypeVar("T")
 
-BUILD_ORDER = (
-    "toc.tex",
-    "plenary.tex",
-    "calculus.tex",
-    "algorithm-design.tex",
-    "complex-analysis.tex",
-    "nonlinear-optimization-unconstrained.tex",
-    "nonlinear-optimization-constrained.tex",
-    "ordinary-differential-equations.tex",
-)
-
 SECTION_TITLES = (
     "Algorithm",
     "Corollary",
@@ -39,6 +28,8 @@ class Regex:
     LABEL = re.compile(b"\\\\label{([a-z0-9]{7})}")
     LABEL_ENDL = re.compile(b"\\\\label{([a-z0-9]{7})}$")
     HREF = re.compile(b"\\\\href{([a-z0-9]{7})}")
+    STAR_NUM = re.compile(b"^\*\[\d+\]$")
+    cache = {}
 
 
 class File:
@@ -108,6 +99,29 @@ def is_section_title(line):  # type: (bytes) -> bool
     return any(map(line.startswith, get_section_titles(prefix=b"\\")))
 
 
+def get_section_title(line):  # type: (bytes) -> bytes
+    for st in get_section_titles():
+        if st in line:
+            return st
+
+
+def get_in_between(
+    buf, start, end, include=False
+):  # type: (bytes, bytes, bytes, bool) -> tuple[bytes, bytes] | None
+    stk, s = 0, None
+    for i in range(len(buf)):
+        c = buf[i : i + 1]
+        if c == start:
+            stk, s = stk + 1, s if s is not None else i
+        elif c == end:
+            stk -= 1
+            if stk == 0:
+                end = buf[i + 1 :]
+                hit = buf[s : i + 1] if include else buf[s + 1 : i]
+                return (hit, end)
+    return None
+
+
 # Checks if the entire section title
 # ```
 # \Theorem{3.1.4}{Cauchy integral theorem}\label{ab0cc7c}
@@ -137,6 +151,7 @@ class Args:
     show_computes = None  # type: bool
     verbose = None  # type: bool
     tex_files = None  # type: list[str]
+    toc = None  # type: bool
 
     @staticmethod
     def parse():  # type: () -> Args
@@ -148,6 +163,7 @@ class Args:
         p.add_argument("-H", dest="header", default="headers")
         p.add_argument("-J", "--jobname", default="out")
         p.add_argument("--build-dir", default=".build")
+        p.add_argument("--toc", action="store_true")
         p.add_argument("--no-proof", dest="show_proofs", action="store_false")
         p.add_argument("--no-compute", dest="show_computes", action="store_false")
         p.add_argument("--verbose", action="store_true")
@@ -190,111 +206,143 @@ def remove_in_between(data: bytes, start: bytes, end: bytes):
 class PdfLatex:
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, args):
-        env = os.environ.copy()
-
+    def __init__(self, args):  # type: (Args) -> None
         # tells latex compiler to search for .sty packages in this folder.
-        env["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
+        os.environ["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
 
-        cmd = (
-            "pdflatex",
-            "--halt-on-error",
-            f"--output-directory={args.build_dir}",
-            f"--jobname={args.jobname}",
-        )
+        j, d = args.jobname, args.build_dir
+        cmd = ("pdflatex", "-halt-on-error", f"-output-directory={d}", f"-jobname={j}")
         self.dev_mode = args.action == "dev"
-        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=env)
-        self.verbose = args.verbose
-        self.tex_files = args.tex_files
-        self.header = args.header
-        self.show_computes = args.show_computes
-        self.show_proofs = args.show_proofs
+        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
+        self.a = args
+        # self.send_to_file()
 
     # write tex contents to a file instead of stdin
     def send_to_file(self):
+        self.x.kill()
         self.x.stdin = open("build.tex", "wb")
 
-    def write(self, e: bytes, end=b""):
+    def write(self, e: bytes):
         self.x.stdin.write(e)
-        self.x.stdin.write(b"\n\n" + end)
+        self.x.stdin.write(b"\n")
 
     def __compile__(self, filepath: str) -> bytes:
         b = read_file(filepath)
-        if not self.show_computes:
+        if not self.a.show_computes:
             b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
-        if not self.show_proofs:
+        if not self.a.show_proofs:
             b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
         return b
 
+    def generate_toc(self):
+        if self.dev_mode or not self.a.toc:
+            return
+        self.write(b"\\section{Table of Contents\\vspace{1em}}")
+        self.write(b"\\vspace{10em}")
+        self.write(b"\\begin{itemize}[itemsep=1em] \\large")
+        self.write(b"\\let\\x\\item\\def\\item#1#2{\\x\\href{#1}{#2}}")
+        pipe = map(read_file, self.a.tex_files)
+        pipe = map(lambda v: v.splitlines(), pipe)
+
+        gib = lambda b, i: get_in_between(b, b"{", b"}", include=i)
+        w = lambda v: b"{" + v + b"}"  # wrap
+
+        for file in pipe:
+            section_started = False
+            for line in file:
+                if not section_started and line.startswith(b"\\section"):
+                    section, line = gib(line, True)
+                    href, _ = gib(line, True)
+                    self.write(b"\\item" + href + section)
+                    self.write(b"\\begin{itemize}[itemsep=0pt]\\small")
+                elif is_section_title(line):
+                    st = get_section_title(line)
+                    num, line = gib(line, False)
+                    name, line = gib(line, True)
+                    href, line = gib(line, True)
+                    st = w(st + b" " + num)
+                    self.write(b"\\item" + href + w(st + b" " + name))
+            self.write(b"\\end{itemize}")
+        self.write(b"\\end{itemize}\\newpage\n\n")
+
     def process_files(self):
-        pipe = map(self.__compile__, self.tex_files)
-        pipe = map(lambda v: self.write(v, end=b"\\newpage"), pipe)
-        list(pipe)
+        blist = map(self.__compile__, self.a.tex_files)
+        for b in blist:
+            self.write(b)
+            self.write(b"\\newpage")
 
     def run(self):
         w = self.write
         w(b"\\documentclass{article}")
-        w(b"\\usepackage{" + self.header.encode("utf8") + b"}")
+        w(b"\\usepackage{" + self.a.header.encode("utf8") + b"}")
         w(b"\\begin{document}")
+        self.generate_toc()
         self.process_files()
         w(b"\\end{document}")
 
         self.x.stdin.flush()
         self.x.stdin.close()
-        self.monitor_stdout()
+        if self.a.verbose:
+            self.direct_stdout()
+        else:
+            self.filtered_stdout()
         self.x.wait()
 
+    def buf_to_stdout(self, buf):  # type: (list[bytes]) -> None
+        for l in buf:
+            print(l.decode("utf8"), end="")
+
+    def direct_stdout(self):
+        self.buf_to_stdout(iter(self.x.stdout.readline, b""))
+
+    def should_print(self, buf):  # type: (list[bytes]) -> bool
+        if len(buf) == 0:
+            return False
+        fl = buf[0]
+        if len(buf) < 2 and (b"*\n" == fl or Regex.STAR_NUM.match(fl)):
+            return False
+
+        # all substrings are included in any line in the buffer
+        inc = lambda x: any(map(lambda l: all(map(lambda x: x in l, x)), buf))
+        # buffer has any line that starts with substring
+        sw = lambda x: any(map(lambda l: l.startswith(x), buf))
+
+        return not (
+            sw(b"This is pdfTeX")
+            or sw(b"*geometry*")
+            or sw(b"**entering extended mode")
+            or sw(b"Package hyperref Warning")
+            or sw(b"Underfull \hbox (badness 10000)")
+            or inc((b"texlive", b"texmf", b"latex"))  # system package
+            or inc((b"texlive", b"texmf", b"pdftex"))  # system package
+            or inc((b"(Please type a command or say `\end')\n"))
+            or sw(b"LaTeX Warning: You have requested package")
+        )
+
+    def err_buf(self, buf):  # type: (list[bytes]) -> None
+        s = b"".join(buf).strip().decode("utf8")
+        raise Exception("PYTEX ERROR\n" + s)
+
     # helps to monitor stdout in a less cluttered way
-    def monitor_stdout(self):
-        if self.verbose:
-            for line in iter(self.x.stdout.readline, b""):
-                print(line.decode("utf8"), end="")
-            return
-
-        num_only = re.compile(b"^\*\[\d+\]$")
-
-        def buf_to_stdout(buf):  # type: (list[bytes]) -> None
-            for l in buf:
-                print(l.decode("utf8"), end="")
-
-        def try_print(buf):  # type: (list[bytes]) -> None
-            inc = lambda x: any(map(lambda l: all(map(lambda x: x in l, x)), buf))
-            sw = lambda x: any(map(lambda l: l.startswith(x), buf))
-
-            if len(buf) < 2 and buf[0] in (b"*\n") or num_only.match(buf[0]):
-                return
-
-            if (
-                sw(b"This is pdfTeX")
-                or sw(b"*geometry*")
-                or sw(b"**entering extended mode")
-                or sw(b"Package hyperref Warning")
-                or sw(b"Underfull \hbox (badness 10000)")
-                or inc((b"texlive", b"texmf", b"latex"))  # system package
-                or inc((b"texlive", b"texmf", b"pdftex"))  # system package
-                or inc((b"(Please type a command or say `\end')\n"))
-                or sw(b"LaTeX Warning: You have requested package")
-            ):
-                return
-            buf_to_stdout(buf)
-
+    def filtered_stdout(self):
         buf, is_err = [], False
         lines = iter(self.x.stdout.readline, b"")
         lines = filter(lambda v: v.removesuffix(b"\n"), lines)
 
-        s = lambda l, x: l.startswith(x)
+        sw = lambda l, x: l.startswith(x)
         for l in lines:
-            excl, ast = s(l, b"!"), s(l, b"*")
+            excl, ast = sw(l, b"!"), sw(l, b"*")
             if excl or ast:
                 if is_err and not self.dev_mode:
-                    raise Exception(
-                        "PYTEX ERROR\n" + b"".join(buf).strip().decode("utf8")
-                    )
-                if len(buf) > 0:
-                    try_print(buf)
+                    self.err_buf(buf)
+                if self.should_print(buf):
+                    self.buf_to_stdout(buf)
                 buf.clear()
             is_err |= excl
             buf.append(l)
+
+        if is_err and not self.dev_mode:
+            self.err_buf(buf)
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
@@ -439,8 +487,9 @@ def __generate_section_titles__(_):
     def gen(t):  # type: (str) -> str
         c, b = lambda v: rf"\ifx&#2&\else{v}\fi", lambda v: "{" + v + "}"
         desc = c("(") + "#2" + c(")")
-        header, sp = "subsubsection", "\hspace{0.7em}"
-        return f"\def\{t}#1#2" + b(f"\{header}" + b(t + r" {#1}" + sp + b(desc)))
+        return f"\def\{t}#1#2" + b(
+            "\subsubsection" + b(t + " {#1}\hspace{0.7em}" + b(desc))
+        )
 
     for l in map(gen, SECTION_TITLES):
         print(l)

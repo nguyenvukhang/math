@@ -1,7 +1,6 @@
 #!/bin/bash
 
 TEX_FILES=(
-    toc.tex
     plenary.tex
     calculus.tex
     algorithm-design.tex
@@ -28,5 +27,5 @@ b minimath.nc --no-compute
 b minimath.np --no-proof
 b minimath.np.nc --no-proof --no-compute
 
-TEX_FILES=(toc.tex plenary.tex calculus.tex)
+TEX_FILES=(plenary.tex calculus.tex)
 b plenary
