@@ -227,8 +227,8 @@ class PdfLatex:
     def generate_toc(self):
         if self.dev_mode or not self.a.toc:
             return
-        self.write(b"\\section{Table of Contents\\vspace{1em}}")
-        self.write(b"\\vspace{10em}")
+        self.write(b"\\section{Table of Contents}")
+        self.write(b"$_\\text{minimath}$\\vspace{1em}")
         self.write(b"\\begin{itemize}[itemsep=1em] \\large")
         self.write(b"\\let\\x\\item\\def\\item#1#2{\\x\\href{#1}{#2}}")
         pipe = map(read_file, self.a.tex_files)
