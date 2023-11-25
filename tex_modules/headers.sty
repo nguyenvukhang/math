@@ -16,6 +16,9 @@
 \usepackage{titlesec}
 % removes newline after \subsubsection, and adds spacing after
 \titleformat{\subsubsection}[runin]{\bfseries}{\thesubsubsection}{*1}{}
+\titleclass{\HwProblem}{straight}[\subsection]
+\titleformat{\HwProblem}[hang]{\Large\bfseries}{\theHwProblem}{*1}{}
+\titlespacing{\HwProblem}{0pt}{*4}{*1.5}
 
 % for linking to sections within the same document
 % provides `\hyperref[<target>]{<display text>}`
