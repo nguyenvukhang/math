@@ -24,15 +24,19 @@ jobs:
           scheme: small
           run: cd main && bash .github/workflows/build-all.sh
 
-      - name: Push PDFs to pdf branch
-        if: github.ref == 'main'
+      - name: Configure git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+          # set git hash
           GIT_HASH=${{ github.sha }}
           GIT_HASH=${GIT_HASH:0:7}
+          echo "GIT_HASH=$GIT_HASH" >> "$GITHUB_ENV"
 
+      - name: Push PDFs to pdf branch
+        if: ${{ github.ref_name == 'main' }}
+        run: |
           rm -f *
           cp ../main/*.pdf .
 
@@ -40,7 +44,7 @@ jobs:
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes found!"
           else
-            git commit --amend --no-edit
+            git commit --amend --no-edit -m "[$GIT_HASH]"
             git push -f
           fi
         working-directory: pdf

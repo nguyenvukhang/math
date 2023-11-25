@@ -10,7 +10,7 @@ TEX_FILES=(
     ordinary-differential-equations.tex
 )
 
-PYTEX="python3 tex_modules/pytex"
+PYTEX="python3 tex_modules/pytex --toc"
 
 b() {
   JOB="$1"

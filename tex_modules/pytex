@@ -7,21 +7,22 @@ from subprocess import Popen, PIPE
 from typing import TypeVar, Literal, Callable
 import typing
 
-T = TypeVar("T")
-
 SECTION_TITLES = (
-    "Algorithm",
-    "Corollary",
-    "Definition",
-    "Example",
-    "Exercise",
-    "Lemma",
-    "Problem",
-    "Proposition",
-    "Remark",
-    "Result",
-    "Theorem",
+    b"Algorithm",
+    b"Corollary",
+    b"Definition",
+    b"Example",
+    b"Exercise",
+    b"Lemma",
+    b"Problem",
+    b"Proposition",
+    b"Remark",
+    b"Result",
+    b"Theorem",
 )
+
+
+T = TypeVar("T")
 
 
 class Regex:
@@ -29,21 +30,19 @@ class Regex:
     LABEL_ENDL = re.compile(b"\\\\label{([a-z0-9]{7})}$")
     HREF = re.compile(b"\\\\href{([a-z0-9]{7})}")
     STAR_NUM = re.compile(b"^\*\[\d+\]$")
-    cache = {}
 
 
 class File:
     def __init__(self, filepath):  # type: (str) -> None
         self.filepath = filepath
-        self.data = read_file(filepath)
-        self.lines = self.data.splitlines()
+        self.lines = read_file(filepath).splitlines()
 
     # collect all labels into a set
     # fails if a duplicate label is found
     def get_labels(self, existing):  # type: (File,  set[bytes]) -> None
         for i in range(len(self.lines)):
             line = self.lines[i]
-            if not is_section_title(line):
+            if get_section_title(line) is None:
                 continue
             if not section_is_one_line(line):
                 print(f"[ERROR] Title spans multiple lines in")
@@ -54,7 +53,7 @@ class File:
                 continue
             label = hit.groups()[0]
             if label in existing:
-                raise Exception(f"Found a duplicate label: {label}")
+                raise Exception("Found a duplicate label: %s" % label.decode("utf8"))
             existing.add(label)
 
     # ensures that all references are pointed to a defined SHA.
@@ -71,7 +70,7 @@ class File:
     def add_labels(self, existing):  # type: (File, set[bytes]) -> None
         for i in range(len(self.lines)):
             l = self.lines[i]
-            if Regex.LABEL_ENDL.search(l) is not None or not is_section_title(l):
+            if Regex.LABEL_ENDL.search(l) is not None or get_section_title(l) is None:
                 continue
             self.lines[i] += b"\\label{" + new_sha(existing) + b"}"
 
@@ -91,17 +90,9 @@ def new_sha(existing):  # type: (set[bytes]) -> bytes
     return x.encode("utf-8")
 
 
-def get_section_titles(prefix=b""):  # type: (bytes) -> list[bytes]
-    return [prefix + v.encode("utf8") for v in SECTION_TITLES]
-
-
-def is_section_title(line):  # type: (bytes) -> bool
-    return any(map(line.startswith, get_section_titles(prefix=b"\\")))
-
-
-def get_section_title(line):  # type: (bytes) -> bytes
-    for st in get_section_titles():
-        if st in line:
+def get_section_title(line):  # type: (bytes) -> bytes | None
+    for st in SECTION_TITLES:
+        if line.startswith(b"\\" + st):
             return st
 
 
@@ -215,7 +206,6 @@ class PdfLatex:
         self.dev_mode = args.action == "dev"
         self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
         self.a = args
-        # self.send_to_file()
 
     # write tex contents to a file instead of stdin
     def send_to_file(self):
@@ -245,7 +235,7 @@ class PdfLatex:
         pipe = map(lambda v: v.splitlines(), pipe)
 
         gib = lambda b, i: get_in_between(b, b"{", b"}", include=i)
-        w = lambda v: b"{" + v + b"}"  # wrap
+        w = lambda v: b"{" + v + b"}"
 
         for file in pipe:
             section_started = False
@@ -255,13 +245,16 @@ class PdfLatex:
                     href, _ = gib(line, True)
                     self.write(b"\\item" + href + section)
                     self.write(b"\\begin{itemize}[itemsep=0pt]\\small")
-                elif is_section_title(line):
-                    st = get_section_title(line)
+                    continue
+
+                st = get_section_title(line)
+                if st is not None:
                     num, line = gib(line, False)
                     name, line = gib(line, True)
                     href, line = gib(line, True)
                     st = w(st + b" " + num)
                     self.write(b"\\item" + href + w(st + b" " + name))
+
             self.write(b"\\end{itemize}")
         self.write(b"\\end{itemize}\\newpage\n\n")
 
@@ -364,18 +357,10 @@ def __build__(args):
 #
 # opinionated quirk: all generated SHAs will start with a letter.
 def __sha__(_):
-    from random import randint as r
-
-    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
-    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
-    _, ids = get_unique_ids(get_tex_files())
-    ids = set(ids)
-
-    x = gen()
-    while x in ids:
-        x = gen()
-
-    print(x, end="")
+    shas = set()
+    for f in map(File, get_tex_files()):
+        f.get_labels(shas)
+    print(new_sha(shas).decode("utf8"), end="")
 
 
 # get all instances of `\label{...}` in a file buffer
@@ -491,7 +476,8 @@ def __generate_section_titles__(_):
             "\subsubsection" + b(t + " {#1}\hspace{0.7em}" + b(desc))
         )
 
-    for l in map(gen, SECTION_TITLES):
+    st = map(lambda v: v.decode("utf8"), SECTION_TITLES)
+    for l in map(gen, st):
         print(l)
 
 

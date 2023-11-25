@@ -36,11 +36,14 @@ test:
 sha:
 	@$(PYTEX) sha | pbcopy
 
+sha-dev:
+	@$(PYTEX) sha
+
 label:
 	$(PYTEX) label
 
 head:
-	$(PYTEX) generate-section-titles
+	@$(PYTEX) generate-section-titles
 
 clean:
 	rm -rf .build
