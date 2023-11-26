@@ -513,7 +513,7 @@ $$
 A problem $H$ is $\mathsf{NP}$-hard when for every $L\in\mathsf{NP}$,
 there is a polynomial-time reduction from $L$ to $H$:
 \begin{equation*}
-  \forall L\in\mathsf{NP}: L\leq_{\mathsf P}H\Tag{*}
+	\forall L\in\mathsf{NP}: L\leq_{\mathsf P}H\Tag{*}
 \end{equation*}
 
 The only difference between $\mathsf{NP}$-complete and
@@ -522,3 +522,36 @@ constraint of having to be in $\mathsf{NP}$.
 
 ($*$), based on a \href{e04bcbc}{previous remark}, also implies that
 $H$ is at least as hard as the hardest problem in $\mathsf{NP}$.
+
+\Theorem{9.1.4}{Cauchy-Schwarz inequality}\label{c503127}
+
+For all vectors $u$ and $v$ of an inner product space,
+$$
+	|\inner uv|^2\leq\inner uu\cdot\inner vv
+$$
+
+In $\R^n$ with the standard inner product (dot product), the
+Cauchy-Schwarz inequality becomes
+\begin{equation*}
+	\def\su{\sum}\def\u{u_i}\def\v{v_i}
+	\left(\su\u\v\right)^2\leq\left(\su\u^2\right)\left(\su\v^2\right)
+\end{equation*}
+
+where the sums run for $i$ in $\{\iter1n\}$.
+
+\begin{compute}
+	Let $u,v\in\R^n$. Let $w_i$ be the $i^\text{th}$ component of vector
+	$w$.
+
+	Then by definition of the dot proudct, we have
+	$$
+		|\inner uv|^2=|u_1v_1+u_2v_2+\ldots+u_nv_n|^2
+	$$
+
+	and
+	$$
+    \inner uu\cdot\inner vv=(u_1^2+\ldots+u_n^2)(v_1^2+\ldots+v_n^2)
+	$$
+
+  which gives us the Cauchy-Schwarz inequality for $\R^n$.
+\end{compute}

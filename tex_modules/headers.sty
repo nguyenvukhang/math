@@ -66,6 +66,7 @@
 \def\quadd{\quad\quad\quad}
 \def\Quadd{\quad\quad\quad\quad}
 \def\with{\quad}
+\def\desc#1{\footnotesize\text{#1}}
 \def\norm#1{\left\lVert{#1}\right\rVert}
 \def\QED{\hfill$\square$}
 \def\iter#1#2{{#1},\ldots,{#2}}
@@ -76,7 +77,12 @@
 \def\notimplies{\;\not\nobreak\!\!\!\!\implies}
 \def\href#1#2{\hyperref[#1]{#2}}
 \def\inner#1#2{\langle{#1},{#2}\rangle}
-\def\informal{$\blacktriangledown\blacktriangle$ }
+
+% useful environments
+\newenvironment{mat}{\begin{bmatrix}}{\end{bmatrix}} % standardize matrices
+\newenvironment{matd}{\begin{vmatrix}}{\end{vmatrix}} % determinant matrices
+\newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 
 % don't number sections at all
 % `\section{}` behaves like `\section*{}` now
@@ -91,8 +97,6 @@
 % for enabling/disabling specific fields
 \newenvironment{proof}{\paragraph{Proof.}} {\QED}
 \newenvironment{compute}{\paragraph{Compute.}} {\QED}
-\newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
-\newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 
 % custom math operators
 \DeclareMathOperator*{\argmin}{argmin}
