@@ -26,5 +26,5 @@ pnpm-debug.log*
 *.out
 .build
 /minimath*.pdf
-out.pdf
+/*.pdf
 build.tex

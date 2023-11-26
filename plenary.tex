@@ -557,28 +557,68 @@ $$
 	|\inner uv|^2\leq\inner uu\cdot\inner vv
 $$
 
-In $\R^n$ with the standard inner product (dot product), the
-Cauchy-Schwarz inequality becomes
-\begin{equation*}
-	\def\su{\sum}\def\u{u_i}\def\v{v_i}
-	\left(\su\u\v\right)^2\leq\left(\su\u^2\right)\left(\su\v^2\right)
-\end{equation*}
+This gives the following corollaries:
+\begin{enumerata}
 
-where the sums run for $i$ in $\{\iter1n\}$.
+	\item Let $u_i,v_i\in\R$ for $i=\iter1n$ for any integer $n$.
+	Then
+	\begin{equation*}
+		\def\su{\sum}\def\u{u_i}\def\v{v_i}
+		\left(\su\u\v\right)^2\leq\left(\su\u^2\right)\left(\su\v^2\right)
+	\end{equation*}
 
-\begin{compute}
-	Let $u,v\in\R^n$. Let $w_i$ be the $i^\text{th}$ component of vector
-	$w$.
+	\item Let $u_k,v_k\in\C$ for $k=\iter1n$ for any integer $n$. Then
+	\begin{equation*}
+		\def\su{\sum}\def\u{u_i}\def\v{v_i}
+		\left|\su\u\v\right|^2\leq\left(\su|\u|^2\right)\left(\su|\v|^2\right)
+	\end{equation*}
+\end{enumerata}
 
-	Then by definition of the dot proudct, we have
+\begin{proof}
+	To prove (a), we observe that $\R^n$ equipped with the standard dot
+	product is an \href{cebd07a}{inner product space}. We can build
+	vectors $u,v\in\R^n$ by arranging $u_i$ for $i=\iter1n$ into a
+	column vector and do the same for $v_i$ to get $v$.
+
+	Then applying the Cauchy-Schwarz inequality with the standard dot
+	product, we have
 	$$
-		|\inner uv|^2=|u_1v_1+u_2v_2+\ldots+u_nv_n|^2
+		|u\cdot v|^2\leq (u\cdot u)(v\cdot v)
 	$$
 
-	and
+	Which gives the statement in (a) exactly.
+
+  To prove (b), instead of the \href{cebd07a}{inner product space}
+  constructed from $\R^n$ and the standard dot product, we use $\C^n$
+  and the complex inner product defined by
+  $$
+  \inner uw:=u_1\bar w_1+\ldots+u_n\bar w_n
+  $$
+
+  Then by the Cauchy-Schwarz inequality, for all $u,w\in\C^n$,
+	\begin{align*}
+		|\inner uw|^2 & =\left|\sum u_k\bar w_k\right|^2                            \\
+		              & \leq\inner uu\cdot\inner ww                                 \\
+		              & =\left(\sum u_k\bar u_k\right)\left(\sum w_k\bar w_k\right) \\
+		              & =\left(\sum|u_k|^2\right)\left(\sum|w_k|^2\right)
+	\end{align*}
+
+	That is
 	$$
-		\inner uu\cdot\inner vv=(u_1^2+\ldots+u_n^2)(v_1^2+\ldots+v_n^2)
+		|u_1\bar w_1+\ldots+u_n\bar w_n|^2\leq
+		\Big(|u_1|^2+\ldots+|u_n|^2\Big)
+		\Big(|\bar w_1|^2+\ldots+|\bar w_n|^2\Big)
 	$$
 
-	which gives us the Cauchy-Schwarz inequality for $\R^n$.
-\end{compute}
+	But since $|z|^2=|\bar z|^2$ for all $z\in\C$, we can define a
+	collection $\iter{v_1}{v_n}$ such that $v_k=\bar w_k$, then we can
+	rewrite the above inequality as
+	$$
+		|u_1v_1+\ldots+u_nv_n|^2\leq
+		\Big(|u_1|^2+\ldots+|u_n|^2\Big)
+		\Big(|v_1|^2+\ldots+|v_n|^2\Big)
+	$$
+
+  And finally since the collection $w_k$ were arbitrarily chosen, so
+  can the collection $v_k$.
+\end{proof}
