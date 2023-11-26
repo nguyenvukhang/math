@@ -14,8 +14,9 @@
 
 % for customizing the behavior of titles
 \usepackage{titlesec}
-% removes newline after \subsubsection, and adds spacing after
-\titleformat{\subsubsection}[runin]{\bfseries}{\thesubsubsection}{*1}{}
+% removes newline after \subsection, and adds spacing after
+\titleformat{\subsection}[runin]{\bfseries}{\thesubsection}{*1}{}
+
 \titleclass{\HwProblem}{straight}[\subsection]
 \titleformat{\HwProblem}[hang]{\Large\bfseries}{\theHwProblem}{*1}{}
 \titlespacing{\HwProblem}{0pt}{*4}{*1.5}
@@ -91,9 +92,6 @@
 % brackets in increasing size:
 % \big( \Big( \bigg( \Bigg(
 
-\def\section#1{\subsubsection{\LARGE #1}}
-\def\subsection#1{\subsubsection{\Large #1}}
-
 % for enabling/disabling specific fields
 \newenvironment{proof}{\paragraph{Proof.}} {\QED}
 \newenvironment{compute}{\paragraph{Compute.}} {\QED}
@@ -105,14 +103,14 @@
 \AtBeginDocument{\raggedright}
 
 % auto-generated headers
-\def\Algorithm#1#2{\subsubsection{Algorithm {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Corollary#1#2{\subsubsection{Corollary {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Definition#1#2{\subsubsection{Definition {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Example#1#2{\subsubsection{Example {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Exercise#1#2{\subsubsection{Exercise {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Lemma#1#2{\subsubsection{Lemma {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Problem#1#2{\subsubsection{Problem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Proposition#1#2{\subsubsection{Proposition {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Remark#1#2{\subsubsection{Remark {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Result#1#2{\subsubsection{Result {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
-\def\Theorem#1#2{\subsubsection{Theorem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Algorithm#1#2{\subsection{Algorithm {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Corollary#1#2{\subsection{Corollary {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Definition#1#2{\subsection{Definition {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Example#1#2{\subsection{Example {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Exercise#1#2{\subsection{Exercise {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Lemma#1#2{\subsection{Lemma {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Problem#1#2{\subsection{Problem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Proposition#1#2{\subsection{Proposition {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Remark#1#2{\subsection{Remark {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Result#1#2{\subsection{Result {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}
+\def\Theorem#1#2{\subsection{Theorem {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}

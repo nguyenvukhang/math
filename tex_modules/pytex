@@ -228,9 +228,8 @@ class PdfLatex:
         if self.dev_mode or not self.a.toc:
             return
         self.write(b"\\section{Table of Contents}")
-        self.write(b"$_\\text{minimath}$\\vspace{1em}")
-        self.write(b"\\begin{itemize}[itemsep=1em] \\large")
-        self.write(b"\\let\\x\\item\\def\\item#1#2{\\x\\href{#1}{#2}}")
+        # self.write(b"\\begin{itemize}[itemsep=1em] \\large")
+        # self.write(b"\\let\\x\\item\\def\\item#1#2{\\x[]\\href{#1}{#2}}")
         pipe = map(read_file, self.a.tex_files)
         pipe = map(lambda v: v.splitlines(), pipe)
 
@@ -243,8 +242,9 @@ class PdfLatex:
                 if not section_started and line.startswith(b"\\section"):
                     section, line = gib(line, True)
                     href, _ = gib(line, True)
-                    self.write(b"\\item" + href + section)
-                    self.write(b"\\begin{itemize}[itemsep=0pt]\\small")
+                    # self.write(b"\\href" + href + section)
+                    self.write(b"{\large "+ section + b"}")
+                    self.write(b"\\begin{itemize}[itemsep=0pt]\\footnotesize")
                     continue
 
                 st = get_section_title(line)
@@ -253,10 +253,9 @@ class PdfLatex:
                     name, line = gib(line, True)
                     href, line = gib(line, True)
                     st = w(st + b" " + num)
-                    self.write(b"\\item" + href + w(st + b" " + name))
+                    self.write(b"\\item[-]\\href" + href + w(st + b" " + name))
 
-            self.write(b"\\end{itemize}")
-        self.write(b"\\end{itemize}\\newpage\n\n")
+            self.write(b"\\end{itemize}\\vspace{1em}")
 
     def process_files(self):
         blist = map(self.__compile__, self.a.tex_files)
