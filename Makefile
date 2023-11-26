@@ -15,7 +15,6 @@ TEX_FILES += algorithm-design.tex
 # TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 
-
 build:
 	$(PYTEX) -J minimath \
 		build $(TEX_FILES)
@@ -23,6 +22,10 @@ build:
 plenary:
 	$(PYTEX) -J plenary \
 		build plenary.tex calculus.tex
+
+refs:
+	$(PYTEX) -J plenary build plenary.tex calculus.tex
+	$(PYTEX) -J all build plenary.tex calculus.tex *.tex
 
 dev:
 	$(PYTEX) -J minimath dev $(TEX_FILES)

@@ -159,7 +159,15 @@ class Args:
         p.add_argument("--no-compute", dest="show_computes", action="store_false")
         p.add_argument("--verbose", action="store_true")
         p.add_argument("tex_files", nargs="*")
-        return p.parse_args()
+        args = p.parse_args()
+        seen = set()
+        tex_files = []
+        for f in args.tex_files:
+            if f not in seen:
+                seen.add(f)
+                tex_files.append(f)
+        args.tex_files = tex_files
+        return args
 
 
 # get index `i` form list `l`, `d` if out of range
