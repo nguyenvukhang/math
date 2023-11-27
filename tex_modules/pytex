@@ -97,19 +97,17 @@ def get_section_title(line):  # type: (bytes) -> bytes | None
 
 
 def get_in_between(
-    buf, start, end, include=False
-):  # type: (bytes, bytes, bytes, bool) -> tuple[bytes, bytes] | None
+    buf, start, include=False
+):  # type: (bytes, int, bool) -> tuple[bytes, int] | None
     stk, s = 0, None
-    for i in range(len(buf)):
-        c = buf[i : i + 1]
-        if c == start:
+    for i in range(start, len(buf)):
+        if buf[i] == 123:  # ord(b'{')
             stk, s = stk + 1, s if s is not None else i
-        elif c == end:
-            stk -= 1
-            if stk == 0:
-                end = buf[i + 1 :]
+        elif buf[i] == 125:  # ord(b'}')
+            if stk == 1:
                 hit = buf[s : i + 1] if include else buf[s + 1 : i]
-                return (hit, end)
+                return (hit, i + 1)
+            stk -= 1
     return None
 
 
@@ -243,25 +241,24 @@ class PdfLatex:
         pipe = map(read_file, self.a.tex_files)
         pipe = map(lambda v: v.splitlines(), pipe)
 
-        gib = lambda b, i: get_in_between(b, b"{", b"}", include=i)
+        gib = get_in_between
         w = lambda v: b"{" + v + b"}"
 
         for file in pipe:
             section_started = False
             for line in file:
                 if not section_started and line.startswith(b"\\section"):
-                    section, line = gib(line, True)
-                    href, _ = gib(line, True)
-                    # self.write(b"\\href" + href + section)
+                    section, i = gib(line, 0, True)
+                    href, _ = gib(line, i, True)
                     self.write(b"{\large " + section + b"}")
                     self.write(b"\\begin{itemize}[itemsep=0pt]\\footnotesize")
                     continue
 
                 st = get_section_title(line)
                 if st is not None:
-                    num, line = gib(line, False)
-                    name, line = gib(line, True)
-                    href, line = gib(line, True)
+                    num, i = gib(line, 0, False)
+                    name, i = gib(line, i, True)
+                    href, i = gib(line, i, True)
                     st = w(st + b" " + num)
                     self.write(b"\\item[-]\\href" + href + w(st + b" " + name))
 
