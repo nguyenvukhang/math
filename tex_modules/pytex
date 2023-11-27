@@ -39,15 +39,11 @@ class File:
 
     # collect all labels into a set
     # fails if a duplicate label is found
-    def get_labels(self, existing):  # type: (File,  set[bytes]) -> None
+    def get_labels(self, existing):  # type: (set[bytes]) -> None
         for i in range(len(self.lines)):
             line = self.lines[i]
             if get_section_title(line) is None:
                 continue
-            if not section_is_one_line(line):
-                print(f"[ERROR] Title spans multiple lines in")
-                print(f"| {self.filepath} | line {i+1} |")
-                exit()
             hit = Regex.LABEL.search(line)
             if hit is None:
                 continue
@@ -56,8 +52,21 @@ class File:
                 raise Exception("Found a duplicate label: %s" % label.decode("utf8"))
             existing.add(label)
 
+    def get_section_titles(self):  # type()
+        for l in range(len(self.lines)):
+            line = self.lines[l]
+            st = get_section_title(line)
+            if st is None:
+                continue
+            gib = get_in_between
+            num, i = gib(line, 0)
+            name, i = gib(line, i)
+            col = l + 1
+            title = st + b" " + num + b" " + name
+            print(self.filepath, ":", col, ":0:", title.decode("utf8"), sep="")
+
     # ensures that all references are pointed to a defined SHA.
-    def check_references(self, existing):  # type: (File, set[bytes]) -> None
+    def check_references(self, existing):  # type: (set[bytes]) -> None
         for line in self.lines:
             hit = Regex.HREF.search(line)
             if hit is None:
@@ -67,7 +76,7 @@ class File:
                 print("undefined reference:", ref)
 
     # add labels to unlabelled section titles
-    def add_labels(self, existing):  # type: (File, set[bytes]) -> None
+    def add_labels(self, existing):  # type: (set[bytes]) -> None
         for i in range(len(self.lines)):
             l = self.lines[i]
             if Regex.LABEL_ENDL.search(l) is not None or get_section_title(l) is None:
@@ -93,6 +102,10 @@ def new_sha(existing):  # type: (set[bytes]) -> bytes
 def get_section_title(line):  # type: (bytes) -> bytes | None
     for st in SECTION_TITLES:
         if line.startswith(b"\\" + st):
+            if not section_is_one_line(line):
+                print(f"[ERROR] Title spans multiple lines in line:")
+                print(line)
+                exit()
             return st
 
 
@@ -131,6 +144,7 @@ class Args:
         "test",
         "label",
         "generate-section-titles",
+        "search-index",
     ]
     action = None  # type: Args.Action
     header = None  # type: str
@@ -373,14 +387,18 @@ def __sha__(_):
 
 
 # Get all files ending with '.tex' in the user's current directory
-def get_tex_files():  # type: () -> list[str]
-    files, cwd = [], os.curdir
-    for root, _, f in os.walk(cwd):
-        f = filter(lambda f: f.endswith(".tex"), f)
-        f = map(lambda f: path.join(root, f), f)
-        f = map(lambda f: path.relpath(f, cwd), f)
-        files.extend(f)
-    return files
+def get_tex_files(recursive=True):  # type: (bool) -> list[str]
+    is_tex = lambda f: f.endswith(".tex")
+    if recursive:
+        files, cwd = [], os.curdir
+        for root, _, f in os.walk(cwd):
+            f = filter(is_tex, f)
+            f = map(lambda f: path.join(root, f), f)
+            f = map(lambda f: path.relpath(f, cwd), f)
+            files.extend(f)
+        return files
+    else:
+        return [x for x in os.listdir() if is_tex(x)]
 
 
 # [SUBCOMMAND] checks if everything is in a healthy state
@@ -449,6 +467,11 @@ def __generate_section_titles__(_):
         print(l)
 
 
+def __search_index__(_):
+    for f in map(File, get_tex_files(recursive=False)):
+        f.get_section_titles()
+
+
 def main():
     args = Args.parse()
     tbl = {
@@ -458,6 +481,7 @@ def main():
         "test": __test__,
         "label": __label__,
         "generate-section-titles": __generate_section_titles__,
+        "search-index": __search_index__,
     }  # type: dict[Args.Action, Callable]
     tbl[args.action](args)
 
