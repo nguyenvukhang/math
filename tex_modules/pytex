@@ -192,13 +192,15 @@ def debug():
 
 
 # remove all bytes including and within a start and end marker
+# remove all bytes including and within a start and end marker
 def remove_in_between(data: bytes, start: bytes, end: bytes):
-    buffer, r, n = [], data.find(start), len(end)
+    buffer, n = [], len(end)
+    r, p = data.find(start), 0
     while r >= 0:
-        buffer.extend(data[:r])
-        data = data[data.find(end) + n :]
-        r = data.find(start)
-    buffer.extend(data)
+        buffer.extend(data[p:r])
+        p = data.find(end, r) + n
+        r = data.find(start, p)
+    buffer.extend(data[p:])
     return bytes(buffer)
 
 
@@ -251,7 +253,7 @@ class PdfLatex:
                     section, line = gib(line, True)
                     href, _ = gib(line, True)
                     # self.write(b"\\href" + href + section)
-                    self.write(b"{\large "+ section + b"}")
+                    self.write(b"{\large " + section + b"}")
                     self.write(b"\\begin{itemize}[itemsep=0pt]\\footnotesize")
                     continue
 
