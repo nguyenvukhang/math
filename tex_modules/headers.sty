@@ -16,6 +16,7 @@
 \usepackage{titlesec}
 % removes newline after \subsection, and adds spacing after
 \titleformat{\subsection}[runin]{\bfseries}{\thesubsection}{*1}{}
+\titleformat{\section}[runin]{\Large\bfseries}{\thesection}{*1}{}
 
 \titleclass{\HwProblem}{straight}[\subsection]
 \titleformat{\HwProblem}[hang]{\Large\bfseries}{\theHwProblem}{*1}{}
@@ -101,6 +102,9 @@
 
 % global left-align text
 \AtBeginDocument{\raggedright}
+
+% badness 10000 antidote
+\tolerance=10000
 
 % auto-generated headers
 \def\Algorithm#1#2{\subsection{Algorithm {#1}\hspace{0.7em}{\ifx&#2&\else(\fi#2\ifx&#2&\else)\fi}}}

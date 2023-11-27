@@ -3,8 +3,8 @@
 \Remark{1.1.1}{Trigonometric identities}\label{c1fe42f}
 
 \begin{alignat*}{3}
-	\sin2x & =2\sin x\cos x & \sin^2x                        & =\frac{1-\cos2x}2 \\
-	\cos2x & =1-2\sin^2x    & \cos^2x                        & =\frac{\cos2x+1}2 \\
+	\sin2x & =2\sin x\cos x & \sin^2x          & =\frac{1-\cos2x}2 \\
+	\cos2x & =1-2\sin^2x    & \cos^2x          & =\frac{\cos2x+1}2 \\
 	       & =2\cos^2x-1    & \Quadd\quad\quad &
 \end{alignat*}
 \begin{align*}
@@ -114,3 +114,79 @@ $$
 
 Essentially, that there exists a local \textbf{linearization} to the
 function.
+
+\Definition{1.1.6}{Directional derivative}\label{dbbf530}
+
+Let $D\subset \R$ be open. $f:D\to\R$ is directionally differentiable
+at $\bar x\in\R^n$ in the direction $d\in\R^n$ if
+$$
+	\lim_{t\downarrow0}\frac{f(\bar x+td)-f(x)}t
+$$
+
+exists. This limit is denoted by $f'(x;d)$ and is called the
+directional derivative of $f$ at $\bar x$ in the direction $d$.
+
+If $f$ is directionally differentiable at $\bar x$ in every direction
+$d\in\R^n$, we call $f$ directionally differentiable at $\bar x$.
+
+If $f$ is directionally differentiable at every $\bar x\in\R^n$, we
+call it directionally differentiable.
+
+\Remark{1.1.7}{Gradient}\label{dad2713}
+
+Only scalar-valued functions can have gradients.
+
+The \textbf{gradient} of a function $f:\R^n\to\R$ is the vector-valued
+function $\nabla f$ whose value at $p$ gives the direction and rate of
+fastest increase. Further, $\nabla f$ can be written as
+$$
+	\nabla f(p)=\begin{mat}
+		\frac{\partial f}{\partial x_1}(p)\\\vdots\\\frac{\partial f}{\partial x_n}(p)
+	\end{mat}
+$$
+
+The gradient of $f$ is defined as the unique vector field whose dot
+product with any vector $d$ at each point $x$ is the directional
+derivative of $f$ along $d$. That is,
+$$
+	\nabla f(x)^Td=\href{dbbf530}{f'(x;d)}
+$$
+
+\Remark{1.1.8}{Jacobian}\label{a2ceb99}
+
+The Jacobian of a vector-valued function in several variables
+generalizes the \href{dad2713}{gradient} of a scalar-valued function
+in several variables.
+
+In other word, the Jacobian of a scalar-valued function is its
+gradient.
+
+So let $f:\R^n\to\R^m$. In particular,
+$$
+	f(x):=\begin{mat}f_1(x)\\\vdots\\f_m(x)\end{mat}\with f_i:\R^n\to\R
+$$
+
+Then the Jacobian of $f$ is an $m\times n$ matrix
+$$
+	\def\p#1#2{\dfrac{\partial #1}{\partial #2}}
+	\def\n#1{\nabla^Tf_{#1}}
+	\mathbf{J}
+	=\begin{mat}\p f{x_1}&\ldots&\p f{x_n}\end{mat}
+	=\begin{mat}\n1\\\vdots\\\\\n m\end{mat}
+	=\begin{mat}
+		\p{f_1}{x_1} & \ldots & \p{f_1}{x_n} \\
+		\vdots & \ddots & \vdots \\
+		\p{f_m}{x_1} & \ldots & \p{f_m}{x_n} \\
+	\end{mat}
+	=\nabla f(x)^T
+$$
+
+Note that by defintion of the \href{dad2713}{gradient}, we have
+$$
+	\def\p#1#2{\dfrac{\partial #1}{\partial #2}}
+	\nabla f(x)^T
+	=\begin{mat}\p f{x_1}&\ldots&\p f{x_n}\end{mat}
+	=\mathbf{J}
+$$
+
+and hence we say that the Jacobian is the transpose of the gradient.

@@ -233,7 +233,7 @@ class PdfLatex:
         return b
 
     def generate_toc(self):
-        if self.dev_mode or not self.a.toc:
+        if not self.a.toc:
             return
         self.write(b"\\section{Table of Contents}")
         # self.write(b"\\begin{itemize}[itemsep=1em] \\large")
@@ -258,9 +258,12 @@ class PdfLatex:
                 if st is not None:
                     num, i = gib(line, 0, False)
                     name, i = gib(line, i, True)
-                    href, i = gib(line, i, True)
                     st = w(st + b" " + num)
-                    self.write(b"\\item[-]\\href" + href + w(st + b" " + name))
+                    href = gib(line, i, True)
+                    if href is not None:
+                        self.write(b"\\item[-]\\href" + href[0] + w(st + b" " + name))
+                    else:
+                        self.write(b"\\item[-]" + st + b" " + name)
 
             self.write(b"\\end{itemize}\\vspace{1em}")
 
