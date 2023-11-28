@@ -216,7 +216,7 @@ For these we split into a few cases:
 \Result{3.1.1}{Constant coefficients}\label{cd8a29a}
 
 \begin{equation*}\def\y#1{y^{(#1)}}
-	\y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ny=0\tag*{($*$)}
+  \y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ny=0\Tag{*}
 \end{equation*}
 where $\iter{a_1}{a_n}\in\R$ fixed.
 
@@ -238,7 +238,7 @@ One way to establish the linear independence is to evaluate their
 \Result{3.1.2}{Euler equations}\label{a0f8e0c}
 
 \begin{equation*}\def\y#1{x^{#1}y^{(#1)}}
-	a_0\y{n}+a_1\y{n-1}+\ldots+a_ny=0\tag*{($*$)}
+  a_0\y{n}+a_1\y{n-1}+\ldots+a_ny=0\Tag{*}
 \end{equation*}
 where $\iter{a_1}{a_n}\in\R$ fixed.
 
@@ -381,7 +381,7 @@ $$
 		(-9s+s^2u)+2(-u-su')-4(u)         & =5                                \\
 		(-2s)u'+(s^2-6)u                  & =9s+5                             \\
 		u'+\frac{6-s^2}{2s}u              & =-\frac92-\frac5{2s}              \\
-		u'+\left(\frac3s-\frac s2\right)u & =-\frac92-\frac5{2s} \tag*{($*$)}
+    u'+\left(\frac3s-\frac s2\right)u & =-\frac92-\frac5{2s}\Tag{*}
 	\end{align*}
 
 	This is a first-order linear equation in $u$.
@@ -392,7 +392,7 @@ $$
 		= \ln s^3-\ln e^{(s^2/4)}
 		= \ln (s^3e^{-(s^2/4)})
 	$$
-	$\implies v=s^3e^{-(s^2/4)}$. Substituting back to ($*$), we have
+	$\implies v=s^3e^{-(s^2/4)}$. Substituting back to $(*)$, we have
 	\begin{align*}
 		uv & =\int\frac{9s+5}{-2s}\cdot s^3e^{-(s^2/4)}\,ds           \\
 		   & =\int\left(-\frac92s^2-\frac5{2}s\right)e^{-(s^2/4)}\,ds

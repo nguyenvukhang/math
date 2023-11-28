@@ -269,7 +269,7 @@ $(\bar\lambda,\bar\mu)\in\R^m\times\R^p$ such that $(\bar
 	\def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
 	By Theorem 5.1.5,
 	\begin{equation*}
-		\nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\tag*{($*$)}
+    \nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\Tag{*}
 	\end{equation*}
 
 	Set
@@ -508,7 +508,7 @@ at $\bar x$. Then \href{fed784a}{MFCQ} holds.
 % Now multiply with $d$ from MFCQ at $\bar x$.
 % \begin{equation*}
 % 	0=\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)^Td
-% 	+ \sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)^Td \tag*{($*$)}
+% 	+ \sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)^Td \Tag{*}
 % \end{equation*}
 
 % And by MFCQ, the second term is $=0$. Hence
@@ -522,7 +522,7 @@ at $\bar x$. Then \href{fed784a}{MFCQ} holds.
 % 	0=\sum_{i\in I(\bar x)}\tilde\lambda_i\nabla g_i(\bar x)^Td
 % 	\;\leq\;\tilde\lambda_{i_0}\nabla g_{i_0}(\bar x)^Td<0
 % $$
-% \textbf{Case 2} $\forall i\in I(\bar x):\tilde\lambda_i=0$. Then ($*$) reads
+% \textbf{Case 2} $\forall i\in I(\bar x):\tilde\lambda_i=0$. Then $(*)$ reads
 % $$
 % 	0=\sum_{j\in J}\tilde\mu_j\nabla h_j(\bar x)^Td
 % $$
@@ -650,7 +650,7 @@ So then
 \end{align*}
 
 The function that takes $x\mapsto L(x,\lambda,\mu)$ is affine (from
-($*$)), and in particular it is convex. And hence it takes its minimum
+$(*)$), and in particular it is convex. And hence it takes its minimum
 if and only if $\nabla_xL(x,\lambda,\mu)=0$, in which case,
 $$
 	\inf_{x\in\R^n}L(x,\lambda,\mu)=b^T\mu
