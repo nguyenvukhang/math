@@ -2,6 +2,8 @@
 
 \Definition{0.0.0}{General terminology}\label{d508dc8}
 
+\textcolor{white}{.}
+
 \textbf{Entire function} is a complex-valued function that is holomorphic on $\C$.
 
 A \textbf{real-valued} function is any function $f:X\to\R$.
@@ -10,61 +12,72 @@ A \textbf{complex-valued} function is any function $f:X\to\C$.
 
 The $C^n$ notation:
 \begin{itemize}
-	\item $C^0$ : continuous
-	\item $C^1$ : continuously differentiable
-	\item $C^2$ : twice continuously differentiable
+  \item $C^0$ : continuous
+  \item $C^1$ : continuously differentiable
+  \item $C^2$ : twice continuously differentiable
 \end{itemize}
 
-\Theorem{0.0.1}{Complex differentiability}\label{d1d5d93}
+\Theorem{0.0.1}{Conventional notation}\label{d1055b9}
 
-A complex function $f(z):=u(z)+iv(z)$ is complex-differentiable at
-$z_0$ if and only if $u$ and $v$ satisfy the
-\href{fb10fd3}{Cauchy-Riemann Equations} at $z_0$.
+For this chapter on Complex Analysis.
 
-To say a function is \href{e1e08f7}{\textbf{holomorphic}} is much
-stronger, since a holomorphic function is complex-differentiable at
-every point of some open subset of the complex plane $\C$.
+Let $U\subseteq\C$ be an open set.
+
+Let $D(P,r)$ be the open disc centered at $P$ with radius $r$. Then
+\begin{enumerati}
+  \item $\partial D(P,r)$ is the (closed) curve at the border of $D(P,r)$
+  \item $\overline D(P,r)$ is the closed disc centered at $P$ with
+  radius $r$.
+\end{enumerati}
+
+\Theorem{0.0.2}{Complex differentiability}\label{d1d5d93}
+
+A complex function $f(z):=u(z)+iv(z)$ is complex-differentiable at $z_0$ if and
+only if $u$ and $v$ satisfy the \href{fb10fd3}{Cauchy-Riemann Equations} at
+$z_0$.
+
+To say a function is \href{e1e08f7}{\textbf{holomorphic}} is much stronger,
+since a holomorphic function is complex-differentiable at every point of some
+open subset of the complex plane $\C$.
 
 \Definition{1.1.3}{Complex Partials}\label{ffea0ed}
 
 $$
-	\frac{\partial f}{\partial z} :=
-	\frac12\left(
-	\frac{\partial}{\partial x}-i\frac{\partial}{\partial y}
-	\right)f
+  \frac{\partial f}{\partial z} :=
+  \frac12\left(
+  \frac{\partial}{\partial x}-i\frac{\partial}{\partial y}
+  \right)f
 $$
 
 $$
-	\frac{\partial f}{\partial\bar z} :=
-	\frac12\left(
-	\frac{\partial}{\partial x}+i\frac{\partial}{\partial y}
-	\right)f
+  \frac{\partial f}{\partial\bar z} :=
+  \frac12\left(
+  \frac{\partial}{\partial x}+i\frac{\partial}{\partial y}
+  \right)f
 $$
 
 \Definition{1.4.1}{Holomorphic functions}\label{e1e08f7}
 
-Let $U\subset\mathbb C$ be open. Let $f:U\to\C$ be in $C^1(U)$. $f$ is
-said to be \textit{holomorphic} if
+Let $U\subset\mathbb C$ be open. Let $f:U\to\C$ be in $C^1(U)$. $f$ is said to
+be \textit{holomorphic} if
 $$
-	\frac{\partial f}{\partial\bar z}=0
+  \frac{\partial f}{\partial\bar z}=0
 $$
 
-\paragraph{Properties of holomorphic functions} If $f$ and $g$ are
-holomorphic in a domain $U$, then so are $f+g$, $f-g$, $fg$, and
-$f\circ g$.
+\paragraph{Properties of holomorphic functions} If $f$ and $g$ are holomorphic in a domain $U$, then so are $f+g$, $f-g$, $fg$,
+and $f\circ g$.
 
-Additionally, if $g$ has no zeros in $U$, then $f/g$ is holomorphic
-too.
+Additionally, if $g$ has no zeros in $U$, then $f/g$ is holomorphic too.
 
 \paragraph{Examples of holomorphic functions}
 
-Here are some building blocks to get started (remember that you can
-use these with the properties above to show that other more
-complicated functions are holomorphic too):
+Here are some building blocks to get started (remember that you can use these
+with the properties above to show that other more complicated functions are
+holomorphic too):
 
 \begin{enumerate}
-	\item $f(z)=1/z$ on $\C\setminus\{0\}$
-	\item $f(z)=z$ on $\C$
+  \item $f(z)=1/z$ on $\C\setminus\{0\}$
+  \item $f(z)=z$ on $\C$
 \end{enumerate}
 
 (I really thought this list was gonna be longer. To be continued.)
@@ -76,110 +89,105 @@ All these can be proved using a destructuring of $z:=x+iy$ and using
 
 If $f(z) = u(z) + iv(z)$ is \href{e1e08f7}{holomorphic}, then
 $$
-	\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y}
-	\quad\text{and}\quad
-	\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+  \frac{\partial u}{\partial x}=\frac{\partial v}{\partial y}
+  \quad\text{and}\quad
+  \frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
 $$
 
 \Proposition{1.4.3}{}\label{d507f47}
 
-If $f:U\to\C$ is $C^1$ and $f$ satisfies the Cauchy-Riemann equations,
-then
+If $f:U\to\C$ is $C^1$ and $f$ satisfies the Cauchy-Riemann equations, then
 $$
-	\frac{\partial f}{\partial z}=\frac{\partial f}{\partial x}=
-	-i\frac{\partial f}{\partial y}
+  \frac{\partial f}{\partial z}=\frac{\partial f}{\partial x}=
+  -i\frac{\partial f}{\partial y}
 $$
 
 \Definition{1.4.4}{Harmonic functions}\label{d53f60f}
 
-Let $U\subset\C$ be open. Let $f:U\to\C$ be in $C^2(U)$. $f$ is said
-to be \textit{harmonic} if
+Let $U\subset\C$ be open. Let $f:U\to\C$ be in $C^2(U)$. $f$ is said to be
+\textit{harmonic} if
 $$
-	\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}=0
+  \frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}=0
 $$
 
 The operator
 $$
-	\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
+  \frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
 $$
 
-is called the \textit{Laplace operator}, or \textit{Laplacian}, and is
-denoted by $\Delta$. We write
+is called the \textit{Laplace operator}, or \textit{Laplacian}, and is denoted
+by $\Delta$. We write
 $$
-	\Delta f=\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}
+  \Delta f=\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}
 $$
 
 \Theorem{1.5.1}{}\label{fdd4521}
 
 Let $f,g\in C^1(U)$ where
 $$
-	U:=\{ (x,y)\in\R^2:|x-a|<\delta,\ |y-b|<\epsilon \}
+  U:=\{ (x,y)\in\R^2:|x-a|<\delta,\ |y-b|<\epsilon \}
 $$
 
-and let $\displaystyle\frac{\partial f}{\partial y}=\frac{\partial
-		g}{\partial x}$ on $U$. Then there exists a function $h\in C^2(U)$
-such that
+and let $\displaystyle\frac{\partial f}{\partial y}=\frac{\partial g}{\partial
+  x}$ on $U$. Then there exists a function $h\in C^2(U)$ such that
 $$
-	\frac{\partial h}{\partial x}=f
-	\quad\text{and}\quad
-	\frac{\partial h}{\partial y}=g
+  \frac{\partial h}{\partial x}=f
+  \quad\text{and}\quad
+  \frac{\partial h}{\partial y}=g
 $$
 
-on $U$. If $f$ and $g$ are real-valued, then we may take $h$ to be
-real-valued also.
+on $U$. If $f$ and $g$ are real-valued, then we may take $h$ to be real-valued
+also.
 
 \Theorem{1.5.3}{}\label{e7808d1}
 
-Let $U\subset\C$ be either an open rectangle or open disc, and let $F$
-be holomorphic on $U$. Then there exists a holomorphic function $H$ on
-$U$ such that
+Let $U\subset\C$ be either an open rectangle or open disc, and let $F$ be
+holomorphic on $U$. Then there exists a holomorphic function $H$ on $U$ such
+that
 $$
-	\frac{\partial H}{\partial z}=F
+  \frac{\partial H}{\partial z}=F
 $$
 on $U$.
 
 \Definition{2.1.1}{Bounded $C^1$ functions}\label{c1f6d35}
 
-A function $\phi:[a,b]\to\R$ is continuously differentiable
-(and we write $\phi\in C^1([a,b])$) if
+A function $\phi:[a,b]\to\R$ is continuously differentiable (and we write
+$\phi\in C^1([a,b])$) if
 
 \begin{enumerata}
-	\item $\phi$ is continuous on $[a,b]$
-	\item $\phi'$ exists on $(a,b)$
-	\item $\phi'$ has a continuous extension to $[a,b]$
+  \item $\phi$ is continuous on $[a,b]$
+  \item $\phi'$ exists on $(a,b)$
+  \item $\phi'$ has a continuous extension to $[a,b]$
 \end{enumerata}
 
 In other words, for (c) we require that
 $$
-	\lim_{t\to a^+}\phi'(t)\quad\text{and}\quad\lim_{t\to b^-}\phi'(t)
+  \lim_{t\to a^+}\phi'(t)\quad\text{and}\quad\lim_{t\to b^-}\phi'(t)
 $$
 
 both exist.
 
-The motivation for this definition is so if $\phi\in C^1([a,b])$, then
-we have
+The motivation for this definition is so if $\phi\in C^1([a,b])$, then we have
 \begin{align*}
-	\phi(b)-\phi(a)
-	 & =\lim_{\epsilon\to0^+}\big(\phi(b-\epsilon)-\phi(a+\epsilon)\big) \\
-	 & =\lim_{\epsilon\to0^+}\int_{a+\epsilon}^{b-\epsilon}\phi'(t)\,dt  \\
-	 & =\int_a^b\phi'(t)\,dt
+  \phi(b)-\phi(a)
+   & =\lim_{\epsilon\to0^+}\big(\phi(b-\epsilon)-\phi(a+\epsilon)\big) \\
+   & =\lim_{\epsilon\to0^+}\int_{a+\epsilon}^{b-\epsilon}\phi'(t)\,dt  \\
+   & =\int_a^b\phi'(t)\,dt
 \end{align*}
 and hence have the \href{b869dc0}{fundamental theorem of calculus}
 hold for $\phi\in C^1([a,b])$.
 
 \Definition{2.1.2}{Continuous complex curve}\label{e4132bc}
 
-Let $\gamma:[a,b]\to\C$ be defined by $\gamma(t):=\gamma_1(t) +
-	i\gamma_2(t)$.
+Let $\gamma:[a,b]\to\C$ be defined by $\gamma(t):=\gamma_1(t) + i\gamma_2(t)$.
 
-Then $\gamma$ is said to be continuous on $[a,b]$ if both $\gamma_1$
-and $\gamma_2$ are.
+Then $\gamma$ is said to be continuous on $[a,b]$ if both $\gamma_1$ and
+$\gamma_2$ are.
 
 The curve $\gamma$ is $C^1([a,b])$ if $\gamma_1$ and $\gamma_2$ are
-continuously differentiable on $[a,b]$. Under these circumstances we
-will write
+continuously differentiable on $[a,b]$. Under these circumstances we will write
 $$
-	\gamma'(t)=\frac{d\gamma}{dt}=\frac{d\gamma_1}{dt}+i\frac{d\gamma_2}{dt}
+  \gamma'(t)=\frac{d\gamma}{dt}=\frac{d\gamma_1}{dt}+i\frac{d\gamma_2}{dt}
 $$
 
 \Definition{2.1.3}{Complex integration}\label{c511702}
@@ -187,95 +195,91 @@ $$
 Let $\psi:[a,b]\to\C$ be continous on $[a,b]$. Write
 $\psi(t)=\psi_1(t)+i\psi_2(t)$. Then we define
 $$
-	\int_a^b\psi(t)\,dt:=\int_a^b\psi_1(t)\,dt+i\int_a^b\psi_2(t)\,dt
+  \int_a^b\psi(t)\,dt:=\int_a^b\psi_1(t)\,dt+i\int_a^b\psi_2(t)\,dt
 $$
 
-Using this definition along with Definitions \href{c1f6d35}{2.1.1}
-and \href{e4132bc}{2.1.2}, we have that if $\gamma\in C^1([a,b])$
-is complex-valued, then
+Using this definition along with Definitions \href{c1f6d35}{2.1.1} and
+\href{e4132bc}{2.1.2}, we have that if $\gamma\in C^1([a,b])$ is
+complex-valued, then
 $$
-	\gamma(b)-\gamma(a)=\int_a^b\gamma'(t)\,dt
+  \gamma(b)-\gamma(a)=\int_a^b\gamma'(t)\,dt
 $$
 
 \Proposition{2.1.4}{}\label{f37b676}
 
-Let $U\subseteq\C$ be open and let $\gamma:[a,b]\to U$ be a $C^1$
-curve. If $f:U\to\R$ and $f\in C^1(U)$ and we write
+Let $U\subseteq\C$ be open and let $\gamma:[a,b]\to U$ be a $C^1$ curve. If
+$f:U\to\R$ and $f\in C^1(U)$ and we write
 \begin{gather*}
-	f:x+iy\mapsto f(x+iy) \\
-	\gamma(t)=\gamma_1(t)+i\gamma_2(t)
+  f:x+iy\mapsto f(x+iy) \\
+  \gamma(t)=\gamma_1(t)+i\gamma_2(t)
 \end{gather*}
 
 then
 \begin{align*}
-	f(\gamma(b))-f(\gamma(a))
-	 & =\int_a^b (f\circ\gamma)'(t)\,dt \\
-	 & =\int_a^b\left(
-	\frac{\partial f}{\partial x}(\gamma(t))\cdot\frac{d\gamma_1}{dt}+
-	\frac{\partial f}{\partial y}(\gamma(t))\cdot\frac{d\gamma_2}{dt}
-	\right)\,dt                         \\
-	 & =\int_a^b
-	f_x(\gamma(t))\cdot\gamma_1'(t)+f_y(\gamma(t))\cdot\gamma_2'(t)
-	\,dt
+  f(\gamma(b))-f(\gamma(a))
+   & =\int_a^b (f\circ\gamma)'(t)\,dt \\
+   & =\int_a^b\left(
+  \frac{\partial f}{\partial x}(\gamma(t))\cdot\frac{d\gamma_1}{dt}+
+  \frac{\partial f}{\partial y}(\gamma(t))\cdot\frac{d\gamma_2}{dt}
+  \right)\,dt                         \\
+   & =\int_a^b
+  f_x(\gamma(t))\cdot\gamma_1'(t)+f_y(\gamma(t))\cdot\gamma_2'(t)
+  \,dt
 \end{align*}
 
-This follows from \href{c511702}{Definition 2.1.3} and the
-\href{d969d46}{chain rule}.
+This follows from \href{c511702}{Definition 2.1.3} and the \href{d969d46}{chain
+  rule}.
 
 (the lack of an $i$ term is intentional. Remember that
 $f\circ\gamma:\R\to\R$)
 
 \Definition{2.1.5}{Complex line integral}\label{b1e96fc}
 
-Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let
-$\gamma:[a,b]\to U$ be a $C^1$ curve. Then we define the complex line
-integral
+Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let $\gamma:[a,b]\to
+U$ be a $C^1$ curve. Then we define the complex line integral
 $$
-	\oint_\gamma F(z)\,dz:=\int_a^bF(\gamma(t))\cdot\frac{d\gamma}{dt}\,dt
+  \oint_\gamma F(z)\,dz:=\int_a^bF(\gamma(t))\cdot\frac{d\gamma}{dt}\,dt
 $$
 
 \Proposition{2.1.6}{Holomorphic line integral}\label{c526c09}
 
-Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let
-$\gamma:[a,b]\to U$ be a $C^1$ curve. If $f$ is a holomorphic function
-on $U$, then
+Let $U\subseteq\C$ open, $F:U\to\C$ continuous on $U$, and let $\gamma:[a,b]\to
+U$ be a $C^1$ curve. If $f$ is a holomorphic function on $U$, then
 $$
-	f(\gamma(b))-f(\gamma(a))=\oint_\gamma\frac{\partial f}{\partial z}(z)\,dz
+  f(\gamma(b))-f(\gamma(a))=\oint_\gamma\frac{\partial f}{\partial z}(z)\,dz
 $$
 
-This comes from using a holomorphic function on
-\href{f37b676}{Proposition 2.1.4}, and then applying
-\href{b1e96fc}{Definition 2.1.5}.
+This comes from using a holomorphic function on \href{f37b676}{Proposition
+  2.1.4}, and then applying \href{b1e96fc}{Definition 2.1.5}.
 
 \Proposition{2.1.7}{Moving $||$ into integral}\label{bcec8b1}
 
 Let $\phi:[a,b]\to\C$ be continuous. Then
 $$
-	\left|\int_a^b\phi(t)\,dt\right|\leq\int_a^b|\phi(t)|\,dt
+  \left|\int_a^b\phi(t)\,dt\right|\leq\int_a^b|\phi(t)|\,dt
 $$
 
 \Proposition{2.1.8}{Upper bound of line integral}\label{faf3f86}
 
-Let $U\subseteq\C$ be open and $f\in C^0(U)$. Let $\gamma:[a,b]\to U$
-be a $C^1$ curve, and let $\ell(\gamma)$ be given by
+Let $U\subseteq\C$ be open and $f\in C^0(U)$. Let $\gamma:[a,b]\to U$ be a
+$C^1$ curve, and let $\ell(\gamma)$ be given by
 $$
-	\ell(\gamma):=\int_a^b\left|\frac{d\gamma}{dt}(t)\right|\,dt
+  \ell(\gamma):=\int_a^b\left|\frac{d\gamma}{dt}(t)\right|\,dt
 $$
 
 Then we have
 $$
-	\left|\oint_\gamma f(z)\,dz\right|\leq
-	\Big(\sup_{t\in[a,b]}|f(\gamma(t))|\Big)\cdot\ell(\gamma)
+  \left|\oint_\gamma f(z)\,dz\right|\leq
+  \Big(\sup_{t\in[a,b]}|f(\gamma(t))|\Big)\cdot\ell(\gamma)
 $$
 
 (Note that $\ell(\gamma)$ is the length of $\gamma$.)
 
 \Proposition{2.1.9}{Parameterization-independence of line integrals}\label{f74efcb}
 
-Let $U\subseteq\C$ be open and $f:U\to\C$ be a continuous function.
-Let $\gamma:[a,b]\to U$ be a $C^1$ curve. Suppose that
-$\phi:[c,d]\to[a,b]$ is a bijective increasing $C^1$ with a $C^1$
-inverse.
+Let $U\subseteq\C$ be open and $f:U\to\C$ be a continuous function. Let
+$\gamma:[a,b]\to U$ be a $C^1$ curve. Suppose that $\phi:[c,d]\to[a,b]$ is a
+bijective increasing $C^1$ with a $C^1$ inverse.
 
 % TODO: Is the inverse of a continuous bijective function continuous?
 % NO.
@@ -284,180 +288,175 @@ inverse.
 Let $\tilde\gamma=\gamma\circ\phi$. Then
 $$\oint_{\tilde\gamma}f(z)\,dz=\oint_\gamma f(z)\,dz$$
 
-The proof involves the standard change of variable formula from
-calculus.
+The proof involves the standard change of variable formula from calculus.
 
 \Theorem{2.2.1}{Existence of $f'$ on holomorphic $f$}\label{f75e43c}
 
-Let $U\subseteq\C$ be open and let $f$ be holomorphic on $U$. Then
-$f'$ exists at each point of $U$ and
+Let $U\subseteq\C$ be open and let $f$ be holomorphic on $U$. Then $f'$ exists
+at each point of $U$ and
 $$f'(z)=\frac{\partial f}{\partial z}$$
 
 for all $z\in U$.
 
 As a result of this theorem, we often will write $f'=\dfrac{\partial
-		f}{\partial z}$ when $f$ is holomorphic.
+  f}{\partial z}$ when $f$ is holomorphic.
 
 \Theorem{2.2.2}{Holomorphic by existence of derivative}\label{d037b0f}
 
-Let $U\subseteq\C$ be open. If $f\in C^1(U)$ and $f$ has a complex
-derivative at each point of $U$, then $f$ is holomorphic on $U$.
+Let $U\subseteq\C$ be open. If $f\in C^1(U)$ and $f$ has a complex derivative
+at each point of $U$, then $f$ is holomorphic on $U$.
 
-In other words, if a continuous, complex-valued function $f$ on $U$ has
-a complex derivative at each point and if $f'$ is continuous on $U$,
-then $f$ is holomorphic on $U$.
+In other words, if a continuous, complex-valued function $f$ on $U$ has a
+complex derivative at each point and if $f'$ is continuous on $U$, then $f$ is
+holomorphic on $U$.
 
 \Theorem{2.2.3}{Holomorphism and directional derivatives}\label{c41052e}
 
-Let $f$ be holomorphic in a neighborhood $P\in\C$. Let $w_1,w_2\in\C$
-have unit modulus. Consider the directional derivatives
+Let $f$ be holomorphic in a neighborhood $P\in\C$. Let $w_1,w_2\in\C$ have unit
+modulus. Consider the directional derivatives
 \begin{align*}
-	D_{w_1}f(P) & :=\lim_{t\to0}\frac{f(P+tw_1)-f(P)}t \\
-	D_{w_2}f(P) & :=\lim_{t\to0}\frac{f(P+tw_2)-f(P)}t
+  D_{w_1}f(P) & :=\lim_{t\to0}\frac{f(P+tw_1)-f(P)}t \\
+  D_{w_2}f(P) & :=\lim_{t\to0}\frac{f(P+tw_2)-f(P)}t
 \end{align*}
 Then
 \begin{enumerata}
-	\item $|D_{w_1}f(P)|=|D_{w_2}f(P)|$
-	\item if $|f'(P)|\neq0$, then the directed angle from $w_1$ to
-	$w_2$ equals the directed angle from $D_{w_1}f(P)$ to $D_{w_2}f(P)$.
+  \item $|D_{w_1}f(P)|=|D_{w_2}f(P)|$
+  \item if $|f'(P)|\neq0$, then the directed angle from $w_1$ to $w_2$ equals the
+  directed angle from $D_{w_1}f(P)$ to $D_{w_2}f(P)$.
 \end{enumerata}
 Note:
 \begin{itemize}
-	\item 2.2.3(a) alone implies that $f$ is holomorphic.
-	\item 2.2.3(b) alone implies that $f$ is holomorphic.
+  \item 2.2.3(a) alone implies that $f$ is holomorphic.
+  \item 2.2.3(b) alone implies that $f$ is holomorphic.
 \end{itemize}
 
 \Lemma{2.3.1}{}\label{f8abd8b}
 
 Let $(\alpha,\beta)\subseteq\R$ be an open interval and let
-$H,F:(\alpha,\beta)\to\R$ be continuous functions. Let
-$p\in(\alpha,\beta)$ and suppose that $dH/dx$ exists and equals $F(x)$
-for all $x\in(\alpha,\beta)\setminus\{p\}$. Then $(dH/dx)(p)$ exists
-and $(dH/dx)(x)=F(x)$ for all $x\in(\alpha,\beta)$.
+$H,F:(\alpha,\beta)\to\R$ be continuous functions. Let $p\in(\alpha,\beta)$ and
+suppose that $dH/dx$ exists and equals $F(x)$ for all
+$x\in(\alpha,\beta)\setminus\{p\}$. Then $(dH/dx)(p)$ exists and
+$(dH/dx)(x)=F(x)$ for all $x\in(\alpha,\beta)$.
 $$
-	\forall_{x\in(\alpha,\beta)\setminus\{p\}}:\frac{dH}{dx}(x)=F(x)\implies
-	\forall_{x\in(\alpha,\beta)}:\frac{dH}{dx}(x)=F(x)
+  \forall_{x\in(\alpha,\beta)\setminus\{p\}}:\frac{dH}{dx}(x)=F(x)\implies
+  \forall_{x\in(\alpha,\beta)}:\frac{dH}{dx}(x)=F(x)
 $$
 
 It's as if the continuity fills in the gap at $p$.
 
 \Theorem{2.3.2}{}\label{f017dd0}
 
-Let $U\subseteq\C$ be either an open rectangle or an open disc and let
-$P\in U$. Let $f$ and $g$ be continuous, real-valued functions on $U$
-which are continuously differentiable on $U\setminus\{P\}$. Suppose
-further that
+Let $U\subseteq\C$ be either an open rectangle or an open disc and let $P\in
+U$. Let $f$ and $g$ be continuous, real-valued functions on $U$ which are
+continuously differentiable on $U\setminus\{P\}$. Suppose further that
 $$
-	\frac{\partial f}{\partial y}=\frac{\partial g}{\partial x}
-	\quad\text{on }U\setminus\{P\}
+  \frac{\partial f}{\partial y}=\frac{\partial g}{\partial x}
+  \quad\text{on }U\setminus\{P\}
 $$
 
 Then there exists a $C^1$ function $h:U\to\R$ such that
 $$
-	\frac{\partial h}{\partial x}=f,\quad
-	\frac{\partial h}{\partial y}=g
+  \frac{\partial h}{\partial x}=f,\quad
+  \frac{\partial h}{\partial y}=g
 $$
 
 at every point of $U$ (including $P$).
 
 \Theorem{2.3.3}{Existence of holomorphic antiderivative}\label{b2d9d89}
 
-Let $U\subseteq\C$ be either an open rectangle or an open disc. Let
-$P\in U$ be fixed. Suppose that $F$ is continuous on $U$ and
-holomorphic on $U\setminus\{P\}$. Then there is a holomorphic $H$ on
-$U$ such that $\partial H/\partial z=F$.
+Let $U\subseteq\C$ be either an open rectangle or an open disc. Let $P\in U$ be
+fixed. Suppose that $F$ is continuous on $U$ and holomorphic on
+$U\setminus\{P\}$. Then there is a holomorphic $H$ on $U$ such that $\partial
+H/\partial z=F$.
 
-Note that since $H$ is holomorphic, by \href{f75e43c}{Theorem 2.2.1},
-we can write $H'=F$.
+Note that since $H$ is holomorphic, by \href{f75e43c}{Theorem 2.2.1}, we can
+write $H'=F$.
 
 \Lemma{2.4.1}{}\label{c6c594a}
 
-Let $\gamma$ be the boundary of a disc $D(z_0,r)$ in the complex
-plane, equipped with the counterclockwise orientation. Let $z$ be a
-point inside the circle $\partial D(z_0,r)$. Then
+Let $\gamma$ be the boundary of a disc $D(z_0,r)$ in the complex plane,
+equipped with the counterclockwise orientation. Let $z$ be a point inside the
+circle $\partial D(z_0,r)$. Then
 $$
-	\frac1{2\pi i}\oint_\gamma\frac1{\zeta-z}\,d\zeta=1
+  \frac1{2\pi i}\oint_\gamma\frac1{\zeta-z}\,d\zeta=1
 $$
 
 The proof involves considering the function
 $$
-	I(z):=\oint_\gamma\frac1{\zeta-z}\,d\zeta
+  I(z):=\oint_\gamma\frac1{\zeta-z}\,d\zeta
 $$
 and showing that $I(z)$ is independent of $z$, and that $I(z_0)=2\pi i$.
 
 \Theorem{2.4.2}{Cauchy integral formula}\label{e50677f}
 
-Suppose that $U\subseteq\C$ is open and that $f$ is a holomorphic
-function on $U$. Let $z_0\in U$ and let $r>0$ such that $\bar
-	D(z_0,r)\subseteq U$ . Let $\gamma:[0,1]\to\C$ be the $C^1$ curve
-$\gamma(t)=z_0+r\cos(2\pi t)+ir\sin(2\pi t)$. Then, for each $z\in
-	D(z_0,r)$,
+Suppose that $U\subseteq\C$ is open and that $f$ is a holomorphic function on
+$U$. Let $z_0\in U$ and let $r>0$ such that $\overline D(z_0,r)\subseteq U$ .
+Let $\gamma:[0,1]\to\C$ be the $C^1$ curve $\gamma(t)=z_0+r\cos(2\pi
+t)+ir\sin(2\pi t)$. Then, for each $z\in D(z_0,r)$,
 $$
-	f(z)=\frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta
+  f(z)=\frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta
 $$
 
-The converse of this theorem is true too: if $f$ is given by the
-Cauchy integral formula, then $f$ is holomorphic.
+The converse of this theorem is true too: if $f$ is given by the Cauchy
+integral formula, then $f$ is holomorphic.
 
 \Theorem{2.4.3}{Cauchy integral theorem}\label{fb87a78}
 
-If $f$ is a holomorphic function on an open disc $U\subseteq\C$, and
-if $\gamma:[a,b]\to U$ is a $C^1$ curve in $U$ with
-$\gamma(a)=\gamma(b)$, then
+If $f$ is a holomorphic function on an open disc $U\subseteq\C$, and if
+$\gamma:[a,b]\to U$ is a $C^1$ curve in $U$ with $\gamma(a)=\gamma(b)$, then
 $$\oint_\gamma f(z)\,dz=0$$
 
 \begin{proof}
-	By \href{e7808d1}{Theorem 1.5.3}, there is a holomorphic function
-	$G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$, we have
-	that
-	$$
-		0=G(\gamma(b))-G(\gamma(a))
-	$$
+  By \href{e7808d1}{Theorem 1.5.3}, there is a holomorphic function
+  $G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$, we have
+  that
+  $$
+    0=G(\gamma(b))-G(\gamma(a))
+  $$
 
-	By \href{c526c09}{Proposition 2.1.6}, this equals
-	$$\oint_\gamma G'(z)\,dz=\oint_\gamma f(z)\,dz$$
+  By \href{c526c09}{Proposition 2.1.6}, this equals
+  $$\oint_\gamma G'(z)\,dz=\oint_\gamma f(z)\,dz$$
 
-	(Reminder that since $G$ is holomorphic, $G'=\dfrac{\partial
-			G}{\partial z}$ by \href{f75e43c}{Theorem 2.2.1})
+  (Reminder that since $G$ is holomorphic, $G'=\dfrac{\partial
+    G}{\partial z}$ by \href{f75e43c}{Theorem 2.2.1})
 \end{proof}
 
 \Definition{2.6.1}{Piecewise $C^1$ curve}\label{baf22ac}
 
-A piecewise $C^1$ curve $\gamma:[a,b]\to\C$ is a continuous function
-such that there exists a finitne set of numbers $a_1\leq
-	a_2\leq\ldots\leq a_k$ satisfying $a_1=a$ and $a_k=b$, and with the
-property that for every $i\leq j\leq k-1,\ \gamma|_{[a_j,a_{j+1}]}$ is
-a $C^1$ curve.
+A piecewise $C^1$ curve $\gamma:[a,b]\to\C$ is a continuous function such that
+there exists a finitne set of numbers $a_1\leq a_2\leq\ldots\leq a_k$
+satisfying $a_1=a$ and $a_k=b$, and with the property that for every $i\leq
+j\leq k-1,\ \gamma|_{[a_j,a_{j+1}]}$ is a $C^1$ curve.
 
 $\gamma$ is a piecewise $C^1$ curve in an open set $U$ if
 $\gamma([a,b])\subseteq U$.
 
-Note that while joining $C^1(\R)$ curves may not lead to a piecewise
-$C^1(\R)$ curve, doing it in $\C$ somehow works.
+Note that while joining $C^1(\R)$ curves may not lead to a piecewise $C^1(\R)$
+curve, doing it in $\C$ somehow works.
 
 \Definition{2.6.2}{Integrating over a piecewise $C^1$ curve}\label{a99ad34}
 
-If $U\subseteq\C$ is open and $\gamma:[a,b]\to U$ is a piecewise $C^1$
-curve in $U$ and if $f:U\to\C$ is a continuous function on $U$, then
+If $U\subseteq\C$ is open and $\gamma:[a,b]\to U$ is a piecewise $C^1$ curve in
+$U$ and if $f:U\to\C$ is a continuous function on $U$, then
 
 $$
-	\oint_\gamma f(z)\,dz:=\sum_{j=1}^k\oint_{\gamma|_{[a_j,a_{j+1}]}}
-	f(z)\,dz
+  \oint_\gamma f(z)\,dz:=\sum_{j=1}^k\oint_{\gamma|_{[a_j,a_{j+1}]}}
+  f(z)\,dz
 $$
 
 where $a_1,a_2,\ldots,a_k$ are as in \href{baf22ac}{Definition 2.6.1}.
 
 \Lemma{2.6.3}{}\label{b6b6d51}
 
-Let $U\subseteq\C$ be open. Let $\gamma:[a,b]\to U$ be a piecewise
-$C^1$ curve. Let $\phi:[c,d]\to[a,b]$ be a piecewise $C^1$ strictly
-monotone increasing function with $\phi(c)=a$ and $\phi(d)=b$. Let
-$f:U\to\C$ be a continuous function on $U$. Then the function
-$\gamma\circ\phi:[c,d]\to U$ is a piecewise $C^1$ curve and
+Let $U\subseteq\C$ be open. Let $\gamma:[a,b]\to U$ be a piecewise $C^1$ curve.
+Let $\phi:[c,d]\to[a,b]$ be a piecewise $C^1$ strictly monotone increasing
+function with $\phi(c)=a$ and $\phi(d)=b$. Let $f:U\to\C$ be a continuous
+function on $U$. Then the function $\gamma\circ\phi:[c,d]\to U$ is a piecewise
+$C^1$ curve and
 $$\oint_\gamma f(z)\,dz=\oint_{\gamma\circ\phi}f(z)\,dz$$
 
 (Really, $\{\gamma(t)\mid t\in[a,b]\}=\{(\gamma\circ\phi)(s)\mid s
-	\in[c,d]\}$, and there are no added crossovers on the parameterization
+\in[c,d]\}$, and there are no added crossovers on the parameterization
 of $\gamma\circ\phi$ because $\phi$ is strictly monotone increasing.)
 
 \Lemma{2.6.4}{}\label{cd28a8f}
@@ -465,7 +464,7 @@ of $\gamma\circ\phi$ because $\phi$ is strictly monotone increasing.)
 Let $U\subseteq\C$ be open, $f:U\to\C$ a holomorphic function and
 $\gamma:[a,b]\to U$ a piecewise $C^1$ curve. Then
 $$
-	f(\gamma(b))-f(\gamma(a))=\oint_\gamma f'(z)\,dz
+  f(\gamma(b))-f(\gamma(a))=\oint_\gamma f'(z)\,dz
 $$
 
 (This is really just \href{c526c09}{Proposition 2.1.6} restated
@@ -473,23 +472,21 @@ with a piecewise $C^1$ version of $\gamma$)
 
 \Proposition{2.6.5}{}\label{b52bca5}
 
-If $f:\C\setminus\{0\}\to\C$ is a holomorphic function, and if
-$\gamma_r$ describes the circle of radius $r$ around $0$, tranversed
-once around counterclockwise, then, for any two positive numbers
-$r_1<r_2$,
+If $f:\C\setminus\{0\}\to\C$ is a holomorphic function, and if $\gamma_r$
+describes the circle of radius $r$ around $0$, tranversed once around
+counterclockwise, then, for any two positive numbers $r_1<r_2$,
 $$
-	\oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
+  \oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
 $$
 
 \Proposition{2.6.6}{}\label{ecbc559}
 
-Let $0<r<R<\infty$ and define the annulus $\mathcal
-	A:=\{z\in\C:r<|z|<R\}$. Let $f:\mathcal A\to\C$ be a holomorphic
-function. If $r<r_1<r_2<R$ and if for each $j$ the curve
-$\gamma_{r_j}$ describes the circle of radius $r_j$ around 0,
+Let $0<r<R<\infty$ and define the annulus $\mathcal A:=\{z\in\C:r<|z|<R\}$. Let
+$f:\mathcal A\to\C$ be a holomorphic function. If $r<r_1<r_2<R$ and if for each
+$j$ the curve $\gamma_{r_j}$ describes the circle of radius $r_j$ around 0,
 traversed once counterclockwise, then we have
 $$
-	\oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
+  \oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
 $$
 
 (On this annulus (donut), integrating a holomorphic $f$ along any two
@@ -500,165 +497,209 @@ circles centered at zero will yield the same value.)
 Let $U\subseteq\C$ be open. Let $f:U\to\C$ be holomorphic. Then
 $$\oint_\gamma f(z)\,dz=0$$
 
-for any piecewise $C^1$ closed curve $\gamma$ in $U$ that can be
-deformed in $U$ through closed curves to a closed curve lying entirely
-in a disc contained in $U$.
+for any piecewise $C^1$ closed curve $\gamma$ in $U$ that can be deformed in
+$U$ through closed curves to a closed curve lying entirely in a disc contained
+in $U$.
 
 In addition, suppose that $\overline D(z,r)\subseteq U$. Then
 $$
-	\frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta=f(z)
+  \frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta=f(z)
 $$
 
-for any piecewise $C^1$ closed curve $\gamma$ in $U\setminus\{z\}$
-that can be continuously deformed in $U\setminus\{z\}$ to $\partial
-	D(z,r)$ equipped with counterclockwise orientation.
+for any piecewise $C^1$ closed curve $\gamma$ in $U\setminus\{z\}$ that can be
+continuously deformed in $U\setminus\{z\}$ to $\partial D(z,r)$ equipped with
+counterclockwise orientation.
 
 \Theorem{3.1.1}{Analyticity of holomorphic functions}\label{e20a4ed}
 
-Let $U\subseteq\C$ be open and let $f$ be a holomorphic on $U$. Then
-$f\in C^\infty(U)$. Moreover, if $\overline D(P,r)\subseteq U$ and
-$z\in D(P,r)$, then
+Let $U\subseteq\C$ be open and let $f$ be a holomorphic on $U$. Then $f\in
+C^\infty(U)$. Moreover, if $\overline D(P,r)\subseteq U$ and $z\in D(P,r)$,
+then
 $$
-	\left(\frac\partial{\partial z}\right)^kf(z)=\frac{k!}{2\pi i}
-	\oint_{|\zeta-P|=r}\frac{f(\zeta)}{(\zeta-z)^{k+1}}\,d\zeta
+  \left(\frac\partial{\partial z}\right)^kf(z)=\frac{k!}{2\pi i}
+  \oint_{|\zeta-P|=r}\frac{f(\zeta)}{(\zeta-z)^{k+1}}\,d\zeta
 $$
 
 for all $k\in\mathbb{N}_0$.
 
 \Corollary{3.1.2}{Derivative of a holomorphic function is holomorphic}\label{ee189cf}
 
-Let $U\subseteq\C$ be open. If $f:U\to\C$ is holomorphic, then
-$f':U\to\C$ is holomorphic.
+Let $U\subseteq\C$ be open. If $f:U\to\C$ is holomorphic, then $f':U\to\C$ is
+holomorphic.
 
 \Theorem{3.1.3}{}\label{c056da0}
 
-If $\phi$ is a continuous function on $\{\zeta:|\zeta-P|=r\}$, then
-the function $f$ given by
+If $\phi$ is a continuous function on $\{\zeta:|\zeta-P|=r\}$, then the
+function $f$ given by
 $$
-	f(z):=\frac1{2\pi i}\oint_{|\zeta-P|=r}\frac{\phi(\zeta)}{\zeta-z}\,d\zeta
+  f(z):=\frac1{2\pi i}\oint_{|\zeta-P|=r}\frac{\phi(\zeta)}{\zeta-z}\,d\zeta
 $$
 
 is defined and holomorphic on $D(P,r)$.
 
-This theorem induces a very strong way to create a holomorphic
-function. Instead of differentiability, we only need a continuous
-$\phi$ to build a holomorphic $f$.
+This theorem induces a very strong way to create a holomorphic function.
+Instead of differentiability, we only need a continuous $\phi$ to build a
+holomorphic $f$.
 
 \Theorem{3.1.4}{Morera's Theorem}\label{f378992}
 
-Let $U\subseteq\C$ be open. Let $f:U\to\C$ be a continuous function on
-a connected open subset $U$ of $\C$. Suppose that for every closed,
-piecewise $C^1$ curve $\gamma:[0,1]\to U$, with $\gamma(0)=\gamma(1)$,
-we have
+Let $U\subseteq\C$ be open. Let $f:U\to\C$ be a continuous function on a
+connected open subset $U$ of $\C$. Suppose that for every closed, piecewise
+$C^1$ curve $\gamma:[0,1]\to U$, with $\gamma(0)=\gamma(1)$, we have
 $$\oint_\gamma f(\zeta)\,d\zeta=0$$
 
 Then $f$ is holomorphic on $U$.
 
 \Lemma{3.2.1}{}\label{db44655}
 
-The sequence $\{a_k\in\C\}$ converges to a limit if and only if for
-each $\epsilon>0$ there is an $N_0$ such that $j,k\geq N_0$ implies
-that $|a_j-a_k|<\epsilon$.
+The sequence $\{a_k\in\C\}$ converges to a limit if and only if for each
+$\epsilon>0$ there is an $N_0$ such that $j,k\geq N_0$ implies that
+$|a_j-a_k|<\epsilon$.
 
 \Definition{3.2.2}{Complex power series}\label{b9a7c59}
 
-Let $P\in\C$ be fixed. A \textit{complex power series} (centered at
-$P$) is an expression of the form
+Let $P\in\C$ be fixed. A \textit{complex power series} (centered at $P$) is an
+expression of the form
 $$
-	\sum_{k=0}^\infty a_k(z-P)^k
+  \sum_{k=0}^\infty a_k(z-P)^k
 $$
 
 where $a_k$ for $k=\iter0\infty$ are complex constants.
 
-Note that this power series expansion is only a formal expression. It
-may or may not converge.
+Note that this power series expansion is only a formal expression. It may or
+may not converge.
 
-A \textit{necessary} condition for $\sum a_k(z-P)^k$ to converge is
-that $a_k(z-P)^k\to0$.
+A \textit{necessary} condition for $\sum a_k(z-P)^k$ to converge is that
+$a_k(z-P)^k\to0$.
 
 \Lemma{3.2.3}{Abel's Theorem}\label{d5d5bdc}
 
-If $\sum_{k=0}^\infty a_k(z-P)^k$ converges at some $z$, then the
-series converges at each $w\in D(P,r)$, where $r=|z-P|$.
+If $\sum_{k=0}^\infty a_k(z-P)^k$ converges at some $z$, then the series
+converges at each $w\in D(P,r)$, where $r=|z-P|$.
 
 \Definition{3.2.4}{Radius of convergence of power series}\label{da6e337}
 
 Let $\sum_{k=0}^\infty a_k(z-P)^k$ be a power series. Then
 $$
-	r:=\sup\Set{|w-P|}{\sum_{k=0}^\infty a_k(w-P)^k\text{ converges}}
+  r:=\sup\Set{|w-P|}{\sum_{k=0}^\infty a_k(w-P)^k\text{ converges}}
 $$
 
-is called the \textit{radius of convergence} of the power series. We
-will call $D(P,r)$ the disc of convergence.
+is called the \textit{radius of convergence} of the power series. We will call
+$D(P,r)$ the disc of convergence.
 
 \Lemma{3.2.5}{}\label{c7d0e1d}
 
-If $\sum_{k=0}^\infty a_k(z-P)^k$ is a power series with radius of
-convergence $r$, then the series converges for each $w\in D(P,r)$ and
-diverges for each $w$ such that $|w-P|>r$.
+If $\sum_{k=0}^\infty a_k(z-P)^k$ is a power series with radius of convergence
+$r$, then the series converges for each $w\in D(P,r)$ and diverges for each $w$
+such that $|w-P|>r$.
 
-Note that the convergence or divergence question for $|w-P|=r$ is left
-open.
+Note that the convergence or divergence question for $|w-P|=r$ is left open.
 
 \Lemma{3.2.6}{Root test for radius of convergence}\label{a9ba20f}
 
 Using
 $$
-	\ell:\limsup_{k\to+\infty}|a_k|^{1/k},
+  \ell:\limsup_{k\to+\infty}|a_k|^{1/k},
 $$
 
 the radius of convergence $r$ of the power series $\sum_{k=0}^\infty
-	a_k(z-P)^k$ is given by
+a_k(z-P)^k$ is given by
 \begin{equation*}
-	r=\begin{cases}
-		1/\ell  & \text{if } \ell>0 \\
-		+\infty & \text{if } \ell=0 \\
-	\end{cases}
+  r=\begin{cases}
+    1/\ell  & \text{if } \ell>0 \\
+    +\infty & \text{if } \ell=0 \\
+  \end{cases}
 \end{equation*}
 
 \Definition{3.2.7}{Uniform convergence of complex functions}\label{bba67e4}
 
-A series $\sum_{k=0}^\infty f_k(z)$ of functions $f_k(z)$ converges
-uniformly on a set $E$ to the function $g(z)$ if for each $\epsilon>0$
-there is an $N_0$ such that if $N\geq N_0$, then
+A series $\sum_{k=0}^\infty f_k(z)$ of functions $f_k(z)$ converges uniformly
+on a set $E$ to the function $g(z)$ if for each $\epsilon>0$ there is an $N_0$
+such that if $N\geq N_0$, then
 $$
-	\left|g(z)-\sum_{k=0}^N f_k(z)\right|<\epsilon\with\forall z\in E
+  \left|g(z)-\sum_{k=0}^N f_k(z)\right|<\epsilon\with\forall z\in E
 $$
 
 \Definition{3.2.8}{Uniformly Cauchy series}\label{bfe260e}
 
-Let $\sum_{k=0}^\infty f_k(z)$ be a series of functions on a set $E$.
-The series is said to be \textit{uniformly Cauchy} if, for any
-$\epsilon>0$, there is a positive integer $N_0$ such that if $m\geq
-	j\geq N_0$, then
+Let $\sum_{k=0}^\infty f_k(z)$ be a series of functions on a set $E$. The
+series is said to be \textit{uniformly Cauchy} if, for any $\epsilon>0$, there
+is a positive integer $N_0$ such that if $m\geq j\geq N_0$, then
 $$
-	\left|\sum_{k=j}^mf_k(z)\right|<\epsilon\with\forall z\in E
+  \left|\sum_{k=j}^mf_k(z)\right|<\epsilon\with\forall z\in E
 $$
 
 \Proposition{3.2.9}{}\label{ec076c1}
 
-Let $\sum_{k=0}^\infty a_k(z-P)^k$ be a power series with radius of
-convergence $r$. Then, for any number $R$ with $0\leq R<r$, the series
+Let $\sum_{k=0}^\infty a_k(z-P)^k$ be a power series with radius of convergence
+$r$. Then, for any number $R$ with $0\leq R<r$, the series
 $\sum_{k=0}^\infty|a_k(z-P)^k|$ \href{bba67e4}{converges uniformly} on
 $\overline D(P,R)$.
 
-In particular, the series $\sum_{k=0}^{+\infty}a_k(z-P)^k$ converges
-uniformly and absolutely on $\overline D(P,R)$.
+In particular, the series $\sum_{k=0}^{+\infty}a_k(z-P)^k$ converges uniformly
+and absolutely on $\overline D(P,R)$.
 
-\Lemma{3.2.10}{}
+\Lemma{3.2.10}{}\label{ccf2595}
 
 If a power series
 \begin{equation*}
-	\sum_{j=0}^\infty a_j(z-P)^j\Tag{*}
+  \sum_{j=0}^\infty a_j(z-P)^j\Tag{*}
 \end{equation*}
 
-has a radius of convergence $r>0$, then the series defines a
-$C^\infty$ function $f(z)$ on $D(P,r)$. The function $f$ is
-holomorphic on $D(P,r)$. The series obtained by termwise
-differentiation $k$ times of $(*)$,
+has a radius of convergence $r>0$, then the series defines a $C^\infty$
+function $f(z)$ on $D(P,r)$. The function $f$ is holomorphic on $D(P,r)$. The
+series obtained by termwise differentiation $k$ times of $(*)$,
 $$
   \sum_{j=k}^\infty\Big[j(j-1)\ldots(j-k+1)\Big]a_j(z-P)^{j-k}
 $$
 
-converges on $D(P,r)$, and its sum is $[\partial/\partial z]^kf(z)$
-for each $z\in D(P,r)$.
+converges on $D(P,r)$, and its sum is $[\partial/\partial z]^kf(z)$ for each
+$z\in D(P,r)$.
+
+\Proposition{3.2.11}{}\label{ea8c930}
+
+If both series $\sum_{j=0}^\infty a_j(z-P)^j$ and $\sum_{j=0}^\infty
+b_j(z-P)^j$ converge on a disc $D(P,r)$, $r>0$, and if
+$$
+  \sum_{j=0}^\infty a_j(z-P)^j=\sum_{j=0}^\infty b_j(z-P)^j
+$$
+
+on $D(P,r)$, then $a_j=b_j$ for every $j$.
+
+\Theorem{3.3.1}{}\label{b43209d}
+
+Let $U\subseteq\C$ be open and let $f$ be holomorphic on $U$. Let $P\in U$ and
+suppose that $D(P,r)\subseteq U$. Then the complex power series
+$$
+  \sum_{k=0}^\infty\frac{(\partial^kf/\partial z^k)(P)}{k!}(z-P)^k
+$$
+
+has radius of convergence at least $r$. It converges to $f(z)$ on $D(P,r)$.
+
+\Theorem{3.4.1}{The Cauchy estimates}\label{a2d8611}
+
+Let $U\subseteq\C$ be open and $f:U\to\C$ be holomorphic. Let $P\in U$ and
+assume that the closed disc $\overline D(P,r)$, $r>0$, is contained in $U$. Set
+$$
+  M:=\sup_{z\in\overline D(P,r)}|f(z)|.
+$$
+
+Then for $k=1,2,3\ldots$ we have
+$$
+  \left|\frac{\partial^kf}{\partial z^k}(P)\right|\leq\frac{Mk!}{r^k}
+$$
+
+\Lemma{3.4.2}{}
+
+Let $U\subseteq\C$ be open and connected and $f:U\to\C$ be holomorphic. If
+$\partial f/\partial z=0$ on $U$, then $f$ is constant on $U$.
+
+\begin{proof}
+  Since $f$ is holomorphic, $\partial f/\partial\bar z=0$. But we have assumed
+  that $\partial f/\partial z=0$. Thus $\partial f/\partial x=\partial f/\partial
+  y=0$. So $f$ is constant.
+\end{proof}
+
+\Lemma{3.4.3}{Liouville's Theorem}
+
+A bounded entire function is constant.

@@ -3,15 +3,15 @@
 \def\pd{\succ} % positive definite
 \def\psd{\succeq} % positive semidefinite
 \def\NlpStdForm{\begin{array}{l l l l}
-		\displaystyle \min_{x\in\R^n}f(x)
-		 & \text{s.t.} & g_i(x)\leq0 & \forall i\in I \\
-		 &             & h_j(x)=0    & \forall j\in J
-	\end{array}}
+    \displaystyle \min_{x\in\R^n}f(x)
+     & \text{s.t.} & g_i(x)\leq0 & \forall i\in I \\
+     &             & h_j(x)=0    & \forall j\in J
+  \end{array}}
 
 \Definition{5.0.0}{Standard Nonlinear Program}\label{bbe9993}
 
 \begin{equation*}
-	\NlpStdForm\Tag{*}
+  \NlpStdForm\Tag{*}
 \end{equation*}
 Where $f,g_i,h_j:\R^n\to\R$ are continuously differentiable.
 
@@ -19,10 +19,10 @@ We call $(*)$ a nonlinear program (NLP) in standard form.
 
 By convention, we let the feasible set of $(*)$ be denoted by $X$, with
 \begin{equation*}
-	X:=\Set{x\in\R^n}{\begin{array}{l l}
-			g_i(x)\leq0 & \forall i\in I \\
-			h_j(x)=0    & \forall j\in J
-		\end{array}\Tag{**}}
+  X:=\Set{x\in\R^n}{\begin{array}{l l}
+      g_i(x)\leq0 & \forall i\in I \\
+      h_j(x)=0    & \forall j\in J
+    \end{array}\Tag{**}}
 \end{equation*}
 
 By the continuity of the constraint functions, $X$ is closed.
@@ -30,45 +30,45 @@ By the continuity of the constraint functions, $X$ is closed.
 We will use $I:=\{\iter1m\}$ and $J:=\{\iter1p\}$, and define the
 \textbf{active set} at $\bar x\in X$ as
 $$
-	I(\bar x):=\Set{i\in I}{g_i(\bar x)=0}
+  I(\bar x):=\Set{i\in I}{g_i(\bar x)=0}
 $$
 
 \Definition{5.1.1}{Cones}\label{ced12c7}
 
 A non-empty set $K\subset\R^n$ is said to be a cone if
 $$
-	\lambda v\in K\with(\lambda\geq0,\ v\in K)
+  \lambda v\in K\with(\lambda\geq0,\ v\in K)
 $$
 
-i.e. $K$ is a cone if and only if it is closed under multiplication
-with non-negative scalars.
+i.e. $K$ is a cone if and only if it is closed under multiplication with
+non-negative scalars.
 
 \Example{5.1.2}{Examples of cones}\label{c36113c}
 
 \begin{enumerata}
-	\item \textit{(Non-negative Orthant)} For all $n\in\N$, the
-	non-negative orthan $\R^n_+$ is a convex cone, which is also a polyhedron as
-	$$
-		\R^n_+=\Set{x\in\R^n}{(-e_i)^Tx\leq 0,\ \forall i=\iter1n}
-	$$
-	\item \textit{(Cone complimentary constraints)} Let $K\subset \R^n$ be
-	a cone. Then the set
-	$$
-		\Lambda:=\Set{(x,y)\in\R^n\times\R^n}{x,y\in K,\ \inner xy=0}
-	$$
-	is a cone. A prominent example is $K=\R^n$, in which case $\Lambda$
-	is called the complementary constraint set.
-	\item \textit{(Positive semidefinite matrices)} For $n\in\N$, the set
-	of positive semidefinite $n\times n$ matrices is a convex cone in
-	the space of $n\times n$ symmetric matrices.
+  \item \textit{(Non-negative Orthant)} For all $n\in\N$, the
+  non-negative orthan $\R^n_+$ is a convex cone, which is also a polyhedron as
+  $$
+    \R^n_+=\Set{x\in\R^n}{(-e_i)^Tx\leq 0,\ \forall i=\iter1n}
+  $$
+  \item \textit{(Cone complimentary constraints)} Let $K\subset \R^n$ be
+  a cone. Then the set
+  $$
+    \Lambda:=\Set{(x,y)\in\R^n\times\R^n}{x,y\in K,\ \inner xy=0}
+  $$
+  is a cone. A prominent example is $K=\R^n$, in which case $\Lambda$
+  is called the complementary constraint set.
+  \item \textit{(Positive semidefinite matrices)} For $n\in\N$, the set
+  of positive semidefinite $n\times n$ matrices is a convex cone in
+  the space of $n\times n$ symmetric matrices.
 \end{enumerata}
 
 \Definition{5.1.3}{Tangent cone}\label{add7a4b}
 
 Let $S\subset\R^n$ and $\bar x\in S$. Then the set
 $$
-	T_S(\bar x):=\Set{d\in\R^n}
-	{\exists\{x^k\in S\}\to\bar x,\{t_k\}\downarrow0:\frac{x^k-\bar x}{t_k}\to d}
+  T_S(\bar x):=\Set{d\in\R^n}
+  {\exists\{x^k\in S\}\to\bar x,\{t_k\}\downarrow0:\frac{x^k-\bar x}{t_k}\to d}
 $$
 is called the (Bouligand) tangent cone of $S$ at $\bar x$.
 
@@ -78,49 +78,50 @@ Let $S\subset\R^n$ and $x\in S$. Then $T_S(x)$ is a closed cone.
 
 \Theorem{5.1.5}{Basic first-order optimality condition}\label{c8e5836}
 
-Let $\bar x$ be a local minimizer of $f\in C^1$ over $S$. Then the following hold:
+Let $\bar x$ be a local minimizer of $f\in C^1$ over $S$. Then the following
+hold:
 \begin{enumerata}
-	\item $\nabla f(\bar x)^Td\geq0\quad(d\in T_S(\bar x))$
-	\item If $S$ is convex then
-	$$
-		\nabla f(\bar x)^T(x-\bar x)\geq 0\with(x\in S)
-	$$
+  \item $\nabla f(\bar x)^Td\geq0\quad(d\in T_S(\bar x))$
+  \item If $S$ is convex then
+  $$
+    \nabla f(\bar x)^T(x-\bar x)\geq 0\with(x\in S)
+  $$
 \end{enumerata}
 
 \Definition{5.1.6}{Projection on a set}\label{fb41457}
 
-Let $S\subset\R^n$ be non-empty and $x\in\R^n$. Then we define the
-projection of $x$ on $S$ by
+Let $S\subset\R^n$ be non-empty and $x\in\R^n$. Then we define the projection
+of $x$ on $S$ by
 $$
-	P_S(x):=\argmin_{y\in S}\norm{x-y}
+  P_S(x):=\argmin_{y\in S}\norm{x-y}
 $$
 
 \Proposition{5.1.7}{Projection on a closed convex set}\label{ce30ae7}
 
-Let $x\in\R^n$ and $S\subset\R^n$ be a non-empty, closed, and convex
-set. Then the following hold:
+Let $x\in\R^n$ and $S\subset\R^n$ be a non-empty, closed, and convex set. Then
+the following hold:
 \begin{enumerata}
-	\item $P_S(x)$ has exactly one element, i.e. $P$ is a function
-	$\R^n\to S$
-	\item $P_S(x)=x$ if and only if $x\in S$
-	\item $(P_S(x)-x)^T(y-P_S(x))\geq0\with(y\in S)$
+  \item $P_S(x)$ has exactly one element, i.e. $P$ is a function
+  $\R^n\to S$
+  \item $P_S(x)=x$ if and only if $x\in S$
+  \item $(P_S(x)-x)^T(y-P_S(x))\geq0\with(y\in S)$
 \end{enumerata}
 
 \begin{proof}
-	(a) follows immediately from \href{f546fc9}{Theorem 2.2.7(d)} since
-	the function $y\mapsto\frac12\norm{x-y}^2$ is strongly convex.
+  (a) follows immediately from \href{f546fc9}{Theorem 2.2.7(d)} since
+  the function $y\mapsto\frac12\norm{x-y}^2$ is strongly convex.
 
-	(b) is obvious.
+  (b) is obvious.
 
-	(c) follows from \href{c8e5836}{Theorem 5.1.5(b)} applied to
-	$f:y\mapsto\frac12\norm{x-y}^2$.
+  (c) follows from \href{c8e5836}{Theorem 5.1.5(b)} applied to
+  $f:y\mapsto\frac12\norm{x-y}^2$.
 \end{proof}
 
 \Lemma{5.1.8}{}\label{d2dff14}
 
 Let $B\in\R^{l\times n}$. Then
 $$
-	K:=\Set{B^Tx}{x\geq0}
+  K:=\Set{B^Tx}{x\geq0}
 $$
 
 is a (non-empty) closed, convex cone.
@@ -129,73 +130,69 @@ is a (non-empty) closed, convex cone.
 
 Let $B\in\R^{l\times n}$ and $h\in\R^n$. Then the system
 $$
-	B^Tx=h\with(x\in\R^l,\ x\geq0)
+  B^Tx=h\with(x\in\R^l,\ x\geq0)
 $$
 
 has a solution if and only if $h^Td\geq0$ for all $d\in\R^n$ such that
 $Bd\geq0$.
 
 \begin{proof}
-	Proving that (1) implies (2):
+  Proving that (1) implies (2):
 
-	Let $x\geq0$ such that $B^Tx=h$. Then for any $d$ such that
-	$Bd\geq0$, we have
-	$$
-		h^Td=(B^Tx)^Td=x^TBd
-	$$
+  Let $x\geq0$ such that $B^Tx=h$. Then for any $d$ such that $Bd\geq0$, we have
+  $$
+    h^Td=(B^Tx)^Td=x^TBd
+  $$
 
-	But $x^TBd\geq0$ because $x\geq0$ and $Bd\geq0$.
+  But $x^TBd\geq0$ because $x\geq0$ and $Bd\geq0$.
 
-	Proving that (2) implies (1) by contrapositive.
+  Proving that (2) implies (1) by contrapositive.
 
-	Assume that (1) is false. Then
-	$$
-		h\notin\{B^Tx \mid x\geq0\}=:K
-	$$
+  Assume that (1) is false. Then
+  $$
+    h\notin\{B^Tx \mid x\geq0\}=:K
+  $$
 
-	By \href{d2dff14}{Lemma 5.1.8}, $K$ is a closed convex cone.
+  By \href{d2dff14}{Lemma 5.1.8}, $K$ is a closed convex cone.
 
-	Set $\bar s:=P_K(h)$ and $\bar d:=\bar s-h$. Note that $\bar
-		s\in K$, and $h\notin K$, and hence $\bar d\neq0$.
+  Set $\bar s:=P_K(h)$ and $\bar d:=\bar s-h$. Note that $\bar s\in K$, and
+  $h\notin K$, and hence $\bar d\neq0$.
 
-	By \href{ce30ae7}{Proposition 5.1.7(c)},
-	\begin{equation*}
-		\bar d^T(s-\bar s)\geq0\quad\forall(s\in K)\Tag{*}
-	\end{equation*}
+  By \href{ce30ae7}{Proposition 5.1.7(c)},
+  \begin{equation*}
+    \bar d^T(s-\bar s)\geq0\quad\forall(s\in K)\Tag{*}
+  \end{equation*}
 
-	Substituting $s:=0$ and $s:=2\bar s$, we obtain two simultaneous
-	inequalities
-	\begin{align*}
-		\bar d^T\bar s\leq0\Quad\text{and}\Quad\bar d^T\bar s\geq0
-	\end{align*}
+  Substituting $s:=0$ and $s:=2\bar s$, we obtain two simultaneous inequalities
+  \begin{align*}
+    \bar d^T\bar s\leq0\Quad\text{and}\Quad\bar d^T\bar s\geq0
+  \end{align*}
 
-	And hence $\bar d^T\bar s=0$. Using this with $(*)$ gives
-	$$
-		\bar d^Ts\geq0
-	$$
+  And hence $\bar d^T\bar s=0$. Using this with $(*)$ gives
+  $$
+    \bar d^Ts\geq0
+  $$
 
-	Then by definition of cone $K$, for all $x\geq0$,
-	\begin{align*}
-		\bar d^T B^Tx     & \geq0 \\
-		\then(B\bar d)^Tx & \geq0
-	\end{align*}
+  Then by definition of cone $K$, for all $x\geq0$,
+  \begin{align*}
+    \bar d^T B^Tx     & \geq0 \\
+    \then(B\bar d)^Tx & \geq0
+  \end{align*}
 
-	Inserting $x:=e_i$ (where $e_i$ is the $i^\text{th}$ component
-	vector) for $i=\iter1n$ implies $(B\bar d)^T\geq0$.
+  Inserting $x:=e_i$ (where $e_i$ is the $i^\text{th}$ component vector) for
+  $i=\iter1n$ implies $(B\bar d)^T\geq0$.
 
-	On the other hand (recall $\bar d^T\bar s=0$ from above)
-	\begin{align*}
-		h^T\bar d & =(\bar s-\bar d)^T\bar d        \\
-		          & =\bar s^T\bar d-\norm{\bar d}^2 \\
-		          & =-\norm{\bar d}^2               \\
-		          & \leq 0
-	\end{align*}
+  On the other hand (recall $\bar d^T\bar s=0$ from above)
+  \begin{align*}
+    h^T\bar d & =(\bar s-\bar d)^T\bar d        \\
+              & =\bar s^T\bar d-\norm{\bar d}^2 \\
+              & =-\norm{\bar d}^2               \\
+              & \leq 0
+  \end{align*}
 
-	But since $\bar d\neq0$, we have the strict inequality $h^T\bar
-		d<0$.
+  But since $\bar d\neq0$, we have the strict inequality $h^T\bar d<0$.
 
-	Therefore, $B\bar d\geq0$, but $h^T\bar d<0$, i.e. (2) does not
-	hold.
+  Therefore, $B\bar d\geq0$, but $h^T\bar d<0$, i.e. (2) does not hold.
 \end{proof}
 
 \Definition{5.1.10}{Karush-Kuhn-Tucker conditions}\label{b38093d}
@@ -203,56 +200,56 @@ $Bd\geq0$.
 Consider the (standard) NLP:
 
 \begin{equation*}
-	\NlpStdForm
-	\Tag{1}
+  \NlpStdForm
+  \Tag{1}
 \end{equation*}
 where we let $X$ be the feasible set of (1).
 
 \begin{enumerate}
-	\item The function $L:\R^n\times\R^m\times\R^p\to\R$ defined by
-	      $$
-		      L(x,\lambda,\mu)=f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x)
-	      $$
-	      is called the Lagrangian (function) of (1).
-	\item The set of conditions
-	      $$
-		      \begin{array}{l l}
-			      \nabla_xL(x,\lambda,\mu)                 & =0, \\[0.2em]
-			      h(x)                                     & =0, \\[0.2em]
-			      \lambda\geq0,\ g(x)\leq0,\ \lambda^Tg(x) & =0
-		      \end{array}
-	      $$
-	      are called the Karush-Kuhn-Tucker conditions for (1), where
-	      $$
-		      \nabla_xL(x,\lambda,\mu)=\nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x)
-	      $$
-	\item A triple $(\bar x,\bar\lambda,\bar\mu)$ that satisfies the
-	      KKT conditions is called a KKT point.
-	\item Given $\bar x$, a feasible point for (1), we define
-	      $$
-		      M(\bar x):=\{(\lambda,\mu)\mid(\bar x,\lambda,\mu)\text{ is a KKT point of (1)}\}
-	      $$
-	      as the set of all KKT multipliers (possibly empty) at $\bar x$.
+  \item The function $L:\R^n\times\R^m\times\R^p\to\R$ defined by
+        $$
+          L(x,\lambda,\mu)=f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x)
+        $$
+        is called the Lagrangian (function) of (1).
+  \item The set of conditions
+        $$
+          \begin{array}{l l}
+            \nabla_xL(x,\lambda,\mu)                 & =0, \\[0.2em]
+            h(x)                                     & =0, \\[0.2em]
+            \lambda\geq0,\ g(x)\leq0,\ \lambda^Tg(x) & =0
+          \end{array}
+        $$
+        are called the Karush-Kuhn-Tucker conditions for (1), where
+        $$
+          \nabla_xL(x,\lambda,\mu)=\nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x)
+        $$
+  \item A triple $(\bar x,\bar\lambda,\bar\mu)$ that satisfies the KKT conditions is
+        called a KKT point.
+  \item Given $\bar x$, a feasible point for (1), we define
+        $$
+          M(\bar x):=\{(\lambda,\mu)\mid(\bar x,\lambda,\mu)\text{ is a KKT point of (1)}\}
+        $$
+        as the set of all KKT multipliers (possibly empty) at $\bar x$.
 \end{enumerate}
 
 \Definition{5.1.11}{Linearized cone}\label{ca4f471}
 
-Let $X$ be the feasible set of (1). The linearized cone (of $X$) at
-$\bar x\in X$ is defined by
+Let $X$ be the feasible set of (1). The linearized cone (of $X$) at $\bar x\in
+X$ is defined by
 $$
-	L_X(\bar x):=\left\{ d\in\R^n\ \middle\vert
-	\begin{array}{l l}
-		\nabla g_i(\bar x)^Td\leq0 & \forall i=I(\bar x) \\
-		\nabla h_j(\bar x)^Td=0    & \forall j=\iter1p
-	\end{array}
-	\right\}
+  L_X(\bar x):=\left\{ d\in\R^n\ \middle\vert
+  \begin{array}{l l}
+    \nabla g_i(\bar x)^Td\leq0 & \forall i=I(\bar x) \\
+    \nabla h_j(\bar x)^Td=0    & \forall j=\iter1p
+  \end{array}
+  \right\}
 $$
 
 \Definition{5.1.12}{Abadie constraint qualification (ACQ)}\label{adc266e}
 
 We say that the ACQ holds at $\bar x\in X$ if
 $$
-	T_X(\bar x)=L_X(\bar x)
+  T_X(\bar x)=L_X(\bar x)
 $$
 
 That is, the \href{add7a4b}{tangent cone} is exactly the
@@ -260,115 +257,112 @@ That is, the \href{add7a4b}{tangent cone} is exactly the
 
 \Theorem{5.1.13}{\href{b38093d}{KKT} conditions under \href{adc266e}{ACQ}}\label{b1c5437}
 
-Let $\bar x\in X$ be a local minimizer of (1) such that
-\href{adc266e}{ACQ} holds at $\bar x$. Then there exists
-$(\bar\lambda,\bar\mu)\in\R^m\times\R^p$ such that $(\bar
-	x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of (1).
+Let $\bar x\in X$ be a local minimizer of (1) such that \href{adc266e}{ACQ}
+holds at $\bar x$. Then there exists $(\bar\lambda,\bar\mu)\in\R^m\times\R^p$
+such that $(\bar x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of (1).
 
 \begin{proof}
-	\def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
-	By Theorem 5.1.5,
-	\begin{equation*}
+  \def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
+  By Theorem 5.1.5,
+  \begin{equation*}
     \nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\Tag{*}
-	\end{equation*}
+  \end{equation*}
 
-	Set
-	$$
-		B:=\begin{pmatrix}
-			-\nabla g_i(\bx)^T\quad(i=\iter1m) \\
-			-\nabla h_j(\bx)^T\quad(j=\iter1p) \\
-			\nabla h_j(\bx)^T\quad(j=\iter1p)
-		\end{pmatrix}\in\R^{(m+2p)\times{n}}
-	$$
-	%TODO: check the sign of the 2nd and 3rd row
+  Set
+  $$
+    B:=\begin{pmatrix}
+      -\nabla g_i(\bx)^T\quad(i=\iter1m) \\
+      -\nabla h_j(\bx)^T\quad(j=\iter1p) \\
+      \nabla h_j(\bx)^T\quad(j=\iter1p)
+    \end{pmatrix}\in\R^{(m+2p)\times{n}}
+  $$
+  %TODO: check the sign of the 2nd and 3rd row
 
-	Then $d\in L_X(\bx)\iff Bd\geq0$.
+  Then $d\in L_X(\bx)\iff Bd\geq0$.
 
-	By ACQ, we have $d\in T_X(\bx)\iff Bd\geq0$
+  By ACQ, we have $d\in T_X(\bx)\iff Bd\geq0$
 
-	Combined with $(*)$, we have
-	$$
-		\nabla f(\bx)^Td\geq0\quad\forall(d:Bd\geq0)
-	$$
+  Combined with $(*)$, we have
+  $$
+    \nabla f(\bx)^Td\geq0\quad\forall(d:Bd\geq0)
+  $$
 
-	(Think $h=\nabla f(\bx)$ and apply the Farkas Lemma.)
+  (Think $h=\nabla f(\bx)$ and apply the Farkas Lemma.)
 
-	By the Farkas Lemma,
-	$$
-		\exists y=\begin{pmatrix}y^1\in\R^m\\y^2\in\R^p\\y^3\in\R^p\end{pmatrix}
-	$$
+  By the Farkas Lemma,
+  $$
+    \exists y=\begin{pmatrix}y^1\in\R^m\\y^2\in\R^p\\y^3\in\R^p\end{pmatrix}
+  $$
 
-	such that $y\geq0$, and $B^Ty=\nabla f(\bx)$
+  such that $y\geq0$, and $B^Ty=\nabla f(\bx)$
 
-	Define $\bl\in\R^n,\bm\in\R^p$ by
-	$$
-		\bl_i=\begin{cases}
-			y^1_i & \text{if $i=\iter1m$} \\
-			0     & \text{otherwise}
-		\end{cases}
-	$$
-	and
-	$$
-		\bm_i=\begin{cases}
-			y^2_j - y^3_j & \text{if $j=\iter{m+1}{m+2p}$} \\
-			0             & \text{otherwise}
-		\end{cases}
-	$$
+  Define $\bl\in\R^n,\bm\in\R^p$ by
+  $$
+    \bl_i=\begin{cases}
+      y^1_i & \text{if $i=\iter1m$} \\
+      0     & \text{otherwise}
+    \end{cases}
+  $$
+  and
+  $$
+    \bm_i=\begin{cases}
+      y^2_j - y^3_j & \text{if $j=\iter{m+1}{m+2p}$} \\
+      0             & \text{otherwise}
+    \end{cases}
+  $$
 
-	Then $(\bx,\bl,\bm)$ is a KKT point.
+  Then $(\bx,\bl,\bm)$ is a KKT point.
 
-	MORE NOTES
+  MORE NOTES
 
-	\begin{align*}
-		0
-		 & = \nabla f(\bx)
-		+\sum_{i=0}^my^1_i\nabla g_i(\bx)
-		+\sum_{j=m+1}^{m+2p}(y^2_j-y^3_j)\nabla h_j(\bx) \\
-		 & = \nabla f(\bx)
-		+\sum_{i=0}^m \bl_i\nabla g_i(\bx)
-		+\sum_{j=m+1}^{m+2p}\bm_j\nabla h_j(\bx)
-	\end{align*}
+  \begin{align*}
+    0
+     & = \nabla f(\bx)
+    +\sum_{i=0}^my^1_i\nabla g_i(\bx)
+    +\sum_{j=m+1}^{m+2p}(y^2_j-y^3_j)\nabla h_j(\bx) \\
+     & = \nabla f(\bx)
+    +\sum_{i=0}^m \bl_i\nabla g_i(\bx)
+    +\sum_{j=m+1}^{m+2p}\bm_j\nabla h_j(\bx)
+  \end{align*}
 
-	and then there is a line with a tick/check next to it:
-	$$
-		\bl^Tg(\bx)=\sum_{i=0}^m\bl_ig_i(\bx)=0
-	$$
+  and then there is a line with a tick/check next to it:
+  $$
+    \bl^Tg(\bx)=\sum_{i=0}^m\bl_ig_i(\bx)=0
+  $$
 \end{proof}
 
 \Definition{5.1.14}{Constraint qualifications}\label{e8fa554}
 
-A condition on $X$ (i.e. on $g$ and $h$) that ensures that the KKT
-conditions hold at a local minimizer is called a \textbf{constraint
-	qualification}.
-
+A condition on $X$ (i.e. on $g$ and $h$) that ensures that the KKT conditions
+hold at a local minimizer is called a \textbf{constraint qualification}.
 
 \Definition{5.1.15}{LICQ and MFCQ}\label{fed784a}
 
 Let $\bar x$ be feasible for (1). We say that
 \begin{enumerata}
-	\item \textbf{(LICQ)} the linear independence constraint
-	qualification holds at $\bar x$ if the gradients
-	\begin{align*}
-		\nabla g_i(\bar x) & \quad(i\in I(\bar x)), \\
-		\nabla h_j(\bar x) & \quad(j\in J)
-	\end{align*}
-	are linearly indepdendent.
-	\item \textbf{(MFCQ)} the Mangasarian-Fromovitz constraint
-	qualification holds at $\bar x$ if the gradients
-	$$
-		\nabla h_j(\bar x)\quad(j\in J)
-	$$
-	are linearly indepdendent, and $\exists d\in\R^n$ such that
-	\begin{align*}
-		\nabla g_i(\bar x)^Td & <0\quad(i\in I(\bar x)) \\
-		\nabla h_j(\bar x)^Td & =0\quad(j\in J)
-	\end{align*}
+  \item \textbf{(LICQ)} the linear independence constraint
+  qualification holds at $\bar x$ if the gradients
+  \begin{align*}
+    \nabla g_i(\bar x) & \quad(i\in I(\bar x)), \\
+    \nabla h_j(\bar x) & \quad(j\in J)
+  \end{align*}
+  are linearly indepdendent.
+  \item \textbf{(MFCQ)} the Mangasarian-Fromovitz constraint
+  qualification holds at $\bar x$ if the gradients
+  $$
+    \nabla h_j(\bar x)\quad(j\in J)
+  $$
+  are linearly indepdendent, and $\exists d\in\R^n$ such that
+  \begin{align*}
+    \nabla g_i(\bar x)^Td & <0\quad(i\in I(\bar x)) \\
+    \nabla h_j(\bar x)^Td & =0\quad(j\in J)
+  \end{align*}
 \end{enumerata}
 
 \Proposition{5.1.16}{LICQ implies MFCQ}\label{a7ef3f5}
 
-Let $\bar x$ be feasible for (1) such that \href{fed784a}{LICQ} holds
-at $\bar x$. Then \href{fed784a}{MFCQ} holds.
+Let $\bar x$ be feasible for (1) such that \href{fed784a}{LICQ} holds at $\bar
+x$. Then \href{fed784a}{MFCQ} holds.
 
 % \Lemma{5.1.17}{}\label{a9bea04}
 
@@ -563,26 +557,26 @@ at $\bar x$. Then \href{fed784a}{MFCQ} holds.
 
 Consider the standard NLP:
 \begin{equation*}
-	\NlpStdForm\Tag{1}
+  \NlpStdForm\Tag{1}
 \end{equation*}
 But now assume that $f,g_i,h_j:\R^n\to\R$ with no smoothness.
 
 The Lagrangian of (1) is
 \begin{align*}
-	L(x,\lambda,\mu)
-	 & =f(x)+\sum_{i\in I}\lambda_ig_i(x) + \sum_{j\in J}\mu_jh_j(x) \\
-	 & =f(x)+\lambda^Tg(x)+\mu^Th(x)
+  L(x,\lambda,\mu)
+   & =f(x)+\sum_{i\in I}\lambda_ig_i(x) + \sum_{j\in J}\mu_jh_j(x) \\
+   & =f(x)+\lambda^Tg(x)+\mu^Th(x)
 \end{align*}
 
 \textbf{The Dual Problem}
 
 Observe that if $x$ is a feasible point,
 \begin{align*}
-	\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}=
-	\begin{cases}
-		f(x)    & \text{if }x\in X,   \\
-		+\infty & \text{if }x\notin X
-	\end{cases}
+  \sup_{\lambda\in\R^m_+,\ \mu\in\R^p}=
+  \begin{cases}
+    f(x)    & \text{if }x\in X,   \\
+    +\infty & \text{if }x\notin X
+  \end{cases}
 \end{align*}
 
 % Infinity because we can blow up both Lambda and Mu terms to
@@ -593,7 +587,7 @@ Observe that if $x$ is a feasible point,
 
 Therefore the primal problem (1) is equivalent to
 $$
-	\min_{x\in\R^n}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)
+  \min_{x\in\R^n}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)
 $$
 
 \textbf{Q.} When can we switch min(inf) and sup?
@@ -602,21 +596,20 @@ $$
 
 The Lagrangian dual of (1) is given by
 $$
-	\begin{array}{l l l l}
-		\max_{}d(\lambda,\mu) & \text{s.t.} & \lambda\geq0
-	\end{array}
+  \begin{array}{l l l l}
+    \max_{}d(\lambda,\mu) & \text{s.t.} & \lambda\geq0
+  \end{array}
 $$
 
-where the dual objective is given by
-$d:\R^m\times\R^p\to\R\cup\{+\infty\}$ and
+where the dual objective is given by $d:\R^m\times\R^p\to\R\cup\{+\infty\}$ and
 $$
-	d(\lambda,\mu):=\inf_{x\in\R^n}L(x,\lambda,\mu)
+  d(\lambda,\mu):=\inf_{x\in\R^n}L(x,\lambda,\mu)
 $$
 
 The function $p:\R^n\to\R\cup\{+\infty\}$ given by
 $$
-	p(x):=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}
-	L(x,\lambda,\mu)
+  p(x):=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}
+  L(x,\lambda,\mu)
 $$
 
 is called the \textbf{primal objective}.
@@ -625,19 +618,19 @@ is called the \textbf{primal objective}.
 
 Consider the standard linear program (LP):
 $$
-	\begin{array}{l l l}
-		\displaystyle \min_{x\in\R^n}c^Tx
-		 & \text{s.t.} & Ax=b   \\
-		 &             & x\geq0
-	\end{array}
+  \begin{array}{l l l}
+    \displaystyle \min_{x\in\R^n}c^Tx
+     & \text{s.t.} & Ax=b   \\
+     &             & x\geq0
+  \end{array}
 $$
 with $A\in\R^{m\times n}$, $b\in\R^m$, $c\in\R^n$.
 
 The Lagrangian reads
 \begin{align*}
-	L(x,\lambda,\mu)
-	 & =c^Tx-\lambda^Tx+\mu^T(b-Ax)         \\
-	 & =(c-\lambda-A^T\mu)^Tx + b^Tu\Tag{*}
+  L(x,\lambda,\mu)
+   & =c^Tx-\lambda^Tx+\mu^T(b-Ax)         \\
+   & =(c-\lambda-A^T\mu)^Tx + b^Tu\Tag{*}
 \end{align*}
 
 % so g_i corresponds to -x<=0
@@ -645,79 +638,77 @@ The Lagrangian reads
 
 So then
 \begin{align*}
-	\nabla_xL(x,\lambda,\mu)
-	 & =c-\lambda-A^T\mu
+  \nabla_xL(x,\lambda,\mu)
+   & =c-\lambda-A^T\mu
 \end{align*}
 
-The function that takes $x\mapsto L(x,\lambda,\mu)$ is affine (from
-$(*)$), and in particular it is convex. And hence it takes its minimum
-if and only if $\nabla_xL(x,\lambda,\mu)=0$, in which case,
+The function that takes $x\mapsto L(x,\lambda,\mu)$ is affine (from $(*)$), and
+in particular it is convex. And hence it takes its minimum if and only if
+$\nabla_xL(x,\lambda,\mu)=0$, in which case,
 $$
-	\inf_{x\in\R^n}L(x,\lambda,\mu)=b^T\mu
+  \inf_{x\in\R^n}L(x,\lambda,\mu)=b^T\mu
 $$
 
-otherwise if $\nabla_xL(x,\lambda,\mu)\neq0$, the infimum must be
-$-\infty$.
+otherwise if $\nabla_xL(x,\lambda,\mu)\neq0$, the infimum must be $-\infty$.
 
 So then
 $$
-	d(\lambda,\mu)=\begin{cases}
-		b^T\mu  & \text{if }c=A^Tu+\lambda, \\
-		-\infty & \text{otherwise}
-	\end{cases}
+  d(\lambda,\mu)=\begin{cases}
+    b^T\mu  & \text{if }c=A^Tu+\lambda, \\
+    -\infty & \text{otherwise}
+  \end{cases}
 $$
 
 Therefore, the dual problem reads
 $$\begin{array}{l l l}\displaystyle
-		\max_{\lambda,\,\mu}d(\lambda,\mu) & \text{s.t.} & \lambda\geq0
-	\end{array}$$
+    \max_{\lambda,\,\mu}d(\lambda,\mu) & \text{s.t.} & \lambda\geq0
+  \end{array}$$
 
 Which is the same as
 $$\begin{array}{l l l}\displaystyle
-		\max_{\lambda,\,\mu}b^T\mu & \text{s.t.} & \lambda\geq0,A^T\mu+\lambda=c
-	\end{array}$$
+    \max_{\lambda,\,\mu}b^T\mu & \text{s.t.} & \lambda\geq0,A^T\mu+\lambda=c
+  \end{array}$$
 
 and again,
 $$\begin{array}{l l l}\displaystyle
-		\max_\mu b^T\mu & \text{s.t.} & A^T\mu\leq c
-	\end{array}$$
+    \max_\mu b^T\mu & \text{s.t.} & A^T\mu\leq c
+  \end{array}$$
 
 % WEAK AND STRONG DUALITY
 
 \Theorem{6.2.1}{Weak duality}\label{ad0b792}
 
-Let $\hat x$ be feasible for (P) and $(\hat\lambda,\hat\mu)$ be
-feasible for (D). Then
+Let $\hat x$ be feasible for (P) and $(\hat\lambda,\hat\mu)$ be feasible for
+(D). Then
 $$
-	p(\hat x)\geq d(\hat\lambda,\hat\mu)
+  p(\hat x)\geq d(\hat\lambda,\hat\mu)
 $$
 
 \begin{proof}
-	\def\hx{\hat x}
-	\def\hl{\hat\lambda}
-	\def\hm{\hat\mu}
-	We have
-	$$
-		p(\hx) = f(\hx)\with(\hx\in X)
-	$$
+  \def\hx{\hat x}
+  \def\hl{\hat\lambda}
+  \def\hm{\hat\mu}
+  We have
+  $$
+    p(\hx) = f(\hx)\with(\hx\in X)
+  $$
 
-	and hence
-	\begin{align*}
-		p(\hx) & \geq f(\hx) + \hl^Tg(\hx) + \hm^Th(\hx) \\
-		       & =L(\hx,\hl,\hm)                         \\
-		       & \geq\inf_{x\in\R^n}L(x,\hl,\hm)         \\
-		       & = d(\hl,\hm)
-	\end{align*}
+  and hence
+  \begin{align*}
+    p(\hx) & \geq f(\hx) + \hl^Tg(\hx) + \hm^Th(\hx) \\
+           & =L(\hx,\hl,\hm)                         \\
+           & \geq\inf_{x\in\R^n}L(x,\hl,\hm)         \\
+           & = d(\hl,\hm)
+  \end{align*}
 
-	\paragraph{Remark} If $p(\hx)=d(\hl,\hm)$, then $\hx$ solves (P),
-	and $(\hl,\hm)$ solves (D).
+  \paragraph{Remark} If $p(\hx)=d(\hl,\hm)$, then $\hx$ solves (P), and $(\hl,\hm)$ solves (D).
 \end{proof}
 
 From weak duality, if we define
 \begin{align*}
-	\bar p:=\inf_{x\in\R^n}p(x)\geq
-	\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}d(\lambda,\mu)
-	=:\bar d
+  \bar p:=\inf_{x\in\R^n}p(x)\geq
+  \sup_{\lambda\in\R^m_+,\ \mu\in\R^p}d(\lambda,\mu)
+  =:\bar d
 \end{align*}
 
 Then $\bar p-\bar d\geq0$
@@ -728,11 +719,11 @@ Then $\bar p-\bar d\geq0$
 
 Consider the following objective function:
 \begin{align*}
-	\min f(x):=\begin{cases}
-		           x^2-2x & x\geq0           \\
-		           x      & \text{otherwise}
-	           \end{cases}
-	\quad \text{s.t.}\quad g(x):=-x\leq0
+  \min f(x):=\begin{cases}
+               x^2-2x & x\geq0           \\
+               x      & \text{otherwise}
+             \end{cases}
+  \quad \text{s.t.}\quad g(x):=-x\leq0
 \end{align*}
 
 % Note that the global minimizer is at 1.
@@ -740,97 +731,96 @@ Consider the following objective function:
 
 The Lagrangian reads
 $$
-	L(x,\lambda)=\begin{cases}
-		x^2-(2+\lambda)x & \text{if } x\geq0 \\
-		(1-\lambda)x     & \text{otherwise}
-	\end{cases}
+  L(x,\lambda)=\begin{cases}
+    x^2-(2+\lambda)x & \text{if } x\geq0 \\
+    (1-\lambda)x     & \text{otherwise}
+  \end{cases}
 $$
 % there is no mu because there is no equality constraints
 
 A short computation shows that
 $$
-	d(\lambda)=\begin{cases}
-		-\frac{(2+\lambda)^2}{4} & \text{if }\lambda\geq1 \\
-		-\infty                  & \text{otherwise}
-	\end{cases}
+  d(\lambda)=\begin{cases}
+    -\frac{(2+\lambda)^2}{4} & \text{if }\lambda\geq1 \\
+    -\infty                  & \text{otherwise}
+  \end{cases}
 $$
 
 Therefore,
 \begin{align*}
-	\bar d=d(1)=-\frac94<1=\bar p
+  \bar d=d(1)=-\frac94<1=\bar p
 \end{align*}
 
 Hence the duality gap
 $$
-	\bar p-\bar d=\frac54>0
+  \bar p-\bar d=\frac54>0
 $$
 
 \Definition{6.3.1}{Saddle point}\label{e1525d8}
 
-The triple $(\bar x,\bar\lambda,\bar\mu)\in\R^n\times\R^m_+\times\R^p$
-is called a saddle point of the Lagrangian $L$ of (P) if
+The triple $(\bar x,\bar\lambda,\bar\mu)\in\R^n\times\R^m_+\times\R^p$ is
+called a saddle point of the Lagrangian $L$ of (P) if
 $$
-	L(\bar x,\lambda,\mu)\leq
-	L(\bar x,\bar\lambda,\bar\mu)\leq
-	L(x,\bar\lambda,\bar\mu)
+  L(\bar x,\lambda,\mu)\leq
+  L(\bar x,\bar\lambda,\bar\mu)\leq
+  L(x,\bar\lambda,\bar\mu)
 $$
 
 \Theorem{6.3.2}{}\label{dc4af95}
 
 The following are equivalent:
 \begin{enumerati}
-	\item $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P)
-	\item $\bar x$ solves (P); $(\bar\lambda,\bar\mu)$ solves (D)
+  \item $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P)
+  \item $\bar x$ solves (P); $(\bar\lambda,\bar\mu)$ solves (D)
 \end{enumerati}
 
 \begin{proof}
-	\paragraph{(i) $\implies$ (ii):}
+  \paragraph{(i) $\implies$ (ii):}
 
-	If $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P), then
-	\begin{align*}
-		L(\bar x,\bar\lambda,\bar\mu)
-		 & \stackrel{\text{S.P.}}{\leq}\inf_{x}L(x,\bar\lambda,\bar\mu)      \\
-		 & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}\inf_{x}L(x,\lambda,\mu)  \\
-		 & \leq\inf_{x}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)  \\
-		 & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu)     \\
-		 & \stackrel{\text{S.P.}}{\leq} L(\bar x,\bar\lambda,\bar\mu)\Tag{*}
-	\end{align*}
+  If $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P), then
+  \begin{align*}
+    L(\bar x,\bar\lambda,\bar\mu)
+     & \stackrel{\text{S.P.}}{\leq}\inf_{x}L(x,\bar\lambda,\bar\mu)      \\
+     & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}\inf_{x}L(x,\lambda,\mu)  \\
+     & \leq\inf_{x}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)  \\
+     & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu)     \\
+     & \stackrel{\text{S.P.}}{\leq} L(\bar x,\bar\lambda,\bar\mu)\Tag{*}
+  \end{align*}
 
-	% TODO: look for a problem in the notes that flip inf and sup and have
-	% a resulting inequality. This will convince you of the argument
-	% above.
+  % TODO: look for a problem in the notes that flip inf and sup and have
+  % a resulting inequality. This will convince you of the argument
+  % above.
 
-	Then,
-	\begin{align*}
-		d(\bar\lambda,\bar\mu)
-		 & =\inf_{x} (x,\bar\lambda,\bar\mu)                                        \\
-		 & \stackrel{(*)}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
-		 & = p(\bar x) = \bar p<+\infty
-	\end{align*}
+  Then,
+  \begin{align*}
+    d(\bar\lambda,\bar\mu)
+     & =\inf_{x} (x,\bar\lambda,\bar\mu)                                        \\
+     & \stackrel{(*)}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+     & = p(\bar x) = \bar p<+\infty
+  \end{align*}
 
-	Hence if $x\in X$, and by weak duality, $\bar x$ solves (P), and
-	$(\bar\lambda,\bar\mu)$ solves (D).
+  Hence if $x\in X$, and by weak duality, $\bar x$ solves (P), and
+  $(\bar\lambda,\bar\mu)$ solves (D).
 
-	\paragraph{(ii) $\implies$ (i):}
+  \paragraph{(ii) $\implies$ (i):}
 
-	Observe that
-	\begin{align*}
-		L(\bar x,\bar\lambda,\bar\mu)
-		 & \stackrel{\bar x\in X}{\leq} f(\bar x)                                                 \\
-		 & \stackrel{\bar x\in X}= p(\bar x)                                                      \\
-		 & \stackrel{\text{defn. of }p}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
-		 & =d(\bar\lambda,\bar\mu)                                                                \\
-		 & =\inf_{x} (x,\bar\lambda,\bar\mu)                                                      \\
-		 & \leq L(\bar x,\bar\lambda,\bar\mu)                                                     \\
-	\end{align*}
+  Observe that
+  \begin{align*}
+    L(\bar x,\bar\lambda,\bar\mu)
+     & \stackrel{\bar x\in X}{\leq} f(\bar x)                                                 \\
+     & \stackrel{\bar x\in X}= p(\bar x)                                                      \\
+     & \stackrel{\text{defn. of }p}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+     & =d(\bar\lambda,\bar\mu)                                                                \\
+     & =\inf_{x} (x,\bar\lambda,\bar\mu)                                                      \\
+     & \leq L(\bar x,\bar\lambda,\bar\mu)                                                     \\
+  \end{align*}
 
-	But that's just the original LHS value, and hence all lines are
-	equal. Hence
-	\begin{align*}
-		L(\bar x,\bar\lambda,\bar\mu)
-		 & =\inf_{x} (x,\bar\lambda,\bar\mu)                          \\
-		 & =\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
-	\end{align*}
+  But that's just the original LHS value, and hence all lines are equal. Hence
+  \begin{align*}
+    L(\bar x,\bar\lambda,\bar\mu)
+     & =\inf_{x} (x,\bar\lambda,\bar\mu)                          \\
+     & =\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+  \end{align*}
 
   And hence $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point.
 \end{proof}

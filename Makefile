@@ -15,6 +15,12 @@ TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 
+
+fmt:
+	rm -f *.bak* **/*.bak*
+	latexindent -s -w -m -l=.latexindent.yaml *.tex || echo "failed"
+	rm -f *.bak* **/*.bak*
+
 build:
 	$(PYTEX) -J minimath \
 		build $(TEX_FILES)
@@ -49,8 +55,7 @@ head:
 	@$(PYTEX) generate-section-titles
 
 clean:
-	rm -rf .build
-	rm -rf minimath*.pdf
+	rm -rf .build *.log minimath*.pdf
 
 open:
 	open minimath.pdf

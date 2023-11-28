@@ -13,38 +13,35 @@
 
 Let $G=(V,E)$ be an undirected graph. A vertex cover $U\subseteq V$ satisfies
 $$
-	(u,v)\in E\implies u\in U\lor u\in U.
+  (u,v)\in E\implies u\in U\lor u\in U.
 $$
 
-In other words, every edge in $E$ has at least one endpoint in the
-vertex cover $U$. Such a set is said to \textit{cover} the edges of
-$G$.
+In other words, every edge in $E$ has at least one endpoint in the vertex cover
+$U$. Such a set is said to \textit{cover} the edges of $G$.
 
 \Definition{1.1}{Flow network}\label{cc18bdc}
 
 A \textit{flow network} is a directed graph $G=(V,E)$ with a single
-\textit{source node} $s$ and a single \textit{target node} $t$, as
-well as a positive number $c(e)$ for each edge $e\in E$, called the
-capacity of $e$.
+\textit{source node} $s$ and a single \textit{target node} $t$, as well as a
+positive number $c(e)$ for each edge $e\in E$, called the capacity of $e$.
 
 \Definition{1.3}{Flow}\label{b06cb3d}
 
-Let $G$ be a flow network. A \textit{flow} on $G$ is given by a positive
-number $f(e)$ for each edge $e$ in $G$ satisfying the following two
-constraints:
+Let $G$ be a flow network. A \textit{flow} on $G$ is given by a positive number
+$f(e)$ for each edge $e$ in $G$ satisfying the following two constraints:
 \begin{itemize}
-	\item \textbf{Capacity constraints.} For each edge $e\in E$, we have
-	      $0\leq f(e)\leq c(e)$
-	\item \textbf{Flow conservation.} For each vertex $v\in V$ that is
-	      not the source or target vertex,
+  \item \textbf{Capacity constraints.} For each edge $e\in E$, we have
+        $0\leq f(e)\leq c(e)$
+  \item \textbf{Flow conservation.} For each vertex $v\in V$ that is
+        not the source or target vertex,
 \end{itemize}
 $$
-	\sum_{e\text{ into }v}f(e)=\sum_{e\text{ leaving }v}f(e)
+  \sum_{e\text{ into }v}f(e)=\sum_{e\text{ leaving }v}f(e)
 $$
 
 The \textit{value} of flow $f$ is all of the flow leaving $s$:
 $$
-	\text{val}(f):=\sum_{e\text{ leaving }s}f(e)
+  \text{val}(f):=\sum_{e\text{ leaving }s}f(e)
 $$
 
 where $s$ is the source node of $G$.
@@ -58,19 +55,18 @@ edge capacities $c(e)$ for $e\in E$.
 
 \Definition{1.4}{Residual graph}\label{b5b85fc}
 
-Let $G$ be a flow network and let $f$ be a flow on $G$. The
-\textit{residual graph} of $G$ and $f$, denoted by $G_f$, is the
-directed graph defined as follows:
+Let $G$ be a flow network and let $f$ be a flow on $G$. The \textit{residual
+  graph} of $G$ and $f$, denoted by $G_f$, is the directed graph defined as
+follows:
 
 The vertices of $G_f$ are the same as the vertices of $G$.
 
-For each edge $e=(u,v)$ in $G$, if $f(e)<c(e)$ then we add the edge
-$(u,v)$ to $G_f$, labelled with the number $c(e)-f(e)$. If $f(e)>0$,
-then we also add the edge $(v,u)$ to $G_f$, labelled with the number
-$f(e)$.
+For each edge $e=(u,v)$ in $G$, if $f(e)<c(e)$ then we add the edge $(u,v)$ to
+$G_f$, labelled with the number $c(e)-f(e)$. If $f(e)>0$, then we also add the
+edge $(v,u)$ to $G_f$, labelled with the number $f(e)$.
 
-All paths from $s$ to $t$ in the residual graph correspond to a
-sequence where flow can be re-routed to increase its value.
+All paths from $s$ to $t$ in the residual graph correspond to a sequence where
+flow can be re-routed to increase its value.
 
 \Definition{3.0}{Binary representation}\label{c043951}
 \def\binrep{\{0,1\}^*}
@@ -78,14 +74,13 @@ sequence where flow can be re-routed to increase its value.
 Let
 $$\binrep:=\{\epsilon,0,1,00,01,10,11,100,101,\ldots\}$$
 
-be the set of all finite binary strings. (where $\epsilon$ is the
-empty string.)
+be the set of all finite binary strings. (where $\epsilon$ is the empty
+string.)
 
 \Definition{3.1}{Decision problem}\label{c2ad5af}
 
-A decision problem $L$ is a subset of $\binrep$. The computational
-task corresponding to $L$ is ``Given a string $x\in\binrep$, is $x\in
-	L$?"
+A decision problem $L$ is a subset of $\binrep$. The computational task
+corresponding to $L$ is ``Given a string $x\in\binrep$, is $x\in L$?"
 
 \Problem{8}{$L$-membership problem}\label{acff8f4}
 
@@ -96,104 +91,100 @@ task corresponding to $L$ is ``Given a string $x\in\binrep$, is $x\in
 \Example{3.1.1}{Rewriting problems as $L$-membership problems}\label{d7cf97b}
 
 \begin{itemize}
-	\def\B{\binrep}
-	\item\textit{Graph Connectivity.} Given a graph $G=(V,E)$, is it
-	      connected?
-	      \begin{align*}
-		      L & =\{x\in\B\mid x\text{ encodes a connected graph}\} \\
-		        & =\{G \mid G \text{ is a connected graph}\}
-	      \end{align*}
-	\item\textit{Max Flow (Decision Version).} Given a flow network
-	      $G$ and a postive integer $k$, does the max flow on $G$ have
-	      value $\geq k$?
-	      \begin{align*}
-		      L & =\{x\in\B\mid x\text{ encodes a $(G,k)$ such that $\text{val}(G)\geq k$}\} \\
-		        & =\{(G,k)\mid\text{val}(G)\geq k \}
-	      \end{align*}
-	\item\textit{Sum.} Given $a,b,c\in\Z$, does $a+b=c$?
-	      \begin{align*}
-		      L & =\{x\in\B\mid x\text{ encodes $(a,b,c)$ such that $a+b=c$}\} \\
-		        & =\{(a,b,c)\mid a+b=c\}
-	      \end{align*}
+  \def\B{\binrep}
+  \item\textit{Graph Connectivity.} Given a graph $G=(V,E)$, is it
+        connected?
+        \begin{align*}
+          L & =\{x\in\B\mid x\text{ encodes a connected graph}\} \\
+            & =\{G \mid G \text{ is a connected graph}\}
+        \end{align*}
+  \item\textit{Max Flow (Decision Version).} Given a flow network
+        $G$ and a postive integer $k$, does the max flow on $G$ have
+        value $\geq k$?
+        \begin{align*}
+          L & =\{x\in\B\mid x\text{ encodes a $(G,k)$ such that $\text{val}(G)\geq k$}\} \\
+            & =\{(G,k)\mid\text{val}(G)\geq k \}
+        \end{align*}
+  \item\textit{Sum.} Given $a,b,c\in\Z$, does $a+b=c$?
+        \begin{align*}
+          L & =\{x\in\B\mid x\text{ encodes $(a,b,c)$ such that $a+b=c$}\} \\
+            & =\{(a,b,c)\mid a+b=c\}
+        \end{align*}
 \end{itemize}
 
-Choice of encoding is important and definitely affects runtime.
-However, for discussion we will assume that the most natural and
-succint encoding is chosen.
+Choice of encoding is important and definitely affects runtime. However, for
+discussion we will assume that the most natural and succint encoding is chosen.
 
 \Definition{3.2}{Polynomial-time algorithms}\label{ee3be28}
 
-An algorithm $A$ runs in \textit{polynomial time} if $\exists c\in\R$
-s.t. $\forall x\in\binrep$, $A$ terminates after $O(|x|^c)$
-computation steps.
+An algorithm $A$ runs in \textit{polynomial time} if $\exists c\in\R$ s.t.
+$\forall x\in\binrep$, $A$ terminates after $O(|x|^c)$ computation steps.
 
-A decision problem $L$ is \textit{polynomial-time computable} if there
-exists a polynomial-time $A$ s.t. $\forall x\in\binrep$, $x\in L\iff
-	A(x)=\Yes$.
+A decision problem $L$ is \textit{polynomial-time computable} if there exists a
+polynomial-time $A$ s.t. $\forall x\in\binrep$, $x\in L\iff A(x)=\Yes$.
 
 We define
 $$
-	\P:=\{L\subseteq\binrep\mid L\text{ is polynomial-time computable}\}
+  \P:=\{L\subseteq\binrep\mid L\text{ is polynomial-time computable}\}
 $$
 
-The complexity class $\P$ is our proxy for \textit{efficiently
-	computable languages}. (``language" is another way to refer to $L$, in
-addition to ``problem".)
+The complexity class $\P$ is our proxy for \textit{efficiently computable
+  languages}. (``language" is another way to refer to $L$, in addition to
+``problem".)
 
 \Definition{3.3.1}{Vertex Cover Problem}\label{bd1de5f}
 
 $$
-	\VC:=\{(G,k)\mid G\text{ is a graph with a
-		\href{b530c81}{vertex cover} of size}\leq k\}
+  \VC:=\{(G,k)\mid G\text{ is a graph with a
+    \href{b530c81}{vertex cover} of size}\leq k\}
 $$
 
 \Definition{3.3.2}{Satisfiability Problem}\label{d6893fe}
 
 $$
-	\mathsf{FORMSAT}:=\{F\mid F\text{ is a satisfiable boolean formula}\}
+  \mathsf{FORMSAT}:=\{F\mid F\text{ is a satisfiable boolean formula}\}
 $$
 
 \Definition{3.3}{Nondeterministic polynomial-time algorithms}\label{d93050e}
 
-A decision problem $L$ has a polynomial-time verifier if there is a
-polynomial time algorithm $B$ taking two strings $x,y$ as input, and a
-polynomial $p(n)$ such that
+A decision problem $L$ has a polynomial-time verifier if there is a polynomial
+time algorithm $B$ taking two strings $x,y$ as input, and a polynomial $p(n)$
+such that
 $$
-	x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
+  x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
 $$
 The complexity class
 $$
-	\mathsf{NP}:=\{L\subseteq\binrep\mid L\text{ has a polynomial-time verifier}\}
+  \mathsf{NP}:=\{L\subseteq\binrep\mid L\text{ has a polynomial-time verifier}\}
 $$
 
 \begin{itemize}
-	\item A polynomial-time verifier for $\VC$ would take a graph
-	      $(G,k)$ and a proposed vertex cover $U$ and check if $|U|\leq k$
-	      and that $U$ is a vertex cover.
-	\item A polynomial-time verifier for $\SAT$ would take in a boolean
-	      formula $F$ and a proposed assignment $x$ and check if $F(x)=\Yes$.
+  \item A polynomial-time verifier for $\VC$ would take a graph $(G,k)$ and a proposed
+        vertex cover $U$ and check if $|U|\leq k$ and that $U$ is a vertex cover.
+  \item A polynomial-time verifier for $\SAT$ would take in a boolean formula $F$ and a
+        proposed assignment $x$ and check if $F(x)=\Yes$.
 \end{itemize}
 
-Observe that $\P\subseteq\NP$. If $L$ has a polynomial-time algorithm,
-then it also has a polynomial-time verifier.
+Observe that $\P\subseteq\NP$. If $L$ has a polynomial-time algorithm, then it
+also has a polynomial-time verifier.
 
 \begin{proof}
-	If $L\in\P$, then \href{ee3be28}{by definition} there exists a polynomial-time algorithm $A$ with
-	$$x\in L\iff A(x)=\Yes$$
+  If $L\in\P$, then \href{ee3be28}{by definition} there exists a polynomial-time algorithm $A$ with
+  $$x\in L\iff A(x)=\Yes$$
 
-	Then, following the \href{d93050e}{defintion of $\NP$}, we need
-	to find a polynomial-time verifier $B$ such that
-	$$
-		x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
-	$$
-	But we can simply use $B(x,y):=A(x)$.
+  Then, following the \href{d93050e}{defintion of $\NP$}, we need to find a
+  polynomial-time verifier $B$ such that
+  $$
+    x\in L\iff\exists y\in\binrep,|y|\leq p(|x|):B(x,y)=\Yes
+  $$
+  But we can simply use $B(x,y):=A(x)$.
 \end{proof}
 
 \Definition{3.4}{Complement of a decision problem}\label{f636043}
 
 The complement of a decision problem $L$ is defined as
 $$
-	\overline L=\binrep\setminus L:=\{x\in\binrep\mid x\notin L\}
+  \overline L=\binrep\setminus L:=\{x\in\binrep\mid x\notin L\}
 $$
 
 Note that $\binrep=L\cup\overline L$ for any decision problem $L$.
@@ -203,49 +194,48 @@ Note that $\binrep=L\cup\overline L$ for any decision problem $L$.
 Prove that if $L\in\P$ then $\overline L\in\P$.
 
 \begin{proof}
-	If $L\in\P$, then \href{ee3be28}{by definition} there exists a
-	polynomial-time algorithm $A$ with $$x\in L\iff A(x)=\Yes$$
+  If $L\in\P$, then \href{ee3be28}{by definition} there exists a
+  polynomial-time algorithm $A$ with $$x\in L\iff A(x)=\Yes$$
 
-	Then, following the \href{ee3be28}{defintion of $\P$}, we need
-	to find a polynomial-time algorithm $B$ such that
-	$$x\in\overline L\iff B(x)=\Yes$$
+  Then, following the \href{ee3be28}{defintion of $\P$}, we need to find a
+  polynomial-time algorithm $B$ such that
+  $$x\in\overline L\iff B(x)=\Yes$$
 
-	But we can simply use $B(x):=\neg A(x)$.
+  But we can simply use $B(x):=\neg A(x)$.
 \end{proof}
 
 \Definition{3.6}{$\mathsf{coNP}$}\label{a92ed96}
 
 The complexity class $\mathsf{coNP}$ is defined as
 $$
-	\mathsf{coNP}:=\{L\mid\overline L\in\mathsf{NP}\}
+  \mathsf{coNP}:=\{L\mid\overline L\in\mathsf{NP}\}
 $$
 
-For example, recall that $\mathsf{\href{d6893fe}{SAT}}=\{F\mid
-	F\text{ is a satisfiable boolean formula}\}$. Then
+For example, recall that $\mathsf{\href{d6893fe}{SAT}}=\{F\mid F\text{ is a
+  satisfiable boolean formula}\}$. Then
 $$
-	\overline{\SAT}=\left\{x\in\binrep\, \middle\vert
-	\begin{array}{l}
-		\text{$x$ is an invalid encoding of a formula, or} \\
-		\text{$x$ encodes an unsatisfiable boolean formula}
-	\end{array}
-	\right\}
+  \overline{\SAT}=\left\{x\in\binrep\, \middle\vert
+  \begin{array}{l}
+    \text{$x$ is an invalid encoding of a formula, or} \\
+    \text{$x$ encodes an unsatisfiable boolean formula}
+  \end{array}
+  \right\}
 $$
 
-But given $x\in\binrep$, it is easy to test its validity as a boolean
-formula, hence we focus on the second constraint:
+But given $x\in\binrep$, it is easy to test its validity as a boolean formula,
+hence we focus on the second constraint:
 $$
-	\CONT:=\{F\mid F\text{ is an unsatisfiable boolean formula}\}
+  \CONT:=\{F\mid F\text{ is an unsatisfiable boolean formula}\}
 $$
 
 Note that since $\overline{\CONT}=\SAT\in\NP$, we have that
 $\overline{\CONT}\in\NP$.
 
-However, is $\CONT\in\NP$? Observe that $F\in\CONT$ if and only if
-\textit{for every} assignment $x$ to the variables of $F$, we have
-that $F(x)=\No$. Since there are $2^n$ assigments to check, it is not
-clear how to encode this checking procedure into a single
-polynomial-sized certificate. For this reason, many researchers
-conjecture that $\NP\neq\coNP$.
+However, is $\CONT\in\NP$? Observe that $F\in\CONT$ if and only if \textit{for
+  every} assignment $x$ to the variables of $F$, we have that $F(x)=\No$. Since
+there are $2^n$ assigments to check, it is not clear how to encode this
+checking procedure into a single polynomial-sized certificate. For this reason,
+many researchers conjecture that $\NP\neq\coNP$.
 
 \Remark{3.6.1}{The complexity class $\mathsf{NP}\cap\mathsf{coNP}$}\label{e6ea03d}
 

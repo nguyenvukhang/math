@@ -1,0 +1,17 @@
+defaultIndent: "  "
+
+specialBeginEnd:
+  # don't indent inline math
+  inlineMath:
+    begin: (?<!\$)(?<!\\)\$(?!\$) # $ but *not* \$ or $$
+    body: [^$]*?                  # anything *except* $
+    end: (?<!\\)\$(?!\$)          # $ but *not* \$ or $$
+    lookForThis: 0
+
+modifyLineBreaks:
+  textWrapOptions:
+    columns: 80
+    blocksEndBefore:
+      other: \\begin\{|\\end\{|\$\$
+    huge: overflow                      # forbid mid-word line breaks
+    separator: ""

@@ -15,59 +15,58 @@ All the proofs and results I don't want to write twice.
 
 \Definition{1.1.1}{Supremum/Infimum}\label{b8f715e}
 
-Let $X\subset\R$ be a non-empty. The supremum of $X$ is a real number
-$M=:\sup X$ that satisfies
+Let $X\subset\R$ be a non-empty. The supremum of $X$ is a real number $M=:\sup
+X$ that satisfies
 \begin{enumerati}
-	\item $M$ is an upper bound of $X$, and
-	\item if $M'$ is an upper bound of $X$, then $M'\geq M$
+  \item $M$ is an upper bound of $X$, and
+  \item if $M'$ is an upper bound of $X$, then $M'\geq M$
 \end{enumerati}
 
-that is, $M$ is the least upper bound of $X$. The infimum of $X$ is
-the greatest lower bound of $X$.
+that is, $M$ is the least upper bound of $X$. The infimum of $X$ is the
+greatest lower bound of $X$.
 
 \Definition{1.1.2}{Subsequential limit}\label{fd942fa}
 
-Let $\{x_n\in\R\}$ sequence. $\bar x\in\R$ is called a
-\textbf{subsequential limit} of $\{x_n\}$ if $\{x_n\}$ has a
-subsequence $\{x_{n_k}\}$ which converges to $\bar x$.
+Let $\{x_n\in\R\}$ sequence. $\bar x\in\R$ is called a \textbf{subsequential
+  limit} of $\{x_n\}$ if $\{x_n\}$ has a subsequence $\{x_{n_k}\}$ which
+converges to $\bar x$.
 
 \Definition{1.1.3}{Limit superior/limit inferior}\label{f4f2af4}
 
-Let $\{x_n\in\R\}$ sequence, and let $S(x_n)$ be the set of all
-subsequential limits of $\{x_n\}$.
+Let $\{x_n\in\R\}$ sequence, and let $S(x_n)$ be the set of all subsequential
+limits of $\{x_n\}$.
 
 Then we define the \textbf{limit superior} of $\{x_n\}$ to be
 $$
-	\limsup x_n := \sup S(x_n)
+  \limsup x_n := \sup S(x_n)
 $$
 
 and the \textbf{limit inferior} of $\{x_n\}$ to be
 $$
-	\liminf x_n := \inf S(x_n)
+  \liminf x_n := \inf S(x_n)
 $$
 
 Alternatively, we can also define them by
 \begin{align*}
-	\limsup x_n & := \lim_{n\to\infty}\sup\Set{x_k}{k\geq n} \\
-	\liminf x_n & := \lim_{n\to\infty}\inf\Set{x_k}{k\geq n}
+  \limsup x_n & := \lim_{n\to\infty}\sup\Set{x_k}{k\geq n} \\
+  \liminf x_n & := \lim_{n\to\infty}\inf\Set{x_k}{k\geq n}
 \end{align*}
 
 \Definition{1.2.1}{Monotone sequences}\label{b5fad69}
 
-A sequence $\{x_n\}$ is said to be \textbf{increasing} if $x_0\leq
-	x_1\leq x_2\leq\ldots$ and \textbf{decreasing} if $x_0\geq x_1\geq
-	x_2\geq\ldots$ and \textbf{monotone} if it is either increasing or
-decreasing.
+A sequence $\{x_n\}$ is said to be \textbf{increasing} if $x_0\leq x_1\leq
+x_2\leq\ldots$ and \textbf{decreasing} if $x_0\geq x_1\geq x_2\geq\ldots$ and
+\textbf{monotone} if it is either increasing or decreasing.
 
 \Theorem{1.2.2}{Monotone convergence theorem}\label{ca25eb7}
 
 If $\{x_n\}$ is monotone and bounded, then $\{x_n\}$ converges.
 
 $$
-	\lim_{n\to\infty}=\begin{cases}
-		\sup\{x_n:n\in\N\} & \text{if $\{x_n\}$ is increasing} \\
-		\inf\{x_n:n\in\N\} & \text{if $\{x_n\}$ is decreasing}
-	\end{cases}
+  \lim_{n\to\infty}=\begin{cases}
+    \sup\{x_n:n\in\N\} & \text{if $\{x_n\}$ is increasing} \\
+    \inf\{x_n:n\in\N\} & \text{if $\{x_n\}$ is decreasing}
+  \end{cases}
 $$
 
 \Theorem{1.2.3}{Monotone subsequence theorem}\label{dddb70e}
@@ -75,34 +74,32 @@ $$
 Every sequence has a monotone subsequence.
 
 \begin{proof}
-	\def\xn{\{x_n\}}
+  \def\xn{\{x_n\}}
 
-	Let $\xn$ be a sequence. We call a term $x_p$ a \textbf{peak term}
-	of $\xn$ if
-	$$x_p\geq x_n\quad(\forall n\geq p)$$
+  Let $\xn$ be a sequence. We call a term $x_p$ a \textbf{peak term} of $\xn$ if
+  $$x_p\geq x_n\quad(\forall n\geq p)$$
 
-	That is, all terms after $x_p$ never go above $x_p$ again. Then
-	there are only two cases:
+  That is, all terms after $x_p$ never go above $x_p$ again. Then there are only
+  two cases:
 
-	\textbf{Case 1:} $\xn$ has infinitely many peak terms.
+  \textbf{Case 1:} $\xn$ has infinitely many peak terms.
 
-	Then the subsequence formed by all the peak terms form a decreasing
-	subsequence of $\xn$.
+  Then the subsequence formed by all the peak terms form a decreasing subsequence
+  of $\xn$.
 
-	\textbf{Case 2:} $\xn$ has finitely many peak terms.
+  \textbf{Case 2:} $\xn$ has finitely many peak terms.
 
-	Let $x_{p_1},x_{p_2},\ldots,x_{p_j}$ be \textbf{all} the peak terms.
+  Let $x_{p_1},x_{p_2},\ldots,x_{p_j}$ be \textbf{all} the peak terms.
 
-	Let $n_1=p_j+1$ be the first term after the last peak term.
+  Let $n_1=p_j+1$ be the first term after the last peak term.
 
-	Since $x_{n_1}$ is not a peak term. $\implies\exists n_2>n_1$ such
-	that $x_{n_1}<x_{n_2}$.
+  Since $x_{n_1}$ is not a peak term. $\implies\exists n_2>n_1$ such that
+  $x_{n_1}<x_{n_2}$.
 
-	Since $x_{n_2}$ is not a peak term, $\implies\exists n_3>n_2$ such
-	that $x_{n_2}<x_{n_3}$.
+  Since $x_{n_2}$ is not a peak term, $\implies\exists n_3>n_2$ such that
+  $x_{n_2}<x_{n_3}$.
 
-	Continuing indefinitely, we can form an increasing subsequence
-	$\{x_{n_k}\}$.
+  Continuing indefinitely, we can form an increasing subsequence $\{x_{n_k}\}$.
 \end{proof}
 
 \Theorem{1.2.4}{Bolzano-Weierstrass Theorem}\label{d277ad0}
@@ -110,227 +107,222 @@ Every sequence has a monotone subsequence.
 Every bounded sequence has a convergent subsequence.
 
 \begin{proof}
-	\def\xn{\{x_n\}}
-	\def\xnk{\{x_{n_k}\}}
+  \def\xn{\{x_n\}}
+  \def\xnk{\{x_{n_k}\}}
 
-	Let $\xn$ be a bounded sequence. By the monotone subsequence
-	theorem, $\xn$ has a monotone subsequence $\xnk$.
+  Let $\xn$ be a bounded sequence. By the monotone subsequence theorem, $\xn$ has
+  a monotone subsequence $\xnk$.
 
-	Since $\xn$ is bounded, so is $\xnk$.
+  Since $\xn$ is bounded, so is $\xnk$.
 
-	Since $\xnk$ is both monotone and bounded, it follows from the
-	\href{ca25eb7}{monotone convergence theorem} that $\xnk$
-	converges.
+  Since $\xnk$ is both monotone and bounded, it follows from the
+  \href{ca25eb7}{monotone convergence theorem} that $\xnk$ converges.
 \end{proof}
 
 % proof for MATH 378
 
 \Theorem{1.2.5}{Monotone seq. with a convergent subseq. is convergent}\label{aaf3ba6}
 
-Let $\{x_n\}$ be a monotone sequence with a subsequence $\{x_{n_k}\}$
-that converges to $L$. Then $\{x_n\}$ converges to $L$.
+Let $\{x_n\}$ be a monotone sequence with a subsequence $\{x_{n_k}\}$ that
+converges to $L$. Then $\{x_n\}$ converges to $L$.
 
 \begin{proof}
-	WLOG, assume that $\{x_n\}$ is decreasing.
-	Given any $\epsilon>0$, we want to find a $N_\epsilon\in\N$ such that
-	$$
-		|x_n-L|<\epsilon\quad\forall(n\geq N_\epsilon)
-	$$
+  WLOG, assume that $\{x_n\}$ is decreasing.
+  Given any $\epsilon>0$, we want to find a $N_\epsilon\in\N$ such that
+  $$
+    |x_n-L|<\epsilon\quad\forall(n\geq N_\epsilon)
+  $$
 
-	Since $\{x_{n_k}\}$ is decreasing and converges to $L$, we can find
-	(and fix) a $k_\epsilon$ such that
-	\begin{equation*}
+  Since $\{x_{n_k}\}$ is decreasing and converges to $L$, we can find (and fix) a
+  $k_\epsilon$ such that
+  \begin{equation*}
     0<x_{n_k}-L<\epsilon\quad\forall(k\geq k_\epsilon)\Tag{*}
-	\end{equation*}
-	So we take $N_\epsilon=n_{k_\epsilon}$. Then since $\{x_n\}$ is
-	decreasing,
-	$$
-		x_n\leq x_{N_\epsilon}=x_{n_{k_\epsilon}}\quad\forall(n\geq N_\epsilon)
-	$$
-	Moreover, $L\leq x_n\leq x_{n_{k_\epsilon}}$, and hence
-	$$0\leq x_n-L\leq x_{n_{k_\epsilon}}-L$$
-	and from $(*)$, we have that this entire inequality $<\epsilon$, and hence
-	$$0\leq x_n-L<\epsilon$$
-	and finally
-	$$|x_n-L|<\epsilon$$
+  \end{equation*}
+  So we take $N_\epsilon=n_{k_\epsilon}$. Then since $\{x_n\}$ is
+  decreasing,
+  $$
+    x_n\leq x_{N_\epsilon}=x_{n_{k_\epsilon}}\quad\forall(n\geq N_\epsilon)
+  $$
+  Moreover, $L\leq x_n\leq x_{n_{k_\epsilon}}$, and hence
+  $$0\leq x_n-L\leq x_{n_{k_\epsilon}}-L$$
+  and from $(*)$, we have that this entire inequality $<\epsilon$, and hence
+  $$0\leq x_n-L<\epsilon$$
+  and finally
+  $$|x_n-L|<\epsilon$$
 \end{proof}
 
 \Theorem{1.2.6}{Mean value theorem}\label{d37aa2b}
 
-Let $f:[a,b]\to\R$ be continuous on the $[a,b]$, and differentiable on
-$(a,b)$. Then there exists $c\in(a,b)$ such that
+Let $f:[a,b]\to\R$ be continuous on the $[a,b]$, and differentiable on $(a,b)$.
+Then there exists $c\in(a,b)$ such that
 $$
-	f'(c)=\frac{f(b)-f(a)}{b-a}
-$$
-
-Generalized to multiple variables, the mean value theorem can be
-written as:
-
-Let $f:[a,b]\to\R$, where $a,b\in\R^n$, and $[a,b]$ refers to the line
-segment connecting $a$ and $b$, namely
-$$
-	[a,b]:=\{\lambda a+(1-\lambda)b\mid\lambda\in[0,1]\}
+  f'(c)=\frac{f(b)-f(a)}{b-a}
 $$
 
-Suppose $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$.
-Then there exists $c\in[a,b]$ such that
+Generalized to multiple variables, the mean value theorem can be written as:
+
+Let $f:[a,b]\to\R$, where $a,b\in\R^n$, and $[a,b]$ refers to the line segment
+connecting $a$ and $b$, namely
 $$
-	\nabla f(c)^T(b-a)=f(b)-f(a)
+  [a,b]:=\{\lambda a+(1-\lambda)b\mid\lambda\in[0,1]\}
 $$
 
-In some arguments, we use $f:[x,x+td]\to\R$ and write that there
-exists $\eta\in[x,x+td]$ such that
+Suppose $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$. Then there
+exists $c\in[a,b]$ such that
 $$
-	\nabla f(\eta)^Td=\frac{f(x+td)-f(x)}t
+  \nabla f(c)^T(b-a)=f(b)-f(a)
+$$
+
+In some arguments, we use $f:[x,x+td]\to\R$ and write that there exists
+$\eta\in[x,x+td]$ such that
+$$
+  \nabla f(\eta)^Td=\frac{f(x+td)-f(x)}t
 $$
 
 \Result{1.2.7}{Preprocessed limits}\label{ffc8953}
 
 Let $k,\ell\in\N$ and $a,b,c\in\R$ be fixed.
 \begin{enumerata}
-	\def\li{\displaystyle\lim_{n\to\infty}}
-	\item $\li\frac1{n^k}=0$
-	\item $\li b^n=0$ \quad if \quad $|b|<1$
-	\item $\li c^{\frac1n}=1$ \quad if \quad $c>0$
-	\item $\li n^{\frac1n}=1$
-	\item $\li \left(1+\frac1n\right)^n=e$
-	\item $\li \left(1-\frac1n\right)^n=\frac1e$
-	\item $\li \frac{n^k}{c^n}=0$ \quad if \quad $c>0$
+  \def\li{\displaystyle\lim_{n\to\infty}}
+  \item $\li\frac1{n^k}=0$
+  \item $\li b^n=0$ \quad if \quad $|b|<1$
+  \item $\li c^{\frac1n}=1$ \quad if \quad $c>0$
+  \item $\li n^{\frac1n}=1$
+  \item $\li \left(1+\frac1n\right)^n=e$
+  \item $\li \left(1-\frac1n\right)^n=\frac1e$
+  \item $\li \frac{n^k}{c^n}=0$ \quad if \quad $c>0$
 \end{enumerata}
 
 if $k<\ell$ and $1<a<b$, we have
 $$
-	n^k << n^\ell << a^n << b^n << n!
+  n^k << n^\ell << a^n << b^n << n!
 $$
 
 \Theorem{1.2.8}{Bernoulli's inequality}\label{d44713f}
 $$
-	(1+x)^r\geq 1+rx
+  (1+x)^r\geq 1+rx
 $$
 
 This holds under any of the following conditions:
 \begin{itemize}
-	\item $r\in\Z,r\geq1$ and $x\in\R,x\geq-1$ (inequality is strict if
-	      $x\neq0$ and $r\geq2$)
-	\item $r\in\Z,r\geq0$ and $x\in\R,x\geq-2$
-	\item $r\in\Z$, $r$ is even and $x\in\R$
-	\item $r\in\R,r\geq1$ and $x\in\R,x\geq-1$ (inequality is strict if
-	      $x\neq0$ and $r\neq1$)
+  \item $r\in\Z,r\geq1$ and $x\in\R,x\geq-1$ (inequality is strict if
+        $x\neq0$ and $r\geq2$)
+  \item $r\in\Z,r\geq0$ and $x\in\R,x\geq-2$
+  \item $r\in\Z$, $r$ is even and $x\in\R$
+  \item $r\in\R,r\geq1$ and $x\in\R,x\geq-1$ (inequality is strict if
+        $x\neq0$ and $r\neq1$)
 \end{itemize}
 
 and separately,
 $$
-	(1+x)^r\leq 1+rx
+  (1+x)^r\leq 1+rx
 $$
 for every $r\in\R,0\leq r\leq 1$ and $x\geq-1$.
 
 \Result{1.2.9}{Limit to infinity of a rational function}\label{ccfddb1}
 
-Let $P,Q$ be polynomial functions, where $Q$ is of a higher degree.
-Then
+Let $P,Q$ be polynomial functions, where $Q$ is of a higher degree. Then
 $$
-	\lim_{x\to\infty}\frac{P(x)}{Q(x)}=0
+  \lim_{x\to\infty}\frac{P(x)}{Q(x)}=0
 $$
 
 \begin{compute}
-	Consider the example of
-	$$
-		\lim_{x\to\infty}\frac{x^2 - 3x}{x^3 + 2x + 5}
-	$$
-	We can divide both numerator and denominator by $x^2$ to obtain
-	$$
-		\lim_{x\to\infty}\frac{1 - \frac3x}{x + \frac2x + \frac5{x^2}}
-	$$
-	And we can see that the numerator $\to1$ while the denominator
-	$\to\infty$.
+  Consider the example of
+  $$
+    \lim_{x\to\infty}\frac{x^2 - 3x}{x^3 + 2x + 5}
+  $$
+  We can divide both numerator and denominator by $x^2$ to obtain
+  $$
+    \lim_{x\to\infty}\frac{1 - \frac3x}{x + \frac2x + \frac5{x^2}}
+  $$
+  And we can see that the numerator $\to1$ while the denominator
+  $\to\infty$.
 \end{compute}
 
 \Result{1.2.10}{Limit of $\frac{e^x}x$ as $x\to\infty$}\label{b905ee7}
 $$
-	\lim_{x\to\infty}\frac{e^x}x=\infty
+  \lim_{x\to\infty}\frac{e^x}x=\infty
 $$
 
 \begin{proof}
-	% TODO: add Taylor series
-	Since $e^x$ can be written as a Taylor series
-	$$
-		e^x=1 + x + \frac{x^2}2 +\ldots
-	$$
-	We have $e^x\geq 1 + x + x^2$ and hence
-	\begin{align*}
-		\lim_{x\to\infty}\frac{e^x}x
-		 & \geq\lim_{x\to\infty}\frac{1+x+\frac{x^2}2}x \\
-		 & =\lim_{x\to\infty}\frac1x + 1 + \frac{x}2    \\
-		 & = \infty
-	\end{align*}
+  % TODO: add Taylor series
+  Since $e^x$ can be written as a Taylor series
+  $$
+    e^x=1 + x + \frac{x^2}2 +\ldots
+  $$
+  We have $e^x\geq 1 + x + x^2$ and hence
+  \begin{align*}
+    \lim_{x\to\infty}\frac{e^x}x
+     & \geq\lim_{x\to\infty}\frac{1+x+\frac{x^2}2}x \\
+     & =\lim_{x\to\infty}\frac1x + 1 + \frac{x}2    \\
+     & = \infty
+  \end{align*}
 \end{proof}
-
 
 \Result{1.2.11}{Limit of $\frac{\ln x}{x}$ as $x\to\infty$}\label{e2e1632}
 $$
-	\lim_{x\to\infty}\frac{\ln x}x = 0
+  \lim_{x\to\infty}\frac{\ln x}x = 0
 $$
 
 \begin{proof}
-	Given any $\epsilon$, we have to find a $N\in\N$ such that
-	$$
-		n\geq N\implies\frac{\ln x}x<\epsilon
-	$$
+  Given any $\epsilon$, we have to find a $N\in\N$ such that
+  $$
+    n\geq N\implies\frac{\ln x}x<\epsilon
+  $$
 
-	But, if you've been paying attention,
-	$$
-		\frac{\ln x}x<\epsilon\iff\frac{e^{\epsilon x}}{\epsilon x}>\frac1\epsilon
-	$$
+  But, if you've been paying attention,
+  $$
+    \frac{\ln x}x<\epsilon\iff\frac{e^{\epsilon x}}{\epsilon x}>\frac1\epsilon
+  $$
 
-	And since $\epsilon x\to+\infty$, using \href{b905ee7}{Result
-		1.2.10} with $\epsilon x$ as the limiting variable tells us that
-	indeed there exists such an $N$, hence completing the proof.
+  And since $\epsilon x\to+\infty$, using \href{b905ee7}{Result 1.2.10} with
+  $\epsilon x$ as the limiting variable tells us that indeed there exists such an
+  $N$, hence completing the proof.
 \end{proof}
 
 \Result{1.2.12}{Limit of a polynomial divided by an exponential}\label{f3540b0}
 
 Let $a,b\in\R$ be fixed, with $b>1$. Then we have
 $$
-	\lim_{x\to\infty}\frac{x^a}{b^x}=0
+  \lim_{x\to\infty}\frac{x^a}{b^x}=0
 $$
 
 \begin{proof}
-	Given any $\epsilon$ we want to find a $N\in\N$ such that
-	$$
-		n\geq N\implies\frac{x^a}{b^x}<\epsilon
-	$$
-	But this is equivalent to
-	$$
-		a\ln x-x\ln b<\ln\epsilon
-	$$
-	So it suffices to prove that
-	$$
-		a\ln x-x\ln b\to-\infty.
-	$$
-	Rewriting, we have
-	\begin{align*}
-		a\ln x-x\ln b
-		 & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right)                       \\
-		 & = \infty(-\ln b) \Quad\because\href{e2e1632}{\frac{\ln x}{x}\to0} \\
-		 & = -\infty
-	\end{align*}
+  Given any $\epsilon$ we want to find a $N\in\N$ such that
+  $$
+    n\geq N\implies\frac{x^a}{b^x}<\epsilon
+  $$
+  But this is equivalent to
+  $$
+    a\ln x-x\ln b<\ln\epsilon
+  $$
+  So it suffices to prove that
+  $$
+    a\ln x-x\ln b\to-\infty.
+  $$
+  Rewriting, we have
+  \begin{align*}
+    a\ln x-x\ln b
+     & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right)                       \\
+     & = \infty(-\ln b) \Quad\because\href{e2e1632}{\frac{\ln x}{x}\to0} \\
+     & = -\infty
+  \end{align*}
 
-	This completes the proof.
+  This completes the proof.
 \end{proof}
 
 \Definition{1.2.13}{Norm properties}\label{e0fff96}
 
-Given a vector space $X$ over a subfield $F$ of the complex numbers
-$\C$, a \textbf{norm} on $X$ is a real-valued function $p:X\to\R$ with
-the following properties, where $|k|$ denotes the absolute value of a
-scalar $k$.
+Given a vector space $X$ over a subfield $F$ of the complex numbers $\C$, a
+\textbf{norm} on $X$ is a real-valued function $p:X\to\R$ with the following
+properties, where $|k|$ denotes the absolute value of a scalar $k$.
 \begin{enumerate}
-	\item [\textbf{(N1)}] \textit{(Positive definiteness)} For all $x\in
-		      X$, if $p(x)=0$ then $x=0$.
-	\item [\textbf{(N2)}] \textit{(Absolute homogeneity)}
-	      $p(kx)=|k|p(x)$ for all $x\in X$ and scalars $k$.
-	\item [\textbf{(N3)}] \textit{(Subadditivity/Triangle inequality)}
-	      $p(x+y)\leq p(x)+p(y)$ for all $x,y\in X$
+  \item [\textbf{(N1)}] \textit{(Positive definiteness)} For all $x\in
+        X$, if $p(x)=0$ then $x=0$.
+  \item [\textbf{(N2)}] \textit{(Absolute homogeneity)}
+        $p(kx)=|k|p(x)$ for all $x\in X$ and scalars $k$.
+  \item [\textbf{(N3)}] \textit{(Subadditivity/Triangle inequality)}
+        $p(x+y)\leq p(x)+p(y)$ for all $x,y\in X$
 \end{enumerate}
 
 % ╭─────────────────────────────────────────────────────────────────╮
@@ -339,12 +331,10 @@ scalar $k$.
 
 \Theorem{2.1.1}{Fundamental theorem of calculus}\label{b869dc0}
 
-\paragraph{First part} Let $f:[a,b]\to\R$ be continuous. Let
-$F:[a,b]\to\R$ be defined by
+\paragraph{First part} Let $f:[a,b]\to\R$ be continuous. Let $F:[a,b]\to\R$ be defined by
 $$F(x)=\int_a^xf(t)\,dt$$
 
-Then $F$ is uniformly continuous on $[a,b]$ and differentiable on
-$(a,b)$, and
+Then $F$ is uniformly continuous on $[a,b]$ and differentiable on $(a,b)$, and
 $$F'(x)=f(x)$$
 
 on $(a,b)$ so $F$ is an antiderivative of $f$.
@@ -352,13 +342,12 @@ on $(a,b)$ so $F$ is an antiderivative of $f$.
 \paragraph{Corollary}
 $$\int_a^bf(t)\,dt=F(b)-F(a)$$
 
-\paragraph{Second part} Let $f:[a,b]\to\R$. Let $F:[a,b]\to\R$ be
-continuous and also the antiderivative of $f$ in $(a,b)$. If $f$ is
-Riemann integrable on $[a,b]$, then
+\paragraph{Second part} Let $f:[a,b]\to\R$. Let $F:[a,b]\to\R$ be continuous and also the
+antiderivative of $f$ in $(a,b)$. If $f$ is Riemann integrable on $[a,b]$, then
 $$\int_a^bf(t)\,dt=F(b)-F(a)$$
 
-This is stronger than the corollary because it does not assume that
-$f$ is continuous.
+This is stronger than the corollary because it does not assume that $f$ is
+continuous.
 
 % ╭─────────────────────────────────────────────────────────────────╮
 % │ 3. ONE-LINER DEFINITIONS                    __one_liner_defns__ │
@@ -368,21 +357,21 @@ $f$ is continuous.
 
 An affine function $f:\R^n\to\R^m$ is of the form
 $$
-	f(x)=Ax-b\with(A\in\R^{m\times n},b\in\R^m)
+  f(x)=Ax-b\with(A\in\R^{m\times n},b\in\R^m)
 $$
 
 \Definition{3.1.2}{Coercive functions}\label{e9c7871}
 
 A function $f:\R^n\to\R$ is coercive if
 $$
-	\lim_{\norm x\to\infty}f(x)=+\infty
+  \lim_{\norm x\to\infty}f(x)=+\infty
 $$
 
 \Definition{3.1.3}{Supercoercive functions}\label{a0444cc}
 
 A function $f:\R^n\to\R$ is supercoercive if
 $$
-	\lim_{\norm x\to\infty}\frac{f(x)}{\norm x}=+\infty
+  \lim_{\norm x\to\infty}\frac{f(x)}{\norm x}=+\infty
 $$
 
 % ╭─────────────────────────────────────────────────────────────────╮
@@ -391,14 +380,12 @@ $$
 
 \Remark{4.1.1}{Thinking about matrix dimensions}\label{d8bd136}
 
-Let $A\in\R^{m\times n}$, $x\in\R^n$, and $b\in\R^m$. We can validly
-write
+Let $A\in\R^{m\times n}$, $x\in\R^n$, and $b\in\R^m$. We can validly write
 $$
-	Ax = b
+  Ax = b
 $$
 
-So $A$ is a gadget that takes a $n$-dim vector and returns a $m$-dim
-vector.
+So $A$ is a gadget that takes a $n$-dim vector and returns a $m$-dim vector.
 
 ($A$ has $m$ rows and $n$ columns)
 
@@ -406,39 +393,39 @@ vector.
 
 A symmetric matrix $A\in\R^{n\times n}$ is positive definite if
 $$
-	x^TAx>0\with\forall(x\in\R^n)
+  x^TAx>0\with\forall(x\in\R^n)
 $$
 
 and positive semidefinite if
 $$
-	x^TAx\geq0\with\forall(x\in\R^n)
+  x^TAx\geq0\with\forall(x\in\R^n)
 $$
 
 \Definition{4.1.3}{Inner product space}\label{cebd07a}
 
-An inner product space is a vector space $V$ over the field $F$
-together with an \textit{inner product}.
+An inner product space is a vector space $V$ over the field $F$ together with
+an \textit{inner product}.
 
 An inner product is a map
 $$
-	\inner\cdot\cdot:V\times V\to F
+  \inner\cdot\cdot:V\times V\to F
 $$
 
 that satisfies the following for all $x,y,z\in V$ and $a,b\in F$:
 \begin{enumerate}
-	\item[\textbf{(I1)}] \textit{(Positive definiteness)} If $x$ is
-	      non-zero, then
-	      $$
-		      \inner xx>0
-	      $$
-	\item[\textbf{(I2)}] \textit{(Linearity in the first argument)}
-	      $$
-		      \inner{ax+by}z = a\inner xz + b\inner yz
-	      $$
-	\item[\textbf{(I3)}] \textit{(Conjugate symmetry)}
-	      $$
-		      \inner xy=\overline{\inner yx}
-	      $$
+  \item[\textbf{(I1)}] \textit{(Positive definiteness)} If $x$ is
+        non-zero, then
+        $$
+          \inner xx>0
+        $$
+  \item[\textbf{(I2)}] \textit{(Linearity in the first argument)}
+        $$
+          \inner{ax+by}z = a\inner xz + b\inner yz
+        $$
+  \item[\textbf{(I3)}] \textit{(Conjugate symmetry)}
+        $$
+          \inner xy=\overline{\inner yx}
+        $$
 \end{enumerate}
 
 % ╭─────────────────────────────────────────────────────────────────╮
@@ -448,18 +435,17 @@ that satisfies the following for all $x,y,z\in V$ and $a,b\in F$:
 \Definition{5.0.0}{Absolute basics of boolean algebra}\label{ba4e2fa}
 
 \begin{enumerata}
-	\item Literal: a boolean variable $x$ or $\neg x$ (or $\bar x$)
-	\item Conjunction: $\land$ (and)
-	\item Disjunction: $\lor$ (or)
-	\item Clause: a disjunction of \textbf{distinct} literals
+  \item Literal: a boolean variable $x$ or $\neg x$ (or $\bar x$)
+  \item Conjunction: $\land$ (and)
+  \item Disjunction: $\lor$ (or)
+  \item Clause: a disjunction of \textbf{distinct} literals
 \end{enumerata}
 
 \Definition{5.1.1}{Conjunctive normal form}\label{ab60bb1}
 
-This is a \href{ba4e2fa}{conjunction} of one or more
-\href{ba4e2fa}{clauses}.
+This is a \href{ba4e2fa}{conjunction} of one or more \href{ba4e2fa}{clauses}.
 $$
-	(A\lor B)\land (C\lor D\lor E)
+  (A\lor B)\land (C\lor D\lor E)
 $$
 
 \Definition{5.1.2}{Disjunctive normal form}\label{bb41c04}
@@ -467,52 +453,48 @@ $$
 This is a \href{ba4e2fa}{disjunction} of one or more
 \href{ba4e2fa}{conjunctions}.
 $$
-	(A\land B)\lor (C\land D\land E)
+  (A\land B)\lor (C\land D\land E)
 $$
 
 \Proposition{5.1.3}{Extending a CNF to 3 variables}\label{f33a84e}
 
-Given a 1-variable or 2-variable \href{ab60bb1}{CNF}, we want to write
-a logically equivalent 3-variable CNF. (Useful for 3-SAT problems).
-Here's how:
+Given a 1-variable or 2-variable \href{ab60bb1}{CNF}, we want to write a
+logically equivalent 3-variable CNF. (Useful for 3-SAT problems). Here's how:
 
-\paragraph{2-var CNF.} Say we have the expression $(x\lor y)$. This is
-logically equivalent to
+\paragraph{2-var CNF.} Say we have the expression $(x\lor y)$. This is logically equivalent to
 $$
-	(x\lor y\lor z)\land(x\lor y\lor\bar z)
+  (x\lor y\lor z)\land(x\lor y\lor\bar z)
 $$
 
-Notice that if $z$ is TRUE then we can drop the left branch because
-it's true and hence
+Notice that if $z$ is TRUE then we can drop the left branch because it's true
+and hence
 $$
-	(x\lor y\lor z)\land(x\lor y\lor\bar z) \equiv(x\lor y\lor\bar z) \equiv (x\lor y)
+  (x\lor y\lor z)\land(x\lor y\lor\bar z) \equiv(x\lor y\lor\bar z) \equiv (x\lor y)
 $$
 
 Similarly if $z$ is FALSE then we drop the right branch and get
 $$
-	(x\lor y\lor z)\land(x\lor y\lor\bar z) \equiv(x\lor y\lor z) \equiv (x\lor y)
+  (x\lor y\lor z)\land(x\lor y\lor\bar z) \equiv(x\lor y\lor z) \equiv (x\lor y)
 $$
 
-\paragraph{1-var CNF.} Now consider the expression $x$. Instead of
-adding just one variable we now add two and get the logically
-equivalent expression
+\paragraph{1-var CNF.} Now consider the expression $x$. Instead of adding just one variable we now add
+two and get the logically equivalent expression
 \begin{equation*}
-	(x\lor y\lor z)\land
-	(x\lor y\lor\bar z)\land
-	(x\lor \bar y\lor z)\land
-	(x\lor \bar y\lor\bar z)
+  (x\lor y\lor z)\land
+  (x\lor y\lor\bar z)\land
+  (x\lor \bar y\lor z)\land
+  (x\lor \bar y\lor\bar z)
 \end{equation*}
 
-If $(y,z)=(\text{TRUE},\text{TRUE})$ we can drop all clauses
-containing $y$ or $z$, leaving us with
+If $(y,z)=(\text{TRUE},\text{TRUE})$ we can drop all clauses containing $y$ or
+$z$, leaving us with
 $$
-	(x\lor \bar y\lor\bar z)
+  (x\lor \bar y\lor\bar z)
 $$
 
 but then $(\bar y,\bar z)=(\text{FALSE},\text{FALSE})$ and hence it is
-logically equivalent to just $x$.
-Repeating this logic for all combinations of $(y,z)$, we can see that
-$(*)$ is logically equivalent to $x$.
+logically equivalent to just $x$. Repeating this logic for all combinations of
+$(y,z)$, we can see that $(*)$ is logically equivalent to $x$.
 
 % ╭─────────────────────────────────────────────────────────────────╮
 % │ 9. GENERAL STUFF                              __general_stuff__ │
@@ -522,7 +504,7 @@ $(*)$ is logically equivalent to $x$.
 
 The gamma function is defined via a convergent improper integral:
 $$
-	\Gamma(z):=\int_0^\infty e^{-t}t^{z-1}\,dt\Quad(\Re(z)>0)
+  \Gamma(z):=\int_0^\infty e^{-t}t^{z-1}\,dt\Quad(\Re(z)>0)
 $$
 
 Note that ``$\displaystyle\int_0^\infty$" is a shorthand for
@@ -533,23 +515,23 @@ $$\int_0^\infty e^{-t}\,dt=\Big[-e^{-t}\Big]_0^\infty=1$$
 
 And that $\Gamma(n+1)=n\Gamma(n)$.
 \begin{align*}
-	\int_0^\infty e^{-t}t^n\,dt
-	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt              \\
-	 & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.2.12})} \\
-	 & = n\Gamma(n)
+  \int_0^\infty e^{-t}t^n\,dt
+   & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt              \\
+   & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.2.12})} \\
+   & = n\Gamma(n)
 \end{align*}
 
 \Definition{9.1.2}{Language reductions}\label{e009acb}
 
 If problem $A$ is reducible to problem $B$, we write $A\leq B$.
 
-Reducing $A$ to $B$ by a \textbf{Many-one reduction} is to find a
-function $f$ which converts inputs $x$ of $A$ into inputs $f(x)$ of
-$B$, such that $A(x)=B(f(x))$ under all values of $x$.
+Reducing $A$ to $B$ by a \textbf{Many-one reduction} is to find a function $f$
+which converts inputs $x$ of $A$ into inputs $f(x)$ of $B$, such that
+$A(x)=B(f(x))$ under all values of $x$.
 
-Reducing $A$ to $B$ by a \textbf{Turing reduction} is to find a
-function which mimics the behavior of $A$ using an oracle of $B$.
-i.e., $A(x)=\text{TRUE}\iff B(f(x))=\text{TRUE}$.
+Reducing $A$ to $B$ by a \textbf{Turing reduction} is to find a function which
+mimics the behavior of $A$ using an oracle of $B$. i.e., $A(x)=\text{TRUE}\iff
+B(f(x))=\text{TRUE}$.
 
 $A$ being reducible to $B$ means solving $A$ cannot be harder than the
 combined difficulty of solving $B$ and executing the reduction. In
@@ -558,9 +540,8 @@ harder than $B$. In order words, $\leq$ is referring to hardness.
 
 \Definition{9.1.3}{Everything $\mathsf P$-, $\mathsf{NP}$-related}\label{e04bcbc}
 
-This is a compilation of everything $\mathsf P$- and
-$\mathsf{NP}$-related. For in-depth definitions, refer to each link
-below.
+This is a compilation of everything $\mathsf P$- and $\mathsf{NP}$-related. For
+in-depth definitions, refer to each link below.
 
 A problem $L$ is in $\mathsf P$ if it runs in polynomial time.
 
@@ -569,22 +550,21 @@ A problem $L$ is in $\mathsf{NP}$ if has a polynomial-time verifier.
 We say that $L_1\leq_{\mathsf P}L_2$ if there is a polynomial-time
 \href{e009acb}{reduction} from $L_1$ to $L_2$.
 
-A problem $L$ is $\mathsf{NP}$-complete when $L\in\mathsf{NP}$, and
-every problem $L'$ in $\mathsf{NP}$ has a polynomial-time reduction to
-it:
+A problem $L$ is $\mathsf{NP}$-complete when $L\in\mathsf{NP}$, and every
+problem $L'$ in $\mathsf{NP}$ has a polynomial-time reduction to it:
 $$
-	\forall L'\in\mathsf{NP}: L'\leq_{\mathsf P}L
+  \forall L'\in\mathsf{NP}: L'\leq_{\mathsf P}L
 $$
 
-A problem $H$ is $\mathsf{NP}$-hard when for every $L\in\mathsf{NP}$,
-there is a polynomial-time reduction from $L$ to $H$:
+A problem $H$ is $\mathsf{NP}$-hard when for every $L\in\mathsf{NP}$, there is
+a polynomial-time reduction from $L$ to $H$:
 \begin{equation*}
-	\forall L\in\mathsf{NP}: L\leq_{\mathsf P}H\Tag{*}
+  \forall L\in\mathsf{NP}: L\leq_{\mathsf P}H\Tag{*}
 \end{equation*}
 
-The only difference between $\mathsf{NP}$-complete and
-$\mathsf{NP}$-hard is that $\mathsf{NP}$-complete has the extra
-constraint of having to be in $\mathsf{NP}$.
+The only difference between $\mathsf{NP}$-complete and $\mathsf{NP}$-hard is
+that $\mathsf{NP}$-complete has the extra constraint of having to be in
+$\mathsf{NP}$.
 
 $(*)$, based on a \href{e04bcbc}{previous remark}, also implies that
 $H$ is at least as hard as the hardest problem in $\mathsf{NP}$.
@@ -593,71 +573,70 @@ $H$ is at least as hard as the hardest problem in $\mathsf{NP}$.
 
 For all vectors $u$ and $v$ of an inner product space,
 $$
-	|\inner uv|^2\leq\inner uu\cdot\inner vv
+  |\inner uv|^2\leq\inner uu\cdot\inner vv
 $$
 
 This gives the following corollaries:
 \begin{enumerata}
 
-	\item Let $u_i,v_i\in\R$ for $i=\iter1n$ for any integer $n$.
-	Then
-	\begin{equation*}
-		\def\su{\sum}\def\u{u_i}\def\v{v_i}
-		\left(\su\u\v\right)^2\leq\left(\su\u^2\right)\left(\su\v^2\right)
-	\end{equation*}
+  \item Let $u_i,v_i\in\R$ for $i=\iter1n$ for any integer $n$. Then
+  \begin{equation*}
+    \def\su{\sum}\def\u{u_i}\def\v{v_i}
+    \left(\su\u\v\right)^2\leq\left(\su\u^2\right)\left(\su\v^2\right)
+  \end{equation*}
 
-	\item Let $u_k,v_k\in\C$ for $k=\iter1n$ for any integer $n$. Then
-	\begin{equation*}
-		\def\su{\sum}\def\u{u_i}\def\v{v_i}
-		\left|\su\u\v\right|^2\leq\left(\su|\u|^2\right)\left(\su|\v|^2\right)
-	\end{equation*}
+  \item Let $u_k,v_k\in\C$ for $k=\iter1n$ for any integer $n$. Then
+  \begin{equation*}
+    \def\su{\sum}\def\u{u_i}\def\v{v_i}
+    \left|\su\u\v\right|^2\leq\left(\su|\u|^2\right)\left(\su|\v|^2\right)
+  \end{equation*}
 \end{enumerata}
 
 \begin{proof}
-	To prove (a), we observe that $\R^n$ equipped with the standard dot
-	product is an \href{cebd07a}{inner product space}. We can build
-	vectors $u,v\in\R^n$ by arranging $u_i$ for $i=\iter1n$ into a
-	column vector and do the same for $v_i$ to get $v$.
+  To prove (a), we observe that $\R^n$ equipped with the standard dot
+  product is an \href{cebd07a}{inner product space}. We can build
+  vectors $u,v\in\R^n$ by arranging $u_i$ for $i=\iter1n$ into a
+  column vector and do the same for $v_i$ to get $v$.
 
-	Then applying the Cauchy-Schwarz inequality with the standard dot
-	product, we have
-	$$
-		|u\cdot v|^2\leq (u\cdot u)(v\cdot v)
-	$$
+  Then applying the Cauchy-Schwarz inequality with the standard dot product, we
+  have
+  $$
+    |u\cdot v|^2\leq (u\cdot u)(v\cdot v)
+  $$
 
-	Which gives the statement in (a) exactly.
+  Which gives the statement in (a) exactly.
 
-	To prove (b), instead of the \href{cebd07a}{inner product space}
-	constructed from $\R^n$ and the standard dot product, we use $\C^n$
-	and the complex inner product defined by
-	$$
-		\inner uw:=u_1\bar w_1+\ldots+u_n\bar w_n
-	$$
+  To prove (b), instead of the \href{cebd07a}{inner product space} constructed
+  from $\R^n$ and the standard dot product, we use $\C^n$ and the complex inner
+  product defined by
+  $$
+    \inner uw:=u_1\bar w_1+\ldots+u_n\bar w_n
+  $$
 
-	Then by the Cauchy-Schwarz inequality, for all $u,w\in\C^n$,
-	\begin{align*}
-		|\inner uw|^2 & =\left|\sum u_k\bar w_k\right|^2                            \\
-		              & \leq\inner uu\cdot\inner ww                                 \\
-		              & =\left(\sum u_k\bar u_k\right)\left(\sum w_k\bar w_k\right) \\
-		              & =\left(\sum|u_k|^2\right)\left(\sum|w_k|^2\right)
-	\end{align*}
+  Then by the Cauchy-Schwarz inequality, for all $u,w\in\C^n$,
+  \begin{align*}
+    |\inner uw|^2 & =\left|\sum u_k\bar w_k\right|^2                            \\
+                  & \leq\inner uu\cdot\inner ww                                 \\
+                  & =\left(\sum u_k\bar u_k\right)\left(\sum w_k\bar w_k\right) \\
+                  & =\left(\sum|u_k|^2\right)\left(\sum|w_k|^2\right)
+  \end{align*}
 
-	That is
-	$$
-		|u_1\bar w_1+\ldots+u_n\bar w_n|^2\leq
-		\Big(|u_1|^2+\ldots+|u_n|^2\Big)
-		\Big(|\bar w_1|^2+\ldots+|\bar w_n|^2\Big)
-	$$
+  That is
+  $$
+    |u_1\bar w_1+\ldots+u_n\bar w_n|^2\leq
+    \Big(|u_1|^2+\ldots+|u_n|^2\Big)
+    \Big(|\bar w_1|^2+\ldots+|\bar w_n|^2\Big)
+  $$
 
-	But since $|z|^2=|\bar z|^2$ for all $z\in\C$, we can define a
-	collection $\iter{v_1}{v_n}$ such that $v_k=\bar w_k$, then we can
-	rewrite the above inequality as
-	$$
-		|u_1v_1+\ldots+u_nv_n|^2\leq
-		\Big(|u_1|^2+\ldots+|u_n|^2\Big)
-		\Big(|v_1|^2+\ldots+|v_n|^2\Big)
-	$$
+  But since $|z|^2=|\bar z|^2$ for all $z\in\C$, we can define a collection
+  $\iter{v_1}{v_n}$ such that $v_k=\bar w_k$, then we can rewrite the above
+  inequality as
+  $$
+    |u_1v_1+\ldots+u_nv_n|^2\leq
+    \Big(|u_1|^2+\ldots+|u_n|^2\Big)
+    \Big(|v_1|^2+\ldots+|v_n|^2\Big)
+  $$
 
-	And finally since the collection $w_k$ were arbitrarily chosen, so
-	can the collection $v_k$.
+  And finally since the collection $w_k$ were arbitrarily chosen, so can the
+  collection $v_k$.
 \end{proof}

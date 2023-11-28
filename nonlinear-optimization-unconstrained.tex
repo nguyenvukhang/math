@@ -7,17 +7,17 @@
 
 The set which minimizes values of $f$ over a domain $X$ is denoted by
 $$
-	\argmin_{x\in X}f:=\Set{x\in X}{f(x)=\inf_Xf}
+  \argmin_{x\in X}f:=\Set{x\in X}{f(x)=\inf_Xf}
 $$
 
 \Definition{1.1.3}{Local vs. global minima}\label{bc7900e}
 
 Let $X\subset\R^n$ and $f:\R^n\to\R$. Then $\bar x\in X$ is called a
 \begin{itemize}
-	\item global minimizer of $f$ over $X$ if $\bar x\in\argmin_Xf$,
-	      i.e. $\forall x\in X:f(\bar x)\leq f(x)$
-	\item local minimizer of $f$ over $X$ if $\exists\epsilon>0$ such
-	      that $\forall x\in X\cap B_\epsilon(\bar x):f(\bar x)\leq f(x)$
+  \item global minimizer of $f$ over $X$ if $\bar x\in\argmin_Xf$, i.e. $\forall x\in
+        X:f(\bar x)\leq f(x)$
+  \item local minimizer of $f$ over $X$ if $\exists\epsilon>0$ such that $\forall x\in
+        X\cap B_\epsilon(\bar x):f(\bar x)\leq f(x)$
 \end{itemize}
 For strict global/local minimizers, the above conditions hold with
 strict inequality.
@@ -26,302 +26,288 @@ strict inequality.
 
 For $f:\R^n\to\R$ the level set for the level $c\in R$ is given by
 $$
-	f^{-1}(\{c\})=\Set{x\in\R^n}{f(x)=c}
+  f^{-1}(\{c\})=\Set{x\in\R^n}{f(x)=c}
 $$
 
-The lower level set (or \textit{sublevel} set) of $f$ to the level
-$c\in\R$ is
+The lower level set (or \textit{sublevel} set) of $f$ to the level $c\in\R$ is
 $$
-	\text{lev}_cf:=f^{-1}((-\infty,c])=\Set{x\in\R^n}{f(x)\leq c}
+  \text{lev}_cf:=f^{-1}((-\infty,c])=\Set{x\in\R^n}{f(x)\leq c}
 $$
 
 \Proposition{1.1.5}{}\label{bd1eec0}
 
-Let $f:\R^n\to\R$ be continuous. If $\exists c\in\R$ such that
-$\text{lev}_cf$ is non-empty and bounded then $f$ takes its minimum
-over $\R^n$.
+Let $f:\R^n\to\R$ be continuous. If $\exists c\in\R$ such that $\text{lev}_cf$
+is non-empty and bounded then $f$ takes its minimum over $\R^n$.
 
 \Definition{1.2.1}{Convex sets}\label{e012971}
 
 A set $C\subset\R^n$ is called convex if
 
 $$
-	\lambda x+(1-\lambda)y\in C\quad
-	\forall(x,y\in C,\ \lambda\in(0,1))
+  \lambda x+(1-\lambda)y\in C\quad
+  \forall(x,y\in C,\ \lambda\in(0,1))
 $$
 
-or simply a set which contains all connecting lines of points from the
-set.
+or simply a set which contains all connecting lines of points from the set.
 
 \Definition{1.2.3}{Convex functions}\label{a114065}
 
-Let $C\subset\R^n$ be convex. Let $\lambda\in(0,1)$ and $x,y\in C$ and
-let
+Let $C\subset\R^n$ be convex. Let $\lambda\in(0,1)$ and $x,y\in C$ and let
 
 Then $f:C\to\R$ is said to be
 
 \begin{itemize}
-	\item convex on $C$ if
-	      $$f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)$$
-	\item strictly convex on $C$ if
-	      $$f(\lambda x+(1-\lambda)y)<\lambda f(x)+(1-\lambda)f(y)$$
-	\item strongly convex on $C$ if $\exists\mu>0$ such that
-	      $$f(\lambda x+(1-\lambda)y)+\frac{\mu}{2}\lambda(1-\lambda)\norm{x-y}^2\leq\lambda f(x)+(1-\lambda)f(y)$$
+  \item convex on $C$ if
+        $$f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)$$
+  \item strictly convex on $C$ if
+        $$f(\lambda x+(1-\lambda)y)<\lambda f(x)+(1-\lambda)f(y)$$
+  \item strongly convex on $C$ if $\exists\mu>0$ such that
+        $$f(\lambda x+(1-\lambda)y)+\frac{\mu}{2}\lambda(1-\lambda)\norm{x-y}^2\leq\lambda f(x)+(1-\lambda)f(y)$$
 \end{itemize}
 
 \Example{1.2.5}{Convex functions}\label{f96c8ae}
 
 \begin{enumerata}
-	\item $\exp:\R\to\R$ and $-\log:(0,\infty)\to\R$ are convex.
-	\item \textit{(Affine functions)} $f:\R^n\to\R^m$ of the form
-	$$
-		f(x)=Ax-b\with(A\in\R^{m\times n},b\in\R^m)
-	$$
-	is called \textbf{affine} (linear). All affine functions, hence
-	all linear functions ($b=0$) $\R^n\to\R$ are convex.
-	\item \textit{(Norms)} Any norm $\norm\cdot$ on $\R^n$ is convex.
+  \item $\exp:\R\to\R$ and $-\log:(0,\infty)\to\R$ are convex.
+  \item \textit{(Affine functions)} $f:\R^n\to\R^m$ of the form
+  $$
+    f(x)=Ax-b\with(A\in\R^{m\times n},b\in\R^m)
+  $$
+  is called \textbf{affine} (linear). All affine functions, hence
+  all linear functions ($b=0$) $\R^n\to\R$ are convex.
+  \item \textit{(Norms)} Any norm $\norm\cdot$ on $\R^n$ is convex.
 \end{enumerata}
 
 \Proposition{1.2.6}{Convexity preserving operations}\label{ddce2a7}
 
 \begin{enumerate}
-	\item (Positive combinations) For $i=1,\ldots,n$ let $f_i:\R^n\to\R$ be
-	      convex and $\lambda_i\geq0$. Then $\sum_{i=1}^n\lambda_if_i$ is
-	      convex.
-	\item (Composition with affine mapping) $f:\R^n\to\R$ be convex
-	      and $g:\R^m\to\R^n$ affine. Then $f\circ G$ is convex.
+  \item (Positive combinations) For $i=1,\ldots,n$ let $f_i:\R^n\to\R$ be
+        convex and $\lambda_i\geq0$. Then $\sum_{i=1}^n\lambda_if_i$ is
+        convex.
+  \item (Composition with affine mapping) $f:\R^n\to\R$ be convex
+        and $g:\R^m\to\R^n$ affine. Then $f\circ G$ is convex.
 \end{enumerate}
 
 \Definition{2.1.1}{Directional derivative}\label{37eb747}
 
-Let $D\subset \R$ be open. $f:D\to\R$ is directionally differentiable
-at $\bar x\in\R^n$ in the direction $d\in\R^n$ if
+Let $D\subset \R$ be open. $f:D\to\R$ is directionally differentiable at $\bar
+x\in\R^n$ in the direction $d\in\R^n$ if
 $$
-	\lim_{t\downarrow0}\frac{f(\bar x+td)-f(x)}t
+  \lim_{t\downarrow0}\frac{f(\bar x+td)-f(x)}t
 $$
 
-exists. This limit is denoted by $f'(x;d)$ and is called the
-directional derivative of $f$ at $\bar x$ in the direction $d$.
+exists. This limit is denoted by $f'(x;d)$ and is called the directional
+derivative of $f$ at $\bar x$ in the direction $d$.
 
 If $f$ is directionally differentiable at $\bar x$ in every direction
 $d\in\R^n$, we call $f$ directionally differentiable at $\bar x$.
 
-If $f$ is directionally differentiable at every $\bar x\in\R^n$, we
-call it directionally differentiable.
+If $f$ is directionally differentiable at every $\bar x\in\R^n$, we call it
+directionally differentiable.
 
 \Lemma{2.1.2}{Directional derivative and gradient}\label{ed67d29}
 
-Let $D\subset \R^n$ be open and $f:D\to\R$
-differentiable at $x\in D$. Then $f$ is directionally differentiable
-at $x$ with
+Let $D\subset \R^n$ be open and $f:D\to\R$ differentiable at $x\in D$. Then $f$
+is directionally differentiable at $x$ with
 $$
-	f'(x;d)=\nabla f(x)^Td\quad\forall(d\in\R^n)
+  f'(x;d)=\nabla f(x)^Td\quad\forall(d\in\R^n)
 $$
 
-Where $f'(x;d)$ is the \href{37eb747}{directional derivative} of
-$f$ at $x$ in the direction $d$.
+Where $f'(x;d)$ is the \href{37eb747}{directional derivative} of $f$ at $x$ in
+the direction $d$.
 
 \Lemma{2.1.4}{Basic optimality condition}\label{b3b5e10}
 
-Let $X\subset\R^n$ be open and $f:X\to\R$. If $\bar x$ is a local
-minimizer of $f$ over $X$ and $f$ is \href{37eb747}{directionally
-	differentiable} at $\bar x$ then
+Let $X\subset\R^n$ be open and $f:X\to\R$. If $\bar x$ is a local minimizer of
+$f$ over $X$ and $f$ is \href{37eb747}{directionally differentiable} at $\bar
+x$ then
 $$
-	f'(x;d)\geq 0\quad\forall(d\in\R^n)
+  f'(x;d)\geq 0\quad\forall(d\in\R^n)
 $$
 
 \Theorem{2.1.5}{Fermat's rule}\label{dc165c9}
 
-Let $X\subset\R^n$ be open and $f:X\to\R$ differentiable at $\bar x\in
-	X$. If $\bar x$ is a local minimizer (or maximizer) of $f$ over $X$
-then $\nabla f(\bar x)=0$.
+Let $X\subset\R^n$ be open and $f:X\to\R$ differentiable at $\bar x\in X$. If
+$\bar x$ is a local minimizer (or maximizer) of $f$ over $X$ then $\nabla
+f(\bar x)=0$.
 
 \Theorem{2.1.6}{Second-order necessary condition}\label{ce5370d}
 
-Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
-differentiable. If $\bar x$ is a local minimizer (maximizer) of $f$
-over $X$ then $\nabla^2f(\bar x)$ is positive (negative) semidefinite.
+Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously differentiable. If
+$\bar x$ is a local minimizer (maximizer) of $f$ over $X$ then $\nabla^2f(\bar
+x)$ is positive (negative) semidefinite.
 
 \Lemma{2.1.7}{}\label{eaa0d24}
 
-Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
-differentiable. If $\bar x\in\R^n$ is such that $\nabla^2f(\bar x)$
-positive definite then $\exists\,\mu,\epsilon>0$ such that
-$B_\epsilon(\bar x)\subset X$ and
+Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously differentiable. If
+$\bar x\in\R^n$ is such that $\nabla^2f(\bar x)$ positive definite then
+$\exists\,\mu,\epsilon>0$ such that $B_\epsilon(\bar x)\subset X$ and
 $$
-	d^T\nabla^2f(x)d\geq\mu\norm d^2_2\quad\forall(d\in\R^n,\
-	x\in B_\epsilon(\bar x))
+  d^T\nabla^2f(x)d\geq\mu\norm d^2_2\quad\forall(d\in\R^n,\
+  x\in B_\epsilon(\bar x))
 $$
 
 \Theorem{2.1.8}{Sufficient optimality condition}\label{b43d95d}
 
-Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously
-differentiable. Moreover, let $\bar x$ be a stationary point of $f$
-such that $\nabla^2f(\bar x)$ is positive definite. Then $\bar x$ is a
-strict local minimizer of $f$.
+Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously differentiable.
+Moreover, let $\bar x$ be a stationary point of $f$ such that $\nabla^2f(\bar
+x)$ is positive definite. Then $\bar x$ is a strict local minimizer of $f$.
 
 \Theorem{2.2.1}{First-order characterizations}\label{cd9cea7}
 
-Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be
-differentiable on $C$. Then the following hold for all $x,\bar x\in
-	C$:
+Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be differentiable on
+$C$. Then the following hold for all $x,\bar x\in C$:
 \begin{enumerata}
-	\item $f$ is convex on $C$ iff
-	\begin{equation*}
-		f(x)\geq f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Tag{*}
-	\end{equation*}
-	\item $f$ is strictly convex on $C$ iff $(*)$ holds with strict
-	inequality whenever $x\neq\bar x$.
-	\item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff
-	$$
-		f(x)\geq\Big[f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Big]
-		+\frac\mu2\norm{x-\bar x}^2
-	$$
+  \item $f$ is convex on $C$ iff
+  \begin{equation*}
+    f(x)\geq f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Tag{*}
+  \end{equation*}
+  \item $f$ is strictly convex on $C$ iff $(*)$ holds with strict
+  inequality whenever $x\neq\bar x$.
+  \item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff
+  $$
+    f(x)\geq\Big[f(\bar x)+\nabla f(\bar x)^T(x-\bar x)\Big]
+    +\frac\mu2\norm{x-\bar x}^2
+  $$
 \end{enumerata}
 
 \Corollary{2.2.2}{}\label{aa63a8a}
 
-Let $f:\R^n\to\R$ be convex and differentiable. Then the following
-hold:
+Let $f:\R^n\to\R$ be convex and differentiable. Then the following hold:
 \begin{enumerata}
-	\item \textit{(Affine minorization)} There exists an
-	\href{dcb7f73}{affine} function $g:\R^n\to\R$ which minorizes
-	$f$ everywhere, i.e.
-	$$
-		g(x)\leq f(x)\with(x\in\R^n)
-	$$
-	\item If $f$ is strongly convex then it is strictly convex and
-	coercive (level-bounded).
+  \item \textit{(Affine minorization)} There exists an
+  \href{dcb7f73}{affine} function $g:\R^n\to\R$ which minorizes
+  $f$ everywhere, i.e.
+  $$
+    g(x)\leq f(x)\with(x\in\R^n)
+  $$
+  \item If $f$ is strongly convex then it is strictly convex and coercive
+  (level-bounded).
 \end{enumerata}
 
 \Corollary{2.2.3}{}\label{f2986e2}
 
-Let $f:\R^n\to\R$ be convex and differentiable. Then the following
-are equivalent:
+Let $f:\R^n\to\R$ be convex and differentiable. Then the following are
+equivalent:
 \begin{enumerati}
-	\item $\bar x$ is a global minimizer of $f$, i.e. $\bar x\in\argmin f$;
-	\item $\bar x$ is a local minimizer;
-	\item $\bar x$ is a stationary point of $f$.
+  \item $\bar x$ is a global minimizer of $f$, i.e. $\bar x\in\argmin f$;
+  \item $\bar x$ is a local minimizer;
+  \item $\bar x$ is a stationary point of $f$.
 \end{enumerati}
 
 \begin{proof}
-	(i) $\implies$ (ii) is obvious. (ii) $\implies$ (iii) follows from
-	\href{dc165c9}{Fermat's Theorem}. (iii) $\implies$ (i) follows
-	from \href{cd9cea7}{Theorem 2.2.1 (a)}.
+  (i) $\implies$ (ii) is obvious. (ii) $\implies$ (iii) follows from
+  \href{dc165c9}{Fermat's Theorem}. (iii) $\implies$ (i) follows
+  from \href{cd9cea7}{Theorem 2.2.1 (a)}.
 \end{proof}
 
 \Corollary{2.2.4}{Monotonocity of gradient mappings}\label{a8ddd0c}
 
-Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be
-differentiable on $C$. Then the following hold for all $x,y\in C$
+Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be differentiable on
+$C$. Then the following hold for all $x,y\in C$
 \begin{enumerata}
-	\item $f$ is convex on $C$ iff
-	\begin{equation*}
-		\inner{\nabla f(x)-\nabla f(y)}{x-y}\geq0\Tag{*}
-	\end{equation*}
-	\item $f$ is strictly convex on $C$ iff $(*)$ holds with a strict
-	inequality whenever $x\neq y$.
-	\item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff
-	$$
-		\inner{\nabla f(x)-\nabla f(y)}{x-y}\geq\mu\norm{x-y}^2
-	$$
+  \item $f$ is convex on $C$ iff
+  \begin{equation*}
+    \inner{\nabla f(x)-\nabla f(y)}{x-y}\geq0\Tag{*}
+  \end{equation*}
+  \item $f$ is strictly convex on $C$ iff $(*)$ holds with a strict
+  inequality whenever $x\neq y$.
+  \item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff
+  $$
+    \inner{\nabla f(x)-\nabla f(y)}{x-y}\geq\mu\norm{x-y}^2
+  $$
 \end{enumerata}
 
 \Theorem{2.2.5}{Twice differentiable convex functions}\label{eeb9c30}
 
-Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be twice
-continuously differentiable on $C$. Then the following hold:
+Let $C\subset\R^n$ be open and convex and let $f:C\to\R$ be twice continuously
+differentiable on $C$. Then the following hold:
 \begin{enumerata}
-	\def\allx{\forall x\in C}
-	\def\hessian{\nabla^2f(x)}
-	\item $f$ is convex on $C$ iff $\hessian$ is positive
-	semidefinite $\allx$.
-	\item If $\hessian$ is positive definite $\allx$ then $f$ is
-	strictly convex on $C$.
-	\item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff,
-	$\allx$, the smallest eigenvalue of $\hessian$ is bounded by $\mu$
-	from below.
+  \def\allx{\forall x\in C}
+  \def\hessian{\nabla^2f(x)}
+  \item $f$ is convex on $C$ iff $\hessian$ is positive
+  semidefinite $\allx$.
+  \item If $\hessian$ is positive definite $\allx$ then $f$ is strictly convex on $C$.
+  \item $f$ is strongly convex with modulus $\mu>0$ on $C$ iff,
+  $\allx$, the smallest eigenvalue of $\hessian$ is bounded by $\mu$
+  from below.
 \end{enumerata}
 
 \Corollary{2.2.6}{Convexity of quadratic functions}\label{de25005}
 
-Let $A\in\R^{n\times n}$ be symmetric and $b\in\R^n$, $\gamma\in\R$,
-and define $f:\R^n\to\R$ by
+Let $A\in\R^{n\times n}$ be symmetric and $b\in\R^n$, $\gamma\in\R$, and define
+$f:\R^n\to\R$ by
 $$
-	f(x)=\frac12x^TAx+b^Tx+\gamma
+  f(x)=\frac12x^TAx+b^Tx+\gamma
 $$
 Then the following hold:
 \begin{enumerata}
-	\item $f$ is convex if and only if $A$ is positive semidefinite
-	\item $f$ is strongly convex if and only if $A$ is positive definite
+  \item $f$ is convex if and only if $A$ is positive semidefinite
+  \item $f$ is strongly convex if and only if $A$ is positive definite
 \end{enumerata}
 
 \begin{proof}
-	% TODO: come back here and show that f is twice cont differentiable.
+  % TODO: come back here and show that f is twice cont differentiable.
 
-	In view of \href{eeb9c30}{Theorem 2.2.5}, it suffices to show that $f$ is
-	twice continuously differentiable.
-	\begin{align*}
-		\nabla f(x)  & = Ax + b \\
-		\nabla^2f(x) & = A
-	\end{align*}
-	and we are done.
+  In view of \href{eeb9c30}{Theorem 2.2.5}, it suffices to show that $f$ is twice
+  continuously differentiable.
+  \begin{align*}
+    \nabla f(x)  & = Ax + b \\
+    \nabla^2f(x) & = A
+  \end{align*}
+  and we are done.
 \end{proof}
 
 \Theorem{2.2.7}{Convex optimization}\label{f546fc9}
 
-Let $f:\R^n\to\R$ be a convex function and $X\subset\R^n$ be a
-non-empty convex set. Consider the convex optimization problem
+Let $f:\R^n\to\R$ be a convex function and $X\subset\R^n$ be a non-empty convex
+set. Consider the convex optimization problem
 \begin{equation*}
-	\begin{array}{l l l}
-		\min f(x) & \text{s.t.} & x\in X\Tag{*}
-	\end{array}
+  \begin{array}{l l l}
+    \min f(x) & \text{s.t.} & x\in X\Tag{*}
+  \end{array}
 \end{equation*}
 Then the following hold:
 \begin{enumerata}
-	\item A point $\bar x$ is a global minimizer of $(*)$ if and only if
-	it is a local minimizer of $(*)$.
-	\item The solution set $\argmin_Xf$ of $(*)$ is convex (possibly
-	empty).
-	\item If $f$ is strictly convex, then the solution set has at most
-	one element.
-  \item If $f$ is strongly convex and differentiable and $X$ is
-    closed, then $(*)$ has exactly one solution ($\argmin_Xf$ is a
-    singleton).
+  \item A point $\bar x$ is a global minimizer of $(*)$ if and only if it is a local
+  minimizer of $(*)$.
+  \item The solution set $\argmin_Xf$ of $(*)$ is convex (possibly empty).
+  \item If $f$ is strictly convex, then the solution set has at most one element.
+  \item If $f$ is strongly convex and differentiable and $X$ is closed, then $(*)$ has
+  exactly one solution ($\argmin_Xf$ is a singleton).
 \end{enumerata}
 
 \Proposition{2.3.1}{Operator norms}\label{bad47a4}
 
-Let $\norm\cdot_*$ be a (vector) norm on $\R^n$ and $\R^m$,
-respectively. Then for $A\in\R^{m\times n}$,
+Let $\norm\cdot_*$ be a (vector) norm on $\R^n$ and $\R^m$, respectively. Then
+for $A\in\R^{m\times n}$,
 $$
-	\norm A_*:=\sup_{x\neq0}\frac{\norm{Ax}_*}{\norm x_*}
+  \norm A_*:=\sup_{x\neq0}\frac{\norm{Ax}_*}{\norm x_*}
 $$
 is a norm on $\R^{m\times n}$ with
 $$
-	\norm A_*=\sup_{\norm x_*=1}\norm{Ax}_*=\sup_{\norm x_*\leq1}\norm{Ax}_*
+  \norm A_*=\sup_{\norm x_*=1}\norm{Ax}_*=\sup_{\norm x_*\leq1}\norm{Ax}_*
 $$
 
 \Proposition{2.3.2}{}\label{ab2107f}
 
 Let $A\in\R^{m\times n}$. Then we have
 $$
-	\begin{array}{l l l}
-		\norm{A}_1      & = \displaystyle\max_{j=\iter1n}\sum_{i=1}^m|a_{ij}| & \text{(maximum absolute column sum)} \\[1.5em]
-		\norm{A}_2      & = \displaystyle\sqrt{\lambda_{\max}(A^TA)}          & \text{(spectral norm)}               \\[1em]
-		\norm{A}_\infty & = \displaystyle\max_{i=\iter1m}\sum_{j=1}^n|a_{ij}| & \text{(maximum absolute row sum)}
-	\end{array}
+  \begin{array}{l l l}
+    \norm{A}_1      & = \displaystyle\max_{j=\iter1n}\sum_{i=1}^m|a_{ij}| & \text{(maximum absolute column sum)} \\[1.5em]
+    \norm{A}_2      & = \displaystyle\sqrt{\lambda_{\max}(A^TA)}          & \text{(spectral norm)}               \\[1em]
+    \norm{A}_\infty & = \displaystyle\max_{i=\iter1m}\sum_{j=1}^n|a_{ij}| & \text{(maximum absolute row sum)}
+  \end{array}
 $$
 
 \Proposition{2.3.3}{}\label{dd47a09}
 
-Let $\norm\cdot_*$ be a norm on $\R^n$, $\R^m$, and $\R^p$
-respectively. Then for all $A\in\R^{m\times n}$ and $B\in\R^{n\times
-		p}$ the following hold:
+Let $\norm\cdot_*$ be a norm on $\R^n$, $\R^m$, and $\R^p$ respectively. Then
+for all $A\in\R^{m\times n}$ and $B\in\R^{n\times p}$ the following hold:
 \begin{itemize}
-	\def\nm#1{\norm{#1}_*}
-	\item $\nm{Ax}\leq\nm A\nm x$ for all $x\in\R^n$ \quad \textit{(compatibility)}
-	\item $\nm{AB}\leq\nm A\nm B$ \quad \textit{(submultiplicativity)}
+  \def\nm#1{\norm{#1}_*}
+  \item $\nm{Ax}\leq\nm A\nm x$ for all $x\in\R^n$ \quad \textit{(compatibility)}
+  \item $\nm{AB}\leq\nm A\nm B$ \quad \textit{(submultiplicativity)}
 \end{itemize}
 
 \Proposition{2.3.4}{Banach Lemma}\label{c733e75}
@@ -329,24 +315,23 @@ respectively. Then for all $A\in\R^{m\times n}$ and $B\in\R^{n\times
 Let $C\in\R^{n\times n}$ with $\norm C<1$ where $\norm\cdot$ is a
 submultiplicative matrix norm. THen $I+C$ is invertible and we have
 $$
-	\norm{(I+C)^{-1}}\leq\frac1{1-\norm C}
+  \norm{(I+C)^{-1}}\leq\frac1{1-\norm C}
 $$
 
 \Corollary{2.3.5}{}\label{ae04fae}
 
-Let $A,B\in\R^{n\times n}$ with $\norm{I-BA}<1$ for some
-submultiplicative norm $\norm\cdot$. Then $A$ and $B$ are invertible
-with
+Let $A,B\in\R^{n\times n}$ with $\norm{I-BA}<1$ for some submultiplicative norm
+$\norm\cdot$. Then $A$ and $B$ are invertible with
 $$
-	\norm{B^{-1}}\leq\frac{\norm A}{1-\norm{I-BA}}
+  \norm{B^{-1}}\leq\frac{\norm A}{1-\norm{I-BA}}
 $$
 
 \Definition{3.1.1}{Descent direction}\label{ac99a6d}
 
-Let $f:\R^n\to\R$ and $x\in\R^n$. A vector $d\in\R^n$ is said to be a
-descent direction of $f$ at $x$ if there exists $\eta>0$ such that
+Let $f:\R^n\to\R$ and $x\in\R^n$. A vector $d\in\R^n$ is said to be a descent
+direction of $f$ at $x$ if there exists $\eta>0$ such that
 $$
-	f(x+td)<f(x)\with(t\in(0,\eta])
+  f(x+td)<f(x)\with(t\in(0,\eta])
 $$
 
 \Proposition{3.1.2}{Sufficient condition for descent direction}\label{f81d53c}
@@ -354,40 +339,39 @@ $$
 Let $f:\R^n\to\R$ be directionally differentiable at $x\in\R^n$ in the
 direction $d\in\R^n$ with
 $$
-	f'(x;d)<0
+  f'(x;d)<0
 $$
 
-Then $d$ is a descent direction of $f$ at $x$. In particular, this is
-true if $f$ is differentiable at $x$ with
+Then $d$ is a descent direction of $f$ at $x$. In particular, this is true if
+$f$ is differentiable at $x$ with
 $$
-	\nabla f(x)^Td<0
+  \nabla f(x)^Td<0
 $$
 
 \begin{proof}
-	The first statement follows immediately from the definition of the
-	\href{37eb747}{directional derivative}. The second one uses
-	\href{ed67d29}{Lemma 2.1.2}.
+  The first statement follows immediately from the definition of the
+  \href{37eb747}{directional derivative}. The second one uses
+  \href{ed67d29}{Lemma 2.1.2}.
 \end{proof}
 
 \Corollary{3.1.3}{}\label{c41d0f0}
 
-Let $f:\R^n\to\R$ be differentiable, $B\in\R^{n\times n}$ be positive
-definite and $x\in\R^n$ with $\nabla f(x)\neq0$. Then $-B\nabla f(x)$
-is a descent direction of $f$ at $x$.
+Let $f:\R^n\to\R$ be differentiable, $B\in\R^{n\times n}$ be positive definite
+and $x\in\R^n$ with $\nabla f(x)\neq0$. Then $-B\nabla f(x)$ is a descent
+direction of $f$ at $x$.
 
 \begin{proof}
-	This result follows almost immediately from the definition of a
-	\href{37eb747}{descent direction} and the definition of a
-	\href{e25e722}{positive definite} matrix.
+  This result follows almost immediately from the definition of a
+  \href{37eb747}{descent direction} and the definition of a
+  \href{e25e722}{positive definite} matrix.
 \end{proof}
 
 \Definition{3.1.4}{Step-size rule}\label{ae4eac6}
 
-Let $f:{\R}^n\to{\R}$ be continuously differentiable and
-let $\mathcal A_f:=\{(x,d)\mid\nabla f(x)^Td<0\}$. A set-valued
-mapping
+Let $f:{\R}^n\to{\R}$ be continuously differentiable and let $\mathcal
+A_f:=\{(x,d)\mid\nabla f(x)^Td<0\}$. A set-valued mapping
 $$
-	T:(x,d)\in\mathcal A_f\mapsto T(x,d)\subset\R_{++}
+  T:(x,d)\in\mathcal A_f\mapsto T(x,d)\subset\R_{++}
 $$
 
 is called a step-size rule for $f$.
@@ -395,179 +379,170 @@ is called a step-size rule for $f$.
 We call it well-defined for $f$ if $T(x,d)\neq0$ for all
 $(x,d)\in\mathcal{A}_f$.
 
-If the step-size rule is well-defined for all continuously
-differentiable functions ${\R}^n\to{\R}$, we simply call it
-well-defined.
+If the step-size rule is well-defined for all continuously differentiable
+functions ${\R}^n\to{\R}$, we simply call it well-defined.
 
 \Definition{3.1.5}{Efficient step-size}\label{d23fdf0}
 
-Let $f:\R^n\to\R$ be continuously differentiable. The
-\href{ae4eac6}{step-size rule} $T$ is called efficient for $f$ if
-there exists $\theta>0$ such that
+Let $f:\R^n\to\R$ be continuously differentiable. The \href{ae4eac6}{step-size
+  rule} $T$ is called efficient for $f$ if there exists $\theta>0$ such that
 $$
-	f(x+td)\leq f(x)-\theta\left(\frac{\nabla f(x)^Td}{\norm d}\right)^2
+  f(x+td)\leq f(x)-\theta\left(\frac{\nabla f(x)^Td}{\norm d}\right)^2
 $$
 
 \Theorem{3.1.6}{Global convergence of general descent method}\label{aa19bbb}
 
-Let $f:\R^n\to\R$ be continuously differentiable, and let $\{x^k\}$,
-$\{d^k\}$, $\{t_k\}$ be generated by \href{edbf62c}{Algorithm 3.1.1}.
-Moreover, assume that the following hold:
+Let $f:\R^n\to\R$ be continuously differentiable, and let $\{x^k\}$, $\{d^k\}$,
+$\{t_k\}$ be generated by \href{edbf62c}{Algorithm 3.1.1}. Moreover, assume
+that the following hold:
 \begin{enumerati}
-	\item \textit{(Angle condition)} There exists $c>0$ such that
-	$$
-		-\frac{\nabla f(x^k)^Td^k}{\norm{\nabla f(x^k)}\cdot\norm{d^k}}\geq c\with\forall k\in\N
-	$$
+  \item \textit{(Angle condition)} There exists $c>0$ such that
+  $$
+    -\frac{\nabla f(x^k)^Td^k}{\norm{\nabla f(x^k)}\cdot\norm{d^k}}\geq c\with\forall k\in\N
+  $$
 
-	i.e. the angle between the gradient vector and the descent direction
-	is at most $90^\circ$.
-	\item \textit{(\href{d23fdf0}{Efficient step-size})} There exists
-	$\theta>0$ such that
-	$$
-		f(x^k+t_kd^k)\leq f(x^k)-\theta\left(
-		\frac{\nabla f(x^k)^Td^k}{\norm{d^k}}
-		\right)^2\with\forall k\in\N
-	$$
+  i.e. the angle between the gradient vector and the descent direction is at most
+  $90^\circ$.
+  \item \textit{(\href{d23fdf0}{Efficient step-size})} There exists
+  $\theta>0$ such that
+  $$
+    f(x^k+t_kd^k)\leq f(x^k)-\theta\left(
+    \frac{\nabla f(x^k)^Td^k}{\norm{d^k}}
+    \right)^2\with\forall k\in\N
+  $$
 \end{enumerati}
 Then every cluster point of $\{x^k\}$ is a stationary point of $f$.
 
 \begin{proof}
-	By (ii), there exists $\theta>0$ such that
-	$$
-		f(x^{k+1})=f(x^k+t_kd^k)\leq
-		f(x^k)-\theta\left(
-		\frac{\nabla f(x^k)^Td^k}{\norm{d^k}}
-		\right)^2\with\forall k\in\N
-	$$
-	Putting $k:=c^2\theta$, the angle condition implies
-	\begin{equation*}
-		f(x^{k+1})\leq f(x^k)-k\norm{\nabla f(x^k)}^2\Tag{*}
-	\end{equation*}
+  By (ii), there exists $\theta>0$ such that
+  $$
+    f(x^{k+1})=f(x^k+t_kd^k)\leq
+    f(x^k)-\theta\left(
+    \frac{\nabla f(x^k)^Td^k}{\norm{d^k}}
+    \right)^2\with\forall k\in\N
+  $$
+  Putting $k:=c^2\theta$, the angle condition implies
+  \begin{equation*}
+    f(x^{k+1})\leq f(x^k)-k\norm{\nabla f(x^k)}^2\Tag{*}
+  \end{equation*}
 
-	Let $\bar x$ be a cluster point of $\{x^k\}$. As $\{f(x^k)\}$ is
-	monotonically decreasing and convergent to $f(\bar x)$ on a
-	subsequence (since $\{x^k\}\to\bar x$ on a subsequence and $f$ is
-	continuous), \href{aaf3ba6}{this implies} that the whole sequence
-	$\{f(x^k)\}$ converges to $f(\bar x)$.
+  Let $\bar x$ be a cluster point of $\{x^k\}$. As $\{f(x^k)\}$ is monotonically
+  decreasing and convergent to $f(\bar x)$ on a subsequence (since
+  $\{x^k\}\to\bar x$ on a subsequence and $f$ is continuous), \href{aaf3ba6}{this
+    implies} that the whole sequence $\{f(x^k)\}$ converges to $f(\bar x)$.
 
-	In particular, we have
-	$$
-		f(x^{k+1})-f(x^k)\to0
-	$$
-	Therefore, $(*)$ implies $\norm{\nabla f(x^k)}\to0$ by squeezing.
+  In particular, we have
+  $$
+    f(x^{k+1})-f(x^k)\to0
+  $$
+  Therefore, $(*)$ implies $\norm{\nabla f(x^k)}\to0$ by squeezing.
 \end{proof}
 
 \Definition{3.2.0}{Armijo rule and sufficient decrease}\label{fefb024}
 
-Choose $\beta,\sigma\in(0,1)$. For $x,d\in\href{ae4eac6}{\mathcal
-		A_f}$ the Armijo rule $T_A$ is defined by
+Choose $\beta,\sigma\in(0,1)$. For $x,d\in\href{ae4eac6}{\mathcal A_f}$ the
+Armijo rule $T_A$ is defined by
 $$
-	T_A(x,d)=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq
-	f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}
+  T_A(x,d)=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq
+  f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}
 $$
 
 The inequality
 $$
-	f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k
+  f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k
 $$
 
-is called the \textit{Armijo condition}. It ensures a
-\textbf{sufficient decrease} on the objective function.
+is called the \textit{Armijo condition}. It ensures a \textbf{sufficient
+  decrease} on the objective function.
 
 \Example{3.2.1}{Insufficient decrease}\label{ae7f42d}
 
 Consider the function $f(x)=(x-1)^2-1$ with optimal value $f^*=-1$.
 
-The sequence $\{x_k\}$ with $x_k:=-\frac1k$ has
-$f(x_k)=\frac{1+2k}{k^2}$ and
+The sequence $\{x_k\}$ with $x_k:=-\frac1k$ has $f(x_k)=\frac{1+2k}{k^2}$ and
 $$
-	f(x_{k+1})-f(x_k)=\frac{2k^2+4k+1}{k^2(k+1^2)}<0
+  f(x_{k+1})-f(x_k)=\frac{2k^2+4k+1}{k^2(k+1^2)}<0
 $$
 
-Hence we've found a case where the objective value decreases, but
-$f(x_k)$ converges to a non-optimal value. ($f(x_k)\to0$, but we want
-$f(x_k)\to-1$)
+Hence we've found a case where the objective value decreases, but $f(x_k)$
+converges to a non-optimal value. ($f(x_k)\to0$, but we want $f(x_k)\to-1$)
 
 \Lemma{3.2.3}{Convergence to gradient}\label{f8e1f12}
 
 Let $f:\R^n\to\R$ be continuously differentiable. Moreover, let
-$\{x^k\in\R^n\}\to x$, $\{d^k\in\R^n\}\to d$ and
-$\{t_k>0\}\downarrow0$. Then
+$\{x^k\in\R^n\}\to x$, $\{d^k\in\R^n\}\to d$ and $\{t_k>0\}\downarrow0$. Then
 $$
-	\lim_{k\to\infty}\frac{f(x^k+t_kd^k)-f(x^k)}{t_k}=\nabla f(x)^Td
+  \lim_{k\to\infty}\frac{f(x^k+t_kd^k)-f(x^k)}{t_k}=\nabla f(x)^Td
 $$
 
 \begin{proof}
-	By the \href{d37aa2b}{mean value theorem}, for all $k\in\N$, there
-	exists $\eta^k\in[x^k,x^k+t_kd^k]$ such that
-	$$
-		f(x^k+t_kd^k)-f(x^k)=t_k\nabla f(\eta^k)^Td^k
-	$$
-	Clearly, $\eta^k\to x$ and hence the continuity of $\nabla f$ yields
-	$$
-		\nabla f(\eta^k)^Td^k\to\nabla f(x)^Td
-	$$
-	This readily implies
-	$$
-		\lim_{k\to\infty}\frac{f(x^k+t_kd^k)-f(x^k)}{t_k}=
-		\lim_{k\to\infty}\nabla f(\eta^k)^Td^k=
-		\nabla f(x)^Td
-	$$
+  By the \href{d37aa2b}{mean value theorem}, for all $k\in\N$, there
+  exists $\eta^k\in[x^k,x^k+t_kd^k]$ such that
+  $$
+    f(x^k+t_kd^k)-f(x^k)=t_k\nabla f(\eta^k)^Td^k
+  $$
+  Clearly, $\eta^k\to x$ and hence the continuity of $\nabla f$ yields
+  $$
+    \nabla f(\eta^k)^Td^k\to\nabla f(x)^Td
+  $$
+  This readily implies
+  $$
+    \lim_{k\to\infty}\frac{f(x^k+t_kd^k)-f(x^k)}{t_k}=
+    \lim_{k\to\infty}\nabla f(\eta^k)^Td^k=
+    \nabla f(x)^Td
+  $$
 \end{proof}
 
 \Theorem{3.2.4}{Global convergence of the gradient method}\label{bbb25cd}
 
-Let $f:\R^n\to\R$ be continuously differentiable. Then every cluster
-point of a sequence generated by the \href{ae01f6d}{Gradient method
-	with Armijo rule} is a stationary point of $f$.
+Let $f:\R^n\to\R$ be continuously differentiable. Then every cluster point of a
+sequence generated by the \href{ae01f6d}{Gradient method with Armijo rule} is a
+stationary point of $f$.
 
 \begin{proof}
-	\def\xk{\{x^k\}}
-	\def\grad#1{\nabla f(#1)}
-	Assume on the contrary that $\grad{\bar x}\neq0$.
+  \def\xk{\{x^k\}}
+  \def\grad#1{\nabla f(#1)}
+  Assume on the contrary that $\grad{\bar x}\neq0$.
 
-	Let $\bar x$ be a cluster point of the generated sequence $\xk$, and
-	let $\xk_K$ be a subsequence converging to $\bar x$. By the
-	continuity of $f$, $\{f(x^k)\}_K\to f(\bar x)$.
+  Let $\bar x$ be a cluster point of the generated sequence $\xk$, and let
+  $\xk_K$ be a subsequence converging to $\bar x$. By the continuity of $f$,
+  $\{f(x^k)\}_K\to f(\bar x)$.
 
-	As $\{f(x^k)\}$ is monotonically decreasing by the Armijo condition
-	and converges on a subsequence to $f(\bar x)$, \href{aaf3ba6}{by
-		inspection}, $\{f(x^k)\}_\N$ converges to $f(\bar x)$.
+  As $\{f(x^k)\}$ is monotonically decreasing by the Armijo condition and
+  converges on a subsequence to $f(\bar x)$, \href{aaf3ba6}{by inspection},
+  $\{f(x^k)\}_\N$ converges to $f(\bar x)$.
 
-	In particular, we have
-	$$f(x^k)-f(x^{k+1})\to0$$
+  In particular, we have
+  $$f(x^k)-f(x^{k+1})\to0$$
 
-	Substituting $t_k=\beta^l$ and $x^{k+1}=x^k+\beta^ld^k$ into steps
-	\textbf{(S2)} and \textbf{(S3)} of the algorithm, we have
-	$$
-		0\leq
-		t_k\norm{\grad{x^k}}^2=
-		-t_k\grad{x^k}^Td^k\leq
-		\frac{f(x^k)-f(x^{k+1})}\sigma\to0
-	$$
+  Substituting $t_k=\beta^l$ and $x^{k+1}=x^k+\beta^ld^k$ into steps
+  \textbf{(S2)} and \textbf{(S3)} of the algorithm, we have
+  $$
+    0\leq
+    t_k\norm{\grad{x^k}}^2=
+    -t_k\grad{x^k}^Td^k\leq
+    \frac{f(x^k)-f(x^{k+1})}\sigma\to0
+  $$
 
-	Since $\{\grad{x^k}\}_K\to\grad{\bar x}\neq0$ (by continuity of $\nabla
-		f$), by squeeze theorem on the above inequality, this implies that
-	$\{t_k\}_K\to0$. Due to \textbf{(S3)}, for all $k\in K$ sufficiently
-	large, we have
-	\begin{equation*}
+  Since $\{\grad{x^k}\}_K\to\grad{\bar x}\neq0$ (by continuity of $\nabla f$), by
+  squeeze theorem on the above inequality, this implies that $\{t_k\}_K\to0$. Due
+  to \textbf{(S3)}, for all $k\in K$ sufficiently large, we have
+  \begin{equation*}
     f(x^k+\beta^{l_k-1}d^k)-f(x^k)>\beta^{l_k-1}\sigma\grad{x^k}^Td^k\Tag{*}
-	\end{equation*}
+  \end{equation*}
 
-	where $\beta^{l_k}=t_k$ and $l_k\in\N$ is the exponent
-	\textit{uniquely} determined by the Armijo rule in \textbf{(S3)}.
-	Note that $l_k$ is the smallest value of $l$ that satisfies the
-	\href{fefb024}{Armijo condition}, and hence $l_k-1$ does \textit{not}
-	satisfy the Armijo condition, hence $(*)$.
+  where $\beta^{l_k}=t_k$ and $l_k\in\N$ is the exponent \textit{uniquely}
+  determined by the Armijo rule in \textbf{(S3)}. Note that $l_k$ is the smallest
+  value of $l$ that satisfies the \href{fefb024}{Armijo condition}, and hence
+  $l_k-1$ does \textit{not} satisfy the Armijo condition, hence $(*)$.
 
-	Passing to the limit on $K$ and using \href{f8e1f12}{Lemma 3.2.3}
-	gives
-	$$
-		-\norm{\nabla f(\bar x)}^2\geq-\sigma\norm{\nabla f(\bar x)}^2
-	$$
-	Which is a contradiction because $\sigma\in(0,1)$ and $\nabla f(\bar
-		x)\neq0$ by assumption. Hence, $\bar x$ is indeed a stationary point
-	of $f$, completing the proof.
+  Passing to the limit on $K$ and using \href{f8e1f12}{Lemma 3.2.3} gives
+  $$
+    -\norm{\nabla f(\bar x)}^2\geq-\sigma\norm{\nabla f(\bar x)}^2
+  $$
+  Which is a contradiction because $\sigma\in(0,1)$ and $\nabla f(\bar
+  x)\neq0$ by assumption. Hence, $\bar x$ is indeed a stationary point
+  of $f$, completing the proof.
 \end{proof}
 
 \Proposition{3.2.7}{Kantorovich inequality}\label{eb4e630}
@@ -575,46 +550,46 @@ point of a sequence generated by the \href{ae01f6d}{Gradient method
 Let $A\in\R^{n\times n}$ symmetric positive definite. Then
 
 \begin{equation*}
-	\def\l{\lambda_{\min}}\def\L{\lambda_{\max}}
-	\frac{4\l\L}{(\l+\L)^2}\leq\frac{\norm d^4}{(d^TAd)(d^TA^{-1}d)}
-	\with\forall(d\in\R^n\setminus\{0\})
+  \def\l{\lambda_{\min}}\def\L{\lambda_{\max}}
+  \frac{4\l\L}{(\l+\L)^2}\leq\frac{\norm d^4}{(d^TAd)(d^TA^{-1}d)}
+  \with\forall(d\in\R^n\setminus\{0\})
 \end{equation*}
 
 \Theorem{3.2.8}{Gradient method for strongly convex quadratics}\label{a7fa49e}
 
 Let $f:\R^n\to\R$ be given by
 $$
-	f(x)=\frac12x^TAx+b^Tx
+  f(x)=\frac12x^TAx+b^Tx
 $$
 
-where $A\in\R^{n\times n}$ is symmetric positive definite and
-$b\in\R^n$. Let $\bar x:=-A^{-1}b$ be the (unique) global minimizer of
-$f$. Assume that $\{x^k\}$ is generated by the gradient method from
-\href{ae01f6d}{Algorithm 3.2.1}. Then the following hold.
+where $A\in\R^{n\times n}$ is symmetric positive definite and $b\in\R^n$. Let
+$\bar x:=-A^{-1}b$ be the (unique) global minimizer of $f$. Assume that
+$\{x^k\}$ is generated by the gradient method from \href{ae01f6d}{Algorithm
+  3.2.1}. Then the following hold.
 \begin{enumerata}
-	\item \textit{(Convergence of function values)}
-	\begin{equation*}
-		\def\l{\lambda_{\min}}\def\L{\lambda_{\max}}
-		f(x^{k+1})-f(\bar x)\leq\left(\frac{\L-\l}{\L+\l}\right)^2(f(x^k)-f(\bar x))\with\forall(k\in\N)
-	\end{equation*}
-	i.e. the sequence $\{f(x^k)\}$ converges linearly to $f(\bar x)$.
+  \item \textit{(Convergence of function values)}
+  \begin{equation*}
+    \def\l{\lambda_{\min}}\def\L{\lambda_{\max}}
+    f(x^{k+1})-f(\bar x)\leq\left(\frac{\L-\l}{\L+\l}\right)^2(f(x^k)-f(\bar x))\with\forall(k\in\N)
+  \end{equation*}
+  i.e. the sequence $\{f(x^k)\}$ converges linearly to $f(\bar x)$.
 
-	\item \textit{(Convergence of variables)}
-	\begin{equation*}
-		\def\l{\lambda_{\min}}\def\L{\lambda_{\max}}
-		\norm{x^k-\bar x}\leq
-		\sqrt{\frac\L\l}
-		\left(\frac{\L-\l}{\L+\l}\right)^k\norm{x^0-\bar x}\with\forall(k\in\N)
-	\end{equation*}
-	i.e. $\{x^k\}$ converges to $\bar x$ for any starting point $x^0$.
+  \item \textit{(Convergence of variables)}
+  \begin{equation*}
+    \def\l{\lambda_{\min}}\def\L{\lambda_{\max}}
+    \norm{x^k-\bar x}\leq
+    \sqrt{\frac\L\l}
+    \left(\frac{\L-\l}{\L+\l}\right)^k\norm{x^0-\bar x}\with\forall(k\in\N)
+  \end{equation*}
+  i.e. $\{x^k\}$ converges to $\bar x$ for any starting point $x^0$.
 \end{enumerata}
 
 \Definition{3.2.9}{Condition number}\label{bde2dc3}
 
-For a symmetric positive definite matrix $A$, its \textit{condition
-	number} is given by
+For a symmetric positive definite matrix $A$, its \textit{condition number} is
+given by
 $$
-	\text{cond}(A):=\frac{\lambda_{\max}(A)}{\lambda_{\min}(A)}
+  \text{cond}(A):=\frac{\lambda_{\max}(A)}{\lambda_{\min}(A)}
 $$
 
 The condition number of the matrix influences the convergence rate in
@@ -623,91 +598,90 @@ convergence can be very slow.
 
 \Definition{3.3.1}{Convergence rates}\label{b401f98}
 
-Let $\{x^k\in\R^n\}\to\bar x$ and $\norm\cdot$ be an arbitrary norm on
-$\R^n$. Then $\{x^k\}$ converges (at least)
+Let $\{x^k\in\R^n\}\to\bar x$ and $\norm\cdot$ be an arbitrary norm on $\R^n$.
+Then $\{x^k\}$ converges (at least)
 \begin{enumerati}
-	\def\X{\norm{x^{k+1}-\bar x}}\def\x{\norm{x^{k}-\bar x}}
-	\item \textbf{linearly} to $\bar x$ if there exists $c\in(0,1)$ such that
-	$$
-		\X\leq c\x\with(k\in\N\text{ sufficiently large})
-	$$
-	\item \textbf{superlinearly} to $\bar x$ if
-	$$
-		\lim_{k\to\infty}\frac\X\x=0
-	$$
-	\item \textbf{quadratically} to $\bar x$ if there exists $C>0$ such that
-	$$
-		\X\leq C\x^2\with\forall(k\in\N)
-	$$
+  \def\X{\norm{x^{k+1}-\bar x}}\def\x{\norm{x^{k}-\bar x}}
+  \item \textbf{linearly} to $\bar x$ if there exists $c\in(0,1)$ such that
+  $$
+    \X\leq c\x\with(k\in\N\text{ sufficiently large})
+  $$
+  \item \textbf{superlinearly} to $\bar x$ if
+  $$
+    \lim_{k\to\infty}\frac\X\x=0
+  $$
+  \item \textbf{quadratically} to $\bar x$ if there exists $C>0$ such that
+  $$
+    \X\leq C\x^2\with\forall(k\in\N)
+  $$
 \end{enumerati}
 
 \Definition{3.3.2}{Landau symbols}\label{e32ba11}
 
 Let $\{a_k>0\},\ \{b_k>0\}\downarrow0$. Then we define
 $$
-	\begin{array}{r c l}
-		a_k=o(b_k) & \iff & \displaystyle\lim_{k\to\infty}\frac{a_k}{b_k}=0 \\[0.7em]
-		a_k=O(b_k) & \iff & \exists C>0,\forall k\in\N:a_k\leq Cb_k
-	\end{array}
+  \begin{array}{r c l}
+    a_k=o(b_k) & \iff & \displaystyle\lim_{k\to\infty}\frac{a_k}{b_k}=0 \\[0.7em]
+    a_k=O(b_k) & \iff & \exists C>0,\forall k\in\N:a_k\leq Cb_k
+  \end{array}
 $$
 
-Rewriting \href{b401f98}{Definition 3.3.1} using Landau notation, we
-say $\{x^k\}\to\bar x$ converges
+Rewriting \href{b401f98}{Definition 3.3.1} using Landau notation, we say
+$\{x^k\}\to\bar x$ converges
 \begin{enumerati}
-	\item superlinearly if and only if
-	$$
-		\norm{x^{k+1}-\bar x}=o(\norm{x^{k}-\bar x})
-	$$
-	\item quadratically if and only if
-	$$
-		\norm{x^{k+1}-\bar x}=O(\norm{x^{k}-\bar x}^2)
-	$$
+  \item superlinearly if and only if
+  $$
+    \norm{x^{k+1}-\bar x}=o(\norm{x^{k}-\bar x})
+  $$
+  \item quadratically if and only if
+  $$
+    \norm{x^{k+1}-\bar x}=O(\norm{x^{k}-\bar x}^2)
+  $$
 \end{enumerati}
 
 \Remark{3.3.3a}{Newton's method}\label{d6c0554}
 
 Our goal is to effectively solve
 $$
-	F(x)=0
+  F(x)=0
 $$
 
-where $F:\R^n\to\R^n$ is assumed to be continuously differentiable.
-The method we are going to study is called \textit{Newton's method}
-and its basic idea is shockingly simple and relies on
-\textit{linearization}, one of the most basic principles in
-mathematics:
+where $F:\R^n\to\R^n$ is assumed to be continuously differentiable. The method
+we are going to study is called \textit{Newton's method} and its basic idea is
+shockingly simple and relies on \textit{linearization}, one of the most basic
+principles in mathematics:
 
-Suppose $\bar x$ is a root of $F$ and $x^k$ is our current
-approximation of it. Then consider a local, linear approximation
+Suppose $\bar x$ is a root of $F$ and $x^k$ is our current approximation of it.
+Then consider a local, linear approximation
 $$
-	x\mapsto F_k(x):=F(x^k)+F'(x^k)(x-x^k)
+  x\mapsto F_k(x):=F(x^k)+F'(x^k)(x-x^k)
 $$
 of $F$ at $x^k$. Now, compute $x^{k+1}$ as a root of $F_k$, and we
 should move closer to $\bar x$.
 
 If $F'(x^k)\in\R^{n\times n}$ is invertible we can write
 $$
-	x^{k+1}=x^k-F'(x^k)^{-1}F(x^k)
+  x^{k+1}=x^k-F'(x^k)^{-1}F(x^k)
 $$
 
-But for numerical reasons one does not explicitly invert a matrix, but
-instead will compute the \textit{Newton direction} $d^k$ as solution
-to the \textit{Newton equation}
+But for numerical reasons one does not explicitly invert a matrix, but instead
+will compute the \textit{Newton direction} $d^k$ as solution to the
+\textit{Newton equation}
 $$
-	F'(x^k)d=-F(x^k)
+  F'(x^k)d=-F(x^k)
 $$
 
-and then update $x^{k+1}:=x^k+d^k$. This yields
-\href{abbc9be}{Algorithm 3.3.1}.
+and then update $x^{k+1}:=x^k+d^k$. This yields \href{abbc9be}{Algorithm
+  3.3.1}.
 
 \Lemma{3.3.3}{Local invertibility}\label{ad66265}
 
-Let $F:\R^n\to\R^n$ be continuously differentiable and $\bar x\in\R^n$
-such that $F'(\bar x)$ is invertible. Then there exists $\epsilon>0$
-such that $F'(x)$ is invertible for all $x\in B_\epsilon(\bar x)$.
-Moreover, there exists $c>0$ such that
+Let $F:\R^n\to\R^n$ be continuously differentiable and $\bar x\in\R^n$ such
+that $F'(\bar x)$ is invertible. Then there exists $\epsilon>0$ such that
+$F'(x)$ is invertible for all $x\in B_\epsilon(\bar x)$. Moreover, there exists
+$c>0$ such that
 $$
-	\norm{F'(x)^{-1}}\leq c\with(x\in B_\epsilon(\bar x))
+  \norm{F'(x)^{-1}}\leq c\with(x\in B_\epsilon(\bar x))
 $$
 
 % #[comment]
@@ -720,66 +694,63 @@ $$
 Using the Landau notation, we can express the fact that $F$ is
 \href{c62315d}{differentiable} at $\bar x\in\R^n$ if and only if
 $$
-	\norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}=o(\norm{x^{k}-\bar x})
+  \norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}=o(\norm{x^{k}-\bar x})
 $$
 
 for all sequences $\{x^k\}\to\bar x$.
 
 Here's how it's expanded:
 $$
-	\lim_{x^k\to\bar x}\frac{\norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}}{\norm{x^k-\bar x}}=0
+  \lim_{x^k\to\bar x}\frac{\norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}}{\norm{x^k-\bar x}}=0
 $$
 
 \Definition{3.3.4}{Local Lipschitz}\label{ba65fa0}
 
 We say that $G:\R^n\to\R^m$ is locally Lipschitz (continuous) at $\bar
-	x\in\R^n$ if there exists $L=L(\bar x)>0$ such that
+x\in\R^n$ if there exists $L=L(\bar x)>0$ such that
 $$
-	\norm{G(x)-G(y)}\leq L\norm{x-y}\with(x,y\in B_\epsilon(\bar x))
+  \norm{G(x)-G(y)}\leq L\norm{x-y}\with(x,y\in B_\epsilon(\bar x))
 $$
 
 \Lemma{3.3.5}{}\label{a71a60e}
 
-Let $F:\R^n\to\R^n$ be continuously differentiable and $\{x^k\}$ such
-that $x^k\to\bar x$. Then
+Let $F:\R^n\to\R^n$ be continuously differentiable and $\{x^k\}$ such that
+$x^k\to\bar x$. Then
 $$
-	\norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}=o(\norm{x^{k}-\bar x})
+  \norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}=o(\norm{x^{k}-\bar x})
 $$
 
-If $F'$ is, in addition, \href{ba65fa0}{locally Lipschitz continuous},
-we also have
+If $F'$ is, in addition, \href{ba65fa0}{locally Lipschitz continuous}, we also
+have
 $$
-	\norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}=O(\norm{x^{k}-\bar x}^2)
+  \norm{F(x^k)-F(\bar x)-F'(x^k)(x^k-\bar x)}=O(\norm{x^{k}-\bar x}^2)
 $$
 
 \Theorem{3.3.6}{Convergence of local Newton's method for equations}\label{fc03f3f}
 
-Let $F:\R^n\to\R^n$ be continuously differentiable and let $\bar x$ be
-a root of $F$ such that $F'(\bar x)$ is invertible. Then there exists
-$\epsilon>0$ such that for every $x^0\in B_\epsilon(\bar x)$, the
-following hold:
+Let $F:\R^n\to\R^n$ be continuously differentiable and let $\bar x$ be a root
+of $F$ such that $F'(\bar x)$ is invertible. Then there exists $\epsilon>0$
+such that for every $x^0\in B_\epsilon(\bar x)$, the following hold:
 \begin{enumerata}
-	\item The local Newton method from \href{abbc9be}{Algorithm 3.3.1} is
-	well-defined and generates a sequence $\{x^k\}$ convergent to $\bar
-		x$.
-	\item The rate of convergence is at least superlinear.
-	\item If in addition $F'$ is \href{ba65fa0}{locally Lipschitz
-		continuous} at $\bar x$ the rate of convergence is quadratic.
+  \item The local Newton method from \href{abbc9be}{Algorithm 3.3.1} is well-defined
+  and generates a sequence $\{x^k\}$ convergent to $\bar x$.
+  \item The rate of convergence is at least superlinear.
+  \item If in addition $F'$ is \href{ba65fa0}{locally Lipschitz continuous} at $\bar x$
+  the rate of convergence is quadratic.
 \end{enumerata}
 
 \Remark{3.3.6a}{Newton's method in optimization}\label{f2a142c}
 
-We now want to exploit our study of Newton's method for solving
-smooth, nonlinear equations to tackle unconstrained optimization
-problems of the form
+We now want to exploit our study of Newton's method for solving smooth,
+nonlinear equations to tackle unconstrained optimization problems of the form
 $$
-	\min_{x\in\R^n} f(x)
+  \min_{x\in\R^n} f(x)
 $$
 
 where $f:\R^n\to\R$ is at least twice continuously differentiable. Recall that
 a necessary condition for $\bar x$ to be a local minimizer of $f$ is
 $$
-	\nabla f(\bar x)=0
+  \nabla f(\bar x)=0
 $$
 So we can put $F:=\nabla f$ and we have $F:\R^n\to\R$ continuously
 differentiable, and all local minimizers of $f$ are among its roots.
@@ -788,23 +759,23 @@ This yields \href{c2bcc4e}{Algorithm 3.3.2}.
 
 \Theorem{3.3.7}{Convergence of local Newton's method for optimization}\label{bf187b2}
 
-Let $f:\R^n\to\R$ be twice continuously differentiable and let $\bar
-	x$ be a stationary point of $f$ such that $\nabla^2f(\bar x)$ is
-invertible. Then there exists $\epsilon>0$ such that for every $x^0\in
-	B_\epsilon(\bar x)$, the following hold:
+Let $f:\R^n\to\R$ be twice continuously differentiable and let $\bar x$ be a
+stationary point of $f$ such that $\nabla^2f(\bar x)$ is invertible. Then there
+exists $\epsilon>0$ such that for every $x^0\in B_\epsilon(\bar x)$, the
+following hold:
 \begin{enumerata}
-	\item \href{c2bcc4e}{Algorithm 3.3.2} is well-defined and generates
-	a sequence $\{x^k\}$ convergent to $\bar x$.
-	\item The rate of convergence is at least superlinear.
-	\item If in addition $\nabla^2f$ is \href{ba65fa0}{locally Lipschitz
-		continuous} at $\bar x$ the rate of convergence is quadratic.
+  \item \href{c2bcc4e}{Algorithm 3.3.2} is well-defined and generates
+  a sequence $\{x^k\}$ convergent to $\bar x$.
+  \item The rate of convergence is at least superlinear.
+  \item If in addition $\nabla^2f$ is \href{ba65fa0}{locally Lipschitz continuous} at
+  $\bar x$ the rate of convergence is quadratic.
 \end{enumerata}
 
 \Theorem{3.3.9}{Global convergence of \href{a7a5665}{Algorithm 3.3.3}}\label{a66db73}
 
-Let $f:\R^n\to\R$ be twice continuously differentiable. Then every
-cluster point of a sequence generated by \href{a7a5665}{Algorithm
-	3.3.3} is a stationary point of $f$.
+Let $f:\R^n\to\R$ be twice continuously differentiable. Then every cluster
+point of a sequence generated by \href{a7a5665}{Algorithm 3.3.3} is a
+stationary point of $f$.
 
 % \begin{proof}
 % 	\def\xk{\{x^k\}}
@@ -821,30 +792,28 @@ cluster point of a sequence generated by \href{a7a5665}{Algorithm
 
 \Lemma{3.3.10}{Moré and Sorensen}\label{a95dfe1}
 
-Let $\bar x$ be an isolated cluster point of $\{x^k\in\R^n\}$ and
-assume that $\{\norm{x^{k+1}-x^k}\}_K\to0$ for every subsequence
-$\{x^k\}_K\to\bar x$. Then the whole sequence $\{x^k\}$ converges to
-$\bar x$.
+Let $\bar x$ be an isolated cluster point of $\{x^k\in\R^n\}$ and assume that
+$\{\norm{x^{k+1}-x^k}\}_K\to0$ for every subsequence $\{x^k\}_K\to\bar x$. Then
+the whole sequence $\{x^k\}$ converges to $\bar x$.
 
 \Corollary{3.3.11}{}\label{aabc89a}
 
-Let $\bar x$ be an isolated cluster point of a sequence $\{x^k\}$
-generated by \href{a7a5665}{Algorithm 3.3.3}. Then the whole sequence
-$\{x^k\}$ converges to $\bar x$.
+Let $\bar x$ be an isolated cluster point of a sequence $\{x^k\}$ generated by
+\href{a7a5665}{Algorithm 3.3.3}. Then the whole sequence $\{x^k\}$ converges to
+$\bar x$.
 
 \Proposition{3.3.12}{Acceptance of full step-size in globalized Newton's method}\label{d6d6148}
 
-Let $f:\R^n\to\R$ be twice continuously differentiable, and $\bar
-	x\in\R^n$ such that $\nabla f(\bar x)=0$ and $\nabla^2f(\bar x)$ is
-positive definite. Assume that $\{x^k\}\to\bar x$ and that $d^k$ is
-given by
+Let $f:\R^n\to\R$ be twice continuously differentiable, and $\bar x\in\R^n$
+such that $\nabla f(\bar x)=0$ and $\nabla^2f(\bar x)$ is positive definite.
+Assume that $\{x^k\}\to\bar x$ and that $d^k$ is given by
 \begin{gather*}
-	d^k = -\nabla^2f(x^k)^{-1}\nabla f(x^k) \\
-	\text{\footnotesize{(\href{d6c0554}{Newton Equation})}}
+  d^k = -\nabla^2f(x^k)^{-1}\nabla f(x^k) \\
+  \text{\footnotesize{(\href{d6c0554}{Newton Equation})}}
 \end{gather*}
 Then there exists $k_0\in\N$ such that $\forall\sigma\in(0,\frac12),\ k\geq k_0$:
 $$
-	f(x^k+d^k)\leq f(x^k)+\sigma\nabla f(x^k)^Td^k
+  f(x^k+d^k)\leq f(x^k)+\sigma\nabla f(x^k)^Td^k
 $$
 
 The significance of this last equation being that $f$ experiences
@@ -852,20 +821,20 @@ The significance of this last equation being that $f$ experiences
 
 \Theorem{3.3.13}{}\label{e58830c}
 
-Let $f:\R^n\to\R$ be twice continuously differentiable and let
-$\{x^k\}$ be generated by \href{a7a5665}{Algorithm 3.3.3}. If $\bar x$
-is a cluster point of $\{x^k\}$ such that $\nabla^2f(\bar x)$ is
-positive definite then the following hold:
+Let $f:\R^n\to\R$ be twice continuously differentiable and let $\{x^k\}$ be
+generated by \href{a7a5665}{Algorithm 3.3.3}. If $\bar x$ is a cluster point of
+$\{x^k\}$ such that $\nabla^2f(\bar x)$ is positive definite then the following
+hold:
 \begin{enumerata}
-\item The whole sequence $\{x^k\}$ converges to $\bar x$ and $\bar x$
-  is a strict local minimizer of $f$.
-\item For all $k\in\N$ sufficiently large, the search direction $d^k$
-  will be determined through the \href{d6c0554}{Newton equation}.
-\item For all $k\in\N$ sufficiently large, the full step-size $t_k=1$
-  will be accepted
-\item $\{x^k\}$ converges superlinearly to $\bar x$
-\item If $\nabla^2f$ is locally Lipschitz then $\{\bar x\}$ converges
-  to $\bar x$ quadratically.
+  \item The whole sequence $\{x^k\}$ converges to $\bar x$ and $\bar x$ is a strict
+  local minimizer of $f$.
+  \item For all $k\in\N$ sufficiently large, the search direction $d^k$ will be
+  determined through the \href{d6c0554}{Newton equation}.
+  \item For all $k\in\N$ sufficiently large, the full step-size $t_k=1$ will be
+  accepted
+  \item $\{x^k\}$ converges superlinearly to $\bar x$
+  \item If $\nabla^2f$ is locally Lipschitz then $\{\bar x\}$ converges to $\bar x$
+  quadratically.
 \end{enumerata}
 
 % TODO: Chapter 3.3.4: Quasi-Newton Methods
@@ -877,10 +846,10 @@ positive definite then the following hold:
 \Remark{x.x.x}{Collection of unconstrained minimization methods}\label{a75d03d}
 
 \begin{enumerate}
-	\item Gradient method
-	\item Globalized Newton's method
-	\item Globalized BFGS method
-	\item Globalized inexact Newton's method
+  \item Gradient method
+  \item Globalized Newton's method
+  \item Globalized BFGS method
+  \item Globalized inexact Newton's method
 \end{enumerate}
 
 \Algorithm{3.1.1}{General line-search descent algorithm}\label{edbf62c}
@@ -889,11 +858,11 @@ Goal is to solve
 $$\min_{x\in\R^n}f(x).$$
 
 \begin{enumerate}
-	\item [\textbf{(S0)}] \textit{Initialization}: Choose $x^0\in\R^n$ and put $k:=0$.
-	\item [\textbf{(S1)}] \textit{Termination}: If $x^k$ satisfies a termination criterion: STOP.
-	\item [\textbf{(S2)}] \textit{Search direction}: Determine $d^k$ such that $\nabla f(x^k)^Td^k<0$.
-	\item [\textbf{(S3)}] \textit{Step-size}: Determine $t_k>0$ such that $f(x^k+t_kd^k)<f(x^k)$.
-	\item [\textbf{(S4)}] \textit{Update}: Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+  \item [\textbf{(S0)}] \textit{Initialization}: Choose $x^0\in\R^n$ and put $k:=0$.
+  \item [\textbf{(S1)}] \textit{Termination}: If $x^k$ satisfies a termination criterion: STOP.
+  \item [\textbf{(S2)}] \textit{Search direction}: Determine $d^k$ such that $\nabla f(x^k)^Td^k<0$.
+  \item [\textbf{(S3)}] \textit{Step-size}: Determine $t_k>0$ such that $f(x^k+t_kd^k)<f(x^k)$.
+  \item [\textbf{(S4)}] \textit{Update}: Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
 
 \Algorithm{3.2.1}{Gradient method with Armijo rule}\label{ae01f6d}
@@ -902,12 +871,12 @@ Goal is to solve
 $$\min_{x\in\R^n}f(x).$$
 
 \begin{enumerate}
-	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\sigma,\beta\in(0,1)$, $\epsilon\geq0$ and put $k:=0$.
-	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
-	\item [\textbf{(S2)}] Put $d^k:=-\nabla f(x^k)$.
-	\item [\textbf{(S3)}] Determine $t_k>0$ by
-	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
-	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+  \item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\sigma,\beta\in(0,1)$, $\epsilon\geq0$ and put $k:=0$.
+  \item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
+  \item [\textbf{(S2)}] Put $d^k:=-\nabla f(x^k)$.
+  \item [\textbf{(S3)}] Determine $t_k>0$ by
+        $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
+  \item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
 
 \Algorithm{3.3.1}{Local Newton's method for equations}\label{abbc9be}
@@ -918,11 +887,11 @@ $$F(x)=0$$
 where $F:\R^n\to\R^n$ and $F$ is assumed to be continuously differentiable.
 
 \begin{enumerate}
-	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\epsilon\geq0$ and put $k:=0$.
-	\item [\textbf{(S1)}] If $\norm{F(x^k)}\leq\epsilon$, STOP.
-	\item [\textbf{(S2)}] Compute $d^k$ as a solution of
-	      $$F'(x^k)d=-F(x^k)$$
-	\item [\textbf{(S3)}] Put $x^{k+1}:=x^k+d^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+  \item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\epsilon\geq0$ and put $k:=0$.
+  \item [\textbf{(S1)}] If $\norm{F(x^k)}\leq\epsilon$, STOP.
+  \item [\textbf{(S2)}] Compute $d^k$ as a solution of
+        $$F'(x^k)d=-F(x^k)$$
+  \item [\textbf{(S3)}] Put $x^{k+1}:=x^k+d^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
 
 \Algorithm{3.3.2}{Local Newton's method for unconstrained optimization}\label{c2bcc4e}
@@ -934,11 +903,11 @@ The following is obtained by substituting $F$ for $\nabla f$ in the
 \href{abbc9be}{local Newton's method for equations}.
 
 \begin{enumerate}
-	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\epsilon\geq0$ and put $k:=0$.
-	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
-	\item [\textbf{(S2)}] Compute $d^k$ as a solution of
-	      $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
-	\item [\textbf{(S3)}] Put $x^{k+1}:=x^k+d^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+  \item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\epsilon\geq0$ and put $k:=0$.
+  \item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
+  \item [\textbf{(S2)}] Compute $d^k$ as a solution of
+        $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
+  \item [\textbf{(S3)}] Put $x^{k+1}:=x^k+d^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
 
 \Algorithm{3.3.3}{Globalized Newton's method for unconstrained optimization}\label{a7a5665}
@@ -950,17 +919,17 @@ The following is obtained by substituting $F$ for $\nabla f$ in the
 \href{abbc9be}{local Newton's method for equations}.
 
 \begin{enumerate}
-	\item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\rho>0$, $p>2$, $\beta\in(0,1)$, $\sigma\in(0,\frac12)$, $\epsilon\geq0$ and put $k:=0$.
-	\item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
-	\item [\textbf{(S2)}] Try to compute $d^k$ as a solution of
-	      $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
-	      If no solution can be found or if
-	      \begin{gather*}
-		      \nabla f(x^k)^Td^k>-\rho\norm{d^k}^p\\
-		      \text{\footnotesize{(\href{fefb024}{insufficient decrease})}}
-	      \end{gather*}
-	      then fall back to $d^k:=-\nabla f(x^k)$
-	\item [\textbf{(S3)}] Determine $t_k$ by
-	      $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
-	\item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
+  \item [\textbf{(S0)}] Choose $x^0\in\R^n$, $\rho>0$, $p>2$, $\beta\in(0,1)$, $\sigma\in(0,\frac12)$, $\epsilon\geq0$ and put $k:=0$.
+  \item [\textbf{(S1)}] If $\norm{\nabla f(x^k)}\leq\epsilon$, STOP.
+  \item [\textbf{(S2)}] Try to compute $d^k$ as a solution of
+        $$\nabla^2f(x^k)d=-\nabla f(x^k)$$
+        If no solution can be found or if
+        \begin{gather*}
+          \nabla f(x^k)^Td^k>-\rho\norm{d^k}^p\\
+          \text{\footnotesize{(\href{fefb024}{insufficient decrease})}}
+        \end{gather*}
+        then fall back to $d^k:=-\nabla f(x^k)$
+  \item [\textbf{(S3)}] Determine $t_k$ by
+        $$t_k:=\max_{l\in\N_0}\{\beta^l\mid f(x^k+\beta^ld^k)\leq f(x^k)+\beta^l\sigma\nabla f(x^k)^Td^k\}$$
+  \item [\textbf{(S4)}] Put $x^{k+1}:=x^k+t_kd^k$, $k\gets k+1$ and go to \textbf{(S1)}.
 \end{enumerate}
