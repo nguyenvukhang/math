@@ -21,3 +21,7 @@ class Regex:
     LABEL_ENDL = re_compile(b"\\\\label{([a-z0-9]{7})}$")
     HREF = re_compile(b"\\\\href{([a-z0-9]{7})}")
     STAR_NUM = re_compile(b"^\*\[\d+\]$")  # }}}
+    SECTION = re_compile(b"^\\\\section{(.*)}\\\\label{([a-z0-9]{7})}$")  # }}}
+    MARKED = re_compile(
+        b"^\\\\(.*){([0-9a-z\\.]+)}{(.*)}\\\\label{([a-z0-9]{7})}$"
+    )  # }}}

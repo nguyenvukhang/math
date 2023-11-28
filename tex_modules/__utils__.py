@@ -89,7 +89,7 @@ def should_pretty_print(x):
 
 
 # quick routine to read a file into bytes
-def read_file(path):  # type: (str) -> list[bytes]
+def read_file(path):  # type: (str) -> bytes
     with open(path, "rb") as f:
         return f.read()
 
@@ -146,3 +146,17 @@ class Line:
         if hit is None:
             return None
         return hit.groups()[0]
+
+    def remove_hrefs(line):  # type: (bytes) -> bytes
+        buf = b''
+        j = 0
+        i = line.find(b"\\href{")
+        while i >= 0:
+            buf += line[j:i]
+            # get past the reference SHA
+            _, i = get_in_between(line, i)
+            text, j = get_in_between(line, i)
+            buf += text
+            i = line.find(b"\\href{", j)
+        buf += line[j:]
+        return buf

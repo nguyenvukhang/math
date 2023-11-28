@@ -65,7 +65,29 @@ class PdfLatex:
         return b
 
     def generate_toc(self):
-        pass
+        marks = [*MARKS_WITH_BSLS, b"\\section"]
+        for file in self.a.tex_files:
+            lines = read_file(file).splitlines()
+            lines = filter(lambda l: any([l.startswith(m) for m in marks]), lines)
+            for line in lines:
+                if line.startswith(b"\\section"):
+                    title, sha = Regex.SECTION.match(line).groups()
+                    self.write(b"{\\Large{" + title + b"}}\n")
+                    self.write(b"\\begin{itemize}")
+                else:
+                    # BUG: if section is empty LaTeX will bug out on
+                    # an empty list
+                    mark = Line.get_mark(line)[1:]
+                    num, i = get_in_between(line, 0)
+                    name, i = get_in_between(line, i)
+                    sha, _ = get_in_between(line, i)
+                    s = b" "
+                    title = mark + s + num + s + name
+                    val = b"\\item[-]\\href{" + sha + b"}{" + title + b"}"
+                    print(val[:40])
+                    self.write(val)
+                    pass
+            self.write(b"\\end{itemize}")
         # if not self.a.toc:
         #     return
         # self.write(b"\\section{Table of Contents}")
@@ -116,7 +138,6 @@ class PdfLatex:
     def filtered_stdout(self):
         buf, is_err = [], False
         lines = iter(self.x.stdout.readline, b"")
-        lines = filter(lambda v: v.removesuffix(b"\n"), lines)
         for l in lines:
             excl, ast = l.startswith(b"!"), l.startswith(b"*")
             if excl or ast:
