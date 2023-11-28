@@ -644,3 +644,21 @@ $\overline D(P,R)$.
 
 In particular, the series $\sum_{k=0}^{+\infty}a_k(z-P)^k$ converges
 uniformly and absolutely on $\overline D(P,R)$.
+
+\Lemma{3.2.10}{}
+
+If a power series
+\begin{equation*}
+	\sum_{j=0}^\infty a_j(z-P)^j\Tag{*}
+\end{equation*}
+
+has a radius of convergence $r>0$, then the series defines a
+$C^\infty$ function $f(z)$ on $D(P,r)$. The function $f$ is
+holomorphic on $D(P,r)$. The series obtained by termwise
+differentiation $k$ times of ($*$),
+$$
+  \sum_{j=k}^\infty\Big[j(j-1)\ldots(j-k+1)\Big]a_j(z-P)^{j-k}
+$$
+
+converges on $D(P,r)$, and its sum is $[\partial/\partial z]^kf(z)$
+for each $z\in D(P,r)$.
