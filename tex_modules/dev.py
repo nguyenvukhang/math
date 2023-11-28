@@ -19,7 +19,6 @@ MARKS_WITH_BSLS = tuple(b"\\" + x for x in MARKS)
 SHOW_PROOF = False
 SHOW_COMPUTE = True
 
-
 def inc(a, b, c):  # type: (int, int, int) -> bool
     return a <= b and b <= c
 

@@ -2,86 +2,15 @@
 
 from __utils__ import *
 from __args__ import *
-import os, re, time, datetime
+from __classes__ import *
+from __consts__ import *
+import os, time, datetime
 from os import path
 from subprocess import Popen, PIPE
 from typing import Callable
 
 SHOW_PROOF = False
 SHOW_COMPUTE = False
-MARKS = (
-    b"Algorithm",
-    b"Corollary",
-    b"Definition",
-    b"Example",
-    b"Exercise",
-    b"Lemma",
-    b"Problem",
-    b"Proposition",
-    b"Remark",
-    b"Result",
-    b"Theorem",
-)
-MARKS_WITH_BSLS = tuple(b"\\" + x for x in MARKS)
-
-
-def panic(*s):
-    (print(*s), exit())
-
-
-class Lines:  # {{{
-    def __init__(self, buffer):  # type: (bytes) -> None
-        self.buffer = buffer
-        self.reset()
-        self.hide_depth = 0
-
-    def reset(self):
-        self.cursor, self.line_number = 0, -1
-
-    def find(self, query):  # type: (bytes) -> int
-        return self.buffer.find(query, self.cursor)
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):  # type() -> tuple[bytes, int]
-        if self.cursor < 0:
-            self.reset()
-            raise StopIteration
-        self.line_number += 1
-        a, b = self.cursor, self.find(b"\n")
-        self.cursor = -1 if b == -1 else b + 1
-
-        line = self.buffer[a:] if b == -1 else self.buffer[a:b]
-
-        stripped = line.strip()
-
-        if not SHOW_PROOF:
-            if stripped == b"\\begin{proof}":
-                self.hide_depth += 1
-            elif stripped == b"\\end{proof}":
-                self.hide_depth -= 1
-                if self.hide_depth == 0:
-                    return b"", self.line_number
-
-        if not SHOW_COMPUTE:
-            if stripped == b"\\begin{compute}":
-                self.hide_depth += 1
-            elif stripped == b"\\end{compute}":
-                self.hide_depth -= 1
-                if self.hide_depth == 0:
-                    return b"", self.line_number
-
-        line = b"" if self.hide_depth > 0 else line
-
-        return line, self.line_number  # }}}
-
-
-class Regex:  # {{{
-    LABEL = re.compile(b"\\\\label{([a-z0-9]{7})}")
-    LABEL_ENDL = re.compile(b"\\\\label{([a-z0-9]{7})}$")
-    HREF = re.compile(b"\\\\href{([a-z0-9]{7})}")
-    STAR_NUM = re.compile(b"^\*\[\d+\]$")  # }}}
 
 
 class Line:  # {{{
@@ -124,20 +53,6 @@ class Line:  # {{{
         if hit is None:
             return None
         return hit.groups()[0]  # }}}
-
-
-class Index:  # {{{
-    def line_number(x):
-        return x[0]
-
-    def mark(x):  # type: (tuple[int, int, bytes, bytes]) -> bytes
-        return MARKS[x[1]]
-
-    def label(x):  # type: (tuple[int, int, bytes, bytes]) -> bytes
-        return x[2]  # }}}
-
-    def title(x):  # type: (tuple[int, int, bytes, bytes]) -> bytes
-        return x[3]  # }}}
 
 
 class File2:  # {{{
@@ -192,7 +107,7 @@ def new_sha(existing):  # type: (set[bytes]) -> bytes
 def get_section_title(line):  # type: (bytes) -> bytes | None
     for st in MARKS:
         if line.startswith(b"\\" + st):
-            if not section_is_one_line(line):
+            if not is_closed(line):
                 print(f"[ERROR] Title spans multiple lines in line:")
                 print(line)
                 exit()
@@ -214,36 +129,12 @@ def get_in_between(
     return None
 
 
-# Checks if the entire section title
-# ```
-# \Theorem{3.1.4}{Cauchy integral theorem}\label{ab0cc7c}
-# ```
-# is in one line by making sure all open '{' are closed.
-def section_is_one_line(line):  # type: (bytes) -> bool
-    stk, t = 0, {123: 1, 125: -1}
-    for i in range(len(line)):
-        stk += t.get(line[i], 0)
-    return stk == 0
-
-
-# quick routine to read a file into bytes
-def read_file(path):  # type: (str) -> list[bytes]
-    with open(path, "rb") as f:
-        return f.read()
-
-
-# lines should not end with newline characters
-def write_file(path, lines):  # type: (str, list[bytes]) -> None
-    with open(path, "wb") as f:
-        f.write(b"\n".join(lines))
-
-
 def debug():
     pass
 
 
 # remove all bytes including and within a start and end marker
-# remove all bytes including and within a start and end marker
+# TODO: add a checkhealth where we can't nest \begin{proof} nor \begin{compute}
 def remove_in_between(data: bytes, start: bytes, end: bytes):
     buffer, n = [], len(end)
     r, p = data.find(start), 0

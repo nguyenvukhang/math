@@ -1,7 +1,13 @@
 from os import curdir
 from typing import TypeVar
 
+
+
 T = TypeVar("T")
+
+
+def panic(*s):
+    (print(*s), exit())
 
 
 # get index `i` form list `l`, `d` if out of range
@@ -49,31 +55,21 @@ def should_pretty_print(x):
     )
 
 
-#
-# now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-# build = lambda: __build__(args)
-# report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
-# (build(), report())
-#
-# class EventHandler(FileSystemEventHandler):
-#     def __init__(self, args):
-#         self.args = args
-#         self.last_trigger_time = time.time()
-#
-#     def on_modified(self, event):
-#         if not event.src_path.endswith(".tex"):
-#             return
-#         current_time = time.time()
-#         if (current_time - self.last_trigger_time) < 1:
-#             return
-#         self.last_trigger_time = current_time
-#         (build(), report())
-#
-# observer = Observer()
-# observer.schedule(EventHandler(args), os.curdir, recursive=False)
-# observer.start()
-# try:
-#     while True:
-#         time.sleep(1)
-# finally:
-#     (observer.stop(), observer.join())
+# quick routine to read a file into bytes
+def read_file(path):  # type: (str) -> list[bytes]
+    with open(path, "rb") as f:
+        return f.read()
+
+
+# lines should not end with newline characters
+def write_file(path, lines):  # type: (str, list[bytes]) -> None
+    with open(path, "wb") as f:
+        f.write(b"\n".join(lines))
+
+
+# Checks if all '{}' pairs are closed in the line
+def is_closed(line):  # type: (bytes) -> bool
+    stk = 0
+    for b in line:
+        stk += 1 if b == 123 else -1 if b == 125 else 0
+    return stk == 0
