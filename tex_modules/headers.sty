@@ -16,7 +16,8 @@
 \usepackage{titlesec}
 % removes newline after \subsection, and adds spacing after
 \titleformat{\subsection}[runin]{\bfseries}{\thesubsection}{*1}{}
-\titleformat{\section}[runin]{\Large\bfseries}{\thesection}{*1}{}
+\titleformat{\section}[hang]{\Large\bfseries}{\thesection}{}{}
+\titlespacing{\section}{0pt}{*4}{*1}
 
 \titleclass{\HwProblem}{straight}[\subsection]
 \titleformat{\HwProblem}[hang]{\Large\bfseries}{\theHwProblem}{*1}{}
