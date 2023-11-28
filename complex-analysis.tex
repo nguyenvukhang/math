@@ -504,7 +504,7 @@ for any piecewise $C^1$ closed curve $\gamma$ in $U$ that can be
 deformed in $U$ through closed curves to a closed curve lying entirely
 in a disc contained in $U$.
 
-In addition, suppose that $\bar D(z,r)\subseteq U$. Then
+In addition, suppose that $\overline D(z,r)\subseteq U$. Then
 $$
 	\frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta=f(z)
 $$
@@ -516,8 +516,8 @@ that can be continuously deformed in $U\setminus\{z\}$ to $\partial
 \Theorem{3.1.1}{Analyticity of holomorphic functions}\label{e20a4ed}
 
 Let $U\subseteq\C$ be open and let $f$ be a holomorphic on $U$. Then
-$f\in C^\infty(U)$. Moreover, if $\bar D(P,r)\subseteq U$ and $z\in
-	D(P,r)$, then
+$f\in C^\infty(U)$. Moreover, if $\overline D(P,r)\subseteq U$ and
+$z\in D(P,r)$, then
 $$
 	\left(\frac\partial{\partial z}\right)^kf(z)=\frac{k!}{2\pi i}
 	\oint_{|\zeta-P|=r}\frac{f(\zeta)}{(\zeta-z)^{k+1}}\,d\zeta
@@ -600,11 +600,11 @@ diverges for each $w$ such that $|w-P|>r$.
 Note that the convergence or divergence question for $|w-P|=r$ is left
 open.
 
-\Lemma{3.2.6}{Root test for radius of convergence}
+\Lemma{3.2.6}{Root test for radius of convergence}\label{a9ba20f}
 
 Using
 $$
-	\ell:\lim\sup_{k\to+\infty}|a_k|^{1/k},
+	\ell:\limsup_{k\to+\infty}|a_k|^{1/k},
 $$
 
 the radius of convergence $r$ of the power series $\sum_{k=0}^\infty
@@ -615,3 +615,32 @@ the radius of convergence $r$ of the power series $\sum_{k=0}^\infty
 		+\infty & \text{if } \ell=0 \\
 	\end{cases}
 \end{equation*}
+
+\Definition{3.2.7}{Uniform convergence of complex functions}\label{bba67e4}
+
+A series $\sum_{k=0}^\infty f_k(z)$ of functions $f_k(z)$ converges
+uniformly on a set $E$ to the function $g(z)$ if for each $\epsilon>0$
+there is an $N_0$ such that if $N\geq N_0$, then
+$$
+	\left|g(z)-\sum_{k=0}^N f_k(z)\right|<\epsilon\with\forall z\in E
+$$
+
+\Definition{3.2.8}{Uniformly Cauchy series}\label{bfe260e}
+
+Let $\sum_{k=0}^\infty f_k(z)$ be a series of functions on a set $E$.
+The series is said to be \textit{uniformly Cauchy} if, for any
+$\epsilon>0$, there is a positive integer $N_0$ such that if $m\geq
+	j\geq N_0$, then
+$$
+	\left|\sum_{k=j}^mf_k(z)\right|<\epsilon\with\forall z\in E
+$$
+
+\Proposition{3.2.9}{}\label{ec076c1}
+
+Let $\sum_{k=0}^\infty a_k(z-P)^k$ be a power series with radius of
+convergence $r$. Then, for any number $R$ with $0\leq R<r$, the series
+$\sum_{k=0}^\infty|a_k(z-P)^k|$ \href{bba67e4}{converges uniformly} on
+$\overline D(P,R)$.
+
+In particular, the series $\sum_{k=0}^{+\infty}a_k(z-P)^k$ converges
+uniformly and absolutely on $\overline D(P,R)$.
