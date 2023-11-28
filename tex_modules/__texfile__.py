@@ -42,7 +42,11 @@ class Project:
         self.tex_files = list(map(TexFile, tex_filepaths))
 
     def build(self, args):  # type: (Args) -> None
-        latex = PdfLatex()
+        latex = PdfLatex(
+            jobname=args.jobname,
+            build_dir=args.build_dir,
+            dev_mode=args.action == "dev",
+        )
         w = latex.stdin.write
 
         w(b"\\documentclass{article}")
@@ -51,6 +55,7 @@ class Project:
 
         for f in self.tex_files:
             w(f.bytes)
+            w(b'\n\\newpage\n')
 
         w(b"\\end{document}")
 
@@ -66,12 +71,13 @@ class Project:
 class PdfLatex(Popen):
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, jobname="minimath", build_dir=".build"):
+    def __init__(self, jobname="minimath", build_dir=".build", dev_mode=False):
         # tells latex compiler to search for .sty packages in this folder.
         os.environ["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
 
         self.jobname = jobname
         self.build_dir = build_dir
+        self.dev_mode = dev_mode
 
         j, d = jobname, build_dir
 

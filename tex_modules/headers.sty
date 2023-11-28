@@ -63,7 +63,6 @@
 \def\Z{\mathbb{Z}}
 \def\R{\mathbb{R}}
 \def\C{\mathbb{C}}
-\def\Re{\text{Re}}
 \def\then{\Rightarrow}
 \def\Quad{\quad\quad}
 \def\quadd{\quad\quad\quad}
@@ -100,6 +99,8 @@
 
 % custom math operators
 \DeclareMathOperator*{\argmin}{argmin}
+\let\Re\relax\DeclareMathOperator*{\Re}{Re}
+\let\Im\relax\DeclareMathOperator*{\Im}{Im}
 
 % global left-align text
 \AtBeginDocument{\raggedright}
