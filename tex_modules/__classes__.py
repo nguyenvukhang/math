@@ -6,11 +6,11 @@ class File:
     def __init__(self, filepath):  # type: (str) -> None
         self.filepath = filepath
         self.lines = Lines(read_file(filepath))
-        self.__index__ = None  # type: list[tuple[int, int, bytes]]
+        self.__index__ = None
 
     def index(self, vimgrep=False):  # type: (bool) -> None
         self.__index__ = []
-        for line, k in self.lines:
+        for k, line in self.lines:
             mark_index = Line.get_mark_index(line)
             label = Line.get_label(line)
             if mark_index is not None or label is not None:
@@ -22,7 +22,7 @@ class File:
     def labels(self):  # type: () -> list[bytes]
         if self.__index__ is None:
             panic(f"[{self.filepath}] is not indexed yet.")
-        return list(map(Index.label, self.__index__))
+        return list(map(lambda v: v[2], self.__index__))
 
     def vimgrep(self, filepath):  # type: (str) -> None
         for idx in self.__index__:
@@ -32,11 +32,24 @@ class File:
 
     def add_labels_and_write(self, existing):  # type: (set[bytes]) -> None
         lines = self.lines.buffer.splitlines()
-        for k, _, label in self.__index__:
+        for i in self.__index__:
+            lnum, label = i[0], i[2]
             if label is None:
-                lines[k] += b"\\label{" + new_sha(existing) + b"}"
+                lines[lnum] += b"\\label{" + new_sha(existing) + b"}"
         with open(self.filepath, "wb") as f:
             f.write(b"\n".join(lines))
+
+    @staticmethod
+    def merge_labels(files):  # type: (list[File]) -> set[bytes]
+        seen = set()
+        for file in files:
+            for label in file.labels():
+                if label is None:
+                    continue
+                if label in seen:
+                    panic("Found a duplicate label: %s" % label.decode("utf8"))
+                seen.add(label)
+        return seen
 
 
 class Lines:

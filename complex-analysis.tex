@@ -553,3 +553,50 @@ we have
 $$\oint_\gamma f(\zeta)\,d\zeta=0$$
 
 Then $f$ is holomorphic on $U$.
+
+\Lemma{3.2.1}{}\label{db44655}
+
+The sequence $\{a_k\in\C\}$ converges to a limit if and only if for
+each $\epsilon>0$ there is an $N_0$ such that $j,k\geq N_0$ implies
+that $|a_j-a_k|<\epsilon$.
+
+\Definition{3.2.2}{Complex power series}\label{b9a7c59}
+
+Let $P\in\C$ be fixed. A \textit{complex power series} (centered at
+$P$) is an expression of the form
+$$
+	\sum_{k=0}^\infty a_k(z-P)^k
+$$
+
+where $a_k$ for $k=\iter0\infty$ are complex constants.
+
+Note that this power series expansion is only a formal expression. It
+may or may not converge.
+
+A \textit{necessary} condition for $\sum a_k(z-P)^k$ to converge is
+that $a_k(z-P)^k\to0$.
+
+\Lemma{3.2.3}{Abel's Theorem}\label{d5d5bdc}
+
+If $\sum_{k=0}^\infty a_k(z-P)^k$ converges at some $z$, then the
+series converges at each $w\in D(P,r)$, where $r=|z-P|$.
+
+\Definition{3.2.4}{Radius of convergence of power series}\label{da6e337}
+
+Let $\sum_{k=0}^\infty a_k(z-P)^k$ be a power series. Then
+$$
+	r:=\sup\Set{|w-P|}{\sum_{k=0}^\infty a_k(w-P)^k\text{ converges}}
+$$
+
+is called the \textit{radius of convergence} of the power series. We
+will call $D(P,r)$ the disc of convergence.
+
+\Lemma{3.2.5}{}\label{c7d0e1d}
+
+If $\sum_{k=0}^\infty a_k(z-P)^k$ is a power series with radius of
+convergence $r$, then the series converges for each $w\in D(P,r)$ and
+diverges for each $w$ such that $|w-P|>r$.
+
+Note that the convergence or divergence question for $|w-P|=r$ is left
+open.
+
