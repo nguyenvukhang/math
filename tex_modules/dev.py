@@ -103,7 +103,7 @@ def panic(*s):
     exit()
 
 
-class Index:
+class Index: # {{{
     def new(self):  # type: () -> tuple[int, int, bytes]
         return (None, None)
 
@@ -114,7 +114,7 @@ class Index:
         return MARKS[x[1]]
 
     def label(x):  # type: (tuple[int, int, bytes]) -> bytes
-        return x[2]
+        return x[2] # }}}
 
 
 class File:
@@ -245,6 +245,6 @@ for path in FILES:
     file.index()
     # indexed_files.append(file)
 
-# all_labels = merge_labels(indexed_files)
+all_labels = merge_labels(indexed_files)
 # for file in indexed_files:
 #     file.add_labels_and_write(all_labels)
