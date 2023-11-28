@@ -65,6 +65,8 @@ class PdfLatex:
         return b
 
     def generate_toc(self):
+        if not self.a.toc:
+            return
         marks = [*MARKS_WITH_BSLS, b"\\section"]
         for file in self.a.tex_files:
             lines = read_file(file).splitlines()
@@ -82,24 +84,12 @@ class PdfLatex:
                     name, i = get_in_between(line, i)
                     sha, _ = get_in_between(line, i)
                     s = b" "
+                    name = Line.remove_hrefs(name)
                     title = mark + s + num + s + name
                     val = b"\\item[-]\\href{" + sha + b"}{" + title + b"}"
-                    print(val[:40])
                     self.write(val)
                     pass
             self.write(b"\\end{itemize}")
-        # if not self.a.toc:
-        #     return
-        # self.write(b"\\section{Table of Contents}")
-        #
-        # indexed_files = [File(p) for p in self.a.tex_files]
-        # for f in indexed_files:
-        #     f.index(vimgrep=True)
-        #
-        # for file in indexed_files:
-        #     print(file.__index__)
-        #
-        #     self.write(b"\\end{itemize}\\vspace{1em}")
 
     def process_files(self):
         for b in map(self.__compile__, self.a.tex_files):
