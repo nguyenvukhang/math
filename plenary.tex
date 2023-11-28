@@ -13,14 +13,53 @@ All the proofs and results I don't want to write twice.
 % │ 1. REAL ANALYSIS                              __real_analysis__ │
 % ╰─────────────────────────────────────────────────────────────────╯
 
-\Definition{1.1.1}{Monotone sequences}\label{b5fad69}
+\Definition{1.1.1}{Supremum/Infimum}
+
+Let $X\subset\R$ be a non-empty. The supremum of $X$ is a real number
+$M=:\sup X$ that satisfies
+\begin{enumerati}
+	\item $M$ is an upper bound of $X$, and
+	\item if $M'$ is an upper bound of $X$, then $M'\geq M$
+\end{enumerati}
+
+that is, $M$ is the least upper bound of $X$. The infimum of $X$ is
+the greatest lower bound of $X$.
+
+\Definition{1.1.2}{Subsequential limit}
+
+Let $\{x_n\in\R\}$ sequence. $\bar x\in\R$ is called a
+\textbf{subsequential limit} of $\{x_n\}$ if $\{x_n\}$ has a
+subsequence $\{x_{n_k}\}$ which converges to $\bar x$.
+
+\Definition{1.1.3}{Limit superior/limit inferior}
+
+Let $\{x_n\in\R\}$ sequence, and let $S(x_n)$ be the set of all
+subsequential limits of $\{x_n\}$.
+
+Then we define the \textbf{limit superior} of $\{x_n\}$ to be
+$$
+	\lim\sup x_n := \sup S(x_n)
+$$
+
+and the \textbf{limit inferior} of $\{x_n\}$ to be
+$$
+	\lim\inf x_n := \inf S(x_n)
+$$
+
+Alternatively, we can also define them by
+\begin{align*}
+	\lim\sup x_n & := \lim_{n\to\infty}\sup\Set{x_k}{k\geq n} \\
+	\lim\inf x_n & := \lim_{n\to\infty}\inf\Set{x_k}{k\geq n}
+\end{align*}
+
+\Definition{1.2.1}{Monotone sequences}\label{b5fad69}
 
 A sequence $\{x_n\}$ is said to be \textbf{increasing} if $x_0\leq
 	x_1\leq x_2\leq\ldots$ and \textbf{decreasing} if $x_0\geq x_1\geq
 	x_2\geq\ldots$ and \textbf{monotone} if it is either increasing or
 decreasing.
 
-\Theorem{1.1.2}{Monotone convergence theorem}\label{ca25eb7}
+\Theorem{1.2.2}{Monotone convergence theorem}\label{ca25eb7}
 
 If $\{x_n\}$ is monotone and bounded, then $\{x_n\}$ converges.
 
@@ -31,7 +70,7 @@ $$
 	\end{cases}
 $$
 
-\Theorem{1.1.3}{Monotone subsequence theorem}\label{dddb70e}
+\Theorem{1.2.3}{Monotone subsequence theorem}\label{dddb70e}
 
 Every sequence has a monotone subsequence.
 
@@ -66,7 +105,7 @@ Every sequence has a monotone subsequence.
 	$\{x_{n_k}\}$.
 \end{proof}
 
-\Theorem{1.1.4}{Bolzano-Weierstrass Theorem}\label{d277ad0}
+\Theorem{1.2.4}{Bolzano-Weierstrass Theorem}\label{d277ad0}
 
 Every bounded sequence has a convergent subsequence.
 
@@ -86,7 +125,7 @@ Every bounded sequence has a convergent subsequence.
 
 % proof for MATH 378
 
-\Theorem{1.1.5}{Monotone seq. with a convergent subseq. is convergent}\label{aaf3ba6}
+\Theorem{1.2.5}{Monotone seq. with a convergent subseq. is convergent}\label{aaf3ba6}
 
 Let $\{x_n\}$ be a monotone sequence with a subsequence $\{x_{n_k}\}$
 that converges to $L$. Then $\{x_n\}$ converges to $L$.
@@ -116,7 +155,7 @@ that converges to $L$. Then $\{x_n\}$ converges to $L$.
 	$$|x_n-L|<\epsilon$$
 \end{proof}
 
-\Theorem{1.1.6}{Mean value theorem}\label{d37aa2b}
+\Theorem{1.2.6}{Mean value theorem}\label{d37aa2b}
 
 Let $f:[a,b]\to\R$ be continuous on the $[a,b]$, and differentiable on
 $(a,b)$. Then there exists $c\in(a,b)$ such that
@@ -145,7 +184,7 @@ $$
 	\nabla f(\eta)^Td=\frac{f(x+td)-f(x)}t
 $$
 
-\Result{1.1.7}{Preprocessed limits}\label{ffc8953}
+\Result{1.2.7}{Preprocessed limits}\label{ffc8953}
 
 Let $k,\ell\in\N$ and $a,b,c\in\R$ be fixed.
 \begin{enumerata}
@@ -164,7 +203,7 @@ $$
 	n^k << n^\ell << a^n << b^n << n!
 $$
 
-\Theorem{1.1.8}{Bernoulli's inequality}\label{d44713f}
+\Theorem{1.2.8}{Bernoulli's inequality}\label{d44713f}
 $$
 	(1+x)^r\geq 1+rx
 $$
@@ -185,7 +224,7 @@ $$
 $$
 for every $r\in\R,0\leq r\leq 1$ and $x\geq-1$.
 
-\Result{1.1.9}{Limit to infinity of a rational function}\label{ccfddb1}
+\Result{1.2.9}{Limit to infinity of a rational function}\label{ccfddb1}
 
 Let $P,Q$ be polynomial functions, where $Q$ is of a higher degree.
 Then
@@ -206,7 +245,7 @@ $$
 	$\to\infty$.
 \end{compute}
 
-\Result{1.1.10}{Limit of $\frac{e^x}x$ as $x\to\infty$}\label{b905ee7}
+\Result{1.2.10}{Limit of $\frac{e^x}x$ as $x\to\infty$}\label{b905ee7}
 $$
 	\lim_{x\to\infty}\frac{e^x}x=\infty
 $$
@@ -227,7 +266,7 @@ $$
 \end{proof}
 
 
-\Result{1.1.11}{Limit of $\frac{\ln x}{x}$ as $x\to\infty$}\label{e2e1632}
+\Result{1.2.11}{Limit of $\frac{\ln x}{x}$ as $x\to\infty$}\label{e2e1632}
 $$
 	\lim_{x\to\infty}\frac{\ln x}x = 0
 $$
@@ -244,11 +283,11 @@ $$
 	$$
 
 	And since $\epsilon x\to+\infty$, using \href{b905ee7}{Result
-		1.1.10} with $\epsilon x$ as the limiting variable tells us that
+		1.2.10} with $\epsilon x$ as the limiting variable tells us that
 	indeed there exists such an $N$, hence completing the proof.
 \end{proof}
 
-\Result{1.1.12}{Limit of a polynomial divided by an exponential}\label{f3540b0}
+\Result{1.2.12}{Limit of a polynomial divided by an exponential}\label{f3540b0}
 
 Let $a,b\in\R$ be fixed, with $b>1$. Then we have
 $$
@@ -279,7 +318,7 @@ $$
 	This completes the proof.
 \end{proof}
 
-\Definition{1.1.13}{Norm properties}\label{e0fff96}
+\Definition{1.2.13}{Norm properties}\label{e0fff96}
 
 Given a vector space $X$ over a subfield $F$ of the complex numbers
 $\C$, a \textbf{norm} on $X$ is a real-valued function $p:X\to\R$ with
@@ -496,7 +535,7 @@ And that $\Gamma(n+1)=n\Gamma(n)$.
 \begin{align*}
 	\int_0^\infty e^{-t}t^n\,dt
 	 & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt              \\
-	 & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.1.12})} \\
+	 & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.2.12})} \\
 	 & = n\Gamma(n)
 \end{align*}
 
@@ -588,14 +627,14 @@ This gives the following corollaries:
 
 	Which gives the statement in (a) exactly.
 
-  To prove (b), instead of the \href{cebd07a}{inner product space}
-  constructed from $\R^n$ and the standard dot product, we use $\C^n$
-  and the complex inner product defined by
-  $$
-  \inner uw:=u_1\bar w_1+\ldots+u_n\bar w_n
-  $$
+	To prove (b), instead of the \href{cebd07a}{inner product space}
+	constructed from $\R^n$ and the standard dot product, we use $\C^n$
+	and the complex inner product defined by
+	$$
+		\inner uw:=u_1\bar w_1+\ldots+u_n\bar w_n
+	$$
 
-  Then by the Cauchy-Schwarz inequality, for all $u,w\in\C^n$,
+	Then by the Cauchy-Schwarz inequality, for all $u,w\in\C^n$,
 	\begin{align*}
 		|\inner uw|^2 & =\left|\sum u_k\bar w_k\right|^2                            \\
 		              & \leq\inner uu\cdot\inner ww                                 \\
@@ -619,6 +658,6 @@ This gives the following corollaries:
 		\Big(|v_1|^2+\ldots+|v_n|^2\Big)
 	$$
 
-  And finally since the collection $w_k$ were arbitrarily chosen, so
-  can the collection $v_k$.
+	And finally since the collection $w_k$ were arbitrarily chosen, so
+	can the collection $v_k$.
 \end{proof}
