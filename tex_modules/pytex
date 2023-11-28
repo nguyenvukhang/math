@@ -7,6 +7,27 @@ from subprocess import Popen, PIPE
 from typing import TypeVar, Literal, Callable
 import typing
 
+
+class Lines:  # {{{
+    def __init__(self, buffer):  # type: (bytes) -> None
+        self.buffer = buffer
+        self.cursor, self.line_number = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):  # type() -> tuple[bytes, int]
+        if self.cursor < 0:
+            raise StopIteration
+        n = self.buffer.find(b"\n", self.cursor)
+        self.line_number += 1
+        if n == -1:
+            r, self.cursor = self.buffer[self.cursor :], -1
+        else:
+            r, self.cursor = self.buffer[self.cursor : n], n + 1
+        return (r, self.line_number)  # }}}
+
+
 SECTION_TITLES = (
     b"Algorithm",
     b"Corollary",

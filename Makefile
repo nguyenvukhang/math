@@ -18,6 +18,9 @@ TEX_FILES += complex-analysis.tex
 search-index:
 	$(PYTEX) search-index *.tex
 
+python-dev:
+	python3 tex_modules/dev.py
+
 
 build:
 	$(PYTEX) -J minimath \
