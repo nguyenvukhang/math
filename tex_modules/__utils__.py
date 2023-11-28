@@ -1,6 +1,6 @@
 from os import curdir
 from typing import TypeVar
-
+from __consts__ import *
 
 
 T = TypeVar("T")
@@ -13,6 +13,33 @@ def panic(*s):
 # get index `i` form list `l`, `d` if out of range
 def get(l, i, d=None):  # type: (list[T], int, T | None) -> T
     return l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else d
+
+
+def new_sha(existing):  # type: (set[bytes]) -> bytes
+    from random import randint as r
+
+    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
+    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
+    x = gen()
+    while x in existing:
+        x = gen()
+    existing.add(x)
+    return x.encode("utf-8")
+
+
+def get_in_between(
+    buf, start, include=False
+):  # type: (bytes, int, bool) -> tuple[bytes, int] | None
+    stk, s = 0, None
+    for i in range(start, len(buf)):
+        if buf[i] == 123:  # ord(b'{')
+            stk, s = stk + 1, s if s is not None else i
+        elif buf[i] == 125:  # ord(b'}')
+            if stk == 1:
+                hit = buf[s : i + 1] if include else buf[s + 1 : i]
+                return (hit, i + 1)
+            stk -= 1
+    return None
 
 
 def run_observer(handler):
@@ -40,6 +67,12 @@ def __includes__(buf, x):
 
 
 def should_pretty_print(x):
+    if len(x) == 0:
+        return False
+    fl = x[0]
+    if len(x) < 2 and (b"*\n" == fl or Regex.STAR_NUM.match(fl)):
+        return False
+
     sw, inc = __starts_with__, __includes__
 
     return not (
@@ -73,3 +106,43 @@ def is_closed(line):  # type: (bytes) -> bool
     for b in line:
         stk += 1 if b == 123 else -1 if b == 125 else 0
     return stk == 0
+
+
+class Line:
+    def get_vimgrep(line):  # type: (bytes) -> bytes | None
+        if line.startswith(b"\\section"):
+            return None
+        num, i = get_in_between(line, 0)
+        title, _ = get_in_between(line, i)
+        return num + b" " + title if len(title) > 0 else num
+
+    # Checks if the line closes all '{' opened in that line
+    def is_closed(line):  # type: (bytes) -> bool
+        stk = 0
+        for b in line:
+            stk += 1 if b == 123 else -1 if b == 125 else 0
+        return stk == 0
+
+    def get_mark(line):  # type: (bytes) -> bytes | None
+        for st in MARKS_WITH_BSLS:
+            if line.startswith(st):
+                if not Line.is_closed(line):
+                    panic("Section title spans multiple lines in line:\n", line)
+                return st
+
+    def get_mark_index(line):  # type: (bytes) -> bytes | None
+        for i in range(len(MARKS_WITH_BSLS)):
+            if line.startswith(MARKS_WITH_BSLS[i]):
+                if not Line.is_closed(line):
+                    panic("Section title spans multiple lines in line:\n", line)
+                return i
+
+    # Assume that labels are at the end of lines.
+    #
+    # TODO: add to checkhealth a function that ensures that all labels
+    # are at the end of lines.
+    def get_label(line):  # type: (bytes) -> bytes | None
+        hit = Regex.LABEL_ENDL.search(line)
+        if hit is None:
+            return None
+        return hit.groups()[0]

@@ -13,122 +13,6 @@ SHOW_PROOF = False
 SHOW_COMPUTE = False
 
 
-class Line:  # {{{
-    # Checks if the line closes all '{' opened in that line
-    def is_closed(line):  # type: (bytes) -> bool
-        stk = 0
-        for b in line:
-            stk += 1 if b == 123 else -1 if b == 125 else 0
-        return stk == 0
-
-    def get_mark(line):  # type: (bytes) -> bytes | None
-        for st in MARKS_WITH_BSLS:
-            if line.startswith(st):
-                if not Line.is_closed(line):
-                    panic("Section title spans multiple lines in line:\n", line)
-                return st
-
-    def get_vimgrep(line):  # type: (bytes) -> bytes | None
-        if line.startswith(b"\\section"):
-            return None
-        num, i = get_in_between(line, 0)
-        title, _ = get_in_between(line, i)
-        return num + b" " + title if len(title) > 0 else num
-
-    def get_mark_index(line):  # type: (bytes) -> bytes | None
-        for i in range(len(MARKS_WITH_BSLS)):
-            if line.startswith(MARKS_WITH_BSLS[i]):
-                if not Line.is_closed(line):
-                    panic("Section title spans multiple lines in line:\n", line)
-                return i
-
-    def get_label(line):  # type: (bytes) -> bytes | None
-        """
-        Assume that labels are at the end of lines.
-
-        TODO: add to checkhealth a function that ensures that all labels
-        are at the end of lines.
-        """
-        hit = Regex.LABEL_ENDL.search(line)
-        if hit is None:
-            return None
-        return hit.groups()[0]  # }}}
-
-
-class File2:  # {{{
-    def __init__(self, filepath):  # type: (str) -> None
-        self.filepath = filepath
-        self.lines = Lines(read_file(filepath))
-        self.__index__ = None  # type: list[tuple[int, int, bytes]]
-
-    def index(self, vimgrep=False):  # type: (bool) -> None
-        self.__index__ = []
-        for line, k in self.lines:
-            mark_index = Line.get_mark_index(line)
-            label = Line.get_label(line)
-            if mark_index is not None or label is not None:
-                vg = None
-                if vimgrep and mark_index is not None:
-                    vg = Line.get_vimgrep(line)
-                self.__index__.append((k, mark_index, label, vg))
-
-    def labels(self):  # type: () -> list[bytes]
-        if self.__index__ is None:
-            panic(f"[{self.filepath}] is not indexed yet.")
-        return list(map(Index.label, self.__index__))
-
-    def vimgrep(self, filepath):  # type: (str) -> None
-        for idx in self.__index__:
-            t = Index.title(idx)
-            t = filepath if t is None else t.decode("utf8")
-            print(filepath, ":", Index.line_number(idx), ":", 0, ":", t, sep="")
-
-    def add_labels_and_write(self, existing):  # type: (set[bytes]) -> None
-        lines = self.lines.buffer.splitlines()
-        for k, _, label in self.__index__:
-            if label is None:
-                lines[k] += b"\\label{" + new_sha(existing) + b"}"
-        with open(self.filepath, "wb") as f:
-            f.write(b"\n".join(lines))  # }}}
-
-
-def new_sha(existing):  # type: (set[bytes]) -> bytes
-    from random import randint as r
-
-    s, c = "abcdef0123456789", lambda e: s[r(0, e)]
-    gen = lambda: c(5) + "".join([c(15) for _ in range(6)])
-    x = gen()
-    while x in existing:
-        x = gen()
-    existing.add(x)
-    return x.encode("utf-8")
-
-
-def get_section_title(line):  # type: (bytes) -> bytes | None
-    for st in MARKS:
-        if line.startswith(b"\\" + st):
-            if not is_closed(line):
-                print(f"[ERROR] Title spans multiple lines in line:")
-                print(line)
-                exit()
-            return st
-
-
-def get_in_between(
-    buf, start, include=False
-):  # type: (bytes, int, bool) -> tuple[bytes, int] | None
-    stk, s = 0, None
-    for i in range(start, len(buf)):
-        if buf[i] == 123:  # ord(b'{')
-            stk, s = stk + 1, s if s is not None else i
-        elif buf[i] == 125:  # ord(b'}')
-            if stk == 1:
-                hit = buf[s : i + 1] if include else buf[s + 1 : i]
-                return (hit, i + 1)
-            stk -= 1
-    return None
-
-
 def debug():
     pass
 
@@ -164,10 +48,14 @@ class PdfLatex:
         self.x.kill()
         self.x.stdin = open("build.tex", "wb")
 
-    def write(self, e: bytes):
+    def write(self, e):
         self.x.stdin.write(e)
         self.x.stdin.write(b"\n")
 
+    # filepath to bytes to be send to stdin
+    #
+    # note that this only works properly provided checkhealth passes,
+    # where {compute} and {proof} environments are not allowed to nest
     def __compile__(self, filepath: str) -> bytes:
         b = read_file(filepath)
         if not self.a.show_computes:
@@ -177,41 +65,22 @@ class PdfLatex:
         return b
 
     def generate_toc(self):
-        if not self.a.toc:
-            return
-        self.write(b"\\section{Table of Contents}")
-        pipe = map(read_file, self.a.tex_files)
-        pipe = map(lambda v: v.splitlines(), pipe)
-
-        gib = get_in_between
-        w = lambda v: b"{" + v + b"}"
-
-        for file in pipe:
-            section_started = False
-            for line in file:
-                if not section_started and line.startswith(b"\\section"):
-                    section, i = gib(line, 0, True)
-                    href, _ = gib(line, i, True)
-                    self.write(b"{\large " + section + b"}")
-                    self.write(b"\\begin{itemize}[itemsep=0pt]\\footnotesize")
-                    continue
-
-                st = get_section_title(line)
-                if st is not None:
-                    num, i = gib(line, 0, False)
-                    name, i = gib(line, i, True)
-                    st = w(st + b" " + num)
-                    href = gib(line, i, True)
-                    if href is not None:
-                        self.write(b"\\item[-]\\href" + href[0] + w(st + b" " + name))
-                    else:
-                        self.write(b"\\item[-]" + st + b" " + name)
-
-            self.write(b"\\end{itemize}\\vspace{1em}")
+        pass
+        # if not self.a.toc:
+        #     return
+        # self.write(b"\\section{Table of Contents}")
+        #
+        # indexed_files = [File(p) for p in self.a.tex_files]
+        # for f in indexed_files:
+        #     f.index(vimgrep=True)
+        #
+        # for file in indexed_files:
+        #     print(file.__index__)
+        #
+        #     self.write(b"\\end{itemize}\\vspace{1em}")
 
     def process_files(self):
-        blist = map(self.__compile__, self.a.tex_files)
-        for b in blist:
+        for b in map(self.__compile__, self.a.tex_files):
             self.write(b)
             self.write(b"\\newpage")
 
@@ -239,14 +108,6 @@ class PdfLatex:
     def direct_stdout(self):
         self.buf_to_stdout(iter(self.x.stdout.readline, b""))
 
-    def should_print(self, buf):  # type: (list[bytes]) -> bool
-        if len(buf) == 0:
-            return False
-        fl = buf[0]
-        if len(buf) < 2 and (b"*\n" == fl or Regex.STAR_NUM.match(fl)):
-            return False
-        return should_pretty_print(buf)
-
     def err_buf(self, buf):  # type: (list[bytes]) -> None
         s = b"".join(buf).strip().decode("utf8")
         raise Exception("PYTEX ERROR\n" + s)
@@ -261,7 +122,7 @@ class PdfLatex:
             if excl or ast:
                 if is_err and not self.dev_mode:
                     self.err_buf(buf)
-                if self.should_print(buf):
+                if should_pretty_print(buf):
                     self.buf_to_stdout(buf)
                 buf.clear()
             is_err |= excl
@@ -271,7 +132,7 @@ class PdfLatex:
             self.err_buf(buf)
 
 
-def merge_labels(files):  # type: (list[File2]) -> set[bytes]
+def merge_labels(files):  # type: (list[File]) -> set[bytes]
     seen = set()
     for file in files:
         for label in file.labels():
@@ -342,7 +203,7 @@ def __dev__(args):
 #
 # opinionated quirk: all generated SHAs will start with a letter.
 def __sha__(_):
-    files = list(map(File2, get_tex_files()))
+    files = list(map(File, get_tex_files()))
     for file in files:
         file.index()
     all_labels = merge_labels(files)
@@ -352,7 +213,7 @@ def __sha__(_):
 # [SUBCOMMAND] adds a label and a unique SHA to all marks that don't
 # already have a SHA.
 def __label__(_):
-    files = list(map(File2, get_tex_files()))
+    files = list(map(File, get_tex_files()))
     for file in files:
         file.index()
     all_labels = merge_labels(files)
@@ -375,7 +236,7 @@ def __generate_section_titles__(_):
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def __test__(_):
-    files = list(map(File2, get_tex_files()))
+    files = list(map(File, get_tex_files()))
     for file in files:
         file.index()
     merge_labels(files)  # should error out if duplicates are found

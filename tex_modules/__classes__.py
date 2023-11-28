@@ -1,4 +1,42 @@
 from __consts__ import *
+from __utils__ import *
+
+
+class File:
+    def __init__(self, filepath):  # type: (str) -> None
+        self.filepath = filepath
+        self.lines = Lines(read_file(filepath))
+        self.__index__ = None  # type: list[tuple[int, int, bytes]]
+
+    def index(self, vimgrep=False):  # type: (bool) -> None
+        self.__index__ = []
+        for line, k in self.lines:
+            mark_index = Line.get_mark_index(line)
+            label = Line.get_label(line)
+            if mark_index is not None or label is not None:
+                vg = None
+                if vimgrep and mark_index is not None:
+                    vg = Line.get_vimgrep(line)
+                self.__index__.append((k, mark_index, label, vg))
+
+    def labels(self):  # type: () -> list[bytes]
+        if self.__index__ is None:
+            panic(f"[{self.filepath}] is not indexed yet.")
+        return list(map(Index.label, self.__index__))
+
+    def vimgrep(self, filepath):  # type: (str) -> None
+        for idx in self.__index__:
+            t = Index.title(idx)
+            t = filepath if t is None else t.decode("utf8")
+            print(filepath, ":", Index.line_number(idx), ":", 0, ":", t, sep="")
+
+    def add_labels_and_write(self, existing):  # type: (set[bytes]) -> None
+        lines = self.lines.buffer.splitlines()
+        for k, _, label in self.__index__:
+            if label is None:
+                lines[k] += b"\\label{" + new_sha(existing) + b"}"
+        with open(self.filepath, "wb") as f:
+            f.write(b"\n".join(lines))
 
 
 class Lines:

@@ -15,12 +15,12 @@ TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 
-test:
-	@tex_modules/__tests__.py
-
 build:
 	$(PYTEX) -J minimath \
 		build $(TEX_FILES)
+
+test:
+	@tex_modules/__tests__.py
 
 plenary:
 	$(PYTEX) -J plenary \
