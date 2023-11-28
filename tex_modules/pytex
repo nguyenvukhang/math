@@ -2,14 +2,11 @@
 
 from __utils__ import *
 from __args__ import *
-from argparse import ArgumentParser
 import os, re, time, datetime
 from os import path
 from subprocess import Popen, PIPE
-from typing import TypeVar, Literal, Callable
-import typing
+from typing import Callable
 
-T = TypeVar("T")
 SHOW_PROOF = False
 SHOW_COMPUTE = False
 MARKS = (
@@ -78,63 +75,6 @@ class Lines:  # {{{
         line = b"" if self.hide_depth > 0 else line
 
         return line, self.line_number  # }}}
-
-
-class File:  # {{{
-    def __init__(self, filepath):  # type: (str) -> None
-        self.filepath = filepath
-        self.lines = read_file(filepath).splitlines()
-
-    # collect all labels into a set
-    # fails if a duplicate label is found
-    def get_labels(self, existing):  # type: (set[bytes]) -> None
-        for i in range(len(self.lines)):
-            line = self.lines[i]
-            if get_section_title(line) is None:
-                continue
-            hit = Regex.LABEL.search(line)
-            if hit is None:
-                continue
-            label = hit.groups()[0]
-            if label in existing:
-                raise Exception("Found a duplicate label: %s" % label.decode("utf8"))
-            existing.add(label)
-
-    def get_section_titles(self):  # type()
-        for l in range(len(self.lines)):
-            line = self.lines[l]
-            st = get_section_title(line)
-            if st is None:
-                continue
-            gib = get_in_between
-            num, i = gib(line, 0)
-            name, i = gib(line, i)
-            col = l + 1
-            title = st + b" " + num + b" " + name
-            print(self.filepath, ":", col, ":0:", title.decode("utf8"), sep="")
-
-    # ensures that all references are pointed to a defined SHA.
-    def check_references(self, existing):  # type: (set[bytes]) -> None
-        for line in self.lines:
-            hit = Regex.HREF.search(line)
-            if hit is None:
-                return
-            ref = hit.groups()[0]
-            if ref not in existing:
-                print("undefined reference:", ref)
-
-    # add labels to unlabelled section titles
-    def add_labels(self, existing):  # type: (set[bytes]) -> None
-        for i in range(len(self.lines)):
-            l = self.lines[i]
-            if Regex.LABEL_ENDL.search(l) is not None or get_section_title(l) is None:
-                continue
-            self.lines[i] += b"\\label{" + new_sha(existing) + b"}"
-
-    def write(self):
-        write_file(self.filepath, self.lines)  # }}}
-
-
 
 
 class Regex:  # {{{
@@ -286,11 +226,6 @@ def section_is_one_line(line):  # type: (bytes) -> bool
     return stk == 0
 
 
-# get index `i` form list `l`, `d` if out of range
-def get(l, i, d=None):  # type: (list[T], int, T | None) -> T
-    return l[i] if (i >= 0 and len(l) > i) or (i < 0 and len(l) >= -i) else d
-
-
 # quick routine to read a file into bytes
 def read_file(path):  # type: (str) -> list[bytes]
     with open(path, "rb") as f:
@@ -354,8 +289,6 @@ class PdfLatex:
         if not self.a.toc:
             return
         self.write(b"\\section{Table of Contents}")
-        # self.write(b"\\begin{itemize}[itemsep=1em] \\large")
-        # self.write(b"\\let\\x\\item\\def\\item#1#2{\\x[]\\href{#1}{#2}}")
         pipe = map(read_file, self.a.tex_files)
         pipe = map(lambda v: v.splitlines(), pipe)
 
@@ -421,23 +354,7 @@ class PdfLatex:
         fl = buf[0]
         if len(buf) < 2 and (b"*\n" == fl or Regex.STAR_NUM.match(fl)):
             return False
-
-        # all substrings are included in any line in the buffer
-        inc = lambda x: any(map(lambda l: all(map(lambda x: x in l, x)), buf))
-        # buffer has any line that starts with substring
-        sw = lambda x: any(map(lambda l: l.startswith(x), buf))
-
-        return not (
-            sw(b"This is pdfTeX")
-            or sw(b"*geometry*")
-            or sw(b"**entering extended mode")
-            or sw(b"Package hyperref Warning")
-            or sw(b"Underfull \hbox (badness 10000)")
-            or inc((b"texlive", b"texmf", b"latex"))  # system package
-            or inc((b"texlive", b"texmf", b"pdftex"))  # system package
-            or inc((b"(Please type a command or say `\end')\n"))
-            or sw(b"LaTeX Warning: You have requested package")
-        )
+        return should_pretty_print(buf)
 
     def err_buf(self, buf):  # type: (list[bytes]) -> None
         s = b"".join(buf).strip().decode("utf8")
@@ -504,7 +421,6 @@ def __build__(args):
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
 # changed.
 def __dev__(args):
-    from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
@@ -526,14 +442,7 @@ def __dev__(args):
             self.last_trigger_time = current_time
             (build(), report())
 
-    observer = Observer()
-    observer.schedule(EventHandler(args), os.curdir, recursive=False)
-    observer.start()
-    try:
-        while True:
-            time.sleep(1)
-    finally:
-        (observer.stop(), observer.join())
+    run_observer(EventHandler(args))
 
 
 # [SUBCOMMAND] prints a 7-char SHA hash that the user can copy to
@@ -575,10 +484,10 @@ def __generate_section_titles__(_):
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def __test__(_):
-    shas = set()  # type: set[bytes]
-    for f in map(File, get_tex_files()):
-        f.get_labels(shas)
-        f.check_references(shas)
+    files = list(map(File2, get_tex_files()))
+    for file in files:
+        file.index()
+    merge_labels(files)  # should error out if duplicates are found
 
 
 if __name__ == "__main__":  # int main() {
