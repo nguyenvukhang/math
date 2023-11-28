@@ -15,13 +15,6 @@ TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 
-vimgrep:
-	rg --vimgrep '^\\(Algorithm|Corollary|Definition|Example|Exercise|Lemma|Problem|Proposition|Remark|Result|Theorem)' *.tex
-
-
-search-index:
-	$(PYTEX) search-index *.tex
-
 build:
 	$(PYTEX) -J minimath \
 		build $(TEX_FILES)
