@@ -29,7 +29,7 @@ def new_sha(existing):  # type: (set[bytes]) -> bytes
 
 def get_in_between(
     buf, start, include=False
-):  # type: (bytes, int, bool) -> tuple[bytes, int] | None
+):  # type: (bytes, int, bool) -> tuple[bytes|None, int]
     stk, s = 0, None
     for i in range(start, len(buf)):
         if buf[i] == 123:  # ord(b'{')
@@ -39,7 +39,7 @@ def get_in_between(
                 hit = buf[s : i + 1] if include else buf[s + 1 : i]
                 return (hit, i + 1)
             stk -= 1
-    return None
+    return None, -1
 
 
 def run_observer(handler):
@@ -108,6 +108,21 @@ def is_closed(line):  # type: (bytes) -> bool
     return stk == 0
 
 
+# remove all bytes including and within a start and end marker
+#
+# useful for removing content between `\begin{proof}` and `\end{proof}`
+# TODO: add a checkhealth where we can't nest \begin{proof} nor \begin{compute}
+def remove_in_between(data: bytes, start: bytes, end: bytes):
+    buffer, n = [], len(end)
+    r, p = data.find(start), 0
+    while r >= 0:
+        buffer.extend(data[p:r])
+        p = data.find(end, r) + n
+        r = data.find(start, p)
+    buffer.extend(data[p:])
+    return bytes(buffer)
+
+
 class Line:
     def get_vimgrep(line):  # type: (bytes) -> bytes | None
         if line.startswith(b"\\section"):
@@ -148,7 +163,7 @@ class Line:
         return hit.groups()[0]
 
     def remove_hrefs(line):  # type: (bytes) -> bytes
-        buf = b''
+        buf = b""
         j = 0
         i = line.find(b"\\href{")
         while i >= 0:

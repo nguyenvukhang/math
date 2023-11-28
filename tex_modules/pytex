@@ -4,153 +4,13 @@ from __utils__ import *
 from __args__ import *
 from __classes__ import *
 from __consts__ import *
+from __texfile__ import *
 import os, time, datetime
 from os import path
-from subprocess import Popen, PIPE
 from typing import Callable
 
 SHOW_PROOF = False
 SHOW_COMPUTE = False
-
-
-def debug():
-    pass
-
-
-# remove all bytes including and within a start and end marker
-# TODO: add a checkhealth where we can't nest \begin{proof} nor \begin{compute}
-def remove_in_between(data: bytes, start: bytes, end: bytes):
-    buffer, n = [], len(end)
-    r, p = data.find(start), 0
-    while r >= 0:
-        buffer.extend(data[p:r])
-        p = data.find(end, r) + n
-        r = data.find(start, p)
-    buffer.extend(data[p:])
-    return bytes(buffer)
-
-
-class PdfLatex:
-    # start a subprocess of `pdflatex` ready to take a latex file in
-    # from stdin
-    def __init__(self, args):  # type: (Args) -> None
-        # tells latex compiler to search for .sty packages in this folder.
-        os.environ["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
-
-        j, d = args.jobname, args.build_dir
-        cmd = ("pdflatex", "-halt-on-error", f"-output-directory={d}", f"-jobname={j}")
-        self.dev_mode = args.action == "dev"
-        self.x = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)
-        self.a = args
-
-    # write tex contents to a file instead of stdin
-    def send_to_file(self):
-        self.x.kill()
-        self.x.stdin = open("build.tex", "wb")
-
-    def write(self, e):
-        self.x.stdin.write(e)
-        self.x.stdin.write(b"\n")
-
-    # filepath to bytes to be send to stdin
-    #
-    # note that this only works properly provided checkhealth passes,
-    # where {compute} and {proof} environments are not allowed to nest
-    def __compile__(self, filepath: str) -> bytes:
-        b = read_file(filepath)
-        if not self.a.show_computes:
-            b = remove_in_between(b, b"\\begin{compute}", b"\\end{compute}")
-        if not self.a.show_proofs:
-            b = remove_in_between(b, b"\\begin{proof}", b"\\end{proof}")
-        return b
-
-    def generate_toc(self):
-        if not self.a.toc:
-            return
-        marks = [*MARKS_WITH_BSLS, b"\\section"]
-        for file in self.a.tex_files:
-            lines = read_file(file).splitlines()
-            lines = filter(lambda l: any([l.startswith(m) for m in marks]), lines)
-            for line in lines:
-                if line.startswith(b"\\section"):
-                    title, sha = Regex.SECTION.match(line).groups()
-                    self.write(b"{\\Large{" + title + b"}}\n")
-                    self.write(b"\\begin{itemize}")
-                else:
-                    # BUG: if section is empty LaTeX will bug out on
-                    # an empty list
-                    mark = Line.get_mark(line)[1:]
-                    num, i = get_in_between(line, 0)
-                    name, i = get_in_between(line, i)
-                    sha, _ = get_in_between(line, i)
-                    s = b" "
-                    name = Line.remove_hrefs(name)
-                    title = mark + s + num + s + name
-                    val = b"\\item[-]\\href{" + sha + b"}{" + title + b"}"
-                    self.write(val)
-                    pass
-            self.write(b"\\end{itemize}")
-
-    def process_files(self):
-        for b in map(self.__compile__, self.a.tex_files):
-            self.write(b)
-            self.write(b"\\newpage")
-
-    def run(self):
-        w = self.write
-        w(b"\\documentclass{article}")
-        w(b"\\usepackage{" + self.a.header.encode("utf8") + b"}")
-        w(b"\\begin{document}")
-        self.generate_toc()
-        self.process_files()
-        w(b"\\end{document}")
-
-        self.x.stdin.flush()
-        self.x.stdin.close()
-        if self.a.verbose:
-            self.direct_stdout()
-        else:
-            self.filtered_stdout()
-        self.x.wait()
-
-    def buf_to_stdout(self, buf):  # type: (list[bytes]) -> None
-        for l in buf:
-            print(l.decode("utf8"), end="")
-
-    def direct_stdout(self):
-        self.buf_to_stdout(iter(self.x.stdout.readline, b""))
-
-    def err_buf(self, buf):  # type: (list[bytes]) -> None
-        s = b"".join(buf).strip().decode("utf8")
-        raise Exception("PYTEX ERROR\n" + s)
-
-    # helps to monitor stdout in a less cluttered way
-    def filtered_stdout(self):
-        buf, is_err = [], False
-        lines = iter(self.x.stdout.readline, b"")
-        for l in lines:
-            excl, ast = l.startswith(b"!"), l.startswith(b"*")
-            if excl or ast:
-                if is_err and not self.dev_mode:
-                    self.err_buf(buf)
-                if should_pretty_print(buf):
-                    self.buf_to_stdout(buf)
-                buf.clear()
-            is_err |= excl
-            buf.append(l)
-
-        if is_err and not self.dev_mode:
-            self.err_buf(buf)
-
-
-def merge_labels(files):  # type: (list[File]) -> set[bytes]
-    seen = set()
-    for file in files:
-        for label in file.labels():
-            if label in seen:
-                panic("Found a duplicate label: %s" % label.decode("utf8"))
-            seen.add(label)
-    return seen
 
 
 # Get all files ending with '.tex' in the user's current directory
@@ -169,25 +29,19 @@ def get_tex_files(recursive=True):  # type: (bool) -> list[str]
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def __build__(args):
-    if not path.isdir(args.build_dir):
-        os.mkdir(args.build_dir)
-
-    PdfLatex(args).run()
-
-    pdf_basename = f"{args.jobname}.pdf"
-    pdf_output = path.join(args.build_dir, pdf_basename)
-    if path.isfile(pdf_output):
-        os.rename(pdf_output, pdf_basename)
+def __build__(args):  # type: (Args) -> None
+    Project(args.tex_files).build(args)
 
 
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
 # changed.
-def __dev__(args):
+def __dev__(args):  # type: (Args) -> None
+    project = Project(args.tex_files)
+
     from watchdog.events import FileSystemEventHandler
 
     now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
-    build = lambda: __build__(args)
+    build = lambda: project.build(args)
     report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
     (build(), report())
 
@@ -196,14 +50,19 @@ def __dev__(args):
             self.args = args
             self.last_trigger_time = time.time()
 
-        def on_modified(self, event):
-            if not event.src_path.endswith(".tex"):
-                return
+        def __build__(self):
             current_time = time.time()
             if (current_time - self.last_trigger_time) < 1:
                 return
             self.last_trigger_time = current_time
             (build(), report())
+
+        def on_modified(self, event):
+            for tf in project.tex_files:
+                if event.src_path.endswith(tf.path):
+                    tf.reload_index()
+                    self.__build__()
+                    break
 
     run_observer(EventHandler(args))
 
@@ -217,7 +76,7 @@ def __sha__(_):
     files = list(map(File, get_tex_files()))
     for file in files:
         file.index()
-    all_labels = merge_labels(files)
+    all_labels = File.merge_labels(files)
     print(new_sha(all_labels).decode("utf8"), end="")
 
 
@@ -227,7 +86,7 @@ def __label__(_):
     files = list(map(File, get_tex_files()))
     for file in files:
         file.index()
-    all_labels = merge_labels(files)
+    all_labels = File.merge_labels(files)
     for file in files:
         file.add_labels_and_write(all_labels)
 
@@ -250,7 +109,7 @@ def __test__(_):
     files = list(map(File, get_tex_files()))
     for file in files:
         file.index()
-    merge_labels(files)  # should error out if duplicates are found
+    File.merge_labels(files)  # should error out if duplicates are found
 
 
 if __name__ == "__main__":  # int main() {

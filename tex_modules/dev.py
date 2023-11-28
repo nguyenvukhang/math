@@ -144,6 +144,18 @@ class File:
         with open(self.filepath, "wb") as f:
             f.write(b"\n".join(lines))
 
+    @staticmethod
+    def merge_labels(files):  # type: (list[File]) -> set[bytes]
+        seen = set()
+        for file in files:
+            for label in file.labels():
+                if label in seen:
+                    panic("Found a duplicate label: %s" % label.decode("utf8"))
+                seen.add(label)
+        return seen
+
+
+
 
 class Line:
     # Checks if the line closes all '{' opened in that line
