@@ -53,7 +53,7 @@ class File:
 
 
 class Lines:
-    def __init__(self, buffer):
+    def __init__(self, buffer):  # type: (bytes) -> None
         self.buffer = buffer
         self.reset()
 
@@ -66,7 +66,7 @@ class Lines:
     def __iter__(self):
         return self
 
-    def __next__(self):  # type() -> tuple[bytes, int]
+    def __next__(self):  # type() -> tuple[int, bytes]
         if self.cursor < 0:
             self.reset()
             raise StopIteration

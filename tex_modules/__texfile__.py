@@ -1,5 +1,4 @@
 from __utils__ import *
-from __classes__ import *
 from __args__ import *
 import os
 from os import path
@@ -9,33 +8,10 @@ from subprocess import Popen, PIPE
 class TexFile:
     def __init__(self, path):  # type: (str) -> None
         self.path = path
-        self.lines = Lines(read_file(path))
-        self.bytes = self.lines.buffer
+        self.bytes = read_file(path)
 
-        self.index = []
-        """
-        A list of ([#line], [#mark], [semver], [name], [SHA])
-        """
-
-        self.reload_index()
-
-    def reload_file(self):
-        self.lines = Lines(read_file(self.path))
-        self.bytes = self.lines.buffer
-
-    def reload_index(self):
-        self.index.clear()
-        self.reload_file()
-
-        for lnum, line in self.lines:
-            m = Line.get_mark_index(line)
-            if m is None:
-                continue
-            semver, i = get_in_between(line, 0)
-            name, i = get_in_between(line, i)
-            sha, _ = get_in_between(line, i)
-            self.index.append((lnum, m, semver, name, sha))
-
+    def reload(self):
+        self.bytes = read_file(self.path)
 
 class Project:
     def __init__(self, tex_filepaths):  # type: (list[str]) -> None
@@ -55,7 +31,7 @@ class Project:
 
         for f in self.tex_files:
             w(f.bytes)
-            w(b'\n\\newpage\n')
+            w(b"\n\\newpage\n")
 
         w(b"\\end{document}")
 

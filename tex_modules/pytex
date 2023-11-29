@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-from __utils__ import *
-from __args__ import *
-from __classes__ import *
 from __consts__ import *
 from __texfile__ import *
 import time, datetime
@@ -32,15 +29,14 @@ def __dev__(args):  # type: (Args) -> None
 
         def __build__(self):
             current_time = time.time()
-            if (current_time - self.last_trigger_time) < 1:
-                return
-            self.last_trigger_time = current_time
-            (build(), report())
+            if (current_time - self.last_trigger_time) >= 1:
+                self.last_trigger_time = current_time
+                (build(), report())
 
         def on_modified(self, event):
             for tf in project.tex_files:
                 if event.src_path.endswith(tf.path):
-                    tf.reload_index()
+                    tf.reload()
                     self.__build__()
                     break
 

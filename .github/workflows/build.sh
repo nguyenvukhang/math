@@ -13,6 +13,7 @@ EOF
   # append each file
   for t in "${TEX_FILES[@]}"; do
     cat $t >>$1
+    echo $'\n\\newpage\n' >>$1
   done
   # \end{document}
   echo $'\n\n\\end{document}' >>$1

@@ -13,8 +13,15 @@ TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 
 build:
-	$(PYTEX) -J minimath \
-		build $(TEX_FILES)
+	$(PYTEX) -J minimath build $(TEX_FILES)
+
+dev:
+	$(PYTEX) -J minimath dev $(TEX_FILES)
+
+ci:
+	bash .github/workflows/build.sh
+	TEXINPUTS='tex_modules/:' pdflatex .ci/minimath.tex
+	@make clean
 
 fmt:
 	rm -f *.bak* **/*.bak*
@@ -32,12 +39,6 @@ refs:
 	$(PYTEX) -J plenary build plenary.tex calculus.tex
 	$(PYTEX) -J all build plenary.tex calculus.tex *.tex
 
-dev:
-	$(PYTEX) -J minimath --toc dev $(TEX_FILES)
-
-all:
-	bash .github/workflows/build-all.sh
-
 sha:
 	@$(PYTEX) sha | pbcopy
 
@@ -51,7 +52,7 @@ head:
 	@$(PYTEX) generate-section-titles
 
 clean:
-	rm -rf .build *.log minimath*.pdf
+	rm -rf .ci .build *.log minimath*.pdf
 
 open:
 	open minimath.pdf
