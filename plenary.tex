@@ -95,8 +95,32 @@ using any of the following equivalent definitions:
   \item $\cl S$ is the set of all \href{f928932}{points of closure} of $S$.
   \item $\cl S$ is the set $S$ together with all of its \href{f928932}{limit
   points}.
-  \item $\cl S$ is the set $S$ together with all of its limit points.
+  \item $\cl S$ is the intersection of all closed sets containing $S$.
+  \item $\cl S$ is the smallest closed set containing $S$.
+  \item $\cl S$ is the union of $S$ and its boundary $\partial S$
 \end{enumerati}
+
+\Definition{1.1.8}{Open sets}\label{dd04b4d}
+
+A subset $U$ of a metric space $(M,d)$ is called open if for any point $x$ in
+$U$, there exists a real number $\epsilon>0$ such that any point $y\in M$
+satisfying $d(x,y)<\epsilon$ belongs to $U$.
+
+Equivalently, $U$ is open if every point $U$ has a neighborhood contained in
+$U$.
+
+An example of a metric space is $(\R^2,\norm\cdot)$.
+
+\Definition{1.1.9}{Closed sets}\label{deadb92}
+
+A subset $A$ of a topological space $(X,\tau)$ is closed if its complement
+$X\setminus A$ is an \href{dd04b4d}{open} subset of $(X,\tau)$
+
+A set $A$ is closed in $X$ if and only if it is equal to its closure $\cl A$ in
+$X$.
+
+Yet another equivalent definition is that a set is closed if and only if it
+contains all of its boundary points.
 
 \Definition{1.2.1}{Monotone sequences}\label{b5fad69}
 
