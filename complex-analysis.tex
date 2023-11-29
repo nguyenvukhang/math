@@ -4,11 +4,15 @@
 
 \textcolor{white}{.}
 
-\textbf{Entire function} is a complex-valued function that is holomorphic on $\C$.
+\textbf{Entire function} is a complex-valued function that is holomorphic on
+$\C$.
 
 A \textbf{real-valued} function is any function $f:X\to\R$.
 
 A \textbf{complex-valued} function is any function $f:X\to\C$.
+
+A subset of $\R^n$ or $\C^n$ is called \textbf{compact} if it is closed and
+bounded.
 
 The $C^n$ notation:
 \begin{itemize}
@@ -720,7 +724,7 @@ A bounded \href{d508dc8}{entire} function is constant.
 
   But since $P$ is arbitrary, we conclude that
   $$
-    \frac{\partial f}{\partial z}\equiv 0
+    \frac{\partial f}{\partial z}\equiv0
   $$
 
   By \href{c2c7fd1}{Lemma 3.4.2}, the proof is complete.
@@ -781,3 +785,44 @@ $$
 $$
 
 uniformly on compact sets.
+
+\Theorem{3.6.1}{}\label{bdc2857}
+
+Let $U\subseteq\C$ be a connected open set and let $f:U\to\C$ be holomorphic.
+Let $\mathbf Z:=\Set{z\in U}{f(z)=0}$. If there are a $z_0\in\mathbf Z$ and a
+sequence $\{z_j\}\subseteq\mathbf Z\setminus\{z_0\}$ such that $z_j\to z_0$,
+then $f\equiv0$.
+
+\Corollary{3.6.2}{}\label{b919101}
+
+Let $U\subseteq\C$ be connected and open, and $D(P,r)\subseteq U$ . If $f$ is
+holomorphic on $U$ and $f|_{D(P,r)}\equiv0$, then $f\equiv0$ on $U$.
+
+Note the strength of this statement. As long as $f$ is holomorphic, if it's zero
+on just a tiny $D(P,r)$, then it is zero on the entire domain.
+
+\Corollary{3.6.3}{}\label{ac6f6ea}
+
+Let $U\subseteq\C$ be connected and open. Let $f,g$ be holomorphic on $U$. If
+$\Set{z\in U}{f(z)=g(z)}$ has an \href{b0219cd}{accumulation point} in $U$, then
+$f\equiv g$.
+
+\Corollary{3.6.4}{}
+
+Let $U\subseteq\C$ be connected and open and let $f,g$ be holomorphic on $U$. If
+$f\cdot g\equiv0$ on $U$, then either $f\equiv0$ on $U$ or $g\equiv0$ on $U$.
+
+\Corollary{3.6.5}{}
+
+Let $U\subseteq\C$ be connected and open and let $f$ be holomorphic on $U$. If
+there is a $P\in U$ such that
+$$
+\left(\frac\partial{\partial z}\right)^jf(P)=0
+$$
+
+for every $j$, then $f\equiv0$.
+
+\Corollary{3.6.6}{}
+
+If $f$ and $g$ are entire holomorphic functions and if $f(x)=g(x)$ for all
+$x\in\R\subseteq\C$, then $f\equiv g$.

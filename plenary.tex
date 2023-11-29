@@ -52,6 +52,22 @@ Alternatively, we can also define them by
   \liminf x_n & := \lim_{n\to\infty}\inf\Set{x_k}{k\geq n}
 \end{align*}
 
+\Definition{1.1.4}{Cluster point}\label{b0219cd}
+
+Let $S$ be a subset of a topological space $X$. A point $x$ in $X$ is a cluster
+point of the set $S$ if every neighborhood of $x$ contains at least one point
+of $S$ different from $x$ itself.
+
+A cluster point is also called a limit point or accumulation point.
+
+In real analysis, $c\in\R$ is a cluster point of a non-empty set $A\subseteq\R$
+if for every $\epsilon>0$ there exists a point $x\in A\setminus\{c\}$ such that
+$x\in(c-\epsilon,c+\epsilon)$.
+
+In complex analysis, $c\in\C$ is a cluster point of a non-empty set
+$A\subseteq\C$ if for every $\epsilon>0$ there exists a point $z\in
+A\setminus\{c\}$ such that $z\in B_\epsilon(c)$.
+
 \Definition{1.2.1}{Monotone sequences}\label{b5fad69}
 
 A sequence $\{x_n\}$ is said to be \textbf{increasing} if $x_0\leq x_1\leq
