@@ -1,17 +1,20 @@
 defaultIndent: "  "
 
 specialBeginEnd:
-  # don't indent inline math
   inlineMath:
-    begin: (?<!\$)(?<!\\)\$(?!\$) # $ but *not* \$ or $$
-    body: [^$]*?                  # anything *except* $
-    end: (?<!\\)\$(?!\$)          # $ but *not* \$ or $$
-    lookForThis: 0
+    # https://latexindentpl.readthedocs.io/en/latest/sec-default-user-local.html#lst-specialbeginend
+    lookForThis: 0 # don't indent inline math
+  hrefs:
+    begin: \\href\{[a-z0-9]{7}
+    body: .*
+    end: \}
+    lookForThis: 1
+  specialBeforeCommand: 1
 
 modifyLineBreaks:
   textWrapOptions:
     columns: 80
     blocksEndBefore:
       other: \\begin\{|\\end\{|\$\$
-    huge: overflow                      # forbid mid-word line breaks
+    huge: overflow # forbid mid-word line breaks
     separator: ""
