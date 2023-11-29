@@ -82,11 +82,15 @@ def __includes__(buf, x):
     return any(map(lambda l: all(map(lambda x: x in l, x)), buf))
 
 
+def has_only(buf, chars):  # type: (bytes, bytes) -> bool
+    return all(map(lambda b: b in chars, buf))
+
+
 def should_pretty_print(x):
     if len(x) == 0:
         return False
     fl = x[0]
-    if len(x) < 2 and (b"*\n" == fl or Regex.STAR_NUM.match(fl)):
+    if len(x) < 2 and (b"*\n" == fl or has_only(fl, b"0123456789[] *\n")):
         return False
 
     sw, inc = __starts_with__, __includes__
