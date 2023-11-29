@@ -2,6 +2,7 @@
 
 from __consts__ import *
 from __texfile__ import *
+from __classes__ import File
 import time, datetime
 from typing import Callable
 

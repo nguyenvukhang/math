@@ -13,6 +13,7 @@ class TexFile:
     def reload(self):
         self.bytes = read_file(self.path)
 
+
 class Project:
     def __init__(self, tex_filepaths):  # type: (list[str]) -> None
         self.tex_files = list(map(TexFile, tex_filepaths))
@@ -71,7 +72,7 @@ class PdfLatex(Popen):
             os.rename(pdf_output, pdf_basename)
 
     def buf_to_stdout(self, buf):  # type: (list[bytes]) -> None
-        for l in buf:
+        for l in filter(lambda v: len(v.strip()) > 0, buf):
             print(l.decode("utf8"), end="")
 
     def direct_stdout(self):

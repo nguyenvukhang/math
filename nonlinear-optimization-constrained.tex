@@ -555,6 +555,275 @@ x$. Then \href{fed784a}{MFCQ} holds.
 
 % LAGRANGIAN DUALITY
 
+With $I:=\iter1m$ and $J:=\iter1p$, the Standard NLP is
+\begin{equation*}
+  \begin{array}{l l l l}
+    \displaystyle \min_{x\in\R^n}f(x)
+     & \text{s.t.} & g_i(x)\leq0 & \forall i\in I \\
+     &             & h_j(x)=0    & \forall j\in J
+  \end{array}\Tag{5.1}
+\end{equation*}
+
+We define the active set $I(\bar x)$ as
+$$
+  I(\bar x):=\Set{i\in I}{g_i(\bar x)=0}
+$$
+
+Let $X$ be the feasible set of the NLP.
+
+TANGENT CONE:
+$$
+  T_X(\bar x):=
+  \Set{d\in\R^n}{\exists \{x^k\in X\}\to\bar x,\{t_k\}\downarrow0:\frac{x^k-\bar x}{t_k}\to d}
+$$
+
+LINEARIZED CONE:
+$$
+  L_X(\bar x):=\left\{ d\in\R^n\ \middle\vert
+  \begin{array}{l l}
+    \nabla g_i(\bar x)^Td\leq0 & \forall i\in I(\bar x) \\
+    \nabla h_j(\bar x)^Td=0    & \forall j\in J
+  \end{array}
+  \right\}
+$$
+
+\Definition{5.1.22}{}\label{e55c332}
+
+We say that the affine constraint qualification (Affine CQ) holds for (5.1) if
+all constraints are affine. That is, there exists
+$$
+  \begin{array}{l l l}
+    a_i\in\R^n & \alpha_i\in\R & \forall i\in I \\
+    b_i\in\R^n & \beta_j\in\R  & \forall j\in J
+  \end{array}
+$$
+such that for all $x\in\R^n$,
+$$
+  \begin{array}{l l}
+    g_i(x)=a_i^T-\alpha_i & \forall i\in I \\
+    h_j(x)=b_i^T-\beta_j  & \forall j\in J
+  \end{array}
+$$
+
+\Proposition{5.1.23}{}\label{f5d546e}
+
+Let the Affine CQ hold for $(5.1)$. Then ACQ holds at every feasible point.
+
+\begin{proof}
+  \def\LC{L_X(\bar x)}
+  \def\TC{T_X(\bar x)}
+  \def\Active{I(\bar x)}
+
+  Let $\bar x\in X$. In view of Lemma 5.1.18 we only have to show that
+  $\LC\subset\TC$. Let $d\in\LC$. Then by defn of the linearized cone we have
+  $$
+    \begin{array}{l l}
+      \alpha_i^Td\leq0 & \forall i\in I \\
+      \beta_j^Td=0     & \forall j\in J
+    \end{array}
+  $$
+  Now, let $\{t_k\}\downarrow0$ and put $x^k:=\bar x+t_kd$. Then
+  $$
+    x^k\to\bar x \Quad\text{and}\Quad \frac{x^k-\bar x}{t_k}\to d
+  $$
+  Hence, we still need to show that $x^k\in X$ ($\forall k$ suff.
+  large)
+
+  \paragraph{For $i\notin\Active$} Then $a_i^T\bar x<\alpha_i$, hence by continuity
+  $$
+    a_i^Tx^k<\alpha_i\Quad\forall(x\text{ suff. large})
+  $$
+
+  \paragraph{For $i\in\Active$} Then
+  $$
+    a_i^Tx^k = a_i^T\bar x + t_ka_i^Td \leq a_i^T\bar x = \alpha_i
+  $$
+  because $a_i^Td\leq0$ by definition of $\LC$.
+
+  \paragraph{For $j\in J$} Then
+  $$
+    b_j^T x^k=b_j^T\bar x+t_kb_j^Td=\beta_j
+  $$
+  because $b_j^Td=0$ by definition of $\LC$.
+
+  These three together show that $x^k\in X$ for $k$ sufficiently large. This
+  completes the proof.
+\end{proof}
+
+\textbf{5.1.5 CONVEX PROBLEMS}
+
+Consider
+\begin{equation*}
+  \begin{array}{l l l l}
+    \min f(x) & \text{s.t.} & g_i(x)\leq0             & \forall i\in I \\
+              &             & h_j(x)=b_j^Tx-\beta_j=0 & \forall j\in J
+  \end{array}
+  \Tag{5.2}
+\end{equation*}
+where $f,g_i,h_j\in\R^n\to\R$ are cont. diff \textbf{and convex}, and
+$b_j\in\R^n,\beta_j\in\R$. Then
+$$
+  X=\Set{x\in\R^n}{
+    \begin{array}{l l}
+      g_i(x)\leq0 & \forall i\in I \\
+      h_j(x)=0    & \forall j\in J
+    \end{array}
+  }
+$$
+is convex (see Midterms).
+
+\Theorem{5.1.24}{}\label{d0453f3}
+
+Let $\bar x$ be feasible for (5.2), and consider the following statements:
+\begin{enumerata}
+  \item There exists $(\bar\lambda,\bar\mu)\in M(\bar x)$
+  \item $\bar x$ is a global minimizer of (5.2)
+\end{enumerata}
+
+Then (a) implies (b). Hence, if a CQ holds at $\bar x$, then (a) iff (b).
+
+% cl A is the set of all {d|exists seq x in A s.t. x goes to d}
+% yes. that is ANY CQ.
+% A CQ, by definition, is a condition that makes the KKT a
+% necessary optimality condition.
+%
+% A CQ guarantees that the local minimizer is a KKT point.
+%
+% NB: make sure the "necessary" and "sufficient" are correctly placed.
+
+\begin{proof}
+  \def\bx{\bar x}\def\bl{\bar\lambda}\def\bm{\bar\mu}
+  \def\Act{I(\bx)}
+  Let $(\bx,\bl,\bm)$ be a KKT point of (5.2), and let $\bar x\in X$.
+
+  Then, by Theorem 2.2.1,
+  $$
+    f(x)\geq f(\bx) + \nabla f(\bx)^T(x-\bx)
+  $$
+
+  But with the KKT conditions, we can rewrite $\nabla f(\bx)$ as
+  $$
+    \nabla f(\bx)=-\sum_{i\in\Act}^m\bl_i \nabla g_i(\bx)-\sum_{j=1}^p\bm_j\nabla h_j(\bx)
+  $$
+  So then
+  \begin{align*}
+    f(x)\geq f(\bx)-\sum_{i\in\Act}^m\bl_i\nabla g_i(\bx)^T(x-\bx)-\sum_{j=1}^p\bm_j\nabla h_j(\bx)^T(x-\bx)\Tag{*}
+  \end{align*}
+
+  Again by Theorem 2.2.1, we have
+  $$
+    \nabla g_i(\bx)^T(x-\bx)\leq g_i(x)-g_i(\bx)
+  $$
+  Separately,
+  $$
+    \nabla h_j(\bx)^T(x-\bx)=0
+  $$
+
+  Putting everything back to $(*)$ and noting that $g_i(\bar x)=0$ by definition
+  of an active set,
+  $$
+    f(x)\geq f(\bx)-\sum_{i\in\Act}^m\bl_ig_i(x)
+  $$
+  But since $\bl_i\geq0$ and $g_i(x)\leq0$, we have
+  $$
+    f(x)\geq f(\bx)
+  $$
+
+  and hence $\bar x$ is a global minimum of (5.2). Hence shown that (a) implies
+  (b). The converse direction is the definition of a CQ.
+
+  And hence (a) iff (b).
+\end{proof}
+
+\Definition{5.1.25}{Slater constraint qualification}\label{a3b15e9}
+
+We say that Slater CQ holds for (5.2) if there exists $\hat x$ such that
+$$
+  \begin{array}{l l}
+    g_i(\hat x)<0 & \forall i\in I \\
+    h_j(\hat x)=0 & \forall j\in J
+  \end{array}
+$$
+
+We call such an $\hat x$ a Slater point.
+
+\Proposition{5.1.26}{}\label{c78f4af}
+
+Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
+
+\begin{proof}
+  \def\bx{\bar x}\def\bl{\bar\lambda}\def\bm{\bar\mu}
+  \def\LC{L_X(\bar x)}
+  \def\TC{T_X(\bar x)}
+  \def\Act{I(\bx)}
+
+  Let $\bx\in X$ and set
+  $$
+    F(\bx):=\Set{d\in\R^n}{
+      \begin{array}{l l}
+        \nabla g_i(\bx)^T\leq0 & \forall i\in\Act \\
+        b_j^Td=0               & \forall j\in J
+      \end{array}
+    }
+  $$
+
+  \Lemma{}{$F(\bx)\subset T_X(\bx)$} Let $d\in F(\bx)$, take
+  $\{t_k\}\downarrow0$. Set $x^k:=\bar x+t_kd$. Then $\dfrac{x^k-\bar
+    x}{t_k}\to d$. Moreover,
+
+  For $i\notin\Act$, $g_i(x^k)<0$ for $k$ sufficiently large.
+
+  For $i\in\Act$, $\dfrac{g_i(x^k)-g_i(\bx)}{t_k}\to\nabla g_i(\bx)<0$, and
+  $g_i(\bx)=0$, so we ahve $g_i(x^k)<0$ for $k$ sufficiently large.
+
+  For $j\in J$, $h_j(x^k)=b_j^Tx^k-\beta_j=t_k\nabla h_j(\bx)^Td-\beta_j$
+  \begin{align*}
+    h_j(x^k) & =b_j^Tx^k-\beta_j                                 \\
+             & =t_k\nabla h_j(\bx)^Td+\nabla h_j(\bx)\beta_j = 0
+    % !!! TODO: fix the line above! this was not read
+    % properly in class.
+  \end{align*}
+
+  Thus
+  $$
+    cl F(\bx)\subset cl\TC=\TC
+  $$
+
+  We now show $\LC\subset dF(\bx)$. To this end, let $d\in\LC$, and let $\hat x$
+  be a Slater point.
+
+  Set $\hat d$ to be $\hat x-\bar x$. Then by Theorem 2.2.1,
+  \begin{equation*}
+    \nabla g_i(\bx)^T\hat d\leq g_i(\hat x) - g_i(\bx)<0\Quad\forall(i\in\Act)\Tag{*}
+  \end{equation*}
+  $<0$ because of definitions of Slater and Active Set.
+
+  Moreover, by the affine-ness of $h_j$, we have
+  \begin{align*}
+    \nabla h_j(\bx)^T\hat d = h_j(\hat x)-h_j(\bx)=0\Quad\forall(j\in J)\Tag{**}
+  \end{align*}
+
+  because both $h_j(\hat x)$ and $h_j(\bx)$ are zero.
+
+  Now we take a small pertubation of $d$ using $\hat d$:
+  $$
+    d(\delta):= d + \delta\hat d\Quad(\delta>0)
+  $$
+  Then $d(\delta)\in F(\bx)$, since
+  \begin{align*}
+    \nabla g_i(\bx)^Td(\delta) & =\nabla g_i(\bx)^Td + \delta\nabla g_i(\bx)^T\hat d<0 \Quad\forall(i\in\Act) \\
+    \nabla h_j(\bx)^Td(\delta) & =\nabla h_j(\bx)^Td + \delta\nabla h_j(\bx)^T\hat d=0 \Quad\forall(j\in J)
+  \end{align*}
+  $<0$ because the 1st term $\leq0$ and 2nd term $<0$, because $d$ is
+  in the linearized cone, and $\hat d$...? \\
+  And $=0$ because both terms $=0$.
+
+  Hence,
+  $$
+    d=\lim_{\delta\downarrow0}d(\delta) \subset clF(\bx)
+  $$
+\end{proof}
+
 Consider the standard NLP:
 \begin{equation*}
   \NlpStdForm\Tag{1}
