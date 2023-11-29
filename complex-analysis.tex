@@ -79,10 +79,10 @@ Here are some building blocks to get started (remember that you can use these
 with the properties above to show that other more complicated functions are
 holomorphic too):
 
-\begin{enumerate}
+\begin{enumerati}
   \item $f(z)=1/z$ on $\C\sans{0}$
   \item $f(z)=z$ on $\C$
-\end{enumerate}
+\end{enumerati}
 
 (I really thought this list was gonna be longer. To be continued.)
 
@@ -806,13 +806,13 @@ Let $U\subseteq\C$ be connected and open. Let $f,g$ be holomorphic on $U$. If
 $\Set{z\in U}{f(z)=g(z)}$ has an \href{b0219cd}{accumulation point} in $U$,
 then $f\equiv g$.
 
-\Corollary{3.6.4}{}
+\Corollary{3.6.4}{}\label{faf57f7}
 
 Let $U\subseteq\C$ be connected and open and let $f,g$ be holomorphic on $U$.
 If $f\cdot g\equiv0$ on $U$, then either $f\equiv0$ on $U$ or $g\equiv0$ on
 $U$.
 
-\Corollary{3.6.5}{}
+\Corollary{3.6.5}{}\label{dccfe6b}
 
 Let $U\subseteq\C$ be connected and open and let $f$ be holomorphic on $U$. If
 there is a $P\in U$ such that
@@ -822,12 +822,12 @@ $$
 
 for every $j$, then $f\equiv0$.
 
-\Corollary{3.6.6}{}
+\Corollary{3.6.6}{}\label{bd8ae3b}
 
 If $f$ and $g$ are entire holomorphic functions and if $f(x)=g(x)$ for all
 $x\in\R\subseteq\C$, then $f\equiv g$.
 
-\Definition{4.1.0}{Types of singularities}
+\Definition{4.1.0}{Types of singularities}\label{a7f062e}
 
 Let $U\subseteq\C$ be open and $P\in U$. Suppose that $f:U\sans P\to\C$ is
 holomorphic.
@@ -839,3 +839,29 @@ There are three possibilities for the behavior of $f$ near $P$:
   \item \textit{(Pole)} $\lim_{z\to P}|f(z)|=+\infty$.
   \item \textit{(Essential singularity)} Neither (i) nor (ii) applies.
 \end{enumerati}
+
+\Theorem{4.1.1}{The Riemann removable singularities theorem}\label{f42a663}
+
+Let $f:D(P,r)\sans P\to\C$ be holomorphic and bounded. Then
+\begin{enumerata}
+  \item $\lim_{z\to P}f(z)$ exists
+  \item the function $\hat f:D(P,r)\to\C$ defined by
+  $$
+    \hat f(z)=\begin{cases}
+      f(z)                                   & \text{if }z\neq P \\
+      \displaystyle\lim_{\zeta\to P}f(\zeta) & \text{if }z=P
+    \end{cases}
+  $$
+
+  is holomorphic
+\end{enumerata}
+
+Notice that, a priori, it is not even clear that $\lim_{z\to P}f(z)$ exists,
+or, even if it does, that the function $\hat f$ has any regularity at $P$
+beyond just continuity.
+
+\Theorem{4.1.4}{Casorati-Weierstrass}\label{da8365b}
+
+If $f:D(P,r_0)\sans P\to\C$ is holomorphic and $P$ is an essential singularity
+of $f$, then $f(D(P,r)\sans P)$ is \href{e14819a}{dense} in $\C$ for any
+$0<r<r_0$.

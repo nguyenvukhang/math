@@ -23,9 +23,9 @@ b() {
 }
 
 b minimath
-b minimath.nc --no-compute
-b minimath.np --no-proof
-b minimath.np.nc --no-proof --no-compute
+# b minimath.nc --no-compute
+# b minimath.np --no-proof
+# b minimath.np.nc --no-proof --no-compute
 
 TEX_FILES=(plenary.tex calculus.tex)
 b plenary

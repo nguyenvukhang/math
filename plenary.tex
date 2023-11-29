@@ -65,8 +65,38 @@ if for every $\epsilon>0$ there exists a point $x\in A\sans{c}$ such that
 $x\in(c-\epsilon,c+\epsilon)$.
 
 In complex analysis, $c\in\C$ is a cluster point of a non-empty set
-$A\subseteq\C$ if for every $\epsilon>0$ there exists a point $z\in
-A\sans{c}$ such that $z\in B_\epsilon(c)$.
+$A\subseteq\C$ if for every $\epsilon>0$ there exists a point $z\in A\sans{c}$
+such that $z\in B_\epsilon(c)$.
+
+\Definition{1.1.5}{Dense}\label{e14819a}
+
+Informally, a subset $A$ of a topological space $X$ is said to be
+\textbf{dense} in $X$ if every point of $X$ either belongs to $A$ or else is
+arbitrarily ``close" to a member of $A$.
+
+A subset $A$ if a topological space $X$ is said to be a dense subset of $X$ if
+any of the following equivalent conditions are satisfied:
+\begin{enumerati}
+  \item The smallest closed subset of $X$ containing $A$ is $X$ itself.
+  % TODO: revisit this wikipedia article
+\end{enumerati}
+
+\Definition{1.1.6}{Point of closure}\label{f928932}
+
+For $S$ as a subset of a Euclidean space, $x$ is a point of closure of $S$ if
+every open ball centered at $x$ contains a point of $S$ (this point can be $x$
+itself).
+
+\Definition{1.1.7}{Closure}\label{a07ff74}
+
+The closure of a subset $S$ of points in a topological space can be defined
+using any of the following equivalent definitions:
+\begin{enumerati}
+  \item $\cl S$ is the set of all \href{f928932}{points of closure} of $S$.
+  \item $\cl S$ is the set $S$ together with all of its \href{f928932}{limit
+  points}.
+  \item $\cl S$ is the set $S$ together with all of its limit points.
+\end{enumerati}
 
 \Definition{1.2.1}{Monotone sequences}\label{b5fad69}
 
