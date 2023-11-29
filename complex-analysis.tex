@@ -228,7 +228,7 @@ then
 \end{align*}
 
 This follows from \href{c511702}{Definition 2.1.3} and the \href{d969d46}{chain
-  rule}.
+rule}.
 
 (the lack of an $i$ term is intentional. Remember that
 $f\circ\gamma:\R\to\R$)
@@ -250,7 +250,7 @@ $$
 $$
 
 This comes from using a holomorphic function on \href{f37b676}{Proposition
-  2.1.4}, and then applying \href{b1e96fc}{Definition 2.1.5}.
+2.1.4}, and then applying \href{b1e96fc}{Definition 2.1.5}.
 
 \Proposition{2.1.7}{Moving $||$ into integral}\label{bcec8b1}
 
@@ -689,7 +689,7 @@ $$
   \left|\frac{\partial^kf}{\partial z^k}(P)\right|\leq\frac{Mk!}{r^k}
 $$
 
-\Lemma{3.4.2}{}
+\Lemma{3.4.2}{}\label{c2c7fd1}
 
 Let $U\subseteq\C$ be open and connected and $f:U\to\C$ be holomorphic. If
 $\partial f/\partial z=0$ on $U$, then $f$ is constant on $U$.
@@ -700,6 +700,84 @@ $\partial f/\partial z=0$ on $U$, then $f$ is constant on $U$.
   y=0$. So $f$ is constant.
 \end{proof}
 
-\Lemma{3.4.3}{Liouville's Theorem}
+\Theorem{3.4.3}{Liouville's Theorem}\label{cf6d8a9}
 
-A bounded entire function is constant.
+A bounded \href{d508dc8}{entire} function is constant.
+
+\begin{proof}
+  Let $f$ be entire and assume that $|f(z)|\leq M$ for all $z\in\C$. Fix a
+  $P\in\C$ and let $r>0$. We apply the \href{a2d8611}{Cauchy estimate} for $k=1$
+  on $\overline D(P,r)$. The result is
+  $$
+    \left|\frac{\partial f}{\partial z}(P)\right|\leq\frac Mr
+  $$
+
+  Since this inequality holds for all $r>0$, we can blow it up to $+\infty$ and
+  conclude that
+  $$
+    \frac{\partial f}{\partial z}(P)=0
+  $$
+
+  But since $P$ is arbitrary, we conclude that
+  $$
+    \frac{\partial f}{\partial z}\equiv 0
+  $$
+
+  By \href{c2c7fd1}{Lemma 3.4.2}, the proof is complete.
+\end{proof}
+
+\Theorem{3.4.4}{}\label{db4ce28}
+
+If $f:\C\to\C$ is an entire function and if for some real number $C$ and some
+positive integer $k$ it holds that
+$$
+  |f(z)|\leq C|z|^k
+$$
+
+for all $z\in\C$ with $|z|>1$, then $f$ is a polynomial in $z$ of degree at
+most $k$.
+
+\Theorem{3.4.5}{}\label{ae3b10d}
+
+Let $p(z)$ be a non-constant (holomorphic) polynomial. Then $p$ has a root.
+That is, there exists an $\alpha\in\C$ such that $p(\alpha)=0$.
+
+This is in fact the fundamental theorem of algebra, and one of the most elegant
+applications of \href{cf6d8a9}{Liouville's Theorem}.
+
+\begin{proof}
+  Suppose there isn't an $\alpha\in\C$ such that $p(\alpha)=0$. Then
+  $$
+    g(z):=\frac1{p(z)}
+  $$
+  is entire. Notice that as $|z|\to\infty$, $|p(z)|\to+\infty$. Thus
+  $1/|p(z)|\to0$ as $|z|\to\infty$ and hence $g$ is bounded. By Liouville's
+  Theorem, $g$ is constant; hence $p$ is constant. Contradiction!
+\end{proof}
+
+\Corollary{3.4.6}{}\label{cae4be0}
+
+If $p(z)$ is a holomorphic polynomial of degree $k$, then there are $k$ complex
+numbers $\alpha_1,\ldots,\alpha_k$ (not necessarily distinct) and a non-zero
+constant $C$ such that
+$$
+  p(z)=C(z-\alpha_1)\ldots(z-\alpha_k)
+$$
+
+\Theorem{3.5.1}{}\label{c4e6d08}
+
+Let $U\subseteq\C$ be an open set. Let $f_j:U\to\C$, $j=1,2,3\ldots$ be a
+sequence of holomorphic functions. Suppose that there is a function $f:U\to\C$
+such that, for each compact subset $E$ of $U$, the sequence $f_j|_E$ converges
+uniformly to $f|_E$. Then $f$ is holomorphic on $U$. (In particular, $f\in
+C^\infty(U)$)
+
+\Corollary{3.5.2}{}\label{f5163f1}
+
+If $f_j,f,U$ are as defined in \href{c4e6d08}{Theorem 3.5.1}, then for any
+integer $k\in\{0,1,2\ldots\}$ we have
+$$
+  \left(\frac\partial{\partial z}\right)^kf_j(z)\to\left(\frac\partial{\partial z}\right)^kf(z)
+$$
+
+uniformly on compact sets.
