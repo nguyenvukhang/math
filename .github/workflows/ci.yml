@@ -22,21 +22,7 @@ jobs:
 
       - name: Generate single .tex files
         working-directory: main
-        run: |
-          PYTEX='python3 tex_modules/pytex --ci'
-
-          $PYTEX -J minimath build \
-            plenary.tex \
-            calculus.tex \
-            algorithm-design.tex \
-            complex-analysis.tex \
-            nonlinear-optimization-unconstrained.tex \
-            nonlinear-optimization-constrained.tex \
-            ordinary-differential-equations.tex
-
-          $PYTEX -J plenary build \
-            plenary.tex \
-            calculus.tex
+        run: bash .github/workflows/build.sh
 
       - uses: xu-cheng/latex-action@v3
         with:
@@ -58,20 +44,28 @@ jobs:
 
       - name: Push PDFs to pdf branch
         if: ${{ github.ref_name == 'main' }}
+        working-directory: pdf
         run: |
+          echo "Clearing out old files"
           rm -f *
+
+          echo "Importing built pdfs"
           cp ../main/*.pdf .
 
+          echo "Stage pdfs"
           git add --all
+
+          echo "Checking for changes"
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes found!"
           else
+            echo "Changes found! Committing..."
             D='Dec 14 2022 12:12:00 +0800'
             GIT_AUTHOR_DATE=$D GIT_COMMITTER_DATE=$D \
               git commit --amend --no-edit -m "[$GIT_HASH]"
+            echo "Pushing..."
             git push -f
           fi
-        working-directory: pdf
 
       - name: Release PDF
         uses: softprops/action-gh-release@v1
