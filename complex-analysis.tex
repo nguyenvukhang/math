@@ -80,7 +80,7 @@ with the properties above to show that other more complicated functions are
 holomorphic too):
 
 \begin{enumerate}
-  \item $f(z)=1/z$ on $\C\setminus\{0\}$
+  \item $f(z)=1/z$ on $\C\sans{0}$
   \item $f(z)=z$ on $\C$
 \end{enumerate}
 
@@ -339,10 +339,10 @@ Note:
 Let $(\alpha,\beta)\subseteq\R$ be an open interval and let
 $H,F:(\alpha,\beta)\to\R$ be continuous functions. Let $p\in(\alpha,\beta)$ and
 suppose that $dH/dx$ exists and equals $F(x)$ for all
-$x\in(\alpha,\beta)\setminus\{p\}$. Then $(dH/dx)(p)$ exists and
-$(dH/dx)(x)=F(x)$ for all $x\in(\alpha,\beta)$.
+$x\in(\alpha,\beta)\sans{p}$. Then $(dH/dx)(p)$ exists and $(dH/dx)(x)=F(x)$
+for all $x\in(\alpha,\beta)$.
 $$
-  \forall_{x\in(\alpha,\beta)\setminus\{p\}}:\frac{dH}{dx}(x)=F(x)\implies
+  \forall_{x\in(\alpha,\beta)\sans{p}}:\frac{dH}{dx}(x)=F(x)\implies
   \forall_{x\in(\alpha,\beta)}:\frac{dH}{dx}(x)=F(x)
 $$
 
@@ -352,10 +352,10 @@ It's as if the continuity fills in the gap at $p$.
 
 Let $U\subseteq\C$ be either an open rectangle or an open disc and let $P\in
 U$. Let $f$ and $g$ be continuous, real-valued functions on $U$ which are
-continuously differentiable on $U\setminus\{P\}$. Suppose further that
+continuously differentiable on $U\sans{P}$. Suppose further that
 $$
   \frac{\partial f}{\partial y}=\frac{\partial g}{\partial x}
-  \quad\text{on }U\setminus\{P\}
+  \quad\text{on }U\sans{P}
 $$
 
 Then there exists a $C^1$ function $h:U\to\R$ such that
@@ -369,9 +369,8 @@ at every point of $U$ (including $P$).
 \Theorem{2.3.3}{Existence of holomorphic antiderivative}\label{b2d9d89}
 
 Let $U\subseteq\C$ be either an open rectangle or an open disc. Let $P\in U$ be
-fixed. Suppose that $F$ is continuous on $U$ and holomorphic on
-$U\setminus\{P\}$. Then there is a holomorphic $H$ on $U$ such that $\partial
-H/\partial z=F$.
+fixed. Suppose that $F$ is continuous on $U$ and holomorphic on $U\sans{P}$.
+Then there is a holomorphic $H$ on $U$ such that $\partial H/\partial z=F$.
 
 Note that since $H$ is holomorphic, by \href{f75e43c}{Theorem 2.2.1}, we can
 write $H'=F$.
@@ -476,9 +475,9 @@ with a piecewise $C^1$ version of $\gamma$)
 
 \Proposition{2.6.5}{}\label{b52bca5}
 
-If $f:\C\setminus\{0\}\to\C$ is a holomorphic function, and if $\gamma_r$
-describes the circle of radius $r$ around $0$, tranversed once around
-counterclockwise, then, for any two positive numbers $r_1<r_2$,
+If $f:\C\sans{0}\to\C$ is a holomorphic function, and if $\gamma_r$ describes
+the circle of radius $r$ around $0$, tranversed once around counterclockwise,
+then, for any two positive numbers $r_1<r_2$,
 $$
   \oint_{\gamma_{r_1}}f(z)\,dz=\oint_{\gamma_{r_2}}f(z)\,dz
 $$
@@ -510,8 +509,8 @@ $$
   \frac1{2\pi i}\oint_\gamma\frac{f(\zeta)}{\zeta-z}\,d\zeta=f(z)
 $$
 
-for any piecewise $C^1$ closed curve $\gamma$ in $U\setminus\{z\}$ that can be
-continuously deformed in $U\setminus\{z\}$ to $\partial D(z,r)$ equipped with
+for any piecewise $C^1$ closed curve $\gamma$ in $U\sans{z}$ that can be
+continuously deformed in $U\sans{z}$ to $\partial D(z,r)$ equipped with
 counterclockwise orientation.
 
 \Theorem{3.1.1}{Analyticity of holomorphic functions}\label{e20a4ed}
@@ -790,34 +789,35 @@ uniformly on compact sets.
 
 Let $U\subseteq\C$ be a connected open set and let $f:U\to\C$ be holomorphic.
 Let $\mathbf Z:=\Set{z\in U}{f(z)=0}$. If there are a $z_0\in\mathbf Z$ and a
-sequence $\{z_j\}\subseteq\mathbf Z\setminus\{z_0\}$ such that $z_j\to z_0$,
-then $f\equiv0$.
+sequence $\{z_j\}\subseteq\mathbf Z\sans{z_0}$ such that $z_j\to z_0$, then
+$f\equiv0$.
 
 \Corollary{3.6.2}{}\label{b919101}
 
 Let $U\subseteq\C$ be connected and open, and $D(P,r)\subseteq U$ . If $f$ is
 holomorphic on $U$ and $f|_{D(P,r)}\equiv0$, then $f\equiv0$ on $U$.
 
-Note the strength of this statement. As long as $f$ is holomorphic, if it's zero
-on just a tiny $D(P,r)$, then it is zero on the entire domain.
+Note the strength of this statement. As long as $f$ is holomorphic, if it's
+zero on just a tiny $D(P,r)$, then it is zero on the entire domain.
 
 \Corollary{3.6.3}{}\label{ac6f6ea}
 
 Let $U\subseteq\C$ be connected and open. Let $f,g$ be holomorphic on $U$. If
-$\Set{z\in U}{f(z)=g(z)}$ has an \href{b0219cd}{accumulation point} in $U$, then
-$f\equiv g$.
+$\Set{z\in U}{f(z)=g(z)}$ has an \href{b0219cd}{accumulation point} in $U$,
+then $f\equiv g$.
 
 \Corollary{3.6.4}{}
 
-Let $U\subseteq\C$ be connected and open and let $f,g$ be holomorphic on $U$. If
-$f\cdot g\equiv0$ on $U$, then either $f\equiv0$ on $U$ or $g\equiv0$ on $U$.
+Let $U\subseteq\C$ be connected and open and let $f,g$ be holomorphic on $U$.
+If $f\cdot g\equiv0$ on $U$, then either $f\equiv0$ on $U$ or $g\equiv0$ on
+$U$.
 
 \Corollary{3.6.5}{}
 
 Let $U\subseteq\C$ be connected and open and let $f$ be holomorphic on $U$. If
 there is a $P\in U$ such that
 $$
-\left(\frac\partial{\partial z}\right)^jf(P)=0
+  \left(\frac\partial{\partial z}\right)^jf(P)=0
 $$
 
 for every $j$, then $f\equiv0$.
@@ -826,3 +826,16 @@ for every $j$, then $f\equiv0$.
 
 If $f$ and $g$ are entire holomorphic functions and if $f(x)=g(x)$ for all
 $x\in\R\subseteq\C$, then $f\equiv g$.
+
+\Definition{4.1.0}{Types of singularities}
+
+Let $U\subseteq\C$ be open and $P\in U$. Suppose that $f:U\sans P\to\C$ is
+holomorphic.
+
+There are three possibilities for the behavior of $f$ near $P$:
+\begin{enumerati}
+  \item \textit{(Removable singularity)} $|f(z)|$ is bounded on $D(P,r)\sans{P}$
+  for some $r>0$ with $D(P,r)\subseteq U$.
+  \item \textit{(Pole)} $\lim_{z\to P}|f(z)|=+\infty$.
+  \item \textit{(Essential singularity)} Neither (i) nor (ii) applies.
+\end{enumerati}

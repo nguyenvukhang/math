@@ -44,7 +44,7 @@ jobs:
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes found!"
           else
-            git commit --amend --no-edit -m "[$GIT_HASH]"
+            git commit --date='Dec 14 2022 +0800' --amend --no-edit -m "[$GIT_HASH]"
             git push -f
           fi
         working-directory: pdf
