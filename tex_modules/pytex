@@ -28,9 +28,31 @@ def get_tex_files(recursive=True):  # type: (bool) -> list[str]
         return [x for x in os.listdir() if is_tex(x)]
 
 
+def ci_build(args):  # type: (Args) -> None
+    if not path.isdir('.ci'):
+        os.mkdir(".ci")
+    with open(f".ci/{args.jobname}.tex", 'wb') as f:
+        def w(e):
+            f.write(e)
+            f.write(b'\n')
+        w(b"\\documentclass{article}")
+        w(b"\\usepackage{" + args.header.encode("utf8") + b"}")
+        w(b"\\begin{document}")
+
+        for t in args.tex_files:
+            w(read_file(t))
+            w(b"\n\\newpage\n")
+
+        w(b"\\end{document}")
+    print("[END PYTEX]")
+
+
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
 def __build__(args):  # type: (Args) -> None
-    Project(args.tex_files).build(args)
+    if args.ci:
+        ci_build(args)
+    else:
+        Project(args.tex_files).build(args)
 
 
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file

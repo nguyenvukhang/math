@@ -11,15 +11,14 @@ TEX_FILES=(
 )
 
 PYTEX="python3 tex_modules/pytex"
-
 b() {
   JOB="$1"
   echo "job: $JOB"
     # run twice to generate document references correctly
     # only report errors on the second one, since the first one will have
     # incorrectly flagged-out undefined references anyway
-  $PYTEX -J $JOB ${@:2} build ${TEX_FILES[@]} >/dev/null
-  $PYTEX -J $JOB ${@:2} build ${TEX_FILES[@]}
+  $PYTEX --ci -J $JOB ${@:2} build ${TEX_FILES[@]} >/dev/null
+  $PYTEX --ci -J $JOB ${@:2} build ${TEX_FILES[@]}
 }
 
 b minimath

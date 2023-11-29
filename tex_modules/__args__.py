@@ -21,6 +21,7 @@ class Args:
     verbose = None  # type: bool
     tex_files = None  # type: list[str]
     toc = None  # type: bool
+    ci = None # type: bool
 
     @staticmethod
     def parse():  # type: () -> Args
@@ -36,6 +37,7 @@ class Args:
         p.add_argument("--no-proof", dest="show_proofs", action="store_false")
         p.add_argument("--no-compute", dest="show_computes", action="store_false")
         p.add_argument("--verbose", action="store_true")
+        p.add_argument("--ci", action="store_true")
         p.add_argument("tex_files", nargs="*")
         args = p.parse_args()
         seen = set()
