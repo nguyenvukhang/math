@@ -865,3 +865,138 @@ beyond just continuity.
 If $f:D(P,r_0)\sans P\to\C$ is holomorphic and $P$ is an essential singularity
 of $f$, then $f(D(P,r)\sans P)$ is \href{e14819a}{dense} in $\C$ for any
 $0<r<r_0$.
+
+\Definition{4.2.0}{Laurent series}\label{cb20929}
+
+A Laurent series on $D(P,r)$ is a (formal) expression of the form
+$$
+  \sum_{j=-\infty}^{+\infty} a_j(z-P)^j
+$$
+
+where $j$ are integer indices.
+
+We say that the infinite series $\sum_{j=-\infty}^{+\infty}\alpha_j$ converges
+if $\sum_{j=0}^{+\infty}\alpha_j$ and $\sum_{j=1}^{+\infty}\alpha_{-j}$
+converge. In this case, we set
+$$
+  \sum_{j=-\infty}^{+\infty}\alpha_j=
+  \bigg(\sum_{j=0}^{+\infty}\alpha_j\bigg)+
+  \bigg(\sum_{j=1}^{+\infty}\alpha_{-j}\bigg)
+$$
+
+This doubly infinite series converges to a complex number $\sigma$ if and only
+if for each $\epsilon>0$ there is an $N>0$ such that if $\ell\geq N$ and $k\geq
+N$, then $|\sigma-\sum_{j=-k}^\ell\alpha_j|<\epsilon$.
+
+It is important to realize that $\ell$ and $k$ are independent here. In
+particular, the existence of the limit
+$\lim_{k\to+\infty}\sum_{j=-k}^{+k}\alpha_j$ does not imply in general that
+$\sum_{j=-\infty}^{+\infty}\alpha_j$ converges.
+% though as I'm writing this I have no idea why Greene would claim this.
+% Apparently it's only clear in an Exercise.
+
+\Lemma{4.2.1}{}\label{d5253d9}
+
+This is the analogue for Laurent series for \href{d5d5bdc}{Lemma 3.2.3}.
+
+If $\sum_{j=-\infty}^{+\infty}a_j(z-P)^j$ converges at $z_1\neq P$ and at
+$z_2\neq P$ and if $|z_1-P|<|z_2-P|$, then the series converges for all $z$
+with $|z_1-P|<|z-P|<|z_2-P|$.
+
+\Lemma{4.2.2}{}\label{a9a7710}
+
+This is the analogue for Laurent series for \href{c7d0e1d}{Lemma 3.2.5}. Let
+$$
+  \sum_{j=-\infty}^{+\infty}a_j(z-P)^j
+$$
+
+converge at (at least) one point $z_0$. There are unique non-negative numbers
+$r_1$ and $r_2$ ($r_1$ or $r_2$ may be $+\infty$) such that the series
+converges absolutely for all $z$ with
+$$
+  r_1<|z-P|<r_2
+$$
+
+and diverges for all $z$ with
+$$
+  |z-P|<r_1\quad\text{or}\quad r_2<|z-P|
+$$
+
+\Proposition{4.2.4}{Uniqueness of Laurent expansion}\label{eafd61e}
+
+Let $0\leq r_1<r_2\leq\infty$. If the Laurent series
+$\sum_{j=-\infty}^{+\infty}a_j(z-P)^j$ converges on $D(P,r_2)\setminus\overline
+D(P,r_1)$ to a function $f$, then, for any $r\in(r_1,r_2)$ and each $j\in\Z$,
+we have
+$$
+  a_j=\frac1{2\pi i}\oint_{|\zeta-P|=r}\frac{f(\zeta)}{(\zeta-P)^{j+1}}\,d\zeta
+$$
+
+In particular, the $a_j$'s are uniquely determined by $f$.
+
+\Theorem{4.3.1}{The \href{e50677f}{Cauchy integral formula} for an annulus}\label{ca5d89e}
+
+Suppose that $0\leq r_1<r_2\leq+\infty$ and that $f:D(P,r_2)\setminus\overline
+D(P,r_1)\to\C$ is holomorphic. Then, for each $s_1,s_2$ such that
+$r_1<s_1<s_2<r_2$ and each $z\in D(P,s_2)\setminus\overline D(P,s_1)$, it holds
+that
+$$
+  f(z)=\frac1{2\pi i}\oint_{|\zeta-P|=s_2}\frac{f(\zeta)}{\zeta-z}\,d\zeta
+  -\frac1{2\pi i}\oint_{|\zeta-P|=s_1}\frac{f(\zeta)}{\zeta-z}\,d\zeta
+$$
+
+\Theorem{4.3.2}{The existence of Laurent expansions}
+
+If $0\leq r_1<r_2\leq+\infty$ and $f:D(P,r_2)\setminus\overline D(P,r_1)\to\C$
+is holomorphic, then there exist complex numbers $a_j$ such that
+$$
+  \sum_{j=-\infty}^{+\infty}a_j(z-P)^j
+$$
+
+converges on $D(P,r_2)\setminus\overline D(P,r_1)$ to $f$. If
+$r_1<s_1<s_2<r_2$, then the series converges absolutely and uniformly on
+$D(P,s_2)\setminus\overline D(P,s_1)$.
+
+\Proposition{4.3.3}{}
+
+If $f:D(P,r)\sans P\to\C$ is holomorphic, then $f$ has a unique Laurent series
+expansion.
+$$
+  f(z)=\sum_{j=-\infty}^{+\infty}a_j(z-P)^j
+$$
+
+which converges absolutely for $z\in D(P,r)\sans P$. The convergence is uniform
+on compact subsets of $D(P,r)\sans P$. The coefficients are given by
+$$
+  a_j=\frac1{2\pi i}\oint_{\partial D(P,s)}\frac{f(\zeta)}{(\zeta-P)^{j+1}}\,d\zeta
+$$
+
+for any $0<s<r$.
+
+There are three mutually exclusive possibilities for the Laurent series of this
+proposition:
+\begin{enumerati}
+  \item $a_j=0$ for all $j<0$;
+  \item for some $k>0$, $a_j=0$ for all $-\infty<j<-k$
+  \item neither (i) nor (ii) applies
+\end{enumerati}
+
+These three cases correspond exactly to the \href{a7f062e}{three types of
+isolated singularities}: (i) $\iff P$ is a removable singularity; (ii) $\iff P$
+is a pole; (iii) $\iff P$ is an essential singularity.
+
+\Proposition{4.4.1}{}
+
+Let $f$ be holomorphic on $D(P,r)\sans P$ and suppose that $f$ has a pole of
+order $k$ at $P$. Then the Laurent series coefficients $a_j$ of $f$ expanded
+about $P$, for $j=-k,-k+1,-k+2\ldots$, are given by the formula
+$$
+  a_j=\frac1{(k+j)!}\left(\frac\partial{\partial z}\right)^{k+j}
+  \big((z-P)^k\cdot f\big)\Bigg|_{z=P}
+$$
+
+\Definition{4.5.1}{Holomorphically simply connected (HSC)}
+
+An open set $U\subseteq\C$ is holomorphically simply connected if $U$ is
+connected and if, for each holomorphic function $f:U\to\C$, there is a
+holomorphic function $F:U\to\C$ such that $F'\equiv f$.
