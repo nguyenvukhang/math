@@ -1,30 +1,29 @@
 #!/bin/bash
 
-TEX_FILES=(
-    plenary.tex
-    calculus.tex
-    algorithm-design.tex
-    complex-analysis.tex
-    nonlinear-optimization-unconstrained.tex
-    nonlinear-optimization-constrained.tex
-    ordinary-differential-equations.tex
-)
+build() {
+  # \begin{document}
+  cat >$1.tex <<-EOF
+\\documentclass{article}
+\\usepackage{headers}
+\\begin{document}
 
-PYTEX="python3 tex_modules/pytex"
-b() {
-  JOB="$1"
-  echo "job: $JOB"
-    # run twice to generate document references correctly
-    # only report errors on the second one, since the first one will have
-    # incorrectly flagged-out undefined references anyway
-  $PYTEX --ci -J $JOB ${@:2} build ${TEX_FILES[@]} >/dev/null
-  $PYTEX --ci -J $JOB ${@:2} build ${TEX_FILES[@]}
+EOF
+  # append each file
+  for t in "${TEX_FILES[@]}"; do
+    cat $t >>$1.tex
+  done
+  # \end{document}
+  echo $'\n\n\\end{document}' >>$1.tex
 }
 
-b minimath
-# b minimath.nc --no-compute
-# b minimath.np --no-proof
-# b minimath.np.nc --no-proof --no-compute
+TEX_FILES=(
+  plenary.tex
+  calculus.tex
+  algorithm-design.tex
+  complex-analysis.tex
+  nonlinear-optimization-unconstrained.tex
+  nonlinear-optimization-constrained.tex
+  ordinary-differential-equations.tex
+)
 
-TEX_FILES=(plenary.tex calculus.tex)
-b plenary
+build dank

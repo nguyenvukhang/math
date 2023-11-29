@@ -2,9 +2,6 @@ MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
 PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
-PYTEX += --toc
-PYTEX += --no-proof
-PYTEX += --no-compute
 
 # --- [TEX_FILES] ---
 TEX_FILES += plenary.tex

@@ -40,6 +40,7 @@ jobs:
 
       - uses: xu-cheng/latex-action@v3
         with:
+          docker_image: ghcr.io/xu-cheng/texlive-small:latest
           working_directory: main
           root_file: .ci/*.tex
         env:

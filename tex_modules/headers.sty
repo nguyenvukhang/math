@@ -73,8 +73,7 @@
 \def\QED{\hfill$\square$}
 \def\iter#1#2{{#1},\ldots,{#2}}
 \def\epsilon{\varepsilon}
-\def\Set#1#2{\left%
-\{{#1}\;\middle\vert\;{#2}\right\}}
+\def\Set#1#2{\left \{{#1}\;\middle\vert\;{#2}\right\}}
 \def\Tag#1{\tag*{($#1$)}}
 \def\notimplies{\;\not\nobreak\!\!\!\!\implies}
 \def\href#1#2{\hyperref[#1]{#2}}
@@ -82,8 +81,9 @@
 \def\sans#1{\setminus\{#1\}}
 
 % useful environments
-\newenvironment{mat}{\begin{bmatrix}}{\end{bmatrix}} % standardize matrices
-\newenvironment{matd}{\begin{vmatrix}}{\end{vmatrix}} % determinant matrices
+\newenvironment{pmat}{\begin{pmatrix}}{\end{pmatrix}}
+\newenvironment{bmat}{\begin{bmatrix}}{\end{bmatrix}}
+\newenvironment{vamt}{\begin{vmatrix}}{\end{vmatrix}}
 \newenvironment{enumerata}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
 \newenvironment{enumerati}{\begin{enumerate}[label=(\roman*)]}{\end{enumerate}}
 

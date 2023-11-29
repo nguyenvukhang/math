@@ -1,4 +1,5 @@
-from os import curdir
+from os import curdir, path
+import os
 from typing import TypeVar
 from __consts__ import *
 
@@ -40,6 +41,21 @@ def get_in_between(
                 return (hit, i + 1)
             stk -= 1
     return None, -1
+
+
+# Get all files ending with '.tex' in the user's current directory
+def get_tex_files(recursive=True):  # type: (bool) -> list[str]
+    is_tex = lambda f: f.endswith(".tex")
+    if recursive:
+        files, cwd = [], os.curdir
+        for root, _, f in os.walk(cwd):
+            f = filter(is_tex, f)
+            f = map(lambda f: path.join(root, f), f)
+            f = map(lambda f: path.relpath(f, cwd), f)
+            files.extend(f)
+        return files
+    else:
+        return [x for x in os.listdir() if is_tex(x)]
 
 
 def run_observer(handler):

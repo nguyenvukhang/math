@@ -5,54 +5,13 @@ from __args__ import *
 from __classes__ import *
 from __consts__ import *
 from __texfile__ import *
-import os, time, datetime
-from os import path
+import time, datetime
 from typing import Callable
-
-SHOW_PROOF = False
-SHOW_COMPUTE = False
-
-
-# Get all files ending with '.tex' in the user's current directory
-def get_tex_files(recursive=True):  # type: (bool) -> list[str]
-    is_tex = lambda f: f.endswith(".tex")
-    if recursive:
-        files, cwd = [], os.curdir
-        for root, _, f in os.walk(cwd):
-            f = filter(is_tex, f)
-            f = map(lambda f: path.join(root, f), f)
-            f = map(lambda f: path.relpath(f, cwd), f)
-            files.extend(f)
-        return files
-    else:
-        return [x for x in os.listdir() if is_tex(x)]
-
-
-def ci_build(args):  # type: (Args) -> None
-    if not path.isdir('.ci'):
-        os.mkdir(".ci")
-    with open(f".ci/{args.jobname}.tex", 'wb') as f:
-        def w(e):
-            f.write(e)
-            f.write(b'\n')
-        w(b"\\documentclass{article}")
-        w(b"\\usepackage{" + args.header.encode("utf8") + b"}")
-        w(b"\\begin{document}")
-
-        for t in args.tex_files:
-            w(read_file(t))
-            w(b"\n\\newpage\n")
-
-        w(b"\\end{document}")
-    print("[END PYTEX]")
 
 
 # [SUBCOMMAND] builds using all the tex_files supplied, in that order
 def __build__(args):  # type: (Args) -> None
-    if args.ci:
-        ci_build(args)
-    else:
-        Project(args.tex_files).build(args)
+    Project(args.tex_files).build(args)
 
 
 # [SUBCOMMAND] runs a server that rebuilds the pdf if any file
@@ -68,8 +27,7 @@ def __dev__(args):  # type: (Args) -> None
     (build(), report())
 
     class EventHandler(FileSystemEventHandler):
-        def __init__(self, args):
-            self.args = args
+        def __init__(self):
             self.last_trigger_time = time.time()
 
         def __build__(self):
@@ -86,7 +44,7 @@ def __dev__(args):  # type: (Args) -> None
                     self.__build__()
                     break
 
-    run_observer(EventHandler(args))
+    run_observer(EventHandler())
 
 
 # [SUBCOMMAND] prints a 7-char SHA hash that the user can copy to

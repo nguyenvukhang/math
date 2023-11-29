@@ -825,6 +825,207 @@ The following are equivalent:
   And hence $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point.
 \end{proof}
 
-Hello bye
-
 % in class, Prof forgot to talk about strong duality in class.
+
+% Exact penalty functions
+
+Consider again
+\begin{equation*}
+  \begin{array}{l l l}
+    \min f(x) & \text{s.t.} & x\in X
+  \end{array}\Tag{1}
+\end{equation*}
+
+and a penalty function
+\begin{equation*}
+  P_\alpha^r:=f+\alpha r,\with \alpha>0\Tag{2}
+\end{equation*}
+
+with $r\geq0$, $r(x)=0\iff x\in X^r$
+
+\Definition{7.2.1}{}
+
+The penalty function $P_\alpha^r$ is called exact at a local min $\bar x$ of
+(1) if there exists $\bar\alpha$ such that $\bar x$ is a local min of
+$P_\alpha^r$ for all $\alpha>\bar\alpha$
+
+Consider now the standard NLP
+\begin{equation*}
+  \NlpStdForm\Tag{3}
+\end{equation*}
+
+with $f,g_i,h_j:\R^n\to\R$ at least cont. diff.
+
+A whole class of penalty functions in the sense of (2) for problem (3) is
+defined via
+$$
+  r_q(x):=\norm{(\max\{g(x),0\},h(x))}_q
+$$
+
+Where the $\max$ is interpreted component-wise, and then we're taking the
+$q$-norm. The value in $(\cdot)$ is a vector with the first $i$ elements being
+$\max\{g_i(x),0\}$ and the last $j$ elements being $h_j(x)$.
+
+and
+$$
+  \norm{z}_q=\begin{cases}
+    \displaystyle\left(\sum_{i=1}^\ell (z_i)^q \right)^{\frac1q} \ldots
+                                          & \text{if } q\in[1,\infty) \\[2em]
+    \displaystyle\max_{i=\iter1\ell}|z_i| & \text{if } q=+\infty
+  \end{cases}
+$$
+
+we focus on $q=1$:
+$$
+  P_\alpha^1(x)=f(x)+\alpha\sum_{j=1}^p|h_j(x)| + \alpha\sum_{i=1}^m\max\{g_i(x),0\}
+$$
+
+\Theorem{7.2.2}{}
+
+Let $(\bar x,\bar\lambda,\bar\mu)$ be a KKT point of the convex NLP
+\begin{equation*}
+  \NlpStdForm\Tag{4}
+\end{equation*}
+
+with $f,g_i:\R^n\to\R$ convex and cont. diff, and $h_j:\R^n\to\R$ affine (and
+hence convex).
+
+Then $\bar x\in\argmin_XP_\alpha^1(x)$, for all
+$\alpha\geq\norm{(\bar\lambda,\bar\mu)}_\infty$.
+
+In particular, $P_\alpha^1$ is exact at $\bar x$ if a CQ holds.
+
+\begin{proof}
+  By Theorem 5.1.23 (KKT for convex problems), $\bar x$ is a global minimizer of
+  (4). Therefore, by Theorem 6.3.2 (Saddle point theorem), $\bar x$ is a global
+  minimizer of the Lagrangian $L(\cdot,\bar\lambda,\bar\mu)$.
+
+  Therefore, for all $x\in\R^n$ and for all
+  $\alpha\geq\norm{(\bar\lambda,\bar\mu)}_\infty$, we have
+  % TODO: what is the shape of $(\bar\lambda,\bar\mu)$? is it a single column
+  % vector? Norming it above here suggests that it is
+  $$
+    P_\alpha^1(\bar x)=f(\bar x)+\alpha\sum_{j=1}^p|h_j(\bar x)| + \alpha\sum_{i=1}^m\max\{g_i(\bar x),0\}
+  $$
+
+  For reference,
+  $$
+    \norm{(\bar\lambda,\bar\mu)}_\infty:=\max\{
+    \iter{|\bar\lambda_1|}{|\bar\lambda_m|},
+    \iter{|\bar\mu_1|}{|\bar\mu_p|}
+    \}
+  $$
+
+  But remember that since the point is feasible, the second and third terms are
+  both zero and hence
+  \begin{align*}
+    P_\alpha^1(\bar x)
+     & =f(\bar x)                                                                               \\
+     & \stackrel{\text{KKT}}{=}f(\bar x)+\bar\lambda^Tg(\bar x)+\bar\mu^Th(\bar x)              \\
+     & = L(\bar x,\bar\lambda,\bar\mu)                                                          \\
+     & \stackrel{\text{Thm 6.3.2}}{\leq} L(x,\bar\lambda,\bar\mu)                               \\
+     & = f(x)+\sum_{i=1}^m\bar\lambda_ig_i(x)+\sum_{j=1}^p\bar\mu_jh_j(x)                       \\
+     & \leq f(x)+\sum_{i=1}^m\bar\lambda_i\max\{g_i(x),0\}+\sum_{j=1}^p|\bar\mu_j|\cdot|h_j(x)| \\
+     & \leq f(x)+\alpha\sum_{i=0}^m\max\{g_i(x),0\}+\alpha\sum_{j=1}^p|h_j(x)|                  \\
+     & = P_\alpha^1(x)
+  \end{align*}
+
+  Hence $\bar x$ is the global minimizer of $P_\alpha^1$, that is for any
+  $\alpha\geq\norm{(\bar\lambda,\bar\mu)}_\infty$
+  $$
+    \bar x\in\argmin_XP_\alpha^1
+  $$
+\end{proof}
+
+% LAST CHAPTER: SQP methods
+
+\section{SQP Methods}
+
+Consider
+\begin{equation*}
+  \begin{array}{l l l}
+    \min f(x) & \text{s.t.} & h_j(x)=0\with\forall j\in J
+  \end{array}\Tag{1}
+\end{equation*}
+
+with $f,h_j:\R^n\to\R$ twice cont diff.
+
+Define $\Phi:\R^n\times\R^p\to\R^n\times\R^p$ by
+$$
+  \Phi(x,\mu):=\begin{bmat}
+    \nabla_xL(x,\mu) \\ h(x)
+  \end{bmat}
+$$
+
+where $L:\R^n\times\R^p\to\R$ is the Lagrangian of (1). Then
+\begin{equation*}
+  (x,\mu)\text{ is a KKT point of (1)}\iff\Phi(x,\mu)=0\Tag{*}
+\end{equation*}
+
+where $\Phi$ is $C^1$.
+
+Idea: Apply Newton's method to $(*)$.
+
+\Algorithm{8.1.1}{Lagrange-Newton method}
+
+\begin{enumerate}
+  \item [\textbf{(S0)}] Choose $(x^0,\mu^0)\in\R^n\times\R^p$ and set $k:=0$.
+  \item [\textbf{(S1)}] If $\Phi(x^k,\mu^k)=0$: STOP
+  \item [\textbf{(S2)}] Determine $(\Delta x^k,\Delta\mu^k)$ as solution of
+        $$
+          \Phi'(x^k,\mu^k)\begin{pmatrix}\Delta x\\\Delta\mu\end{pmatrix}=-\Phi(x^k,\mu^k)
+        $$
+  \item [\textbf{(S3)}] Put $(x^{k+1},\mu^{k+1}):=(x^k,\mu^k)+(\Delta x^k,\Delta\mu^k)$, $k\gets k+1$, and go to (S1).
+\end{enumerate}
+
+``Hessian is the Jacobian of the gradient"
+
+Crucial part for well-definedness is to have $\Phi'$ be invertible at
+$(x^k,\mu^k)$
+
+\Theorem{8.2.1}{}
+
+Let $(\bar x,\bar\mu)\in\R^n\times\R^p$ be a KKT point of (1), i.e. a root of
+the function $\Phi(x,\mu)=0$ such that:
+\begin{enumerati}
+  \item (LICQ) The vectors $\nabla h_j(x)$ are linearly indepdendent, for $j\in J$
+  \item (2nd order sufficient condition) We have
+  $$
+    d^T \nabla_{xx}^2 L(\bar x,\bar\mu)d>0\with\forall d\neq0\land\nabla h_j(\bar
+    x)^Td=0
+  $$
+\end{enumerati}
+
+\begin{proof}
+  Goal is to show that kernel is trivial.
+
+  Sidenote:
+  $$
+    h'(x)^T=\begin{bmat}
+      \nabla h_1(x) & \ldots & \nabla h_p(x)
+    \end{bmat}
+    \in\R^{n\times p}
+  $$
+
+  Observe that
+  % Example of computing jacobians!
+  $$
+    \Phi(x,\mu)=\begin{pmatrix}
+      \nabla_{xx}^2L(x,\mu) & h'(x)^T \\
+      h'(x)                 & 0
+    \end{pmatrix}\with\forall (x,\mu)\in\R^n\times\R^p
+  $$
+
+  Hence,
+  \begin{align*}
+    % TODO: which space is this exactly?
+    \Phi'(\bar x,\bar\mu){\begin{pmat}q\\r\end{pmat}}
+     & = 0 \\
+    \iff \nabla_{xx}^2L(\bar x,\mu)q + h'(\bar x)^Tr
+     & =0  \\
+    \text{and}\Quad h'(\bar x)^Tq
+     & =0
+  \end{align*}
+
+  Note: $\Phi'\in\R^{(n+p)\times(n+p)}$
+\end{proof}
