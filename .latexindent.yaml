@@ -24,3 +24,8 @@ modifyLineBreaks:
       other: \\begin\{|\\end\{|\$\$
     huge: overflow # forbid mid-word line breaks
     separator: ""
+
+lookForAlignDelims:
+   vmat: 1
+   bmat: 1
+   pmat: 1

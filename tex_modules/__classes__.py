@@ -17,24 +17,25 @@ class File:
                 continue
             parsed = Line.parse(line)
             if parsed is not None:
-                self.__index__.append(tuple([k, *parsed]))
+                mark, num, name, label = parsed
+                self.__index__.append((k, mark, num, name, label))
 
     def serialize(self):
         data = []
         for row in self.__index__:
-            row = [r.decode('utf8') if type(r) == bytes else r for r in row]
+            row = [r.decode("utf8") if type(r) == bytes else r for r in row]
             data.append(tuple(row))
         return data
 
     def labels(self):  # type: () -> list[bytes]
         if self.__index__ is None:
             panic(f"[{self.filepath}] is not indexed yet.")
-        return list(map(lambda v: v[2], self.__index__))
+        return list(map(lambda v: v[4], self.__index__))
 
     def add_labels_and_write(self, existing):  # type: (set[bytes]) -> None
         lines = self.lines.buffer.splitlines()
         for i in self.__index__:
-            lnum, label = i[0], i[2]
+            lnum, label = i[0], i[4]
             if label is None:
                 lines[lnum] += b"\\label{" + new_sha(existing) + b"}"
         with open(self.filepath, "wb") as f:

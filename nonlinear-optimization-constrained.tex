@@ -1,4 +1,4 @@
-\section{Nonlinear Optimization, Part II: Constrained Optimization}\label{d1c9db1}
+\section{Nonlinear Optimization, Part II: Constrained Optimization}
 
 \def\pd{\succ} % positive definite
 \def\psd{\succeq} % positive semidefinite
@@ -11,11 +11,11 @@
 \Definition{5.0.0}{Standard Nonlinear Program}\label{bbe9993}
 
 \begin{equation*}
-  \NlpStdForm\Tag{*}
+  \NlpStdForm\Tag{5.1}
 \end{equation*}
 Where $f,g_i,h_j:\R^n\to\R$ are continuously differentiable.
 
-We call $(*)$ a nonlinear program (NLP) in standard form.
+We call $(5.1)$ a nonlinear program (NLP) in standard form.
 
 By convention, we let the feasible set of $(*)$ be denoted by $X$, with
 \begin{equation*}
@@ -1298,3 +1298,23 @@ the function $\Phi(x,\mu)=0$ such that:
 
   Note: $\Phi'\in\R^{(n+p)\times(n+p)}$
 \end{proof}
+
+\section{Nov 30 class}
+
+\subsection{Lagrange-Newton Equation}
+
+Update with $(x^{k+1},\mu^{k+1}):=(x^k,\mu^k)+(\Delta x^k,\Delta \mu^k)$
+
+\begin{align*}
+  \Phi'(x^k,\mu^k)\begin{pmat}\Delta x\\\Delta\mu\end{pmat}
+   & =-\Phi(x^k,\mu^k) \\
+  \iff\begin{bmat}
+        \nabla_{xx}^2 L(x^k,\mu^k) & h'(x^k)^T \\
+        h'(x^k)                    & 0
+      \end{bmat}\begin{pmat}\Delta x\\\Delta\mu\end{pmat}
+   & =
+  -\begin{bmat}
+     \nabla f(x^k)-h'(x^k)^T \\
+     h'(x^k)
+   \end{bmat}
+\end{align*}
