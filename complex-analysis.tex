@@ -961,7 +961,7 @@ converges on $D(P,r_2)\setminus\overline D(P,r_1)$ to $f$. If
 $r_1<s_1<s_2<r_2$, then the series converges absolutely and uniformly on
 $D(P,s_2)\setminus\overline D(P,s_1)$.
 
-\Proposition{4.3.3}{}\label{e7fa5f8}
+\Proposition{4.3.3}{Laurent expansion of holomorphic functions}\label{e7fa5f8}
 
 If $f:D(P,r)\sans P\to\C$ is holomorphic, then $f$ has a unique Laurent series
 expansion.
@@ -1004,3 +1004,85 @@ $$
 An open set $U\subseteq\C$ is holomorphically simply connected if $U$ is
 connected and if, for each holomorphic function $f:U\to\C$, there is a
 holomorphic function $F:U\to\C$ such that $F'\equiv f$.
+
+\Lemma{4.5.2}{}\label{f3a867e}
+
+A connected open set $U$ is holomorphically simply connected if and only if for
+each holomorphic function $f:U\to\C$ and each piecewise $C^1$ closed curve
+$\gamma$ in $U$,
+$$
+  \oint_\gamma f(z)\,dz=0.
+$$
+
+\Definition{4.5.3a}{Residue of a function at a point}\label{ea3ff58}
+
+The \textbf{residue} of a function $f$ at point $P$ is denoted by $\Res_f(P)$,
+and is the coefficient of $(z-P)^{-1}$ in the \href{e7fa5f8}{Laurent expansion}
+of $f$ about $P$.
+
+In particular, if $f$ is holomorphic, then $\Res_f(P)$ is given by
+$$
+  \Res_f(P)=\frac1{2\pi i}\oint_\gamma f(\zeta)\,d\zeta
+$$
+
+where $\gamma$ is a counterclockwise simply closed curve around $P$ and not
+including any other singularities inside the curve.
+
+\Theorem{4.5.3}{Residue theorem}\label{e1efb5a}
+
+Suppose that $U\subseteq\C$ is a \href{d20898f}{HSC} open set, and that
+$\iter{P_1}{P_n}$ are distinct points of $U$. Suppose that
+$f:U\sans{\iter{P_1}{P_n}}\to\C$ is a holomorphic function and $\gamma$ is a
+closed, piecewise $C^1$ curve in $U\sans{\iter{P_1}{P_n}}$.
+
+Set $R_j$ to be the coefficient of $(z-P_j)^{-1}$ in the Laurent expansion of
+$f$ about $P_j$.
+
+Then
+$$
+  \oint_\gamma f(z)\,dz=\sum_{j=1}^nR_j\cdot\left(\oint_\gamma\frac1{\zeta-P_j}\,d\zeta\right)
+$$
+
+Using the notation of \href{ea3ff58}{$\Res_f$} and
+\href{bfdcc82}{$\Ind_\gamma$}, we can rewrite this as
+
+$$
+  \oint_\gamma f(z)\,dz=2\pi i\sum_{j=1}^n\Res_f(P_j)\cdot\Ind_\gamma(P_j)
+$$
+
+\Definition{4.5.4}{Index of a curve}\label{bfdcc82}
+
+Let $\gamma:[a,b]\to\C$ be a piecewise $C^1$ closed curve. Suppose
+$P\notin\gamma([a,b])$. Then the \textbf{index} of $\gamma$ with respect to
+$P$, is defined as
+$$
+  \Ind_\gamma(P):=\frac1{2\pi i}\oint_\gamma\frac1{\zeta-P}\,d\zeta
+$$
+
+The index is also sometimes called the ``winding number of $\gamma$ about $P$".
+As we will see later, $\Ind_\gamma(P)$ coincides with the number of times
+$\gamma$ winds about $P$, counting orientation.
+
+\Lemma{4.5.5}{Index of a curve is an integer}\label{ff34baf}
+
+Let $\gamma:[a,b]\to\C$ be a piecewise $C^1$ closed curve. Suppose $P$ is a
+point not on the image of that curve, then
+$$
+  \frac1{2\pi i}\oint_\gamma\frac1{\zeta-P}\,d\zeta
+  \equiv
+  \frac1{2\pi i}\int_a^b\frac{\gamma'(t)}{\gamma(t)-P}\,dt
+$$
+
+is an integer.
+
+\Proposition{4.5.6}{}
+
+Let $f$ be a function with a pole of order $k$ at $P$. Then
+$$
+  \Res_f(P)=\frac1{(k-1)!}\left(\frac\partial{\partial z}\right)^{k-1}
+  \Big((z-P)^kf(z)\Big)\Bigg|_{z=P}
+$$
+
+\begin{proof}
+  This is the case $j=-1$ of \href{c1d2d0c}{Proposition 4.4.1}.
+\end{proof}
