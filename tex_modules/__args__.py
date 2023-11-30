@@ -8,6 +8,7 @@ Action = Literal[
     "test",
     "label",
     "generate-section-titles",
+    "toc",
 ]
 
 

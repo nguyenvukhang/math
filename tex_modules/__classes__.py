@@ -13,8 +13,18 @@ class File:
         for k, line in self.lines:
             mark_index = Line.get_mark_index(line)
             label = Line.get_label(line)
-            if mark_index is not None or label is not None:
-                self.__index__.append((k, mark_index, label))
+            if mark_index is None and label is None:
+                continue
+            parsed = Line.parse(line)
+            if parsed is not None:
+                self.__index__.append(tuple([k, *parsed]))
+
+    def serialize(self):
+        data = []
+        for row in self.__index__:
+            row = [r.decode('utf8') if type(r) == bytes else r for r in row]
+            data.append(tuple(row))
+        return data
 
     def labels(self):  # type: () -> list[bytes]
         if self.__index__ is None:

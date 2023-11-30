@@ -29,12 +29,16 @@ ref:
     nonlinear-optimization-constrained.tex \
     ordinary-differential-equations.tex
 
+toc:
+	$(PYTEX) toc
+
 ci:
 	bash .github/workflows/build.sh
 	TEXINPUTS='tex_modules/:' pdflatex .ci/minimath.tex
 	@make clean
 
 fmt:
+	prettier -w --print-width 200 toc.json
 	rm -f *.bak* **/*.bak*
 	latexindent -s -w -m -l=.latexindent.yaml *.tex || echo "failed"
 	rm -f *.bak* **/*.bak*

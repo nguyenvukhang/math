@@ -165,6 +165,16 @@ class Line:
                     panic("Section title spans multiple lines in line:\n", line)
                 return i
 
+    # Parses a line into <MARK>, <NUM>, <NAME>, <SHA>
+    def parse(line):  # type: (bytes) -> tuple[bytes]
+        mark = Line.get_mark(line)
+        if mark is None:
+            return None
+        num, i = get_in_between(line, len(mark))
+        name, i = get_in_between(line, i)
+        label, _ = get_in_between(line, i)
+        return (mark[1:], num, name, label)
+
     # Assume that labels are at the end of lines.
     #
     # TODO: add to checkhealth a function that ensures that all labels

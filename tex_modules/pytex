@@ -3,7 +3,7 @@
 from __consts__ import *
 from __texfile__ import *
 from __classes__ import File
-import time, datetime
+import time, datetime, json
 from typing import Callable
 
 
@@ -80,6 +80,15 @@ def __generate_section_titles__(_):
         print(l)
 
 
+def __toc__(_):
+    files = list(map(File, get_tex_files()))
+    for file in files:
+        file.index()
+    data = {f.filepath: f.serialize() for f in files}
+    with open("toc.json", "w") as f:
+        json.dump(data, f, indent=2)
+
+
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def __test__(_):
@@ -97,6 +106,7 @@ if __name__ == "__main__":  # int main() {
         "sha": __sha__,
         "label": __label__,
         "generate-section-titles": __generate_section_titles__,
+        "toc": __toc__,
         "test": __test__,
     }  # type: dict[Args.Action, Callable]
     tbl[args.action](args)
