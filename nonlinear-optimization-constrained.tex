@@ -1,28 +1,32 @@
-\section{Nonlinear Optimization, Part II: Constrained Optimization}
+\section{Nonlinear Optimization, Part II: Constrained Optimization}\label{fc7da02}
 
 \def\pd{\succ} % positive definite
 \def\psd{\succeq} % positive semidefinite
-\def\NlpStdForm{\begin{array}{l l l l}
-    \displaystyle \min_{x\in\R^n}f(x)
+\def\NlpStdForm{\begin{array}{l l r l}
+    \displaystyle\min_{x\in\R^n}f(x)
      & \text{s.t.} & g_i(x)\leq0 & \forall i\in I \\
      &             & h_j(x)=0    & \forall j\in J
   \end{array}}
+\def\NlpStdCond{\begin{array}{r l}
+    g_i(x)\leq0 & \forall i\in I \\
+    h_j(x)=0    & \forall j\in J
+  \end{array}}
 
-\Definition{5.0.0}{Standard Nonlinear Program}\label{bbe9993}
+\Definition{5.0.0}{Standard Nonlinear Program}\label{aeac31f}
 
 \begin{equation*}
-  \NlpStdForm\Tag{5.1}
+  \NlpStdForm\Tag{5.1}\label{a85283d}
 \end{equation*}
 Where $f,g_i,h_j:\R^n\to\R$ are continuously differentiable.
 
-We call $(5.1)$ a nonlinear program (NLP) in standard form.
+We call \ref{a85283d} a nonlinear program (NLP) in standard form.
 
-By convention, we let the feasible set of $(*)$ be denoted by $X$, with
+By convention, we let the feasible set of \ref{a85283d} be denoted by $X$, with
 \begin{equation*}
-  X:=\Set{x\in\R^n}{\begin{array}{l l}
+  X:=\Set{x\in\R^n}{\begin{array}{r l}
       g_i(x)\leq0 & \forall i\in I \\
       h_j(x)=0    & \forall j\in J
-    \end{array}\Tag{**}}
+    \end{array}\Tag{5.2}}\label{ea8fbff}
 \end{equation*}
 
 By the continuity of the constraint functions, $X$ is closed.
@@ -197,20 +201,17 @@ $Bd\geq0$.
 
 \Definition{5.1.10}{Karush-Kuhn-Tucker conditions}\label{b38093d}
 
-Consider the (standard) NLP:
-
-\begin{equation*}
-  \NlpStdForm
-  \Tag{1}
-\end{equation*}
-where we let $X$ be the feasible set of (1).
+Consider the standard NLP in \ref{a85283d}. and let $X$ be the feasible set of
+\ref{a85283d}.
 
 \begin{enumerate}
   \item The function $L:\R^n\times\R^m\times\R^p\to\R$ defined by
-        $$
-          L(x,\lambda,\mu)=f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x)
-        $$
-        is called the Lagrangian (function) of (1).
+        \begin{align*}
+          L(x,\lambda,\mu)
+           & =f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x) \\
+           & =f(x)+\lambda^Tg(x)+\mu^Th(x)
+        \end{align*}
+        is called the Lagrangian (function) of \ref{a85283d}.
   \item The set of conditions
         $$
           \begin{array}{l l}
@@ -219,26 +220,46 @@ where we let $X$ be the feasible set of (1).
             \lambda\geq0,\ g(x)\leq0,\ \lambda^Tg(x) & =0
           \end{array}
         $$
-        are called the Karush-Kuhn-Tucker conditions for (1), where
-        $$
-          \nabla_xL(x,\lambda,\mu)=\nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x)
-        $$
+        are called the Karush-Kuhn-Tucker conditions for \ref{a85283d}, where
+        \begin{align*}
+          \nabla_xL(x,\lambda,\mu)
+           & = \nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x) \\
+           & = \nabla f(x)+\lambda^T\nabla g(x)+\mu^T\nabla h(x)
+        \end{align*}
   \item A triple $(\bar x,\bar\lambda,\bar\mu)$ that satisfies the KKT conditions is
         called a KKT point.
-  \item Given $\bar x$, a feasible point for (1), we define
+  \item Given $\bar x$, a feasible point for \ref{a85283d}, we define
         $$
-          M(\bar x):=\{(\lambda,\mu)\mid(\bar x,\lambda,\mu)\text{ is a KKT point of (1)}\}
+          M(\bar x):=\{(\lambda,\mu)\mid(\bar x,\lambda,\mu)\text{ is a KKT point of \ref{a85283d}}\}
         $$
         as the set of all KKT multipliers (possibly empty) at $\bar x$.
 \end{enumerate}
 
+\Definition{5.1.10a}{Constraint qualification (CQ)}\label{d533941}
+
+We define a condition about the feasible set $X$ of a standard NLP
+\ref{a85283d} that guarantees that the \href{b38093d}{KKT conditions} hold at a
+local minimizer as a constraint qualification.
+
+If a CQ holds on $\bar x\in X$, then KKT is necessary for $\bar x$ to be a
+local minimizer.
+
+If a CQ holds on $\bar x\in X$, then $\bar x$ being a local minimizer implies
+that there exists a $(\bar\lambda,\bar\mu)$ such that $(\bar
+x,\bar\lambda,\bar\mu)$ is a KKT point.
+
+% A CQ, by definition, is a condition that makes the KKT a
+% necessary optimality condition.
+%
+% A CQ guarantees that the local minimizer is a KKT point.
+
 \Definition{5.1.11}{Linearized cone}\label{ca4f471}
 
-Let $X$ be the feasible set of (1). The linearized cone (of $X$) at $\bar x\in
-X$ is defined by
+Let $X$ be the feasible set of \ref{a85283d}. The linearized cone (of $X$) at
+$\bar x\in X$ is defined by
 $$
   L_X(\bar x):=\left\{ d\in\R^n\ \middle\vert
-  \begin{array}{l l}
+  \begin{array}{r l}
     \nabla g_i(\bar x)^Td\leq0 & \forall i=I(\bar x) \\
     \nabla h_j(\bar x)^Td=0    & \forall j=\iter1p
   \end{array}
@@ -257,13 +278,14 @@ That is, the \href{add7a4b}{tangent cone} is exactly the
 
 \Theorem{5.1.13}{\href{b38093d}{KKT} conditions under \href{adc266e}{ACQ}}\label{b1c5437}
 
-Let $\bar x\in X$ be a local minimizer of (1) such that \href{adc266e}{ACQ}
-holds at $\bar x$. Then there exists $(\bar\lambda,\bar\mu)\in\R^m\times\R^p$
-such that $(\bar x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of (1).
+Let $\bar x\in X$ be a local minimizer of \ref{a85283d} such that
+\href{adc266e}{ACQ} holds at $\bar x$. Then there exists
+$(\bar\lambda,\bar\mu)\in\R^m\times\R^p$ such that $(\bar
+x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of \ref{a85283d}.
 
 \begin{proof}
   \def\bm{\bar\mu}\def\bl{\bar\lambda}\def\bx{\bar x}
-  By Theorem 5.1.5,
+  By \href{c8e5836}{Theorem 5.1.5},
   \begin{equation*}
     \nabla f(\bx)^Td\geq0\quad\forall(d\in T_X(\bx))\Tag{*}
   \end{equation*}
@@ -271,16 +293,20 @@ such that $(\bar x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of (1).
   Set
   $$
     B:=\begin{pmatrix}
-      -\nabla g_i(\bx)^T\quad(i=\iter1m) \\
-      -\nabla h_j(\bx)^T\quad(j=\iter1p) \\
-      \nabla h_j(\bx)^T\quad(j=\iter1p)
+      -\nabla g_i(\bx)^T & (i=\iter1m) \\
+      -\nabla h_j(\bx)^T & (j=\iter1p) \\
+      \nabla h_j(\bx)^T  & (j=\iter1p)
     \end{pmatrix}\in\R^{(m+2p)\times{n}}
   $$
   %TODO: check the sign of the 2nd and 3rd row
 
-  Then $d\in L_X(\bx)\iff Bd\geq0$.
+  Then purely from the definition of a \href{ca4f471}{linearized cone} and how we
+  set $B$, we have
+  $$
+    d\in L_X(\bx)\iff Bd\geq0
+  $$
 
-  By ACQ, we have $d\in T_X(\bx)\iff Bd\geq0$
+  By \href{adc266e}{ACQ}, we have $d\in T_X(\bx)\iff Bd\geq0$
 
   Combined with $(*)$, we have
   $$
@@ -291,7 +317,10 @@ such that $(\bar x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of (1).
 
   By the Farkas Lemma,
   $$
-    \exists y=\begin{pmatrix}y^1\in\R^m\\y^2\in\R^p\\y^3\in\R^p\end{pmatrix}
+    \exists y=
+    \begin{pmatrix}
+      y^1\in\R^m \\y^2\in\R^p\\y^3\in\R^p
+    \end{pmatrix}
   $$
 
   such that $y\geq0$, and $B^Ty=\nabla f(\bx)$

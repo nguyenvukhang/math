@@ -50,21 +50,17 @@ def __dev__(args):  # type: (Args) -> None
 #
 # opinionated quirk: all generated SHAs will start with a letter.
 def __sha__(_):
-    files = list(map(File, get_tex_files()))
-    for file in files:
-        file.index()
-    all_labels = File.merge_labels(files)
+    all_labels = get_all_labels(get_tex_files())
     print(new_sha(all_labels).decode("utf8"), end="")
 
 
 # [SUBCOMMAND] adds a label and a unique SHA to all marks that don't
 # already have a SHA.
 def __label__(_):
-    files = list(map(File, get_tex_files()))
+    all_labels = get_all_labels(get_tex_files())
+    files = map(File, get_tex_files())
     for file in files:
         file.index()
-    all_labels = File.merge_labels(files)
-    for file in files:
         file.add_labels_and_write(all_labels)
 
 

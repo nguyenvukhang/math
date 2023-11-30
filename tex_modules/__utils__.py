@@ -58,6 +58,17 @@ def get_tex_files(recursive=True):  # type: (bool) -> list[str]
         return [x for x in os.listdir() if is_tex(x)]
 
 
+def get_all_labels(tex_files):
+    all_labels = set()
+    for f in tex_files:
+        labels = Regex.LABEL.findall(read_file(f))
+        for label in labels:
+            if label in all_labels:
+                panic(f"Duplicate label: {label}")
+            all_labels.add(label)
+    return all_labels
+
+
 def run_observer(handler):
     from watchdog.observers import Observer
     from time import sleep
