@@ -1,2 +1,36 @@
-\Result{0.0.1}{Trying different functions with the \href{e50677f}{Cauchy
-integral formula}}
+\def\pp#1#2{\frac{\partial #1}{\partial #2}}
+
+\Result{0.0.1}{Taking partial derivatives w.r.t. $z$ of different functions}.\label{c0828f0}
+
+Differentiating polynomials work exactly like reals.
+$$
+  \pp{}z z^n=nz^{n-1}
+$$
+
+Differentiating trigonometric identities are also the same as reals.
+
+Product rule works exactly the same as reals.
+$$
+  \pp{}z(F\cdot G)=\pp Fz\cdot G+F\cdot\pp Gz
+$$
+
+Since quotient rule is derived from product rule, it also works the same as
+wihth reals.
+
+\Result{0.0.2}{Trying different functions with the Cauchy integral formula}\label{d833c36}
+
+Let $\gamma:=\partial D(P,r)$ where $D(P,r)$ is an open disc centered at $P$
+with radius $r$. Let
+$$
+  I(z):=\oint_\gamma\frac1{\zeta-z}\,d\zeta
+$$
+
+Then it was shown in the textbook that $I(z)$ is constant because
+$$
+  \pp{}zI(z)=0\quad\text{and}\quad\pp{}{\bar z}I(z)=0
+$$
+
+and that
+$$
+  I(P)=2\pi i
+$$

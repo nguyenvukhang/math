@@ -46,19 +46,10 @@ open subset of the complex plane $\C$.
 
 \Definition{1.1.3}{Complex Partials}\label{ffea0ed}
 
-$$
-  \frac{\partial f}{\partial z} :=
-  \frac12\left(
-  \frac{\partial}{\partial x}-i\frac{\partial}{\partial y}
-  \right)f
-$$
-
-$$
-  \frac{\partial f}{\partial\bar z} :=
-  \frac12\left(
-  \frac{\partial}{\partial x}+i\frac{\partial}{\partial y}
-  \right)f
-$$
+\begin{gather*}
+  \frac{\partial f}{\partial z}\equiv\frac12\left(\frac{\partial}{\partial x}-i\frac{\partial}{\partial y}\right)f \\[1em]
+  \frac{\partial f}{\partial\bar z}\equiv\frac12\left(\frac{\partial}{\partial x}+i\frac{\partial}{\partial y}\right)f
+\end{gather*}
 
 \Definition{1.4.1}{Holomorphic functions}\label{e1e08f7}
 
@@ -81,6 +72,7 @@ holomorphic too):
 
 \begin{enumerati}
   \item $f(z)=1/z$ on $\C\sans{0}$
+  \item $f(z)=1/p(z)$ on $\C$ where $p(z)\neq0$
   \item $f(z)=z$ on $\C$
 \end{enumerati}
 
@@ -402,6 +394,18 @@ $$
 
 The converse of this theorem is true too: if $f$ is given by the Cauchy
 integral formula, then $f$ is holomorphic.
+
+\Example{2.4.2a}{Examples with Cauchy integral formula}\label{da0d68d}
+
+Here's some ground-truth computations to get started. (Almost all problems in
+MATH 466 can be re-routed back to these)
+
+$$
+  \oint_\gamma\zeta^k\,d\zeta=\begin{cases}
+    0      & \text{if }k\neq-1 \\
+    2\pi i & \text{if }k=-1
+  \end{cases}\with(k\in\Z)
+$$
 
 \Theorem{2.4.3}{Cauchy integral theorem}\label{fb87a78}
 

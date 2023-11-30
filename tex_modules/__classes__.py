@@ -8,27 +8,18 @@ class File:
         self.lines = Lines(read_file(filepath))
         self.__index__ = None
 
-    def index(self, vimgrep=False):  # type: (bool) -> None
+    def index(self):  # type: (bool) -> None
         self.__index__ = []
         for k, line in self.lines:
             mark_index = Line.get_mark_index(line)
             label = Line.get_label(line)
             if mark_index is not None or label is not None:
-                vg = None
-                if vimgrep and mark_index is not None:
-                    vg = Line.get_vimgrep(line)
-                self.__index__.append((k, mark_index, label, vg))
+                self.__index__.append((k, mark_index, label))
 
     def labels(self):  # type: () -> list[bytes]
         if self.__index__ is None:
             panic(f"[{self.filepath}] is not indexed yet.")
         return list(map(lambda v: v[2], self.__index__))
-
-    def vimgrep(self, filepath):  # type: (str) -> None
-        for idx in self.__index__:
-            t = Index.title(idx)
-            t = filepath if t is None else t.decode("utf8")
-            print(filepath, ":", Index.line_number(idx), ":", 0, ":", t, sep="")
 
     def add_labels_and_write(self, existing):  # type: (set[bytes]) -> None
         lines = self.lines.buffer.splitlines()
@@ -75,14 +66,3 @@ class Lines:
         self.cursor = -1 if b == -1 else b + 1
         line = self.buffer[a:] if b == -1 else self.buffer[a:b]
         return self.line_number, line
-
-
-class Index:
-    def __init__(self, lnum, mark_idx, label, title) -> None:
-        self.lnum = lnum
-        self.__mark_idx__ = mark_idx
-        self.label = label
-        self.title = title
-
-    def mark(self):  # type: () -> bytes
-        return MARKS[self.__mark_idx__]

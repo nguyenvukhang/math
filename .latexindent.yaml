@@ -4,12 +4,18 @@ specialBeginEnd:
   inlineMath:
     # https://latexindentpl.readthedocs.io/en/latest/sec-default-user-local.html#lst-specialbeginend
     lookForThis: 0 # don't indent inline math
-  hrefs:
-    begin: \\href\{[a-z0-9]{7}
-    body: .*
-    end: \}
-    lookForThis: 1
-  specialBeforeCommand: 1
+
+  # known bug with this block: if a \href is found in $$...$$, it causes problems
+  # braces:
+  #   begin: \{
+  #   end: \}
+  #   lookForThis: 0
+  # specialBeforeCommand: 1
+
+noAdditionalIndent:
+  textit: 1
+  textbf: 1
+  href: 1
 
 modifyLineBreaks:
   textWrapOptions:

@@ -19,6 +19,16 @@ build:
 dev:
 	$(PYTEX) -J minimath dev $(TEX_FILES)
 
+ref:
+	$(PYTEX) -J ref build \
+		plenary.tex \
+		calculus.tex \
+    algorithm-design.tex \
+    complex-analysis.tex \
+    nonlinear-optimization-unconstrained.tex \
+    nonlinear-optimization-constrained.tex \
+    ordinary-differential-equations.tex
+
 ci:
 	bash .github/workflows/build.sh
 	TEXINPUTS='tex_modules/:' pdflatex .ci/minimath.tex
@@ -35,10 +45,6 @@ test:
 plenary:
 	$(PYTEX) -J plenary \
 		build plenary.tex calculus.tex
-
-refs:
-	$(PYTEX) -J plenary build plenary.tex calculus.tex
-	$(PYTEX) -J all build plenary.tex calculus.tex *.tex
 
 sha:
 	@$(PYTEX) sha | pbcopy

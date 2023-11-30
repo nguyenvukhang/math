@@ -144,13 +144,6 @@ def remove_in_between(data: bytes, start: bytes, end: bytes):
 
 
 class Line:
-    def get_vimgrep(line):  # type: (bytes) -> bytes | None
-        if line.startswith(b"\\section"):
-            return None
-        num, i = get_in_between(line, 0)
-        title, _ = get_in_between(line, i)
-        return num + b" " + title if len(title) > 0 else num
-
     # Checks if the line closes all '{' opened in that line
     def is_closed(line):  # type: (bytes) -> bool
         stk = 0

@@ -38,11 +38,11 @@ class Project:
 
         latex.stdin.flush()
         latex.stdin.close()
-        latex.wait()
         if args.verbose:
             latex.direct_stdout()
         else:
             latex.filtered_stdout()
+        latex.wait()
 
 
 class PdfLatex(Popen):
