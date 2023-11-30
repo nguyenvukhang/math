@@ -331,7 +331,7 @@
 
 \enitkv@key{-resume}{series}{%
   \enit@checkseries@m
-  \let\enit@resuming\@ne  %%% TODO - default check also \Set..Key
+  \let\enit@resuming\@ne
   \ifcase\enit@seriesopt
     \enit@ifunset{enitkv@enumitem@#1}{}%
       {\enit@error
@@ -1578,13 +1578,6 @@
     \fi
   \fi}
 
-% TODO: more robust tests (catch wrong key names, but not easy)
-
-% Internally, LaTeX uses a short name for enumerate (enum)
-% and itemize (item). To be consistent with this convention,
-% a couple of macros provide a "translation". I'm not very
-% happy with the current implementation.
-
 \def\enit@shortenumerate{enum}
 \def\enit@shortitemize{item}
 
@@ -1836,19 +1829,9 @@
     % \message{\the\labelindent/\the\labelwidth/\the\labelsep/\the\itemindent}%
   \endgroup} 
 
-% TODO -  option 'verbose'
-
 % +=============================+
 % |        TWO-PASS TOOLS       |
 % +=============================+
-
-% TODO - Not for the moment, because both tools would require to take
-% into account series and resume, which is not simple. Also, are they
-% applied to all lists, by type, by level, by name, etc.? Document how
-% to do it in at least the simplest cases.
-%
-% - reverse counting
-% - automatic widest, based on existing labels.
 
 \endinput
 

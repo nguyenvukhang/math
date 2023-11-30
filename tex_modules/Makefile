@@ -6,7 +6,7 @@
 
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
-PYTEX := $(MAKEFILE_DIR)tex_modules/pytex
+PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
 
 TEX_FILES := main.tex
 

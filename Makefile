@@ -12,7 +12,7 @@ TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
-# TEX_FILES += sandbox.tex
+TEX_FILES += sandbox.tex
 
 build:
 	$(PYTEX) -J minimath build $(TEX_FILES)
