@@ -100,8 +100,6 @@ def __toc_markdown__(args):  # type: (Args) -> None
             existing_shas = json.load(f)
     existing_shas = set(existing_shas)
 
-    print(existing_shas)
-
     def toc_line(line):
         _, mark, num, name, label = line
         if label in existing_shas:

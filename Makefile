@@ -15,7 +15,7 @@ TEX_FILES += complex-analysis.tex
 TEX_FILES += sandbox.tex
 
 x:
-	@make toc-md
+	@make build
 
 build:
 	$(PYTEX) -J minimath build $(TEX_FILES)
@@ -38,6 +38,16 @@ toc:
 
 toc-md:
 	$(PYTEX) toc-md
+
+gen-notes:
+	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
+	git worktree add .git/prev
+	cd .git/prev && git reset --hard v1.0.10
+	cd .git/prev && $(PYTEX) toc-md
+	$(PYTEX) --prev-rel .git/prev/shas.json toc-md
+	nvim CHANGELOG.md
+	rm -f CHANGELOG.md
+	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
 
 ci:
 	bash .github/workflows/build.sh
