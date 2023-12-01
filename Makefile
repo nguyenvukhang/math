@@ -44,9 +44,6 @@ fmt:
 	latexindent -s -w -m -l=.latexindent.yaml *.tex || echo "failed"
 	rm -f *.bak* **/*.bak*
 
-test:
-	@tex_modules/__tests__.py
-
 plenary:
 	$(PYTEX) -J plenary \
 		build plenary.tex calculus.tex

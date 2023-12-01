@@ -8,6 +8,16 @@ A **mark** is a custom LaTeX command along the lines of
 \Theorem{4.1.6}{Antoine's Conjecture}\label{cc7b8c6}
 ```
 
+## Capabilities that should never fail
+
+- Build
+- Continuous build
+  - Rebuild on change
+- Generate a fresh SHA
+- Add labels to all
+
+## Stretch Capabilities
+
 - Build
   - Hide certain environments
 - Continuous build

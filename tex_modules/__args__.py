@@ -17,8 +17,6 @@ class Args:
     header = None  # type: str
     jobname = None  # type: str
     build_dir = None  # type: str
-    show_proofs = None  # type: bool
-    show_computes = None  # type: bool
     verbose = None  # type: bool
     tex_files = None  # type: list[str]
     toc = None  # type: bool
@@ -37,8 +35,7 @@ class Args:
         p.add_argument("-v", "--verbose", action="store_true")
         p.add_argument("tex_files", nargs="*")
         args = p.parse_args()
-        seen = set()
-        tex_files = []
+        seen, tex_files = set(), []
         for f in args.tex_files:
             if f not in seen:
                 seen.add(f)
