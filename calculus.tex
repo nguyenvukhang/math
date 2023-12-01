@@ -21,7 +21,25 @@
   \end{tabular}
 \end{center}
 
-\Remark{1.1.2}{Differentiation identities}\label{e0367fa}
+\Result{1.1.2}{Basic trigonometric constants}
+
+Trigonometric preprocessing to finish homework in $O(1)$ time.
+
+\begin{tabular}
+  {|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|}
+  \hline
+         & 0 & $\pi/6$    & $\pi/4$    & $\pi/3$    & $\pi/2$ \\[0.2em]\hline
+  $\sin$ & 0 & $1/2$      & $1/\sqrt2$ & $\sqrt3/2$ & 1       \\[0.2em]\hline
+  $\cos$ & 1 & $\sqrt3/2$ & $1/\sqrt2$ & $1/2$      & 0       \\[0.2em]\hline
+  $\tan$ & 0 & $1/\sqrt3$ & 1          & $\sqrt3$   & -       \\[0.2em]\hline
+\end{tabular}
+\begin{align*}
+  \sin(-x) & =-\sin(x) \\
+  \cos(-x) & =\cos(x)  \\
+  \tan(-x) & =-\tan(x)  \\
+\end{align*}
+
+\Remark{2.1.1}{Differentiation identities}\label{e0367fa}
 
 \paragraph{Product rule} $(uv)'=u'v+uv'$
 
@@ -32,7 +50,7 @@ uv\right)'=\frac{u'v-uv'}{v^2}$
 
 (can be derived from product rule using $u$ and $\frac1v$)
 
-\Remark{1.1.3}{Integration identities}\label{dbd3301}
+\Remark{2.1.2}{Integration identities}\label{dbd3301}
 \begin{center}
   \renewcommand{\arraystretch}{2.1}\def\d{\displaystyle}
   \begin{tabular}{c|c l}
@@ -48,7 +66,7 @@ uv\right)'=\frac{u'v-uv'}{v^2}$
   \end{tabular}
 \end{center}
 
-\Remark{1.1.4}{Chain rule}\label{d969d46}
+\Remark{2.1.3}{Chain rule}\label{d969d46}
 
 In all the following scenarios, let $h:=f\circ g$.
 
@@ -77,7 +95,7 @@ Note the lack of $i$ terms on the term with ${g_2}'$. This is intentional.
 Remember anyway that $f\circ g:\R\to\R$, and so we must have $(f\circ
 g)':\R\to\R$.
 
-\Definition{1.1.5}{Differentiability}\label{c62315d}
+\Definition{2.1.4}{Differentiability}\label{c62315d}
 
 In single-variable calculus, $f:\R\to\R$ is differentiable if
 $$
@@ -109,7 +127,7 @@ $$
 
 Essentially, that there exists a local \textbf{linearization} to the function.
 
-\Definition{1.1.6}{Directional derivative}\label{dbbf530}
+\Definition{2.1.5}{Directional derivative}\label{dbbf530}
 
 Let $D\subset \R$ be open. $f:D\to\R$ is directionally differentiable at $\bar
 x\in\R^n$ in the direction $d\in\R^n$ if
@@ -126,7 +144,7 @@ $d\in\R^n$, we call $f$ directionally differentiable at $\bar x$.
 If $f$ is directionally differentiable at every $\bar x\in\R^n$, we call it
 directionally differentiable.
 
-\Remark{1.1.7}{Gradient}\label{dad2713}
+\Remark{2.1.6}{Gradient}\label{dad2713}
 
 Only scalar-valued functions can have gradients.
 
@@ -146,7 +164,7 @@ $$
   \nabla f(x)^Td=\href{dbbf530}{f'(x;d)}
 $$
 
-\Remark{1.1.8}{Jacobian}\label{a2ceb99}
+\Remark{2.1.7}{Jacobian}\label{a2ceb99}
 
 The Jacobian of a vector-valued function in several variables generalizes the
 \href{dad2713}{gradient} of a scalar-valued function in several variables.
