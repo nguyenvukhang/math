@@ -34,7 +34,29 @@ Let $D(P,r)$ be the open disc centered at $P$ with radius $r$. Then
   radius $r$.
 \end{enumerati}
 
-\Theorem{0.0.2}{Complex differentiability}\label{d1d5d93}
+\Result{0.0.2}{Basic complex arithmetic}\label{adebe9e}
+
+\begin{align*}
+  |z|^2  & =z\bar z    \\
+  |zw|^2 & =|z|^2|w|^2
+\end{align*}
+
+\begin{proof}
+  Let $z:=x+iy$, and $w:=u+iv$.
+  $$
+    |z|^2=x^2+y^2=(x+iy)(x-iy)=z\bar z
+  $$
+  \begin{align*}
+    |zw|^2
+     & = (xu-yv)^2+(xv+yu)^2                        \\
+     & =(x^2u^2-2xyvu+y^2v^2)+(x^2v^2+2xyvu+y^2u^2) \\
+     & =x^2u^2+y^2v^2+x^2v^2+y^2u^2                 \\
+     & =(x^2+y^2)(u^2+v^u)                          \\
+     & =|z|^2|w|^2
+  \end{align*}
+\end{proof}
+
+\Theorem{0.0.3}{Complex differentiability}\label{d1d5d93}
 
 A complex function $f(z):=u(z)+iv(z)$ is complex-differentiable at $z_0$ if and
 only if $u$ and $v$ satisfy the \href{fb10fd3}{Cauchy-Riemann Equations} at
