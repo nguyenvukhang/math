@@ -310,11 +310,12 @@ class File:
         for k, line in enumerate(self.lines):
             mark, num, name, label = Line.parse(line)
             if mark is not None:
-                self.__index__.append((k, mark, num, name, label))
+                self.__index__.append([k, mark, num, name, label])
 
     def serialize(self):
         data = []
         for row in self.__index__:
+            row[3] = Line.remove_hrefs(row[3])
             row = [r.decode("utf8") if type(r) == bytes else r for r in row]
             data.append(tuple(row))
         return data

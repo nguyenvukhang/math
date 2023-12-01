@@ -14,6 +14,9 @@ TEX_FILES += complex-analysis.tex
 # TEX_FILES += algorithm-design.tex
 TEX_FILES += sandbox.tex
 
+x:
+	@make toc-md
+
 build:
 	$(PYTEX) -J minimath build $(TEX_FILES)
 
@@ -32,6 +35,9 @@ ref:
 
 toc:
 	$(PYTEX) toc
+
+toc-md:
+	$(PYTEX) toc-md
 
 ci:
 	bash .github/workflows/build.sh

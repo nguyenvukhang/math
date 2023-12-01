@@ -89,6 +89,28 @@ def __toc__(_):
         json.dump(data, f, indent=2)
 
 
+def __toc_markdown__(_):
+    BLACKLIST = ("toc.tex", "sandbox.tex")
+    with open("toc.json", "r") as f:
+        topics = json.load(f)
+    lines = []
+
+    for t in topics:
+        if t in BLACKLIST:
+            continue
+        lines.extend((f"### `{t}`", ""))
+        for _, mark, num, name, _ in topics[t]:
+            line = f"- {mark} {num}"
+            if len(name) > 0:
+                line += f" {name}"
+            lines.append(line)
+            pass
+            # print(mark, num, name)
+        lines.append("")
+    with open("toc.md", "w") as f:
+        f.write("\n".join(lines))
+
+
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def __test__(_):
@@ -107,6 +129,7 @@ if __name__ == "__main__":  # int main() {
         "label": __label__,
         "generate-section-titles": __generate_section_titles__,
         "toc": __toc__,
+        "toc-md": __toc_markdown__,
         "test": __test__,
     }  # type: dict[Args.Action, Callable]
     tbl[args.action](args)

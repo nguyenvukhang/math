@@ -8,49 +8,86 @@
     [70, "Definition", "3.0", "Binary representation", "c043951"],
     [79, "Definition", "3.1", "Decision problem", "c2ad5af"],
     [84, "Problem", "8", "$L$-membership problem", "acff8f4"],
-    [90, "Example", "3.1.1", "Rewriting problems as $L$-membership problems", "d7cf97b"],
+    [
+      90,
+      "Example",
+      "3.1.1",
+      "Rewriting problems as $L$-membership problems",
+      "d7cf97b"
+    ],
     [117, "Definition", "3.2", "Polynomial-time algorithms", "ee3be28"],
     [134, "Definition", "3.3.1", "Vertex Cover Problem", "bd1de5f"],
     [141, "Definition", "3.3.2", "Satisfiability Problem", "d6893fe"],
-    [147, "Definition", "3.3", "Nondeterministic polynomial-time algorithms", "d93050e"],
+    [
+      147,
+      "Definition",
+      "3.3",
+      "Nondeterministic polynomial-time algorithms",
+      "d93050e"
+    ],
     [182, "Definition", "3.4", "Complement of a decision problem", "f636043"],
     [191, "Exercise", "3.5", "", "da1567b"],
     [206, "Definition", "3.6", "$\\mathsf{coNP}$", "a92ed96"],
-    [239, "Remark", "3.6.1", "The complexity class $\\mathsf{NP}\\cap\\mathsf{coNP}$", "e6ea03d"]
+    [
+      239,
+      "Remark",
+      "3.6.1",
+      "The complexity class $\\mathsf{NP}\\cap\\mathsf{coNP}$",
+      "e6ea03d"
+    ]
   ],
   "nonlinear-optimization-constrained.tex": [
-    [10, "Definition", "5.0.0", "Standard Nonlinear Program", "bbe9993"],
-    [35, "Definition", "5.1.1", "Cones", "ced12c7"],
-    [45, "Example", "5.1.2", "Examples of cones", "c36113c"],
-    [65, "Definition", "5.1.3", "Tangent cone", "add7a4b"],
-    [74, "Proposition", "5.1.4", "", "fe814cc"],
-    [78, "Theorem", "5.1.5", "Basic first-order optimality condition", "c8e5836"],
-    [90, "Definition", "5.1.6", "Projection on a set", "fb41457"],
-    [98, "Proposition", "5.1.7", "Projection on a closed convex set", "ce30ae7"],
-    [119, "Lemma", "5.1.8", "", "d2dff14"],
-    [128, "Theorem", "5.1.9", "Farkas' Lemma", "d64b0db"],
-    [197, "Definition", "5.1.10", "Karush-Kuhn-Tucker conditions", "b38093d"],
-    [234, "Definition", "5.1.11", "Linearized cone", "ca4f471"],
-    [247, "Definition", "5.1.12", "Abadie constraint qualification (ACQ)", "adc266e"],
-    [257, "Theorem", "5.1.13", "\\href{b38093d}{KKT} conditions under \\href{adc266e}{ACQ}", "b1c5437"],
-    [333, "Definition", "5.1.14", "Constraint qualifications", "e8fa554"],
-    [338, "Definition", "5.1.15", "LICQ and MFCQ", "fed784a"],
-    [361, "Proposition", "5.1.16", "LICQ implies MFCQ", "a7ef3f5"],
-    [589, "Definition", "5.1.22", "", "e55c332"],
-    [607, "Proposition", "5.1.23", "", "f5d546e"],
-    [674, "Theorem", "5.1.24", "", "d0453f3"],
-    [737, "Definition", "5.1.25", "Slater constraint qualification", "a3b15e9"],
-    [749, "Proposition", "5.1.26", "", "c78f4af"],
-    [863, "Definition", "6.1.1", "Lagrangian dual", "f6ab91b"],
-    [885, "Example", "6.1.2", "LP duality", "ab8429b"],
-    [947, "Theorem", "6.2.1", "Weak duality", "ad0b792"],
-    [984, "Example", "6.2.2", "Non-zero duality gap", "c4aaa1f"],
-    [1027, "Definition", "6.3.1", "Saddle point", "e1525d8"],
-    [1037, "Theorem", "6.3.2", "", "dc4af95"],
-    [1114, "Definition", "7.2.1", "", "de3d5ee"],
-    [1151, "Theorem", "7.2.2", "", "d2d5221"],
-    [1237, "Algorithm", "8.1.1", "Lagrange-Newton method", "faafd8f"],
-    [1254, "Theorem", "8.2.1", "", "c471dcc"]
+    [14, "Definition", "5.0.0", "Standard Nonlinear Program", "aeac31f"],
+    [39, "Definition", "5.1.1", "Cones", "ced12c7"],
+    [49, "Example", "5.1.2", "Examples of cones", "c36113c"],
+    [69, "Definition", "5.1.3", "Tangent cone", "add7a4b"],
+    [78, "Proposition", "5.1.4", "", "fe814cc"],
+    [
+      82,
+      "Theorem",
+      "5.1.5",
+      "Basic first-order optimality condition",
+      "c8e5836"
+    ],
+    [94, "Definition", "5.1.6", "Projection on a set", "fb41457"],
+    [
+      102,
+      "Proposition",
+      "5.1.7",
+      "Projection on a closed convex set",
+      "ce30ae7"
+    ],
+    [123, "Lemma", "5.1.8", "", "d2dff14"],
+    [132, "Theorem", "5.1.9", "Farkas' Lemma", "d64b0db"],
+    [201, "Definition", "5.1.10", "Karush-Kuhn-Tucker conditions", "b38093d"],
+    [237, "Definition", "5.1.10a", "Constraint qualification (CQ)", "d533941"],
+    [255, "Definition", "5.1.11", "Linearized cone", "ca4f471"],
+    [
+      268,
+      "Definition",
+      "5.1.12",
+      "Abadie constraint qualification (ACQ)",
+      "adc266e"
+    ],
+    [278, "Theorem", "5.1.13", "KKT conditions under ACQ", "b1c5437"],
+    [361, "Definition", "5.1.14", "Constraint qualifications", "e8fa554"],
+    [366, "Definition", "5.1.15", "LICQ and MFCQ", "fed784a"],
+    [389, "Proposition", "5.1.16", "LICQ implies MFCQ", "a7ef3f5"],
+    [617, "Definition", "5.1.22", "", "e55c332"],
+    [635, "Proposition", "5.1.23", "", "f5d546e"],
+    [702, "Theorem", "5.1.24", "", "d0453f3"],
+    [765, "Definition", "5.1.25", "Slater constraint qualification", "a3b15e9"],
+    [777, "Proposition", "5.1.26", "", "c78f4af"],
+    [891, "Definition", "6.1.1", "Lagrangian dual", "f6ab91b"],
+    [913, "Example", "6.1.2", "LP duality", "ab8429b"],
+    [975, "Theorem", "6.2.1", "Weak duality", "ad0b792"],
+    [1012, "Example", "6.2.2", "Non-zero duality gap", "c4aaa1f"],
+    [1055, "Definition", "6.3.1", "Saddle point", "e1525d8"],
+    [1065, "Theorem", "6.3.2", "", "dc4af95"],
+    [1142, "Definition", "7.2.1", "", "de3d5ee"],
+    [1179, "Theorem", "7.2.2", "", "d2d5221"],
+    [1265, "Algorithm", "8.1.1", "Lagrange-Newton method", "faafd8f"],
+    [1282, "Theorem", "8.2.1", "", "c471dcc"]
   ],
   "ordinary-differential-equations.tex": [
     [4, "Result", "1.1.1", "Separable", "c4db619"],
@@ -61,26 +98,45 @@
     [73, "Result", "1.1.6", "Exact", "db2397c"],
     [97, "Definition", "2.1.1", "Wronskian", "b70073b"],
     [114, "Result", "2.1.2", "Method of undetermined coefficients", "af8932c"],
-    [140, "Result", "2.1.3", "Variation of parameters (particular: $y_p$)", "cc51fcb"],
-    [155, "Result", "2.1.4", "Variation of parameters (complementary: $y_c$)", "d359b97"],
+    [
+      140,
+      "Result",
+      "2.1.3",
+      "Variation of parameters (particular: $y_p$)",
+      "cc51fcb"
+    ],
+    [
+      155,
+      "Result",
+      "2.1.4",
+      "Variation of parameters (complementary: $y_c$)",
+      "d359b97"
+    ],
     [182, "Result", "2.1.5", "Euler equations", "c15a777"],
     [212, "Result", "3.1.1", "Constant coefficients", "cd8a29a"],
     [234, "Result", "3.1.2", "Euler equations", "a0f8e0c"],
     [251, "Result", "3.1.3", "Variation of parameters", "de785b7"],
-    [253, "Result", "3.1.4", "Radius of convergence of power series", "ea9daf1"],
+    [
+      253,
+      "Result",
+      "3.1.4",
+      "Radius of convergence of power series",
+      "ea9daf1"
+    ],
     [287, "Proposition", "3.1.5", "Power series at zero", "fe2e0f1"],
     [299, "Definition", "3.1.6", "Laplace transform", "a7047c9"],
     [353, "Exercise", "3.1.7", "", "b0e53e0"]
   ],
   "calculus.tex": [
     [2, "Remark", "1.1.1", "Trigonometric identities", "c1fe42f"],
-    [23, "Remark", "1.1.2", "Differentiation identities", "e0367fa"],
-    [34, "Remark", "1.1.3", "Integration identities", "dbd3301"],
-    [50, "Remark", "1.1.4", "Chain rule", "d969d46"],
-    [79, "Definition", "1.1.5", "Differentiability", "c62315d"],
-    [111, "Definition", "1.1.6", "Directional derivative", "dbbf530"],
-    [128, "Remark", "1.1.7", "Gradient", "dad2713"],
-    [148, "Remark", "1.1.8", "Jacobian", "a2ceb99"]
+    [23, "Result", "1.1.2", "Basic trigonometric constants", "e1c170b"],
+    [41, "Remark", "2.1.1", "Differentiation identities", "e0367fa"],
+    [52, "Remark", "2.1.2", "Integration identities", "dbd3301"],
+    [68, "Remark", "2.1.3", "Chain rule", "d969d46"],
+    [97, "Definition", "2.1.4", "Differentiability", "c62315d"],
+    [129, "Definition", "2.1.5", "Directional derivative", "dbbf530"],
+    [146, "Remark", "2.1.6", "Gradient", "dad2713"],
+    [166, "Remark", "2.1.7", "Jacobian", "a2ceb99"]
   ],
   "nonlinear-optimization-unconstrained.tex": [
     [5, "Definition", "1.1.2", "The argmin set", "b27e478"],
@@ -102,7 +158,13 @@
     [173, "Corollary", "2.2.2", "", "aa63a8a"],
     [187, "Corollary", "2.2.3", "", "f2986e2"],
     [203, "Corollary", "2.2.4", "Monotonocity of gradient mappings", "a8ddd0c"],
-    [220, "Theorem", "2.2.5", "Twice differentiable convex functions", "eeb9c30"],
+    [
+      220,
+      "Theorem",
+      "2.2.5",
+      "Twice differentiable convex functions",
+      "eeb9c30"
+    ],
     [235, "Corollary", "2.2.6", "Convexity of quadratic functions", "de25005"],
     [260, "Theorem", "2.2.7", "Convex optimization", "f546fc9"],
     [279, "Proposition", "2.3.1", "Operator norms", "bad47a4"],
@@ -111,39 +173,129 @@
     [312, "Proposition", "2.3.4", "Banach Lemma", "c733e75"],
     [320, "Corollary", "2.3.5", "", "ae04fae"],
     [328, "Definition", "3.1.1", "Descent direction", "ac99a6d"],
-    [336, "Proposition", "3.1.2", "Sufficient condition for descent direction", "f81d53c"],
+    [
+      336,
+      "Proposition",
+      "3.1.2",
+      "Sufficient condition for descent direction",
+      "f81d53c"
+    ],
     [356, "Corollary", "3.1.3", "", "c41d0f0"],
     [368, "Definition", "3.1.4", "Step-size rule", "ae4eac6"],
     [384, "Definition", "3.1.5", "Efficient step-size", "d23fdf0"],
-    [392, "Theorem", "3.1.6", "Global convergence of general descent method", "aa19bbb"],
-    [440, "Definition", "3.2.0", "Armijo rule and sufficient decrease", "fefb024"],
+    [
+      392,
+      "Theorem",
+      "3.1.6",
+      "Global convergence of general descent method",
+      "aa19bbb"
+    ],
+    [
+      440,
+      "Definition",
+      "3.2.0",
+      "Armijo rule and sufficient decrease",
+      "fefb024"
+    ],
     [457, "Example", "3.2.1", "Insufficient decrease", "ae7f42d"],
     [469, "Lemma", "3.2.3", "Convergence to gradient", "f8e1f12"],
-    [495, "Theorem", "3.2.4", "Global convergence of the gradient method", "bbb25cd"],
+    [
+      495,
+      "Theorem",
+      "3.2.4",
+      "Global convergence of the gradient method",
+      "bbb25cd"
+    ],
     [547, "Proposition", "3.2.7", "Kantorovich inequality", "eb4e630"],
-    [557, "Theorem", "3.2.8", "Gradient method for strongly convex quadratics", "a7fa49e"],
+    [
+      557,
+      "Theorem",
+      "3.2.8",
+      "Gradient method for strongly convex quadratics",
+      "a7fa49e"
+    ],
     [586, "Definition", "3.2.9", "Condition number", "bde2dc3"],
     [598, "Definition", "3.3.1", "Convergence rates", "b401f98"],
     [618, "Definition", "3.3.2", "Landau symbols", "e32ba11"],
     [641, "Remark", "3.3.3a", "Newton's method", "d6c0554"],
     [676, "Lemma", "3.3.3", "Local invertibility", "ad66265"],
-    [691, "Remark", "3.3.3b", "Differentiability in Landau notation", "b4ee31d"],
+    [
+      691,
+      "Remark",
+      "3.3.3b",
+      "Differentiability in Landau notation",
+      "b4ee31d"
+    ],
     [706, "Definition", "3.3.4", "Local Lipschitz", "ba65fa0"],
     [714, "Lemma", "3.3.5", "", "a71a60e"],
-    [728, "Theorem", "3.3.6", "Convergence of local Newton's method for equations", "fc03f3f"],
+    [
+      728,
+      "Theorem",
+      "3.3.6",
+      "Convergence of local Newton's method for equations",
+      "fc03f3f"
+    ],
     [741, "Remark", "3.3.6a", "Newton's method in optimization", "f2a142c"],
-    [759, "Theorem", "3.3.7", "Convergence of local Newton's method for optimization", "bf187b2"],
-    [773, "Theorem", "3.3.9", "Global convergence of \\href{a7a5665}{Algorithm 3.3.3}", "a66db73"],
+    [
+      759,
+      "Theorem",
+      "3.3.7",
+      "Convergence of local Newton's method for optimization",
+      "bf187b2"
+    ],
+    [
+      773,
+      "Theorem",
+      "3.3.9",
+      "Global convergence of Algorithm 3.3.3",
+      "a66db73"
+    ],
     [792, "Lemma", "3.3.10", "Mor\u00e9 and Sorensen", "a95dfe1"],
     [798, "Corollary", "3.3.11", "", "aabc89a"],
-    [804, "Proposition", "3.3.12", "Acceptance of full step-size in globalized Newton's method", "d6d6148"],
+    [
+      804,
+      "Proposition",
+      "3.3.12",
+      "Acceptance of full step-size in globalized Newton's method",
+      "d6d6148"
+    ],
     [821, "Theorem", "3.3.13", "", "e58830c"],
-    [845, "Remark", "x.x.x", "Collection of unconstrained minimization methods", "a75d03d"],
-    [854, "Algorithm", "3.1.1", "General line-search descent algorithm", "edbf62c"],
+    [
+      845,
+      "Remark",
+      "x.x.x",
+      "Collection of unconstrained minimization methods",
+      "a75d03d"
+    ],
+    [
+      854,
+      "Algorithm",
+      "3.1.1",
+      "General line-search descent algorithm",
+      "edbf62c"
+    ],
     [867, "Algorithm", "3.2.1", "Gradient method with Armijo rule", "ae01f6d"],
-    [881, "Algorithm", "3.3.1", "Local Newton's method for equations", "abbc9be"],
-    [896, "Algorithm", "3.3.2", "Local Newton's method for unconstrained optimization", "c2bcc4e"],
-    [912, "Algorithm", "3.3.3", "Globalized Newton's method for unconstrained optimization", "a7a5665"]
+    [
+      881,
+      "Algorithm",
+      "3.3.1",
+      "Local Newton's method for equations",
+      "abbc9be"
+    ],
+    [
+      896,
+      "Algorithm",
+      "3.3.2",
+      "Local Newton's method for unconstrained optimization",
+      "c2bcc4e"
+    ],
+    [
+      912,
+      "Algorithm",
+      "3.3.3",
+      "Globalized Newton's method for unconstrained optimization",
+      "a7a5665"
+    ]
   ],
   "complex-analysis.tex": [
     [2, "Definition", "0.0.0", "General terminology", "d508dc8"],
@@ -164,35 +316,107 @@
     [239, "Proposition", "2.1.6", "Holomorphic line integral", "c526c09"],
     [250, "Proposition", "2.1.7", "Moving $||$ into integral", "bcec8b1"],
     [257, "Proposition", "2.1.8", "Upper bound of line integral", "faf3f86"],
-    [273, "Proposition", "2.1.9", "Parameterization-independence of line integrals", "f74efcb"],
-    [288, "Theorem", "2.2.1", "Existence of $f'$ on holomorphic $f$", "f75e43c"],
-    [299, "Theorem", "2.2.2", "Holomorphic by existence of derivative", "d037b0f"],
-    [308, "Theorem", "2.2.3", "Holomorphism and directional derivatives", "c41052e"],
+    [
+      273,
+      "Proposition",
+      "2.1.9",
+      "Parameterization-independence of line integrals",
+      "f74efcb"
+    ],
+    [
+      288,
+      "Theorem",
+      "2.2.1",
+      "Existence of $f'$ on holomorphic $f$",
+      "f75e43c"
+    ],
+    [
+      299,
+      "Theorem",
+      "2.2.2",
+      "Holomorphic by existence of derivative",
+      "d037b0f"
+    ],
+    [
+      308,
+      "Theorem",
+      "2.2.3",
+      "Holomorphism and directional derivatives",
+      "c41052e"
+    ],
     [328, "Lemma", "2.3.1", "", "f8abd8b"],
     [342, "Theorem", "2.3.2", "", "f017dd0"],
-    [360, "Theorem", "2.3.3", "Existence of holomorphic antiderivative", "b2d9d89"],
+    [
+      360,
+      "Theorem",
+      "2.3.3",
+      "Existence of holomorphic antiderivative",
+      "b2d9d89"
+    ],
     [369, "Lemma", "2.4.1", "", "c6c594a"],
     [384, "Theorem", "2.4.2", "Cauchy integral formula", "e50677f"],
-    [397, "Example", "2.4.2a", "Examples with Cauchy integral formula", "da0d68d"],
+    [
+      397,
+      "Example",
+      "2.4.2a",
+      "Examples with Cauchy integral formula",
+      "da0d68d"
+    ],
     [409, "Theorem", "2.4.3", "Cauchy integral theorem", "fb87a78"],
     [430, "Definition", "2.6.1", "Piecewise $C^1$ curve", "baf22ac"],
-    [443, "Definition", "2.6.2", "Integrating over a piecewise $C^1$ curve", "a99ad34"],
+    [
+      443,
+      "Definition",
+      "2.6.2",
+      "Integrating over a piecewise $C^1$ curve",
+      "a99ad34"
+    ],
     [455, "Lemma", "2.6.3", "", "b6b6d51"],
     [468, "Lemma", "2.6.4", "", "cd28a8f"],
     [479, "Proposition", "2.6.5", "", "b52bca5"],
     [488, "Proposition", "2.6.6", "", "ecbc559"],
-    [501, "Theorem", "2.6.7", "Cauchy integral formula and theorem: general form", "be5c80c"],
-    [519, "Theorem", "3.1.1", "Analyticity of holomorphic functions", "e20a4ed"],
-    [531, "Corollary", "3.1.2", "Derivative of a holomorphic function is holomorphic", "ee189cf"],
+    [
+      501,
+      "Theorem",
+      "2.6.7",
+      "Cauchy integral formula and theorem: general form",
+      "be5c80c"
+    ],
+    [
+      519,
+      "Theorem",
+      "3.1.1",
+      "Analyticity of holomorphic functions",
+      "e20a4ed"
+    ],
+    [
+      531,
+      "Corollary",
+      "3.1.2",
+      "Derivative of a holomorphic function is holomorphic",
+      "ee189cf"
+    ],
     [536, "Theorem", "3.1.3", "", "c056da0"],
     [550, "Theorem", "3.1.4", "Morera's Theorem", "f378992"],
     [559, "Lemma", "3.2.1", "", "db44655"],
     [565, "Definition", "3.2.2", "Complex power series", "b9a7c59"],
     [581, "Lemma", "3.2.3", "Abel's Theorem", "d5d5bdc"],
-    [586, "Definition", "3.2.4", "Radius of convergence of power series", "da6e337"],
+    [
+      586,
+      "Definition",
+      "3.2.4",
+      "Radius of convergence of power series",
+      "da6e337"
+    ],
     [596, "Lemma", "3.2.5", "", "c7d0e1d"],
     [604, "Lemma", "3.2.6", "Root test for radius of convergence", "a9ba20f"],
-    [620, "Definition", "3.2.7", "Uniform convergence of complex functions", "bba67e4"],
+    [
+      620,
+      "Definition",
+      "3.2.7",
+      "Uniform convergence of complex functions",
+      "bba67e4"
+    ],
     [629, "Definition", "3.2.8", "Uniformly Cauchy series", "bfe260e"],
     [638, "Proposition", "3.2.9", "", "ec076c1"],
     [648, "Lemma", "3.2.10", "", "ccf2595"],
@@ -213,17 +437,53 @@
     [818, "Corollary", "3.6.5", "", "dccfe6b"],
     [828, "Corollary", "3.6.6", "", "bd8ae3b"],
     [833, "Definition", "4.1.0", "Types of singularities", "a7f062e"],
-    [846, "Theorem", "4.1.1", "The Riemann removable singularities theorem", "f42a663"],
+    [
+      846,
+      "Theorem",
+      "4.1.1",
+      "The Riemann removable singularities theorem",
+      "f42a663"
+    ],
     [866, "Theorem", "4.1.4", "Casorati-Weierstrass", "da8365b"],
     [872, "Definition", "4.2.0", "Laurent series", "cb20929"],
     [901, "Lemma", "4.2.1", "", "d5253d9"],
     [909, "Lemma", "4.2.2", "", "a9a7710"],
     [928, "Proposition", "4.2.4", "Uniqueness of Laurent expansion", "eafd61e"],
-    [940, "Theorem", "4.3.1", "The \\href{e50677f}{Cauchy integral formula} for an annulus", "ca5d89e"],
+    [
+      940,
+      "Theorem",
+      "4.3.1",
+      "The Cauchy integral formula for an annulus",
+      "ca5d89e"
+    ],
     [951, "Theorem", "4.3.2", "The existence of Laurent expansions", "cd93e84"],
-    [963, "Proposition", "4.3.3", "", "e7fa5f8"],
+    [
+      963,
+      "Proposition",
+      "4.3.3",
+      "Laurent expansion of holomorphic functions",
+      "e7fa5f8"
+    ],
     [991, "Proposition", "4.4.1", "", "c1d2d0c"],
-    [1001, "Definition", "4.5.1", "Holomorphically simply connected (HSC)", "d20898f"]
+    [
+      1001,
+      "Definition",
+      "4.5.1",
+      "Holomorphically simply connected (HSC)",
+      "d20898f"
+    ],
+    [1007, "Lemma", "4.5.2", "", "f3a867e"],
+    [
+      1016,
+      "Definition",
+      "4.5.3a",
+      "Residue of a function at a point",
+      "ea3ff58"
+    ],
+    [1030, "Theorem", "4.5.3", "Residue theorem", "e1efb5a"],
+    [1052, "Definition", "4.5.4", "Index of a curve", "bfdcc82"],
+    [1065, "Lemma", "4.5.5", "Index of a curve is an integer", "ff34baf"],
+    [1077, "Proposition", "4.5.6", "", "a264ecd"]
   ],
   "plenary.tex": [
     [15, "Definition", "1.1.1", "Supremum/Infimum", "b8f715e"],
@@ -239,14 +499,44 @@
     [132, "Theorem", "1.2.2", "Monotone convergence theorem", "ca25eb7"],
     [143, "Theorem", "1.2.3", "Monotone subsequence theorem", "dddb70e"],
     [176, "Theorem", "1.2.4", "Bolzano-Weierstrass Theorem", "d277ad0"],
-    [195, "Theorem", "1.2.5", "Monotone seq. with a convergent subseq. is convergent", "aaf3ba6"],
+    [
+      195,
+      "Theorem",
+      "1.2.5",
+      "Monotone seq. with a convergent subseq. is convergent",
+      "aaf3ba6"
+    ],
     [225, "Theorem", "1.2.6", "Mean value theorem", "d37aa2b"],
     [253, "Result", "1.2.7", "Preprocessed limits", "ffc8953"],
     [272, "Theorem", "1.2.8", "Bernoulli's inequality", "d44713f"],
-    [293, "Result", "1.2.9", "Limit to infinity of a rational function", "ccfddb1"],
-    [313, "Result", "1.2.10", "Limit of $\\frac{e^x}x$ as $x\\to\\infty$", "b905ee7"],
-    [333, "Result", "1.2.11", "Limit of $\\frac{\\ln x}{x}$ as $x\\to\\infty$", "e2e1632"],
-    [354, "Result", "1.2.12", "Limit of a polynomial divided by an exponential", "f3540b0"],
+    [
+      293,
+      "Result",
+      "1.2.9",
+      "Limit to infinity of a rational function",
+      "ccfddb1"
+    ],
+    [
+      313,
+      "Result",
+      "1.2.10",
+      "Limit of $\\frac{e^x}x$ as $x\\to\\infty$",
+      "b905ee7"
+    ],
+    [
+      333,
+      "Result",
+      "1.2.11",
+      "Limit of $\\frac{\\ln x}{x}$ as $x\\to\\infty$",
+      "e2e1632"
+    ],
+    [
+      354,
+      "Result",
+      "1.2.12",
+      "Limit of a polynomial divided by an exponential",
+      "f3540b0"
+    ],
     [385, "Definition", "1.2.13", "Norm properties", "e0fff96"],
     [403, "Theorem", "2.1.1", "Fundamental theorem of calculus", "b869dc0"],
     [427, "Definition", "3.1.1", "Affine functions", "dcb7f73"],
@@ -255,17 +545,42 @@
     [452, "Remark", "4.1.1", "Thinking about matrix dimensions", "d8bd136"],
     [463, "Definition", "4.1.2", "Positive (semi)definiteness", "e25e722"],
     [475, "Definition", "4.1.3", "Inner product space", "cebd07a"],
-    [506, "Definition", "5.0.0", "Absolute basics of boolean algebra", "ba4e2fa"],
+    [
+      506,
+      "Definition",
+      "5.0.0",
+      "Absolute basics of boolean algebra",
+      "ba4e2fa"
+    ],
     [515, "Definition", "5.1.1", "Conjunctive normal form", "ab60bb1"],
     [522, "Definition", "5.1.2", "Disjunctive normal form", "bb41c04"],
     [530, "Proposition", "5.1.3", "Extending a CNF to 3 variables", "f33a84e"],
     [574, "Definition", "9.1.1", "Gamma function", "ce1fa3f"],
     [595, "Definition", "9.1.2", "Language reductions", "e009acb"],
-    [612, "Definition", "9.1.3", "Everything $\\mathsf P$-, $\\mathsf{NP}$-related", "e04bcbc"],
+    [
+      612,
+      "Definition",
+      "9.1.3",
+      "Everything $\\mathsf P$-, $\\mathsf{NP}$-related",
+      "e04bcbc"
+    ],
     [643, "Theorem", "9.1.4", "Cauchy-Schwarz inequality", "c503127"]
   ],
+  "toc.tex": [],
   "sandbox.tex": [
-    [2, "Result", "0.0.1", "Taking partial derivatives w.r.t. $z$ of different functions", "c0828f0"],
-    [19, "Result", "0.0.2", "Trying different functions with the Cauchy integral formula", "d833c36"]
+    [
+      2,
+      "Result",
+      "0.0.1",
+      "Taking partial derivatives w.r.t. $z$ of different functions",
+      "f107aed"
+    ],
+    [
+      19,
+      "Result",
+      "0.0.2",
+      "Trying different functions with the Cauchy integral formula",
+      "fbc836e"
+    ]
   ]
 }
