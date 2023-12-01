@@ -89,25 +89,51 @@ def __toc__(_):
         json.dump(data, f, indent=2)
 
 
-def __toc_markdown__(_):
+def __toc_markdown__(args):  # type: (Args) -> None
     BLACKLIST = ("toc.tex", "sandbox.tex")
-    with open("toc.json", "r") as f:
-        topics = json.load(f)
-    lines = []
+    files = map(File, get_tex_files(recursive=False))
+    files = list(filter(lambda f: f.filepath not in BLACKLIST, files))
 
-    for t in topics:
-        if t in BLACKLIST:
-            continue
-        lines.extend((f"### `{t}`", ""))
-        for _, mark, num, name, _ in topics[t]:
-            line = f"- {mark} {num}"
-            if len(name) > 0:
-                line += f" {name}"
-            lines.append(line)
-            pass
-            # print(mark, num, name)
-        lines.append("")
-    with open("toc.md", "w") as f:
+    existing_shas = []
+    if args.prev_rel is not None and path.isfile(args.prev_rel):
+        with open(args.prev_rel, "r") as f:
+            existing_shas = json.load(f)
+    existing_shas = set(existing_shas)
+
+    print(existing_shas)
+
+    def toc_line(line):
+        _, mark, num, name, label = line
+        if label in existing_shas:
+            return None
+        line = f"- {mark} {num}"
+        if len(name) > 0:
+            line += f" {name}"
+        return line
+
+    for file in files:
+        file.index()
+
+    with open("shas.json", "w") as fp:
+        shas = []
+        for f in files:
+            labels = filter(lambda v: v is not None, f.labels())
+            shas.extend(map(lambda v: v.decode("utf8"), labels))
+        json.dump(shas, fp)
+
+    lines = []
+    for f in files:
+        tmp = []
+        for line in f.serialize():
+            tl = toc_line(line)
+            if tl is not None:
+                tmp.append(tl)
+        if len(tmp) > 0:
+            lines.extend((f"## `{f.filepath}`", ""))
+            lines.extend(tmp)
+            lines.append("")
+
+    with open("CHANGELOG.md", "w") as f:
         f.write("\n".join(lines))
 
 

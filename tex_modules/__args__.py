@@ -18,6 +18,7 @@ class Args:
     header = None  # type: str
     jobname = None  # type: str
     build_dir = None  # type: str
+    prev_rel = None  # type: str
     verbose = None  # type: bool
     tex_files = None  # type: list[str]
     toc = None  # type: bool
@@ -34,6 +35,7 @@ class Args:
         p.add_argument("-J", "--jobname", default="out")
         p.add_argument("--build-dir", default=".build")
         p.add_argument("-v", "--verbose", action="store_true")
+        p.add_argument("--prev-rel")
         p.add_argument("tex_files", nargs="*")
         args = p.parse_args()
         seen, tex_files = set(), []
