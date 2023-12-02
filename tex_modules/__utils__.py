@@ -131,6 +131,7 @@ def should_pretty_print(x):  # type: (bytes) -> bool
         or inc(x, (b"texlive", b"texmf", b"pdftex"))  # system package
         or inc(x, (b"(Please type a command or say `\end')\n"))
         or sw(x, b"LaTeX Warning: You have requested package")
+        or sw(x, b"LaTeX Font Warning: Command \\footnotesize invalid in math mode")
     )
 
 
