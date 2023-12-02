@@ -445,6 +445,11 @@ If $f$ is a holomorphic function on an open disc $U\subseteq\C$, and if
 $\gamma:[a,b]\to U$ is a $C^1$ curve in $U$ with $\gamma(a)=\gamma(b)$, then
 $$\oint_\gamma f(z)\,dz=0$$
 
+Note that this implies that the \href{e50677f}{Cauchy integral formula} gives a
+zero whenever $z$ does not lie in the contour $\gamma$, since the integrand is
+holomorphic. (Integrand is holomorphic because numerator is assumed to be
+holomorphic, and the denominator is never zero.)
+
 \begin{proof}
   By \href{e7808d1}{Theorem 1.5.3}, there is a holomorphic function
   $G:U\to\C$ with $G'=f$ on $U$. Since $\gamma(a)=\gamma(b)$, we have
