@@ -70,13 +70,13 @@ def __label__(_):
 
 def __generate_section_titles__(_):
     def gen(t):  # type: (str) -> str
-        c, b = lambda v: rf"\ifx&#2&\else{v}\fi", lambda v: "{" + v + "}"
-        desc = c("(") + "#2" + c(")")
-        return f"\def{t}#1#2" + b(
-            "\subsubsection" + b(t + " {#1}\hspace{0.7em}" + b(desc))
+        b = lambda v: "{" + v + "}"
+        desc = rf"\ifx&#2&\else(#2)\fi"
+        return f"\def\{t}#1#2" + b(
+            "\subsection" + b(t + " {#1}\hspace{0.7em}" + b(desc))
         )
 
-    for l in map(lambda v: gen(v.decode("utf8")), MARKS_WITH_BSLS):
+    for l in map(lambda v: gen(v.decode("utf8")), MARKS):
         print(l)
 
 

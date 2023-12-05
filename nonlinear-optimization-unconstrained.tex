@@ -137,6 +137,37 @@ Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously differentiable. If
 $\bar x$ is a local minimizer (maximizer) of $f$ over $X$ then $\nabla^2f(\bar
 x)$ is positive (negative) semidefinite.
 
+\begin{proof}
+  \def\x{\bar x}
+  \def\H#1{\nabla^2f\ifx&#1&\else(#1)\fi}
+  \def\G{\nabla f(\x)}
+  We only prove the case in which $\x$ is a local minimizer. The maximum case
+  follows from it by substituting $f$ for $-f$.
+
+  Assume on the contrary that $\H\x$ were not positive semidefinite. Then there
+  exists $d\in\R^n$ such that $d^T\H\x d<0$. By Taylor's Theorem, for $t>0$ there
+  exists $\eta_t\in[\x,\x+td]$ such that
+  $$
+    f(\x+td)=f(\x)+t\G^Td+\frac{t^2}2d^T\H{\eta_t}d
+  $$
+
+  But since $\x$ is a local minimizer, by \href{dc165c9}{Fermat's rule} we have
+  $\G=0$ and hence
+  $$
+    f(\x+td)=f(\x)+\frac{t^2}2d^T\H{\eta_t}d
+  $$
+
+  As $t\downarrow0$, $\eta_t\to\x$ and hence for some $t>0$ sufficiently small,
+  we have
+  $$
+    \frac{t^2}2d^T\H{\eta_t}d<0
+  $$
+
+  as $\H{}$ is continuous by assumption. This yields $f(\x+td)<f(\x)$ for all
+  $t>0$ sufficiently small, which contradicts the fact that $\x$ is a local
+  minimizer of $f$ over $X$. Hence, $\H\x$ must be positive semidefinite.
+\end{proof}
+
 \Lemma{2.1.7}{}\label{eaa0d24}
 
 Let $X\subset\R^n$ be open and $f:X\to\R$ twice continuously differentiable. If
