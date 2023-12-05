@@ -65,6 +65,8 @@ Then $f:C\to\R$ is said to be
         $$f(\lambda x+(1-\lambda)y)+\frac{\mu}{2}\lambda(1-\lambda)\norm{x-y}^2\leq\lambda f(x)+(1-\lambda)f(y)$$
 \end{itemize}
 
+This has parallels \href{cd9cea7}{here} and \href{a8ddd0c}{here}.
+
 \Example{1.2.5}{Convex functions}\label{f96c8ae}
 
 \begin{enumerata}
@@ -87,6 +89,15 @@ Then $f:C\to\R$ is said to be
   \item (Composition with affine mapping) $f:\R^n\to\R$ be convex
         and $g:\R^m\to\R^n$ affine. Then $f\circ G$ is convex.
 \end{enumerate}
+
+\Theorem{1.2.7}{Taylor's Theorem, $k=2$}\label{b90111f}
+
+Let $D\subset\R^n$ be open, let $f:D\to\R$ be twice continuously
+differentiable, and $x,y\in D$ such that $[x,y]\subset D$. Then there exists
+$\eta\in[x,y]$ such that
+$$
+  f(y)-f(x)=\nabla f(x)^T(y-x)+\frac12(y-x)^T\nabla^2f(\eta)(y-x)
+$$
 
 \Definition{2.1.1}{Directional derivative}\label{37eb747}
 
@@ -145,8 +156,8 @@ x)$ is positive (negative) semidefinite.
   follows from it by substituting $f$ for $-f$.
 
   Assume on the contrary that $\H\x$ were not positive semidefinite. Then there
-  exists $d\in\R^n$ such that $d^T\H\x d<0$. By Taylor's Theorem, for $t>0$ there
-  exists $\eta_t\in[\x,\x+td]$ such that
+  exists $d\in\R^n$ such that $d^T\H\x d<0$. By \href{b90111f}{Taylor's Theorem},
+  for $t>0$ there exists $\eta_t\in[\x,\x+td]$ such that
   $$
     f(\x+td)=f(\x)+t\G^Td+\frac{t^2}2d^T\H{\eta_t}d
   $$
@@ -202,6 +213,8 @@ $C$. Then the following hold for all $x,\bar x\in C$:
   $$
 \end{enumerata}
 
+This has parallels \href{a114065}{here} and \href{a8ddd0c}{here}.
+
 \Corollary{2.2.2}{}\label{aa63a8a}
 
 Let $f:\R^n\to\R$ be convex and differentiable. Then the following hold:
@@ -248,6 +261,8 @@ $C$. Then the following hold for all $x,y\in C$
     \inner{\nabla f(x)-\nabla f(y)}{x-y}\geq\mu\norm{x-y}^2
   $$
 \end{enumerata}
+
+This has parallels \href{a114065}{here} and \href{cd9cea7}{here}.
 
 \Theorem{2.2.5}{Twice differentiable convex functions}\label{eeb9c30}
 
@@ -344,7 +359,7 @@ for all $A\in\R^{m\times n}$ and $B\in\R^{n\times p}$ the following hold:
 \Proposition{2.3.4}{Banach Lemma}\label{c733e75}
 
 Let $C\in\R^{n\times n}$ with $\norm C<1$ where $\norm\cdot$ is a
-submultiplicative matrix norm. THen $I+C$ is invertible and we have
+submultiplicative matrix norm. Then $I+C$ is invertible and we have
 $$
   \norm{(I+C)^{-1}}\leq\frac1{1-\norm C}
 $$
