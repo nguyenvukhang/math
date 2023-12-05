@@ -20,6 +20,7 @@ EOF
 }
 
 TEX_FILES=(
+  toc.tex
   plenary.tex
   calculus.tex
   algorithm-design.tex

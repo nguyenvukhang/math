@@ -1,6 +1,8 @@
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
+PREV_TAG := v1.1.1
+
 PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
 
 # --- [TEX_FILES] ---
@@ -25,6 +27,7 @@ dev:
 
 ref:
 	$(PYTEX) -J ref build \
+		toc.tex \
 		plenary.tex \
 		calculus.tex \
     algorithm-design.tex \
@@ -42,7 +45,7 @@ toc-md:
 gen-notes:
 	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
 	git worktree add .git/prev
-	cd .git/prev && git reset --hard v1.1.1
+	cd .git/prev && git reset --hard $(PREV_TAG)
 	cd .git/prev && $(PYTEX) toc-md
 	$(PYTEX) --prev-rel .git/prev/shas.json toc-md
 	nvim CHANGELOG.md
