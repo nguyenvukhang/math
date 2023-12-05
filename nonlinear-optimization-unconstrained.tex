@@ -99,6 +99,11 @@ $$
   f(y)-f(x)=\nabla f(x)^T(y-x)+\frac12(y-x)^T\nabla^2f(\eta)(y-x)
 $$
 
+\Theorem{1.2.8}{Schwarz's Theorem}\label{c3524e9}
+
+Let $D\in\R^n$ be open and $f:D\to\R$ be twice continuously differentiable at
+$x\in D$. Then $\nabla^2f(x)$ is symmetric.
+
 \Definition{2.1.1}{Directional derivative}\label{37eb747}
 
 Let $D\subset \R$ be open. $f:D\to\R$ is directionally differentiable at $\bar
@@ -374,22 +379,22 @@ $$
 
 \Definition{3.1.1}{Descent direction}\label{ac99a6d}
 
-Let $f:\R^n\to\R$ and $x\in\R^n$. A vector $d\in\R^n$ is said to be a descent
-direction of $f$ at $x$ if there exists $\eta>0$ such that
+Let $f:\R^n\to\R$ and $x\in\R^n$. A vector $d\in\R^n$ is said to be a
+\textit{descent direction} of $f$ at $x$ if there exists $\ell>0$ such that
 $$
-  f(x+td)<f(x)\with(t\in(0,\eta])
+  f(x+td)<f(x)\with(t\in(0,\ell])
 $$
 
 \Proposition{3.1.2}{Sufficient condition for descent direction}\label{f81d53c}
 
-Let $f:\R^n\to\R$ be directionally differentiable at $x\in\R^n$ in the
-direction $d\in\R^n$ with
+Let $f:\R^n\to\R$ be \href{37eb747}{directionally differentiable} at $x\in\R^n$
+in the direction $d\in\R^n$ with
 $$
   f'(x;d)<0
 $$
 
-Then $d$ is a descent direction of $f$ at $x$. In particular, this is true if
-$f$ is differentiable at $x$ with
+Then $d$ is a \href{ac99a6d}{descent direction} of $f$ at $x$. In particular,
+this is true if $f$ is differentiable at $x$ with
 $$
   \nabla f(x)^Td<0
 $$
@@ -879,8 +884,53 @@ hold:
   \item For all $k\in\N$ sufficiently large, the full step-size $t_k=1$ will be
   accepted
   \item $\{x^k\}$ converges superlinearly to $\bar x$
-  \item If $\nabla^2f$ is locally Lipschitz then $\{\bar x\}$ converges to $\bar x$
+  \item If $\nabla^2f$ is locally Lipschitz then $\{x^k\}$ converges to $\bar x$
   quadratically.
+\end{enumerata}
+
+\Definition{3.3.14a}{Quasi-Newton equation}\label{cc538a4}
+
+In the context of iterating over $\{x_k\}$ and $\{H_k\}$ where $H_k$ is the
+approximation of $\nabla^2f(x^k)$ at $x^k$, $H_{k+1}$ satisfies the
+quasi-Newton equation if
+$$
+  H_{k+1}s^k=y^k,
+$$
+
+where $s^k:=x^{k+1}-x^k$ and $y^k:=\nabla f(x^{k+1})-\nabla f(x^k)$.
+
+\Remark{3.3.14b}{Direct Quasi-Newton methods}\label{f25ca2a}
+
+In order to devise a strategy of how to approximate the Hessian matrix of the
+underlying function $f$ the current iterate $x^k$ we first need to agree on
+which properties we would like it to have. To this end, let $H_k$ be an
+approximation of $\nabla^2f(x^k)$. We would like for $H_{k+1}$ to satisfy the
+following criteria:
+\begin{enumerate}
+  \item [I.] $H_{k+1}=H_{k+1}^T$ is symmetric.
+  \item [II.] $H_{k+1}$ satisfies the \href{cc538a4}{quasi-Newton equation}.
+  \item [III.] $H_{k+1}$ can be obtained efficiently from $H_k$.
+  \item [IV.] The resulting method has strong local convergence properties.
+\end{enumerate}
+
+\Remark{3.3.14}{}\label{b19fe28}
+
+Let $x^k$ be a current iterate for minimizing $f:\R^n\to\R$ that is twice
+continuously differentiable.
+\begin{enumerata}
+  \item The Hessian $\nabla^2f(x^k)$ of $f$ at $x^k$ does not necessarily satisfy the
+  \href{cc538a4}{quasi-Newton equation}.
+  \item Condition I. is motivated by \href{c3524e9}{Schwarz's Theorem}.
+  \item The quasi-Newton equation can be motivated by the Mean-Value Theorem in
+  integral form, which yields
+  \begin{align*}
+    \nabla f(x^{k+1})-\nabla f(x^k)
+        & =\int_0^1\nabla^2f(x^k+t(x^{k+1}-x^k))\,dt\cdot(x^{k+1}-x^k) \\
+    y^k & =\int_0^1\nabla^2f(x^k+t(x^{k+1}-x^k))\,dt\cdot s^k
+  \end{align*}
+
+  The term $\int_0^1\nabla^2f(x^k+t(x^{k+1}-x^k))\,dt$ can be interpreted as some
+  sort of ``averaged Hessian".
 \end{enumerata}
 
 % TODO: Chapter 3.3.4: Quasi-Newton Methods
