@@ -397,7 +397,7 @@ properties, where $|k|$ denotes the absolute value of a scalar $k$.
         $p(x+y)\leq p(x)+p(y)$ for all $x,y\in X$
 \end{enumerate}
 
-\Theorem{1.2.14}{Limit and limit superior/inferior}
+\Theorem{1.2.14}{Limit and limit superior/inferior}\label{dbc2c89}
 
 Let $\{x_n\}$ be a bounded sequence. Then $\{x_n\}$ converges to $\bar x$ if
 and only if
@@ -412,6 +412,37 @@ $$
 
 Sidenote: all convergent sequences are bounded, so the boundedness can be taken
 for free once convergence is established.
+
+\Result{1.2.15}{Limit of a polynomial divided by its successor}\label{b63d815}
+
+Let $P$ be a polynomial. Show that
+$$
+  \lim_{x\to\infty}\frac{P(x)}{P(x+1)}=1
+$$
+
+\begin{proof}
+  \def\one{\left(1+\frac1x\right)}
+  We will write $P(x)$ as
+  $$
+    P(x):=\sum_{i=0}^n a_ix^i
+  $$
+
+  where $n$ is the degree of polynomial $P$.
+  \begin{align*}
+    P(x+1)
+     & =P\big(x(1+\tfrac1x)\big)                                                                           \\
+     & =a_0+a_1x\one+a_2x^2\one^2+\ldots+a_nx^n\one^n                                                      \\
+     & =x^n\left[\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}\one+\frac{a_2}{x^{n-2}}\one^2+\ldots+a_n\one^n\right] \\[0.5em]
+    P(x)
+     & =x^n\left(\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}+\frac{a_2}{x^{n-2}}+\ldots+a_n\right)                 \\[0.5em]
+    \implies \frac{P(x)}{P(x+1)}
+     & =\frac
+    {\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}\one+\frac{a_2}{x^{n-2}}\one^2+\ldots+a_n\one^n}
+    {\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}+\frac{a_2}{x^{n-2}}+\ldots+a_n}                                   \\[0.5em]
+    \implies \lim_{x\to\infty}\frac{P(x)}{P(x+1)}
+     & =\frac{a_n}{a_n} = 1
+  \end{align*}
+\end{proof}
 
 % ╭─────────────────────────────────────────────────────────────────╮
 % │ 2. CALCULUS                                        __calculus__ │

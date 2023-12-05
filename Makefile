@@ -42,12 +42,13 @@ toc-md:
 gen-notes:
 	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
 	git worktree add .git/prev
-	cd .git/prev && git reset --hard v1.0.10
+	cd .git/prev && git reset --hard v1.1.1
 	cd .git/prev && $(PYTEX) toc-md
 	$(PYTEX) --prev-rel .git/prev/shas.json toc-md
 	nvim CHANGELOG.md
 	rm -f CHANGELOG.md
 	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
+	git branch -D prev
 
 ci:
 	bash .github/workflows/build.sh
