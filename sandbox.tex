@@ -54,3 +54,188 @@ Hence $w^2=-1$
   (z-w)^2(z-\bar w)^2
    & = (z^2-2zw+i)(z^2-2z\bar w-i) \\
 \end{align*}
+
+\newpage
+\Result{0.0.3}{Jacobian Matrix}\label{bcd0aa1}
+
+Let $D\subset\R^n$ be open and $F:D\to\R^m$. $F$ is differentiable at $x\in D$
+if there exists $J(x)\in\R^{m\times n}$ such that
+\begin{equation*}
+  \lim_{h\to0}\frac{F(x+h)-F(x)-J(x)h}{\norm h}=0\in\R^m\Tag{*}
+\end{equation*}
+
+where $h\in\R^n$.
+
+The existence of the limit in $(*)$ effectively claims that every element of
+the $\R^m$ vector on the LHS must go to zero as $h\to0$.
+
+Unpack $F(x)$ and $J(x)$ with
+$$
+  F(x):=\begin{bmat}
+    F_1(x) \\\vdots\\F_m(x)
+  \end{bmat}, \Quad
+  J(x):=\begin{bmat}
+    J_{11} & \ldots & J_{1n} \\
+    \vdots & \ddots & \vdots \\
+    J_{m1} & \ldots & J_{mn} \\
+  \end{bmat}
+$$
+
+\def\Ji{\begin{bmat}J_{i1}&\ldots&J_{in}\end{bmat}}
+
+Then for each $i=\iter1m$:
+\begin{equation*}
+  \lim_{h\to0}\frac{F_i(x+h)-F_i(x)-{\Ji}h}{\norm h}=0\in\R
+\end{equation*}
+
+Define $J_i:=\Ji$. Then we have
+\begin{align*}
+  \lim_{h\to0}\frac{F_i(x+h)-F_i(x)-{J_i}h}{\norm h}
+   & =0                                  \\
+  \lim_{h\to0}\frac{F_i(x+h)-F_i(x)}{\norm h}
+   & =\lim_{h\to0}\frac{{J_i}h}{\norm h}
+\end{align*}
+
+Replacing $h$ with $td$ where $t\in\R$ and $d\in\R^n$, and sending $t\to0$, we
+have
+\begin{equation*}
+  \lim_{t\to0}\frac{F_i(x+td)-F_i(x)}{t}
+  =\lim_{t\to0}\frac{{J_i}(td)}{t}
+  =J_id
+\end{equation*}
+
+This shows that $J_i$ is the transpose of the gradient vector of $F_i$.
+$$
+  J_i=\nabla F_i(x)^T
+$$
+
+\newpage
+\Result{0.0.4}{Hessian Matrix}\label{bb1bec9}
+
+Firstly, note that at undergrad Y3 mathematics, I will only have to deal with
+Hessians of $\R^n\to\R$ functions. Apparently, Hessians of $\R^n\to\R^m$
+functions are 3-D matrices.
+
+Let $D\subset\R^n$ be open and $F:D\to\R$. Let $F$ be twice differentiable at
+$x\in D$. Consider the first derivative (Jacobian) first, we have
+\begin{equation*}
+  \lim_{h\to0}\frac{F(x+h)-F(x)-F'(x)h}{\norm h}=0\in\R\Tag{*}
+\end{equation*}
+
+This translates to
+\begin{equation*}
+  \lim_{t\downarrow0}\frac{F(x+td)-F(x)}t=F'(x)d
+\end{equation*}
+
+which implies that $F'(x)=\nabla F(x)^T$. Next, moving on to the second
+derivative (Hessian).
+\begin{align*}
+  \lim_{h\to0}\frac{F'(x+h)-F'(x)-H(x)h}{\norm h} & =0\in\R^n
+\end{align*}
+
+Now, like before, we unpack this equation into each of the $n$ elements of the
+row vectors on both sides of the equation. For each $i=\iter1n$,
+\begin{equation*}
+  \lim_{h\to0}\frac{F'_i(x+h)-F'_i(x)-(H(x)h)_i}{\norm h}=0
+\end{equation*}
+
+Replacing $h$ with $td$ where $t\in\R$ and $d\in\R^n$, we have
+\begin{align*}
+  \lim_{t\downarrow0}\frac{F'_i(x+td)-F'_i(x)-(H(x)td)_i}t
+   & =0         \\
+  \lim_{t\downarrow0}\frac{F'_i(x+td)-F'_i(x)}t
+   & =(H(x)d)_i
+\end{align*}
+
+This implies that
+\begin{equation*}
+  \nabla F'_i(x)^Td=(H(x)d)_i
+\end{equation*}
+
+Let's make sense of this. $F'_i:\R^n\to\R$ since it maps $x$ to just one
+element
+
+$\implies F'_i(x)\in\R^n$
+
+$\implies\nabla F'_i(x)\in\R^n$
+
+$\implies\nabla F'_i(x)^Td\in\R$ and hence the equation above is in $\R$.
+
+On the RHS, we have $(H(x)d)_i$
+
+Taking $H_i(x)$ as the $i^\text{th}$ row of $H(x)$, we can rewrite this as
+$H_i(x)^Td$, but in this form it's easy to see that we have
+\begin{equation*}
+  H_i(x)=\nabla F'_i(x)
+\end{equation*}
+
+In summary,
+\begin{align*}
+  H_f
+   & =
+  \def\p#1#2{\dfrac{\partial^2f}{\partial x_{#1}\partial x_{#2}}}
+  \def\P#1{\dfrac{\partial^2f}{\partial x_{#1}^2}}
+  \begin{bmat}
+    \P1    & \p12   & \ldots & \p1n   \\[1.4em]
+    \p21   & \P2    & \ldots & \p2n   \\[1.4em]
+    \vdots & \vdots & \ddots & \vdots \\[0.7em]
+    \p n1  & \p n2  & \ldots & \P n
+  \end{bmat}
+  =\begin{bmat}
+     \nabla F_1'(x)^T \\[0.2em]
+     \vdots           \\[0.4em]
+     \nabla F_n'(x)^T
+   \end{bmat}
+\end{align*}
+
+\newpage
+
+\paragraph{GT1} $H(f(x))=J(\nabla f(x))^T$ (Wikipedia)
+\paragraph{GT2} If $f:\R^n\to\R$ is differentiable, then
+$$
+  \lim_{h\to0}\frac{f(x+h)-f(x)}{\norm h}
+  =\lim_{t\downarrow0}\frac{f(x+td)-f(x)}t
+  =f'(x;d)
+  =\nabla f(x)^Td
+$$
+\paragraph{GT3} $J=\nabla^Tf$ (Wikipedia)
+
+\paragraph{COR1} Based on \textbf{GT2}, we have
+$$
+  \lim_{h\to0}\frac{f(x+h)-f(x)-L(x)h}{\norm h}=0\quad\iff\quad L(x)=\nabla f(x)^T
+$$
+
+This checks out with \textbf{GT3}
+
+---
+
+Now based on \textbf{GT1}, we have $H^T=J(\nabla f)$ and hence we use the
+definition of the derivative:
+\begin{align*}
+  \lim_{h\to0}\frac{\nabla f(x+h)-\nabla f(x)-H^Th}{\norm h}=0\in\R^n
+\end{align*}
+
+Unpack this to the $i^\text{th}$ row:
+\begin{align*}
+  \lim_{h\to0}\frac{\nabla f_i(x+h)-\nabla f_i(x)-H_i^Th}{\norm h}=0\in\R
+\end{align*}
+
+where $H_i^T$ is the $i^\text{th}$ row of $H^T$. Now using \textbf{COR1},
+\begin{align*}
+  H_i^T
+   & =\nabla(\nabla f_i(x))^T                              \\
+   & =\nabla\left(\frac{\partial f}{\partial x_i}\right)^T \\
+   & =\begin{bmat}
+        \dfrac{\partial^2f}{\partial x_i\partial x_1} &
+        \ldots                                        &
+        \dfrac{\partial^2f}{\partial x_i\partial x_n}
+      \end{bmat}
+\end{align*}
+
+But due to Clairaut's Theorem, which states that
+$$
+  \frac{\partial^2f}{\partial x\partial y}=
+  \frac{\partial^2f}{\partial y\partial x}
+$$
+
+We have $H^T=H$ and hence all is good.

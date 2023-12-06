@@ -14,7 +14,7 @@ TEX_FILES += nonlinear-optimization-unconstrained.tex
 TEX_FILES += nonlinear-optimization-constrained.tex
 # TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
-# TEX_FILES += sandbox.tex
+TEX_FILES += sandbox.tex
 
 x:
 	@make build
