@@ -34,7 +34,6 @@ const Toolbar = ({
   setIsThumbsbarOpen,
 }: TToolbarProps) => {
   const pageNumberRef = useRef() as MutableRefObject<HTMLInputElement>
-  const openPdfFileRef = useRef() as MutableRefObject<HTMLInputElement>
 
   const numPages = usePDFSlickStore((s) => s.numPages)
   const pageNumber = usePDFSlickStore((s) => s.pageNumber)
@@ -42,18 +41,7 @@ const Toolbar = ({
 
   const [wantedPageNumber, setWantedPageNumber] = useState<number | string>(1)
 
-  const updatePageNumber = ({ pageNumber }: any) =>
-    setWantedPageNumber(pageNumber)
-
-  const handleOpenPdfFile = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      const url = URL.createObjectURL(file)
-      pdfSlick?.loadDocument(url, { filename: file.name })
-    }
-  }
-
-  useEffect(() => updatePageNumber({ pageNumber }), [pageNumber])
+  useEffect(() => setWantedPageNumber(pageNumber), [pageNumber])
 
   return (
     <>
@@ -144,43 +132,26 @@ const Toolbar = ({
         <div className="text-gray-700">minimath</div>
 
         <div className="px-1 space-x-1 flex items-center justify-end">
-          <FreetextMenu {...{ usePDFSlickStore }} />
-          <InkMenu {...{ usePDFSlickStore }} />
-
+          <FreetextMenu usePDFSlickStore={usePDFSlickStore} />
+          <InkMenu usePDFSlickStore={usePDFSlickStore} />
           <Splitter />
-
-          <div className="items-center space-x-1 hidden sm:flex">
-            <button
-              className={clsx(
-                'flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent',
-              )}
-              onClick={() =>
-                window.open('https://github.com/nguyenvukhang/math', '_blank')
-              }
-            >
-              <MarkGithubIcon className="w-4 h-4" />
-              <Tooltip position="bottom">
-                <p className="whitespace-nowrap">Source</p>
-              </Tooltip>
-            </button>
-
-            <DocumentInfo {...{ usePDFSlickStore }} />
-            <Splitter />
-          </div>
-
-          <MoreActionsMenu {...{ usePDFSlickStore }} />
+          <button
+            className={clsx(
+              'flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent',
+            )}
+            onClick={() =>
+              window.open('https://github.com/nguyenvukhang/math', '_blank')
+            }
+          >
+            <MarkGithubIcon className="w-4 h-4" />
+            <Tooltip position="bottom">
+              <p className="whitespace-nowrap">Source</p>
+            </Tooltip>
+          </button>
+          <DocumentInfo usePDFSlickStore={usePDFSlickStore} />
+          <Splitter />
+          <MoreActionsMenu usePDFSlickStore={usePDFSlickStore} />
         </div>
-      </div>
-      <div className="absolute -top-10 overflow-hidden w-0 h-0">
-        <input
-          id="openPdfFile"
-          ref={openPdfFileRef}
-          tabIndex={-1}
-          type="file"
-          accept=".pdf,application/pdf"
-          onChange={handleOpenPdfFile}
-          className="absolute -top-[10000px]"
-        />
       </div>
     </>
   )

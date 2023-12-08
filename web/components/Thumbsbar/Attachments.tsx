@@ -1,25 +1,25 @@
-import { FC, useRef, MutableRefObject } from "react";
-import { type TUsePDFSlickStore } from "@pdfslick/react";
-import clsx from "clsx";
+import { FC, useRef, MutableRefObject } from 'react'
+import { type TUsePDFSlickStore } from '@pdfslick/react'
+import clsx from 'clsx'
 
 type AttachmentsProps = {
-  usePDFSlickStore: TUsePDFSlickStore;
-  show: boolean;
-};
+  usePDFSlickStore: TUsePDFSlickStore
+  show: boolean
+}
 
 type AttachmentButtonProps = {
-  usePDFSlickStore: TUsePDFSlickStore;
-  filename: string;
-  content: Uint8Array;
-};
+  usePDFSlickStore: TUsePDFSlickStore
+  filename: string
+  content: Uint8Array
+}
 
 const AttachmentButton: FC<AttachmentButtonProps> = ({
   usePDFSlickStore,
   filename,
   content,
 }) => {
-  const pdfSlick = usePDFSlickStore((s) => s.pdfSlick);
-  const ref = useRef() as MutableRefObject<HTMLButtonElement>;
+  const pdfSlick = usePDFSlickStore((s) => s.pdfSlick)
+  const ref = useRef() as MutableRefObject<HTMLButtonElement>
 
   return (
     <button
@@ -31,15 +31,15 @@ const AttachmentButton: FC<AttachmentButtonProps> = ({
     >
       {filename}
     </button>
-  );
-};
+  )
+}
 
 const Attachments = ({ usePDFSlickStore, show }: AttachmentsProps) => {
-  const attachments = usePDFSlickStore((s) => s.attachments);
+  const attachments = usePDFSlickStore((s) => s.attachments)
 
   return (
     <div
-      className={clsx("overflow-auto absolute inset-0", { invisible: !show })}
+      className={clsx('overflow-auto absolute inset-0', { invisible: !show })}
     >
       <div className="p-2 text-slate-700 text-sm">
         {Array.from(attachments.entries()).map(
@@ -48,11 +48,11 @@ const Attachments = ({ usePDFSlickStore, show }: AttachmentsProps) => {
               key={key}
               {...{ usePDFSlickStore, filename, content }}
             />
-          )
+          ),
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Attachments;
+export default Attachments

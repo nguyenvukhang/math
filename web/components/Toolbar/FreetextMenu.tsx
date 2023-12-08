@@ -59,7 +59,6 @@ const FreetextMenu = ({ usePDFSlickStore }: FreetextMenuProps) => {
               {colorStrengths.map((s) => (
                 <div className="flex space-x-0.5" key={s}>
                   {colorNames.map((name) => (
-                    // <Menu.Item key={`${name}-${s}`}>
                     <button
                       key={`${name}-${s}`}
                       className="p-2 rounded-full border border-slate-200 hover:border-slate-400 hover:shadow-sm focus:ring-blue-500"
@@ -78,7 +77,6 @@ const FreetextMenu = ({ usePDFSlickStore }: FreetextMenuProps) => {
                         ])
                       }}
                     />
-                    // </Menu.Item>
                   ))}
                 </div>
               ))}

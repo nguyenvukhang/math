@@ -1,41 +1,41 @@
-import { Dialog, Transition } from "@headlessui/react";
-import type { TUsePDFSlickStore } from "@pdfslick/react";
-import { Fragment } from "react";
+import { Dialog, Transition } from '@headlessui/react'
+import type { TUsePDFSlickStore } from '@pdfslick/react'
+import { Fragment } from 'react'
 
 function formatBytes(bytes: number, decimals: number) {
-  if (bytes == 0) return "0 Bytes";
+  if (bytes == 0) return '0 Bytes'
   var k = 1024,
     dm = decimals || 2,
-    sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
-    i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 
 type DocumentInfoModalProps = {
-  usePDFSlickStore: TUsePDFSlickStore;
-  isOpen: boolean;
-  closeModal: () => void;
-};
+  usePDFSlickStore: TUsePDFSlickStore
+  isOpen: boolean
+  closeModal: () => void
+}
 
 export default function DocumentInfoModal({
   usePDFSlickStore,
   isOpen,
   closeModal,
 }: DocumentInfoModalProps) {
-  const filename = usePDFSlickStore((s) => s.filename);
-  const filesize = usePDFSlickStore((s) => s.filesize);
-  const title = usePDFSlickStore((s) => s.title);
-  const subject = usePDFSlickStore((s) => s.subject);
-  const creator = usePDFSlickStore((s) => s.creator);
-  const keywords = usePDFSlickStore((s) => s.keywords);
-  const creationDate = usePDFSlickStore((s) => s.creationDate);
-  const modificationDate = usePDFSlickStore((s) => s.modificationDate);
-  const author = usePDFSlickStore((s) => s.author);
-  const producer = usePDFSlickStore((s) => s.producer);
-  const version = usePDFSlickStore((s) => s.version);
-  const numPages = usePDFSlickStore((s) => s.numPages);
-  const pageSize = usePDFSlickStore((s) => s.pageSize);
-  const isLinearized = usePDFSlickStore((s) => s.isLinearized);
+  const filename = usePDFSlickStore((s) => s.filename)
+  const filesize = usePDFSlickStore((s) => s.filesize)
+  const title = usePDFSlickStore((s) => s.title)
+  const subject = usePDFSlickStore((s) => s.subject)
+  const creator = usePDFSlickStore((s) => s.creator)
+  const keywords = usePDFSlickStore((s) => s.keywords)
+  const creationDate = usePDFSlickStore((s) => s.creationDate)
+  const modificationDate = usePDFSlickStore((s) => s.modificationDate)
+  const author = usePDFSlickStore((s) => s.author)
+  const producer = usePDFSlickStore((s) => s.producer)
+  const version = usePDFSlickStore((s) => s.version)
+  const numPages = usePDFSlickStore((s) => s.numPages)
+  const pageSize = usePDFSlickStore((s) => s.pageSize)
+  const isLinearized = usePDFSlickStore((s) => s.isLinearized)
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -139,9 +139,9 @@ export default function DocumentInfoModal({
                     </dt>
                     <dd className="text-sm text-gray-900 col-span-2">
                       {creationDate ? (
-                        new Intl.DateTimeFormat("en-US", {
-                          dateStyle: "long",
-                          timeStyle: "medium",
+                        new Intl.DateTimeFormat('en-US', {
+                          dateStyle: 'long',
+                          timeStyle: 'medium',
                         }).format(creationDate)
                       ) : (
                         <span className="text-xs text-gray-500">N/A</span>
@@ -155,9 +155,9 @@ export default function DocumentInfoModal({
                     </dt>
                     <dd className="text-sm text-gray-900 col-span-2">
                       {modificationDate ? (
-                        new Intl.DateTimeFormat("en-US", {
-                          dateStyle: "long",
-                          timeStyle: "medium",
+                        new Intl.DateTimeFormat('en-US', {
+                          dateStyle: 'long',
+                          timeStyle: 'medium',
                         }).format(modificationDate)
                       ) : (
                         <span className="text-xs text-gray-500">N/A</span>
@@ -217,7 +217,7 @@ export default function DocumentInfoModal({
                       {pageSize ? (
                         <>
                           {pageSize.width} x {pageSize.height} {pageSize.unit} (
-                          {pageSize.name ? pageSize.name + ", " : ""}
+                          {pageSize.name ? pageSize.name + ', ' : ''}
                           {pageSize.orientation})
                         </>
                       ) : (
@@ -231,7 +231,7 @@ export default function DocumentInfoModal({
                       Fast Web View
                     </dt>
                     <dd className="text-sm text-gray-900 col-span-2">
-                      {isLinearized ? "Yes" : "No"}
+                      {isLinearized ? 'Yes' : 'No'}
                     </dd>
                   </div>
                 </dl>
@@ -251,5 +251,5 @@ export default function DocumentInfoModal({
         </div>
       </Dialog>
     </Transition>
-  );
+  )
 }

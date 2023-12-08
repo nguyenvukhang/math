@@ -17,6 +17,7 @@
     "d3-selection": "^3.0.0",
     "next": "14.0.4",
     "pdfjs-dist": "^4.0.269",
+    "preact": "^10.19.3",
     "react": "^18",
     "react-dom": "^18",
     "react-use": "^17.4.2",

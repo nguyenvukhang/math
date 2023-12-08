@@ -17,7 +17,7 @@ export default function DocumentInfo({ usePDFSlickStore }: DocumentInfoProps) {
   return (
     <>
       <button
-        className={`flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent`}
+        className="flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
         onClick={openModal}
       >
         <InfoIcon className="w-4 h-4" />
