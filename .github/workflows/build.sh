@@ -1,7 +1,5 @@
 #!/bin/bash
 
-rm -rf .ci && mkdir .ci
-
 build() {
   # \begin{document}
   cat >$1 <<-EOF
@@ -29,7 +27,7 @@ TEX_FILES=(
   nonlinear-optimization-constrained.tex
   ordinary-differential-equations.tex
 )
-build .ci/minimath.tex
+build .git/minimath.tex
 
 TEX_FILES=(plenary.tex calculus.tex)
-build .ci/plenary.tex
+build .git/plenary.tex

@@ -13,7 +13,7 @@ branch][pdf] of this repository.
 <br>
 
 <p align='center'>
-  <img src="https://github.com/nguyenvukhang/math/assets/10664455/67710212-e1ac-4a45-a0cb-ff65aac00e3f"/>
+  <img src="https://github.com/nguyenvukhang/math/assets/10664455/68170003-30f7-467f-ad2d-aef3c08aa15e"/>
 </p>
 
 [gh-act]: https://github.com/nguyenvukhang/math/blob/main/.github/workflows/ci.yml

@@ -12,27 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: main
 
       - name: Checkhealth
-        working-directory: main
         run: python3 tex_modules/pytex checkhealth
 
-      - uses: actions/checkout@v4
-        with:
-          ref: pdf
-          path: pdf
-
       - name: Generate single .tex files
-        working-directory: main
         run: bash .github/workflows/build.sh
 
       - uses: xu-cheng/latex-action@v3
         with:
           docker_image: ghcr.io/xu-cheng/texlive-small:latest
-          working_directory: main
-          root_file: .ci/*.tex
+          root_file: .git/*.tex
         env:
           TEXINPUTS: "tex_modules/:"
 
@@ -48,32 +38,19 @@ jobs:
 
       - name: Push PDFs to pdf branch
         if: ${{ github.ref_name == 'main' }}
-        working-directory: pdf
         run: |
-          echo "Clearing out old files"
-          rm -f *
-
-          echo "Importing built pdfs"
-          cp ../main/*.pdf .
-
-          echo "Stage pdfs"
-          git add --all
-
-          echo "Checking for changes"
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "No changes found!"
-          else
-            echo "Changes found! Committing..."
-            D='Dec 14 2022 12:12:00 +0800'
-            GIT_AUTHOR_DATE=$D GIT_COMMITTER_DATE=$D \
-              git commit --amend --no-edit -m "[$GIT_HASH]"
-            echo "Pushing..."
-            git push -f
-          fi
+          cp *.pdf README.md -- .git
+          git checkout --orphan pdf
+          git rm -rf .
+          sudo cp .git/*.pdf .git/README.md -- .
+          git add *.pdf README.md
+          D='Dec 14 2022 12:12:00 +0800'
+          GIT_AUTHOR_DATE=$D GIT_COMMITTER_DATE=$D git commit -m "[$GIT_HASH]"
+          git push -f origin pdf
 
       - name: Release PDF
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           tag_name: ${{ github.ref_name }}
-          files: pdf/*.pdf
+          files: ./*.pdf
