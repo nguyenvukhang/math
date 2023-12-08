@@ -15,7 +15,7 @@ import MoreActionsMenu from './MoreActionsMenu'
 import Splitter from './Splitter'
 import Tooltip from '../Tooltip'
 import {
-    ChevronDownIcon,
+  ChevronDownIcon,
   ChevronUpIcon,
   DownloadIcon,
   MarkGithubIcon,
@@ -162,18 +162,6 @@ const Toolbar = ({
               <MarkGithubIcon className="w-4 h-4" />
               <Tooltip position="bottom">
                 <p className="whitespace-nowrap">Source</p>
-              </Tooltip>
-            </button>
-
-            <button
-              className={clsx(
-                'enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent',
-              )}
-              onClick={() => pdfSlick?.downloadOrSave()}
-            >
-              <DownloadIcon className="w-4 h-4" />
-              <Tooltip position="bottom">
-                <p className="whitespace-nowrap">Save</p>
               </Tooltip>
             </button>
 
