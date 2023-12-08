@@ -21,11 +21,16 @@ MARKS_WITH_BSLS = tuple(b"\\" + x for x in MARKS)
 
 
 class Rx:
-    LABEL = re_compile(b"\\\\label{([a-z0-9]{7})}")
+    LABEL_ANY = re_compile(b"\\\\label{([^{}]+)}")
+    LABEL = re_compile(b"\\\\label{([a-f][a-f0-9]{6})}")
+    VALID_LABEL_ID = re_compile(b"([a-f][a-f0-9]{6})")
+    CUSTOM_ENV = re_compile(
+        b"(\\\\begin{proof}|\\\\end{proof}|\\\\begin{compute}|\\\\end{compute})"
+    )
 
 
 def panic(*s):
-    (print(*s), exit())
+    (print(*s), exit(1))
 
 
 def new_sha(existing):  # type: (set[bytes]) -> bytes
@@ -150,7 +155,6 @@ def write_file(path, lines):  # type: (str, list[bytes]) -> None
 # remove all bytes including and within a start and end marker
 #
 # useful for removing content between `\begin{proof}` and `\end{proof}`
-# TODO: add a checkhealth where we can't nest \begin{proof} nor \begin{compute}
 def remove_in_between(data: bytes, start: bytes, end: bytes):
     buffer, n = [], len(end)
     r, p = data.find(start), 0

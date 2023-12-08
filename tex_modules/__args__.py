@@ -6,7 +6,7 @@ Action = Literal[
     "build",
     "dev",
     "sha",
-    "test",
+    "checkhealth",
     "label",
     "generate-section-titles",
     "toc",

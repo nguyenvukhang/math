@@ -26,7 +26,7 @@ dev:
 	$(PYTEX) -J minimath dev $(TEX_FILES)
 
 test:
-	$(PYTEX) test
+	$(PYTEX) checkhealth
 
 ref:
 	$(PYTEX) -J ref build \

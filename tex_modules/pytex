@@ -7,12 +7,6 @@ from datetime import datetime
 from typing import Callable
 
 
-class Rx:
-    LABEL_ANY = re_compile(b"\\\\label{([^{}]+)}")
-    LABEL = re_compile(b"\\\\label{([a-f][a-f0-9]{6})}")
-    VALID_LABEL_ID = re_compile(b"([a-f][a-f0-9]{6})")
-
-
 class Color:
     red = lambda v: "\x1b[31m" + v + "\x1b[0m"
     green = lambda v: "\x1b[32m" + v + "\x1b[0m"
@@ -143,6 +137,7 @@ def __toc_markdown__(args):  # type: (Args) -> None
         f.write("\n".join(lines))
 
 
+# [test]
 def line_is_valid(line):  # type: (bytes) -> tuple[bool, str]
     for label in Rx.LABEL_ANY.finditer(line):
         # \label{} is not at end of line.
@@ -154,10 +149,34 @@ def line_is_valid(line):  # type: (bytes) -> tuple[bool, str]
         if not Rx.VALID_LABEL_ID.match(label_id):
             id = label_id.decode()
             return (False, f"Invalid label ID: [{id}]. Use built-in label generator.")
-
+    LONE = [b"\\begin{proof}", b"\\end{proof}", b"\\begin{compute}", b"\\end{compute}"]
+    stripped = line.strip().removeprefix(b"%").strip()
+    for lone in LONE:
+        if lone in stripped:
+            if lone != stripped:
+                return False, f'"{lone}" must be alone on its own line.'
     return True, ""
 
 
+# [test]
+def no_nested_custom_environments(file):  # type: (File) -> tuple[bool, str]
+    stack = []
+    for lnum, line in enumerate(file.lines):
+        for env in Rx.CUSTOM_ENV.finditer(line):
+            env = env.groups()[0]
+            if env.startswith(b"\\begin"):
+                if len(stack) == 1:
+                    return False, f"Nested env at {file.path}:{lnum}"
+                stack.append(env)
+            # latex itself should handle all other nesting issues such as
+            # environments having to be a stack. So we can assume here that the
+            # environment that ended is in fact at the top of the stack.
+            elif env.startswith(b"\\end"):
+                stack.pop()
+    return True, ""
+
+
+# [test]
 def debug_test():
     def test_line_is_valid(line, expected):
         ok, _ = line_is_valid(line.encode())
@@ -170,7 +189,7 @@ def debug_test():
 
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
-def __test__(_):
+def __checkhealth__(_):
     tex_filepaths = get_tex_files()
     project = {
         "labels": get_all_labels(tex_filepaths),
@@ -185,6 +204,10 @@ def __test__(_):
                 print("Error:")
                 print(err)
                 panic(f"Invalid line in [{file.path}]")
+
+        if not no_nested_custom_environments(file):
+            panic(f"Found nested custom environments in {file.path}")
+
         print(Color.green("✓"), file.path)
 
 
@@ -199,6 +222,6 @@ if __name__ == "__main__":  # int main() {
         "generate-section-titles": __generate_section_titles__,
         "toc": __toc__,
         "toc-md": __toc_markdown__,
-        "test": __test__,
+        "checkhealth": __checkhealth__,
     }  # type: dict[Args.Action, Callable]
     tbl[args.action](args)

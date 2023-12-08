@@ -15,6 +15,10 @@ jobs:
         with:
           path: main
 
+      - name: Checkhealth
+        working-directory: main
+        run: python3 tex_modules/pytex checkhealth
+
       - uses: actions/checkout@v4
         with:
           ref: pdf
