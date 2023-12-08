@@ -179,8 +179,8 @@ $Bd\geq0$.
 
   Then by definition of cone $K$, for all $x\geq0$,
   \begin{align*}
-    \bar d^T B^Tx     & \geq0 \\
-    \then(B\bar d)^Tx & \geq0
+    \bar d^T B^Tx     &\geq0 \\
+    \then(B\bar d)^Tx &\geq0
   \end{align*}
 
   Inserting $x:=e_i$ (where $e_i$ is the $i^\text{th}$ component vector) for
@@ -188,10 +188,10 @@ $Bd\geq0$.
 
   On the other hand (recall $\bar d^T\bar s=0$ from above)
   \begin{align*}
-    h^T\bar d & =(\bar s-\bar d)^T\bar d        \\
-              & =\bar s^T\bar d-\norm{\bar d}^2 \\
-              & =-\norm{\bar d}^2               \\
-              & \leq 0
+    h^T\bar d &=(\bar s-\bar d)^T\bar d        \\
+              &=\bar s^T\bar d-\norm{\bar d}^2 \\
+              &=-\norm{\bar d}^2               \\
+              &\leq 0
   \end{align*}
 
   But since $\bar d\neq0$, we have the strict inequality $h^T\bar d<0$.
@@ -208,8 +208,8 @@ Consider the standard NLP in \ref{a85283d}. and let $X$ be the feasible set of
   \item The function $L:\R^n\times\R^m\times\R^p\to\R$ defined by
         \begin{align*}
           L(x,\lambda,\mu)
-           & =f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x) \\
-           & =f(x)+\lambda^Tg(x)+\mu^Th(x)
+           &=f(x)+\sum_{i=1}^m\lambda_ig_i(x)+\sum_{j=1}^p\mu_jh_j(x) \\
+           &=f(x)+\lambda^Tg(x)+\mu^Th(x)
         \end{align*}
         is called the Lagrangian (function) of \ref{a85283d}.
   \item The set of conditions
@@ -223,8 +223,8 @@ Consider the standard NLP in \ref{a85283d}. and let $X$ be the feasible set of
         are called the Karush-Kuhn-Tucker conditions for \ref{a85283d}, where
         \begin{align*}
           \nabla_xL(x,\lambda,\mu)
-           & = \nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x) \\
-           & = \nabla f(x)+\lambda^T\nabla g(x)+\mu^T\nabla h(x)
+           &= \nabla f(x)+\sum_{i=1}^m\lambda_i\nabla g_i(x)+\sum_{j=1}^p\mu_j\nabla h_j(x) \\
+           &= \nabla f(x)+\lambda^T\nabla g(x)+\mu^T\nabla h(x)
         \end{align*}
   \item A triple $(\bar x,\bar\lambda,\bar\mu)$ that satisfies the KKT conditions is
         called a KKT point.
@@ -345,10 +345,10 @@ x,\bar\lambda,\bar\mu)$ is a \href{b38093d}{KKT} point of \ref{a85283d}.
 
   \begin{align*}
     0
-     & = \nabla f(\bx)
+     &= \nabla f(\bx)
     +\sum_{i=0}^my^1_i\nabla g_i(\bx)
     +\sum_{j=m+1}^{m+2p}(y^2_j-y^3_j)\nabla h_j(\bx) \\
-     & = \nabla f(\bx)
+     &= \nabla f(\bx)
     +\sum_{i=0}^m \bl_i\nabla g_i(\bx)
     +\sum_{j=m+1}^{m+2p}\bm_j\nabla h_j(\bx)
   \end{align*}
@@ -371,8 +371,8 @@ Let $\bar x$ be feasible for (1). We say that
   \item \textbf{(LICQ)} the linear independence constraint
   qualification holds at $\bar x$ if the gradients
   \begin{align*}
-    \nabla g_i(\bar x) & \quad(i\in I(\bar x)), \\
-    \nabla h_j(\bar x) & \quad(j\in J)
+    \nabla g_i(\bar x) &\quad(i\in I(\bar x)), \\
+    \nabla h_j(\bar x) &\quad(j\in J)
   \end{align*}
   are linearly indepdendent.
   \item \textbf{(MFCQ)} the Mangasarian-Fromovitz constraint
@@ -382,8 +382,8 @@ Let $\bar x$ be feasible for (1). We say that
   $$
   are linearly indepdendent, and $\exists d\in\R^n$ such that
   \begin{align*}
-    \nabla g_i(\bar x)^Td & <0\quad(i\in I(\bar x)) \\
-    \nabla h_j(\bar x)^Td & =0\quad(j\in J)
+    \nabla g_i(\bar x)^Td &<0\quad(i\in I(\bar x)) \\
+    \nabla h_j(\bar x)^Td &=0\quad(j\in J)
   \end{align*}
 \end{enumerata}
 
@@ -806,8 +806,8 @@ Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
 
   For $j\in J$, $h_j(x^k)=b_j^Tx^k-\beta_j=t_k\nabla h_j(\bx)^Td-\beta_j$
   \begin{align*}
-    h_j(x^k) & =b_j^Tx^k-\beta_j                                 \\
-             & =t_k\nabla h_j(\bx)^Td+\nabla h_j(\bx)\beta_j = 0
+    h_j(x^k) &=b_j^Tx^k-\beta_j                                 \\
+             &=t_k\nabla h_j(\bx)^Td+\nabla h_j(\bx)\beta_j = 0
     % !!! TODO: fix the line above! this was not read
     % properly in class.
   \end{align*}
@@ -839,8 +839,8 @@ Let SCQ hold for (5.2). Then ACQ holds at every feasible point.
   $$
   Then $d(\delta)\in F(\bx)$, since
   \begin{align*}
-    \nabla g_i(\bx)^Td(\delta) & =\nabla g_i(\bx)^Td + \delta\nabla g_i(\bx)^T\hat d<0 \Quad\forall(i\in\Act) \\
-    \nabla h_j(\bx)^Td(\delta) & =\nabla h_j(\bx)^Td + \delta\nabla h_j(\bx)^T\hat d=0 \Quad\forall(j\in J)
+    \nabla g_i(\bx)^Td(\delta) &=\nabla g_i(\bx)^Td + \delta\nabla g_i(\bx)^T\hat d<0 \Quad\forall(i\in\Act) \\
+    \nabla h_j(\bx)^Td(\delta) &=\nabla h_j(\bx)^Td + \delta\nabla h_j(\bx)^T\hat d=0 \Quad\forall(j\in J)
   \end{align*}
   $<0$ because the 1st term $\leq0$ and 2nd term $<0$, because $d$ is
   in the linearized cone, and $\hat d$...? \\
@@ -861,8 +861,8 @@ But now assume that $f,g_i,h_j:\R^n\to\R$ with no smoothness.
 The Lagrangian of (1) is
 \begin{align*}
   L(x,\lambda,\mu)
-   & =f(x)+\sum_{i\in I}\lambda_ig_i(x) + \sum_{j\in J}\mu_jh_j(x) \\
-   & =f(x)+\lambda^Tg(x)+\mu^Th(x)
+   &=f(x)+\sum_{i\in I}\lambda_ig_i(x) + \sum_{j\in J}\mu_jh_j(x) \\
+   &=f(x)+\lambda^Tg(x)+\mu^Th(x)
 \end{align*}
 
 \textbf{The Dual Problem}
@@ -926,8 +926,8 @@ with $A\in\R^{m\times n}$, $b\in\R^m$, $c\in\R^n$.
 The Lagrangian reads
 \begin{align*}
   L(x,\lambda,\mu)
-   & =c^Tx-\lambda^Tx+\mu^T(b-Ax)         \\
-   & =(c-\lambda-A^T\mu)^Tx + b^Tu\Tag{*}
+   &=c^Tx-\lambda^Tx+\mu^T(b-Ax)         \\
+   &=(c-\lambda-A^T\mu)^Tx + b^Tu\Tag{*}
 \end{align*}
 
 % so g_i corresponds to -x<=0
@@ -936,7 +936,7 @@ The Lagrangian reads
 So then
 \begin{align*}
   \nabla_xL(x,\lambda,\mu)
-   & =c-\lambda-A^T\mu
+   &=c-\lambda-A^T\mu
 \end{align*}
 
 The function that takes $x\mapsto L(x,\lambda,\mu)$ is affine (from $(*)$), and
@@ -992,10 +992,10 @@ $$
 
   and hence
   \begin{align*}
-    p(\hx) & \geq f(\hx) + \hl^Tg(\hx) + \hm^Th(\hx) \\
-           & =L(\hx,\hl,\hm)                         \\
-           & \geq\inf_{x\in\R^n}L(x,\hl,\hm)         \\
-           & = d(\hl,\hm)
+    p(\hx) &\geq f(\hx) + \hl^Tg(\hx) + \hm^Th(\hx) \\
+           &=L(\hx,\hl,\hm)                         \\
+           &\geq\inf_{x\in\R^n}L(x,\hl,\hm)         \\
+           &= d(\hl,\hm)
   \end{align*}
 
   \paragraph{Remark} If $p(\hx)=d(\hl,\hm)$, then $\hx$ solves (P), and $(\hl,\hm)$ solves (D).
@@ -1077,11 +1077,11 @@ The following are equivalent:
   If $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point of (P), then
   \begin{align*}
     L(\bar x,\bar\lambda,\bar\mu)
-     & \stackrel{\text{S.P.}}{\leq}\inf_{x}L(x,\bar\lambda,\bar\mu)      \\
-     & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}\inf_{x}L(x,\lambda,\mu)  \\
-     & \leq\inf_{x}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)  \\
-     & \leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu)     \\
-     & \stackrel{\text{S.P.}}{\leq} L(\bar x,\bar\lambda,\bar\mu)\Tag{*}
+     &\stackrel{\text{S.P.}}{\leq}\inf_{x}L(x,\bar\lambda,\bar\mu)      \\
+     &\leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}\inf_{x}L(x,\lambda,\mu)  \\
+     &\leq\inf_{x}\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(x,\lambda,\mu)  \\
+     &\leq\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu)     \\
+     &\stackrel{\text{S.P.}}{\leq} L(\bar x,\bar\lambda,\bar\mu)\Tag{*}
   \end{align*}
 
   % TODO: look for a problem in the notes that flip inf and sup and have
@@ -1091,9 +1091,9 @@ The following are equivalent:
   Then,
   \begin{align*}
     d(\bar\lambda,\bar\mu)
-     & =\inf_{x} (x,\bar\lambda,\bar\mu)                                        \\
-     & \stackrel{(*)}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
-     & = p(\bar x) = \bar p<+\infty
+     &=\inf_{x} (x,\bar\lambda,\bar\mu)                                        \\
+     &\stackrel{(*)}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+     &= p(\bar x) = \bar p<+\infty
   \end{align*}
 
   Hence if $x\in X$, and by weak duality, $\bar x$ solves (P), and
@@ -1104,19 +1104,19 @@ The following are equivalent:
   Observe that
   \begin{align*}
     L(\bar x,\bar\lambda,\bar\mu)
-     & \stackrel{\bar x\in X}{\leq} f(\bar x)                                                 \\
-     & \stackrel{\bar x\in X}= p(\bar x)                                                      \\
-     & \stackrel{\text{defn. of }p}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
-     & =d(\bar\lambda,\bar\mu)                                                                \\
-     & =\inf_{x} (x,\bar\lambda,\bar\mu)                                                      \\
-     & \leq L(\bar x,\bar\lambda,\bar\mu)                                                     \\
+     &\stackrel{\bar x\in X}{\leq} f(\bar x)                                                 \\
+     &\stackrel{\bar x\in X}= p(\bar x)                                                      \\
+     &\stackrel{\text{defn. of }p}=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+     &=d(\bar\lambda,\bar\mu)                                                                \\
+     &=\inf_{x} (x,\bar\lambda,\bar\mu)                                                      \\
+     &\leq L(\bar x,\bar\lambda,\bar\mu)                                                     \\
   \end{align*}
 
   But that's just the original LHS value, and hence all lines are equal. Hence
   \begin{align*}
     L(\bar x,\bar\lambda,\bar\mu)
-     & =\inf_{x} (x,\bar\lambda,\bar\mu)                          \\
-     & =\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
+     &=\inf_{x} (x,\bar\lambda,\bar\mu)                          \\
+     &=\sup_{\lambda\in\R^m_+,\ \mu\in\R^p}L(\bar x,\lambda,\mu) \\
   \end{align*}
 
   And hence $(\bar x,\bar\lambda,\bar\mu)$ is a saddle point.
@@ -1217,14 +1217,14 @@ In particular, $P_\alpha^1$ is exact at $\bar x$ if a CQ holds.
   both zero and hence
   \begin{align*}
     P_\alpha^1(\bar x)
-     & =f(\bar x)                                                                               \\
-     & \stackrel{\text{KKT}}{=}f(\bar x)+\bar\lambda^Tg(\bar x)+\bar\mu^Th(\bar x)              \\
-     & = L(\bar x,\bar\lambda,\bar\mu)                                                          \\
-     & \stackrel{\text{Thm 6.3.2}}{\leq} L(x,\bar\lambda,\bar\mu)                               \\
-     & = f(x)+\sum_{i=1}^m\bar\lambda_ig_i(x)+\sum_{j=1}^p\bar\mu_jh_j(x)                       \\
-     & \leq f(x)+\sum_{i=1}^m\bar\lambda_i\max\{g_i(x),0\}+\sum_{j=1}^p|\bar\mu_j|\cdot|h_j(x)| \\
-     & \leq f(x)+\alpha\sum_{i=0}^m\max\{g_i(x),0\}+\alpha\sum_{j=1}^p|h_j(x)|                  \\
-     & = P_\alpha^1(x)
+     &=f(\bar x)                                                                               \\
+     &\stackrel{\text{KKT}}{=}f(\bar x)+\bar\lambda^Tg(\bar x)+\bar\mu^Th(\bar x)              \\
+     &= L(\bar x,\bar\lambda,\bar\mu)                                                          \\
+     &\stackrel{\text{Thm 6.3.2}}{\leq} L(x,\bar\lambda,\bar\mu)                               \\
+     &= f(x)+\sum_{i=1}^m\bar\lambda_ig_i(x)+\sum_{j=1}^p\bar\mu_jh_j(x)                       \\
+     &\leq f(x)+\sum_{i=1}^m\bar\lambda_i\max\{g_i(x),0\}+\sum_{j=1}^p|\bar\mu_j|\cdot|h_j(x)| \\
+     &\leq f(x)+\alpha\sum_{i=0}^m\max\{g_i(x),0\}+\alpha\sum_{j=1}^p|h_j(x)|                  \\
+     &= P_\alpha^1(x)
   \end{align*}
 
   Hence $\bar x$ is the global minimizer of $P_\alpha^1$, that is for any
@@ -1317,11 +1317,11 @@ the function $\Phi(x,\mu)=0$ such that:
   \begin{align*}
     % TODO: which space is this exactly?
     \Phi'(\bar x,\bar\mu){\begin{pmat}q\\r\end{pmat}}
-     & = 0 \\
+     &= 0 \\
     \iff \nabla_{xx}^2L(\bar x,\mu)q + h'(\bar x)^Tr
-     & =0  \\
+     &=0  \\
     \text{and}\Quad h'(\bar x)^Tq
-     & =0
+     &=0
   \end{align*}
 
   Note: $\Phi'\in\R^{(n+p)\times(n+p)}$
@@ -1335,12 +1335,12 @@ Update with $(x^{k+1},\mu^{k+1}):=(x^k,\mu^k)+(\Delta x^k,\Delta \mu^k)$
 
 \begin{align*}
   \Phi'(x^k,\mu^k)\begin{pmat}\Delta x\\\Delta\mu\end{pmat}
-   & =-\Phi(x^k,\mu^k) \\
+   &=-\Phi(x^k,\mu^k) \\
   \iff\begin{bmat}
         \nabla_{xx}^2 L(x^k,\mu^k) & h'(x^k)^T \\
         h'(x^k)                    & 0
       \end{bmat}\begin{pmat}\Delta x\\\Delta\mu\end{pmat}
-   & =
+   &=
   -\begin{bmat}
      \nabla f(x^k)-h'(x^k)^T \\
      h'(x^k)

@@ -28,6 +28,8 @@ pnpm-debug.log*
 /minimath*.pdf
 /*.pdf
 
+__pycache__/
+
 build.tex
 CHANGELOG*
 shas.json

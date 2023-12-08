@@ -2,19 +2,18 @@
 
 build() {
   # \begin{document}
-  cat >$1 <<-EOF
-\\documentclass{article}
-\\usepackage{headers}
-\\begin{document}
+  echo '\documentclass{article}' >$1
+  echo '\usepackage{headers}' >>$1
+  printf '\\begin{document}\n\n' >>$1
 
-EOF
   # append each file
   for t in "${TEX_FILES[@]}"; do
     cat $t >>$1
-    echo $'\n\\newpage\n' >>$1
+    printf '\n\\newpage\n\n' >>$1
   done
+
   # \end{document}
-  echo $'\n\n\\end{document}' >>$1
+  printf '\n\\end{document}' >>$1
 }
 
 TEX_FILES=(

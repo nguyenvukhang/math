@@ -37,10 +37,10 @@ Let $D(P,r)$ be the open disc centered at $P$ with radius $r$. Then
 \Result{0.0.2}{Basic complex arithmetic}\label{adebe9e}
 
 \begin{align*}
-  |z|^2           & =z\bar z                       \\
-  |zw|^2          & =|z|^2|w|^2                    \\
-  |z+w|^2         & =|z|^2+|w|^2+\Re(z\cdot\bar w) \\
-  |z+w|^2+|z-w|^2 & =2|z|^2+2|w|^2
+  |z|^2           &=z\bar z                       \\
+  |zw|^2          &=|z|^2|w|^2                    \\
+  |z+w|^2         &=|z|^2+|w|^2+\Re(z\cdot\bar w) \\
+  |z+w|^2+|z-w|^2 &=2|z|^2+2|w|^2
 \end{align*}
 
 \begin{proof}
@@ -50,11 +50,11 @@ Let $D(P,r)$ be the open disc centered at $P$ with radius $r$. Then
   $$
   \begin{align*}
     |zw|^2
-     & = (xu-yv)^2+(xv+yu)^2                        \\
-     & =(x^2u^2-2xyvu+y^2v^2)+(x^2v^2+2xyvu+y^2u^2) \\
-     & =x^2u^2+y^2v^2+x^2v^2+y^2u^2                 \\
-     & =(x^2+y^2)(u^2+v^u)                          \\
-     & =|z|^2|w|^2
+     &= (xu-yv)^2+(xv+yu)^2                        \\
+     &=(x^2u^2-2xyvu+y^2v^2)+(x^2v^2+2xyvu+y^2u^2) \\
+     &=x^2u^2+y^2v^2+x^2v^2+y^2u^2                 \\
+     &=(x^2+y^2)(u^2+v^u)                          \\
+     &=|z|^2|w|^2
   \end{align*}
 \end{proof}
 
@@ -199,9 +199,9 @@ both exist.
 The motivation for this definition is so if $\phi\in C^1([a,b])$, then we have
 \begin{align*}
   \phi(b)-\phi(a)
-   & =\lim_{\epsilon\to0^+}\big(\phi(b-\epsilon)-\phi(a+\epsilon)\big) \\
-   & =\lim_{\epsilon\to0^+}\int_{a+\epsilon}^{b-\epsilon}\phi'(t)\,dt  \\
-   & =\int_a^b\phi'(t)\,dt
+   &=\lim_{\epsilon\to0^+}\big(\phi(b-\epsilon)-\phi(a+\epsilon)\big) \\
+   &=\lim_{\epsilon\to0^+}\int_{a+\epsilon}^{b-\epsilon}\phi'(t)\,dt  \\
+   &=\int_a^b\phi'(t)\,dt
 \end{align*}
 and hence have the \href{b869dc0}{fundamental theorem of calculus}
 hold for $\phi\in C^1([a,b])$.
@@ -246,12 +246,12 @@ $f:U\to\R$ and $f\in C^1(U)$ and we write
 then
 \begin{align*}
   f(\gamma(b))-f(\gamma(a))
-   & =\int_a^b (f\circ\gamma)'(t)\,dt \\
-   & =\int_a^b\left(
+   &=\int_a^b (f\circ\gamma)'(t)\,dt \\
+   &=\int_a^b\left(
   \frac{\partial f}{\partial x}(\gamma(t))\cdot\frac{d\gamma_1}{dt}+
   \frac{\partial f}{\partial y}(\gamma(t))\cdot\frac{d\gamma_2}{dt}
-  \right)\,dt                         \\
-   & =\int_a^b
+  \right)\,dt                        \\
+   &=\int_a^b
   f_x(\gamma(t))\cdot\gamma_1'(t)+f_y(\gamma(t))\cdot\gamma_2'(t)
   \,dt
 \end{align*}
@@ -352,8 +352,8 @@ holomorphic on $U$.
 Let $f$ be holomorphic in a neighborhood $P\in\C$. Let $w_1,w_2\in\C$ have unit
 modulus. Consider the directional derivatives
 \begin{align*}
-  D_{w_1}f(P) & :=\lim_{t\to0}\frac{f(P+tw_1)-f(P)}t \\
-  D_{w_2}f(P) & :=\lim_{t\to0}\frac{f(P+tw_2)-f(P)}t
+  D_{w_1}f(P) &:=\lim_{t\to0}\frac{f(P+tw_1)-f(P)}t \\
+  D_{w_2}f(P) &:=\lim_{t\to0}\frac{f(P+tw_2)-f(P)}t
 \end{align*}
 Then
 \begin{enumerata}

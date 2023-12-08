@@ -52,7 +52,7 @@ Hence $w^2=-1$
 
 \begin{align*}
   (z-w)^2(z-\bar w)^2
-   & = (z^2-2zw+i)(z^2-2z\bar w-i) \\
+   &= (z^2-2zw+i)(z^2-2z\bar w-i) \\
 \end{align*}
 
 \newpage
@@ -91,9 +91,9 @@ Then for each $i=\iter1m$:
 Define $J_i:=\Ji$. Then we have
 \begin{align*}
   \lim_{h\to0}\frac{F_i(x+h)-F_i(x)-{J_i}h}{\norm h}
-   & =0                                  \\
+   &=0                                  \\
   \lim_{h\to0}\frac{F_i(x+h)-F_i(x)}{\norm h}
-   & =\lim_{h\to0}\frac{{J_i}h}{\norm h}
+   &=\lim_{h\to0}\frac{{J_i}h}{\norm h}
 \end{align*}
 
 Replacing $h$ with $td$ where $t\in\R$ and $d\in\R^n$, and sending $t\to0$, we
@@ -130,7 +130,7 @@ This translates to
 which implies that $F'(x)=\nabla F(x)^T$. Next, moving on to the second
 derivative (Hessian).
 \begin{align*}
-  \lim_{h\to0}\frac{F'(x+h)-F'(x)-H(x)h}{\norm h} & =0\in\R^n
+  \lim_{h\to0}\frac{F'(x+h)-F'(x)-H(x)h}{\norm h} &=0\in\R^n
 \end{align*}
 
 Now, like before, we unpack this equation into each of the $n$ elements of the
@@ -142,9 +142,9 @@ row vectors on both sides of the equation. For each $i=\iter1n$,
 Replacing $h$ with $td$ where $t\in\R$ and $d\in\R^n$, we have
 \begin{align*}
   \lim_{t\downarrow0}\frac{F'_i(x+td)-F'_i(x)-(H(x)td)_i}t
-   & =0         \\
+   &=0         \\
   \lim_{t\downarrow0}\frac{F'_i(x+td)-F'_i(x)}t
-   & =(H(x)d)_i
+   &=(H(x)d)_i
 \end{align*}
 
 This implies that
@@ -172,7 +172,7 @@ $H_i(x)^Td$, but in this form it's easy to see that we have
 In summary,
 \begin{align*}
   H_f
-   & =
+   &=
   \def\p#1#2{\dfrac{\partial^2f}{\partial x_{#1}\partial x_{#2}}}
   \def\P#1{\dfrac{\partial^2f}{\partial x_{#1}^2}}
   \begin{bmat}
@@ -223,13 +223,13 @@ Unpack this to the $i^\text{th}$ row:
 where $H_i^T$ is the $i^\text{th}$ row of $H^T$. Now using \textbf{COR1},
 \begin{align*}
   H_i^T
-   & =\nabla(\nabla f_i(x))^T                              \\
-   & =\nabla\left(\frac{\partial f}{\partial x_i}\right)^T \\
-   & =\begin{bmat}
-        \dfrac{\partial^2f}{\partial x_i\partial x_1} &
-        \ldots                                        &
-        \dfrac{\partial^2f}{\partial x_i\partial x_n}
-      \end{bmat}
+   &=\nabla(\nabla f_i(x))^T                              \\
+   &=\nabla\left(\frac{\partial f}{\partial x_i}\right)^T \\
+   &=\begin{bmat}
+       \dfrac{\partial^2f}{\partial x_i\partial x_1} &
+       \ldots                                        &
+       \dfrac{\partial^2f}{\partial x_i\partial x_n}
+     \end{bmat}
 \end{align*}
 
 But due to Clairaut's Theorem, which states that

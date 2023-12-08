@@ -98,6 +98,8 @@ def run_observer(handler):
     try:
         while True:
             sleep(1)
+    except KeyboardInterrupt:
+        print("End server.")
     finally:
         (observer.stop(), observer.join())
 

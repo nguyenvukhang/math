@@ -190,7 +190,11 @@ def debug_test():
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def __checkhealth__(_):
-    tex_filepaths = get_tex_files()
+    tex_filepaths = get_tex_files(recursive=False)
+    print("Running checkheatlh on these files:")
+    for f in tex_filepaths:
+        print(Color.yellow("*"), f)
+    print("---")
     project = {
         "labels": get_all_labels(tex_filepaths),
     }

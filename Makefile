@@ -62,10 +62,9 @@ ci:
 	@make clean
 
 fmt:
-	prettier -w --print-width 200 toc.json
-	rm -f *.bak* **/*.bak*
+	@rm -f *.bak* **/*.bak* *indent.log
 	latexindent -s -w -m -l=.latexindent.yaml *.tex || echo "failed"
-	rm -f *.bak* **/*.bak*
+	@rm -f *.bak* **/*.bak* *indent.log
 
 plenary:
 	$(PYTEX) -J plenary \

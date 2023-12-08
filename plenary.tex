@@ -48,8 +48,8 @@ $$
 
 Alternatively, we can also define them by
 \begin{align*}
-  \limsup x_n & := \lim_{n\to\infty}\sup\Set{x_k}{k\geq n} \\
-  \liminf x_n & := \lim_{n\to\infty}\inf\Set{x_k}{k\geq n}
+  \limsup x_n &:= \lim_{n\to\infty}\sup\Set{x_k}{k\geq n} \\
+  \liminf x_n &:= \lim_{n\to\infty}\inf\Set{x_k}{k\geq n}
 \end{align*}
 
 \Definition{1.1.4}{Cluster point}\label{b0219cd}
@@ -325,9 +325,9 @@ $$
   We have $e^x\geq 1 + x + x^2$ and hence
   \begin{align*}
     \lim_{x\to\infty}\frac{e^x}x
-     & \geq\lim_{x\to\infty}\frac{1+x+\frac{x^2}2}x \\
-     & =\lim_{x\to\infty}\frac1x + 1 + \frac{x}2    \\
-     & = \infty
+     &\geq\lim_{x\to\infty}\frac{1+x+\frac{x^2}2}x \\
+     &=\lim_{x\to\infty}\frac1x + 1 + \frac{x}2    \\
+     &= \infty
   \end{align*}
 \end{proof}
 
@@ -375,9 +375,9 @@ $$
   Rewriting, we have
   \begin{align*}
     a\ln x-x\ln b
-     & = x\left(a\cdot\frac{\ln x}{x}-\ln b\right)                       \\
-     & = \infty(-\ln b) \Quad\because\href{e2e1632}{\frac{\ln x}{x}\to0} \\
-     & = -\infty
+     &= x\left(a\cdot\frac{\ln x}{x}-\ln b\right)                       \\
+     &= \infty(-\ln b) \Quad\because\href{e2e1632}{\frac{\ln x}{x}\to0} \\
+     &= -\infty
   \end{align*}
 
   This completes the proof.
@@ -430,17 +430,17 @@ $$
   where $n$ is the degree of polynomial $P$.
   \begin{align*}
     P(x+1)
-     & =P\big(x(1+\tfrac1x)\big)                                                                           \\
-     & =a_0+a_1x\one+a_2x^2\one^2+\ldots+a_nx^n\one^n                                                      \\
-     & =x^n\left[\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}\one+\frac{a_2}{x^{n-2}}\one^2+\ldots+a_n\one^n\right] \\[0.5em]
+     &=P\big(x(1+\tfrac1x)\big)                                                                           \\
+     &=a_0+a_1x\one+a_2x^2\one^2+\ldots+a_nx^n\one^n                                                      \\
+     &=x^n\left[\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}\one+\frac{a_2}{x^{n-2}}\one^2+\ldots+a_n\one^n\right] \\[0.5em]
     P(x)
-     & =x^n\left(\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}+\frac{a_2}{x^{n-2}}+\ldots+a_n\right)                 \\[0.5em]
+     &=x^n\left(\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}+\frac{a_2}{x^{n-2}}+\ldots+a_n\right)                 \\[0.5em]
     \implies \frac{P(x)}{P(x+1)}
-     & =\frac
+     &=\frac
     {\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}\one+\frac{a_2}{x^{n-2}}\one^2+\ldots+a_n\one^n}
-    {\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}+\frac{a_2}{x^{n-2}}+\ldots+a_n}                                   \\[0.5em]
+    {\frac{a_0}{x^n}+\frac{a_1}{x^{n-1}}+\frac{a_2}{x^{n-2}}+\ldots+a_n}                                  \\[0.5em]
     \implies \lim_{x\to\infty}\frac{P(x)}{P(x+1)}
-     & =\frac{a_n}{a_n} = 1
+     &=\frac{a_n}{a_n} = 1
   \end{align*}
 \end{proof}
 
@@ -635,9 +635,9 @@ $$\int_0^\infty e^{-t}\,dt=\Big[-e^{-t}\Big]_0^\infty=1$$
 And that $\Gamma(n+1)=n\Gamma(n)$.
 \begin{align*}
   \int_0^\infty e^{-t}t^n\,dt
-   & = \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt              \\
-   & = 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.2.12})} \\
-   & = n\Gamma(n)
+   &= \Big[-e^{-t}\cdot t^n\Big]_0^\infty-\int_0^\infty-e^{-t}\cdot nt^{n-1}\,dt              \\
+   &= 0+\int_0^\infty e^{-t}\cdot nt^{n-1}\,dt \Quad\text{(by \href{f3540b0}{Result 1.2.12})} \\
+   &= n\Gamma(n)
 \end{align*}
 
 \Definition{9.1.2}{Language reductions}\label{e009acb}
@@ -734,10 +734,10 @@ This gives the following corollaries:
 
   Then by the Cauchy-Schwarz inequality, for all $u,w\in\C^n$,
   \begin{align*}
-    |\inner uw|^2 & =\left|\sum u_k\bar w_k\right|^2                            \\
-                  & \leq\inner uu\cdot\inner ww                                 \\
-                  & =\left(\sum u_k\bar u_k\right)\left(\sum w_k\bar w_k\right) \\
-                  & =\left(\sum|u_k|^2\right)\left(\sum|w_k|^2\right)
+    |\inner uw|^2 &=\left|\sum u_k\bar w_k\right|^2                            \\
+                  &\leq\inner uu\cdot\inner ww                                 \\
+                  &=\left(\sum u_k\bar u_k\right)\left(\sum w_k\bar w_k\right) \\
+                  &=\left(\sum|u_k|^2\right)\left(\sum|w_k|^2\right)
   \end{align*}
 
   That is

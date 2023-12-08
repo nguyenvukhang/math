@@ -26,6 +26,9 @@ modifyLineBreaks:
     separator: ""
 
 lookForAlignDelims:
-   vmat: 1
-   bmat: 1
-   pmat: 1
+  vmat: 1
+  bmat: 1
+  pmat: 1
+  align*:
+    delims: 1
+    spacesAfterAmpersand: 0
