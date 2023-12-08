@@ -1,5 +1,6 @@
 from typing import Literal, get_args
 from argparse import ArgumentParser
+from dataclasses import dataclass
 
 Action = Literal[
     "build",
@@ -11,18 +12,18 @@ Action = Literal[
     "toc",
     "toc-md",
 ]
+ACTIONS = get_args(Action)
 
 
+@dataclass
 class Args:
-    action = None  # type: Args.Action
-    header = None  # type: str
-    jobname = None  # type: str
-    build_dir = None  # type: str
-    prev_rel = None  # type: str
-    verbose = None  # type: bool
-    tex_files = None  # type: list[str]
-    toc = None  # type: bool
-    ci = None  # type: bool
+    action: Action
+    header: str
+    jobname: str
+    build_dir: str
+    prev_rel: str
+    verbose: bool
+    tex_files: list[str]
 
     @staticmethod
     def parse():  # type: () -> Args
@@ -30,7 +31,7 @@ class Args:
             prog="pytex",
             description="Custom pdflatex build script with Python3",
         )
-        p.add_argument("action", choices=get_args(Action))
+        p.add_argument("action", choices=ACTIONS)
         p.add_argument("-H", dest="header", default="headers")
         p.add_argument("-J", "--jobname", default="out")
         p.add_argument("--build-dir", default=".build")
@@ -44,4 +45,4 @@ class Args:
                 seen.add(f)
                 tex_files.append(f)
         args.tex_files = tex_files
-        return args
+        return Args(**vars(args))

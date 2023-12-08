@@ -72,7 +72,7 @@ def get_tex_files(recursive=True):  # type: (bool) -> list[str]
         return [x for x in os.listdir() if is_tex(x)]
 
 
-def get_all_labels(tex_files):
+def get_all_labels(tex_files):  # type: (list[str]) -> set[bytes]
     all_labels = set()
     for f in tex_files:
         labels = Rx.LABEL.findall(read_file(f))
@@ -301,9 +301,9 @@ class PdfLatex(Popen):
 
 # for labelling/indexing
 class File:
-    def __init__(self, filepath):  # type: (str) -> None
-        self.filepath = filepath
-        self.lines = read_file(filepath).splitlines()
+    def __init__(self, path):  # type: (str) -> None
+        self.path = path
+        self.lines = read_file(path).splitlines()
         self.__index__ = None
 
     def index(self):  # type: (bool) -> None
@@ -323,7 +323,7 @@ class File:
 
     def labels(self):  # type: () -> list[bytes]
         if self.__index__ is None:
-            panic(f"[{self.filepath}] is not indexed yet.")
+            panic(f"[{self.path}] is not indexed yet.")
         return list(map(lambda v: v[4], self.__index__))
 
     def add_labels_and_write(self, existing):  # type: (set[bytes]) -> None
@@ -331,7 +331,7 @@ class File:
             lnum, label = i[0], i[4]
             if label is None:
                 self.lines[lnum] += b"\\label{" + new_sha(existing) + b"}"
-        with open(self.filepath, "wb") as f:
+        with open(self.path, "wb") as f:
             f.write(b"\n".join(self.lines))
 
     @staticmethod
@@ -343,3 +343,10 @@ class File:
                     panic("Found a duplicate label: %s" % label.decode("utf8"))
                 seen.add(label)
         return seen
+
+
+def assert_eq(received, expected):
+    if received == expected:
+        return
+    print(f"\nreceived: {received}\nexpected: {expected}\n")
+    panic("Assertion Error.")

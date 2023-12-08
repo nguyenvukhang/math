@@ -17,13 +17,16 @@ TEX_FILES += nonlinear-optimization-constrained.tex
 TEX_FILES += sandbox.tex
 
 x:
-	@make build
+	@make test
 
 build:
 	$(PYTEX) -J minimath build $(TEX_FILES)
 
 dev:
 	$(PYTEX) -J minimath dev $(TEX_FILES)
+
+test:
+	$(PYTEX) test
 
 ref:
 	$(PYTEX) -J ref build \
