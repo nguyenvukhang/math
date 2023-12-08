@@ -17,7 +17,6 @@ import Tooltip from '../Tooltip'
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  DownloadIcon,
   MarkGithubIcon,
   SidebarCollapseIcon,
   SidebarExpandIcon,
@@ -153,7 +152,7 @@ const Toolbar = ({
           <div className="items-center space-x-1 hidden sm:flex">
             <button
               className={clsx(
-                'enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent',
+                'flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent',
               )}
               onClick={() =>
                 window.open('https://github.com/nguyenvukhang/math', '_blank')

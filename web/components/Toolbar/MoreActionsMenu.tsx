@@ -69,7 +69,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
       <Menu as="span" className="pr-0.5">
         <Menu.Button
           disabled={!pdfSlick}
-          className="flex enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
+          className="flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
         >
           <span className="sr-only">Open more actions menu</span>
           <KebabHorizontalIcon className="w-3 h-3 rotate-90" />

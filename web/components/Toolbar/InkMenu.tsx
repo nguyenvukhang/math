@@ -21,7 +21,7 @@ const InkMenu = ({ usePDFSlickStore }: InkMenuProps) => {
       }`}
     >
       <button
-        className="enabled:hover:text-black text-slate-600 p-1 disabled:text-slate-300 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
+        className="flex justify-center enabled:hover:text-black text-slate-600 p-1 disabled:text-slate-300 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
         onClick={() => {
           const mode = isInkMode
             ? AnnotationEditorType.NONE
