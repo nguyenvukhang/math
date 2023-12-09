@@ -9,7 +9,6 @@ process.on('exit', () => rmSync('postcss.config.js', { force: true }))
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  api: { externalResolver: true },
   webpack: (config, options) => {
     // use Preact instead of React
     if (!options.dev && !options.isServer) {
