@@ -673,6 +673,10 @@ $$
   \left|g(z)-\sum_{k=0}^N f_k(z)\right|<\epsilon\with\forall z\in E
 $$
 
+The point is that $N_0$ does not depend on $z\in E$: There is, for each
+$\epsilon$, an $N_0$ depending on $\epsilon$ (but not on $z$) that works for
+all $z\in E$.
+
 \Definition{3.2.8}{Uniformly Cauchy series}\label{bfe260e}
 
 Let $\sum_{k=0}^\infty f_k(z)$ be a series of functions on a set $E$. The
@@ -681,6 +685,11 @@ is a positive integer $N_0$ such that if $m\geq j\geq N_0$, then
 $$
   \left|\sum_{k=j}^mf_k(z)\right|<\epsilon\with\forall z\in E
 $$
+
+If a series is uniformly Cauchy on a set $E$, then it converges uniformly on
+$E$ to some limit function. From this it follows that if $\sum|f_k(z)|$ is
+uniformly convergent, then $\sum f_k(z)$ is uniformly convergent (to some limit
+function).
 
 \Proposition{3.2.9}{}\label{ec076c1}
 
