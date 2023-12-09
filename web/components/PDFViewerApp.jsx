@@ -12,8 +12,6 @@ export default function PDFViewerApp({ pdfFilePath }) {
     if (isDocumentLoaded) setIsThumbsbarOpen(true)
   }, [isDocumentLoaded])
 
-  usePDFSlickStore((s) => (s.filename = 'minimath.pdf'))
-
   return (
     <div className="absolute inset-0 bg-bg1 flex flex-col pdfSlick">
       <Toolbar

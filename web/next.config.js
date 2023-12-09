@@ -1,10 +1,17 @@
-const { rmSync, writeFileSync } = require('fs')
+const { rmSync, writeFileSync, createWriteStream } = require('fs')
 
-writeFileSync(
-  'postcss.config.js',
-  'module.exports={plugins:{tailwindcss:{},autoprefixer:{}}}',
-)
-process.on('exit', () => rmSync('postcss.config.js', { force: true }))
+const LATEST_RELEASE =
+  'https://github.com/nguyenvukhang/math/releases/latest/download/minimath.pdf'
+
+rmSync('public/minimath.pdf')
+
+fetch(LATEST_RELEASE)
+  .then((v) => v.blob().then((v) => v.arrayBuffer()))
+  .then((v) => createWriteStream('public/minimath.pdf').write(Buffer.from(v)))
+
+const PCJ = 'postcss.config.js'
+writeFileSync(PCJ, 'module.exports={plugins:{tailwindcss:{},autoprefixer:{}}}')
+process.on('exit', () => rmSync(PCJ, { force: true }))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -24,4 +31,3 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-
