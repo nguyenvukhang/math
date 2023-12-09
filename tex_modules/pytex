@@ -27,7 +27,7 @@ def __dev__(args):  # type: (Args) -> None
 
     now = lambda: datetime.now().strftime("%H:%M:%S")
     build = lambda: project.build(args)
-    report = lambda: print("\x1b[33m[Last build: %s]\x1b[0m" % now())
+    report = lambda: print(Color.green("[Last build: %s]" % now()))
     (build(), report())
 
     class EventHandler(FileSystemEventHandler):
