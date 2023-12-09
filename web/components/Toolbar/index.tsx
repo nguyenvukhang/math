@@ -114,11 +114,17 @@ const Toolbar = ({
               }}
             />
           </form>
-          <span> of {numPages}</span>
+          <span className="break-keep truncate"> of {numPages}</span>
         </div>
       </div>
 
-      <div className="text-fg0">minimath</div>
+      <div className="text-fg0 w-48 truncate mx-6">
+        <span>minimath</span>
+        <span className="text-fg2">{' by '}</span>
+        <a target="_blank" href="https://github.com/nguyenvukhang">
+          @nguyenvukhang
+        </a>
+      </div>
 
       <div className="px-1 space-x-1 flex items-center justify-end">
         <FreetextMenu usePDFSlickStore={usePDFSlickStore} />
