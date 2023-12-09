@@ -11,22 +11,20 @@ type DocumentInfoProps = {
 export default function DocumentInfo({ usePDFSlickStore }: DocumentInfoProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const closeModal = () => setIsOpen(false)
-  const openModal = () => setIsOpen(true)
-
   return (
     <>
-      <button
-        className="flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
-        onClick={openModal}
-      >
+      <button className="group tb-button" onClick={() => setIsOpen(true)}>
         <InfoIcon className="w-4 h-4" />
         <Tooltip position="bottom" alignX="right">
-          <p className="whitespace-nowrap">Document Properties</p>
+          Document Properties
         </Tooltip>
       </button>
 
-      <DocumentInfoModal {...{ usePDFSlickStore, isOpen, closeModal }} />
+      <DocumentInfoModal
+        usePDFSlickStore={usePDFSlickStore}
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+      />
     </>
   )
 }

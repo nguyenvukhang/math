@@ -32,7 +32,7 @@ const ZoomSelector = ({ usePDFSlickStore }: ZoomSelectorProps) => {
     <div className="flex items-center space-x-1">
       <button
         disabled={!pdfSlick || scale <= 0.25}
-        className="enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
+        className="group tb-button"
         onClick={() => pdfSlick?.viewer?.decreaseScale()}
       >
         <DashIcon className="h-4 w-4 fill-current" />
@@ -41,7 +41,7 @@ const ZoomSelector = ({ usePDFSlickStore }: ZoomSelectorProps) => {
       <Menu as="div" className="text-xs relative hidden sm:block">
         <Menu.Button
           disabled={!pdfSlick}
-          className="text-left w-32 bg-slate-200/70 hover:bg-slate-200 py-1 rounded-sm focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
+          className="text-left w-32 bg-bg1 py-1 rounded-sm focus:shadow outline-none border border-transparent"
         >
           <span className="sr-only">Open zoom options</span>
           <div className="flex px-1">
@@ -69,7 +69,7 @@ const ZoomSelector = ({ usePDFSlickStore }: ZoomSelectorProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 left-0 z-30 mt-2 w-full origin-top-right divide-y divide-slate-200 rounded text-left bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 left-0 z-30 mt-2 w-full origin-top-right divide-y divide-bg2 rounded text-left bg-bg1 shadow-lg">
             <div className="py-1">
               {Array.from(presets.entries()).map(([value, label]) => (
                 <Menu.Item key={label}>
@@ -77,7 +77,7 @@ const ZoomSelector = ({ usePDFSlickStore }: ZoomSelectorProps) => {
                     <button
                       onClick={() => (pdfSlick!.currentScaleValue = value)}
                       className={`block w-full box-border text-left px-2 py-1.5 text-xs ${
-                        active ? 'bg-slate-100 text-gray-900' : 'text-gray-700'
+                        active ? 'bg-bg2 text-fg0' : 'text-fg3'
                       }`}
                     >
                       {label}
@@ -94,7 +94,7 @@ const ZoomSelector = ({ usePDFSlickStore }: ZoomSelectorProps) => {
                     <button
                       onClick={() => (pdfSlick!.currentScale = value)}
                       className={`block w-full box-border text-left px-2 py-1.5 text-xs ${
-                        active ? 'bg-slate-100 text-gray-900' : 'text-gray-700'
+                        active ? 'bg-bg2 text-fg0' : 'text-fg3'
                       }`}
                     >
                       {label}
@@ -109,7 +109,7 @@ const ZoomSelector = ({ usePDFSlickStore }: ZoomSelectorProps) => {
 
       <button
         disabled={!pdfSlick || scale >= 5}
-        className="enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
+        className="group tb-button"
         onClick={() => pdfSlick?.viewer?.increaseScale()}
       >
         <PlusIcon className="h-4 w-4 fill-current" />

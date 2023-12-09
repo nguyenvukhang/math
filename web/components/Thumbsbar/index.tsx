@@ -1,25 +1,14 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import type { TUsePDFSlickStore } from '@pdfslick/react'
 import { select } from 'd3-selection'
 import { drag } from 'd3-drag'
 import Outline from './Outline'
-import Thumbnails from './Thumbnails'
-import ButtonsBar from './ButtonsBar'
+import { Store } from '../types'
 
-type ThumbsbarProps = {
-  usePDFSlickStore: TUsePDFSlickStore
-  isThumbsbarOpen: boolean
-  thumbsRef: (instance: HTMLElement | null) => void
-}
-
-const Thumbsbar = ({
+export default function Thumbsbar({
   usePDFSlickStore,
   isThumbsbarOpen,
-  thumbsRef,
-}: ThumbsbarProps) => {
-  const [tab, setTab] = useState<'outline' | 'thumbnails'>('outline')
-
+}: Store<{ isThumbsbarOpen: boolean }>) {
   const containerRef = useRef() as MutableRefObject<HTMLDivElement>
   const resizerRef = useRef() as MutableRefObject<HTMLDivElement>
   const [isResizing, setIsResizing] = useState(false)
@@ -28,7 +17,7 @@ const Thumbsbar = ({
   useEffect(() => {
     let newWidth = 0
     const dragResize = drag<HTMLDivElement, unknown>()
-      .on('start', (e) => {
+      .on('start', () => {
         newWidth = containerRef.current.clientWidth
         setIsResizing(true)
       })
@@ -37,7 +26,7 @@ const Thumbsbar = ({
         const width = Math.min(620, Math.max(233, newWidth))
         setWidth(width)
       })
-      .on('end', (e) => setIsResizing(false))
+      .on('end', () => setIsResizing(false))
     select(resizerRef.current).call(dragResize)
   }, [])
 
@@ -46,7 +35,7 @@ const Thumbsbar = ({
       <div
         ref={containerRef}
         className={clsx(
-          'h-full flex relative bg-slate-50 border-r border-slate-300 [box-shadow:1px_0_2px_0_rgb(0_0_0_/_0.05)]',
+          'h-full flex relative border-r border-bg0 shadow-sm z-10',
           {
             visible: isThumbsbarOpen,
             'invisible border-r-0 overflow-hidden': !isThumbsbarOpen,
@@ -57,8 +46,6 @@ const Thumbsbar = ({
           width: `${isThumbsbarOpen ? width : 0}px`,
         }}
       >
-        <ButtonsBar {...{ tab, setTab, isThumbsbarOpen, usePDFSlickStore }} />
-
         <div
           className={clsx('flex-1 relative', {
             'translate-x-0 visible opacity-100': isThumbsbarOpen,
@@ -67,10 +54,7 @@ const Thumbsbar = ({
             '-translate-x-full invisible opacity-0': !isThumbsbarOpen,
           })}
         >
-          <Thumbnails
-            {...{ show: tab === 'thumbnails', thumbsRef, usePDFSlickStore }}
-          />
-          <Outline {...{ show: tab === 'outline', usePDFSlickStore }} />
+          <Outline show usePDFSlickStore={usePDFSlickStore} />
         </div>
       </div>
       <div ref={resizerRef} className="hover:cursor-col-resize relative w-0">
@@ -89,5 +73,3 @@ const Thumbsbar = ({
     </>
   )
 }
-
-export default Thumbsbar

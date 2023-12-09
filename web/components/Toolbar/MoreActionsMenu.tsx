@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  Fragment,
-  MutableRefObject,
-  useRef,
-  useState,
-} from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ScrollMode } from '@pdfslick/react'
 import type { TUsePDFSlickStore } from '@pdfslick/react'
@@ -18,9 +12,9 @@ import {
   DownloadIcon,
   FileIcon,
   InfoIcon,
-  KebabHorizontalIcon,
   MoveToBottomIcon,
   MoveToTopIcon,
+  ThreeBarsIcon,
 } from '@primer/octicons-react'
 
 type MoreActionsMenuProps = {
@@ -29,7 +23,6 @@ type MoreActionsMenuProps = {
 
 const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const openPdfFileRef = useRef() as MutableRefObject<HTMLInputElement>
 
   const { pdfSlick, pageNumber, numPages, scrollMode } = usePDFSlickStore(
     (s) => ({
@@ -42,37 +35,18 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
     shallow,
   )
 
-  function handleOpenPdfFile(e: ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      const url = URL.createObjectURL(file)
-      pdfSlick?.loadDocument(url, { filename: file.name })
-    }
-  }
-
   const closeModal = () => setIsOpen(false)
   const openModal = () => setIsOpen(true)
 
+  const CSS =
+    'text-fg1 w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50'
+
   return (
     <>
-      <div className="absolute overflow-hidden w-0 h-0">
-        <input
-          id="openPdfFileAction"
-          ref={openPdfFileRef}
-          tabIndex={-1}
-          type="file"
-          accept=".pdf,application/pdf"
-          onChange={handleOpenPdfFile}
-          className="absolute -top-[10000px]"
-        />
-      </div>
-      <Menu as="span" className="pr-0.5">
-        <Menu.Button
-          disabled={!pdfSlick}
-          className="flex justify-center enabled:hover:bg-slate-200 enabled:hover:text-black text-slate-500 disabled:text-slate-300 p-1 rounded-sm transition-all group relative focus:border-blue-400 focus:ring-0 focus:shadow outline-none border border-transparent"
-        >
+      <Menu as="span">
+        <Menu.Button disabled={!pdfSlick} className="group tb-button">
           <span className="sr-only">Open more actions menu</span>
-          <KebabHorizontalIcon className="w-3 h-3 rotate-90" />
+          <ThreeBarsIcon className="w-4 h-4" />
         </Menu.Button>
         <Transition
           as={Fragment}
@@ -83,22 +57,13 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-2 w-52 z-30 mt-2 origin-top-right divide-y divide-slate-200 rounded text-left bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-2 w-52 z-30 mt-2 origin-top-right divide-y divide-bg2 rounded text-left bg-bg1 shadow-sm border border-bg0">
             <div className="py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    onClick={() => {
-                      if (pdfSlick) pdfSlick.filename = 'minimath.pdf'
-                      pdfSlick?.downloadOrSave()
-                    }}
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    onClick={() => pdfSlick?.downloadOrSave()}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <DownloadIcon className="w-3.5 h-3.5" />
                     <span>Save</span>
@@ -109,13 +74,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                 {({ active }) => (
                   <button
                     onClick={() => pdfSlick?.triggerPrinting()}
-                    className={clsx(
-                      'w-full items-center flex space-x-1.5 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <ContainerIcon className="w-3.5 h-3.5" />
                     <span>Print</span>
@@ -130,13 +89,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                   <button
                     disabled={pageNumber === 1}
                     onClick={() => pdfSlick?.gotoPage(1)}
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <MoveToTopIcon className="w-3.5 h-3.5" />
                     <span>Go to First Page</span>
@@ -148,13 +101,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                   <button
                     disabled={pageNumber === numPages}
                     onClick={() => pdfSlick?.gotoPage(numPages)}
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <MoveToBottomIcon className="w-3.5 h-3.5" />
                     <span>Go to Last Page</span>
@@ -168,13 +115,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                 {({ active }) => (
                   <button
                     onClick={() => pdfSlick?.setScrollMode(ScrollMode.PAGE)}
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <FileIcon className="w-3.5 h-3.5" />
                     <span className="flex-1">Page Scrolling</span>
@@ -188,13 +129,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                 {({ active }) => (
                   <button
                     onClick={() => pdfSlick?.setScrollMode(ScrollMode.VERTICAL)}
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <ArrowBothIcon className="w-3.5 h-3.5 rotate-90" />
                     <span className="flex-1">Vertical Scrolling</span>
@@ -210,13 +145,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                     onClick={() =>
                       pdfSlick?.setScrollMode(ScrollMode.HORIZONTAL)
                     }
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <ArrowBothIcon className="w-3.5 h-3.5" />
                     <span className="flex-1">Horizontal Scrolling</span>
@@ -234,13 +163,7 @@ const MoreActionsMenu = ({ usePDFSlickStore }: MoreActionsMenuProps) => {
                   <button
                     disabled={pageNumber === numPages}
                     onClick={openModal}
-                    className={clsx(
-                      'w-full items-center flex space-x-2 box-border text-left px-2 py-1.5 text-xs disabled:opacity-50',
-                      {
-                        'bg-slate-100 text-gray-900': active,
-                        'text-gray-700': !active,
-                      },
-                    )}
+                    className={clsx(CSS, { 'bg-bg0': active })}
                   >
                     <InfoIcon className="w-3.5 h-3.5" />
                     <span>Document Properties...</span>
