@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
-    "@pdfslick/react": "^1.2.6",
+    "@pdfslick/core": "file:deps/@pdfslick/core",
+    "@pdfslick/react": "file:deps/@pdfslick/react",
     "@primer/octicons-react": "^19.8.0",
     "clsx": "^2.0.0",
     "d3-drag": "^3.0.0",

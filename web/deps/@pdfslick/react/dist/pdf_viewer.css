@@ -1,0 +1,2743 @@
+/* Copyright 2014 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+ :root {
+  --highlight-bg-color: rgba(180, 0, 170, 1);
+  --highlight-selected-bg-color: rgba(0, 100, 0, 1);
+}
+
+@media screen and (forced-colors: active) {
+  :root {
+    --highlight-bg-color: Highlight;
+    --highlight-selected-bg-color: ButtonText;
+  }
+}
+
+.textLayer {
+  position: absolute;
+  text-align: initial;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  opacity: 0.25;
+  line-height: 1;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+  transform-origin: 0 0;
+  z-index: 2;
+}
+
+.textLayer span,
+.textLayer br {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+}
+
+/* Only necessary in Google Chrome, see issue 14205, and most unfortunately
+ * the problem doesn't show up in "text" reference tests. */
+.textLayer span.markedContent {
+  top: 0;
+  height: 0;
+}
+
+.textLayer .highlight {
+  margin: -1px;
+  padding: 1px;
+  background-color: var(--highlight-bg-color);
+  border-radius: 4px;
+}
+
+.textLayer .highlight.appended {
+  position: initial;
+}
+
+.textLayer .highlight.begin {
+  border-radius: 4px 0 0 4px;
+}
+
+.textLayer .highlight.end {
+  border-radius: 0 4px 4px 0;
+}
+
+.textLayer .highlight.middle {
+  border-radius: 0;
+}
+
+.textLayer .highlight.selected {
+  background-color: var(--highlight-selected-bg-color);
+}
+
+.textLayer ::-moz-selection {
+  background: blue;
+  background: AccentColor;
+}
+
+.textLayer ::selection {
+  background: blue;
+  background: AccentColor;
+}
+
+/* Avoids https://github.com/mozilla/pdf.js/issues/13840 in Chrome */
+.textLayer br::-moz-selection {
+  background: transparent;
+}
+.textLayer br::selection {
+  background: transparent;
+}
+
+.textLayer .endOfContent {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.textLayer .endOfContent.active {
+  top: 0;
+}
+
+:root {
+  --annotation-unfocused-field-background: url("data:image/svg+xml;charset=UTF-8,<svg width='1px' height='1px' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' style='fill:rgba(0, 54, 255, 0.13);'/></svg>");
+  --input-focus-border-color: Highlight;
+  --input-focus-outline: 1px solid Canvas;
+  --input-unfocused-border-color: transparent;
+  --input-disabled-border-color: transparent;
+  --input-hover-border-color: black;
+  --link-outline: none;
+}
+
+@media screen and (forced-colors: active) {
+  :root {
+    --input-focus-border-color: CanvasText;
+    --input-unfocused-border-color: ActiveText;
+    --input-disabled-border-color: GrayText;
+    --input-hover-border-color: Highlight;
+    --link-outline: 1.5px solid LinkText;
+  }
+  .annotationLayer .textWidgetAnnotation input:required,
+  .annotationLayer .textWidgetAnnotation textarea:required,
+  .annotationLayer .choiceWidgetAnnotation select:required,
+  .annotationLayer .buttonWidgetAnnotation.checkBox input:required,
+  .annotationLayer .buttonWidgetAnnotation.radioButton input:required {
+    outline: 1.5px solid selectedItem;
+  }
+
+  .annotationLayer .linkAnnotation:hover {
+    -webkit-backdrop-filter: invert(100%);
+    backdrop-filter: invert(100%);
+  }
+}
+
+.annotationLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform-origin: 0 0;
+  z-index: 3;
+}
+
+.annotationLayer[data-main-rotation="90"] .norotate {
+  transform: rotate(270deg) translateX(-100%);
+}
+.annotationLayer[data-main-rotation="180"] .norotate {
+  transform: rotate(180deg) translate(-100%, -100%);
+}
+.annotationLayer[data-main-rotation="270"] .norotate {
+  transform: rotate(90deg) translateY(-100%);
+}
+
+.annotationLayer canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.annotationLayer section {
+  position: absolute;
+  text-align: initial;
+  pointer-events: auto;
+  box-sizing: border-box;
+  transform-origin: 0 0;
+}
+
+.annotationLayer .linkAnnotation {
+  outline: var(--link-outline);
+}
+
+.annotationLayer .linkAnnotation > a,
+.annotationLayer .buttonWidgetAnnotation.pushButton > a {
+  position: absolute;
+  font-size: 1em;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.annotationLayer .linkAnnotation > a:hover,
+.annotationLayer .buttonWidgetAnnotation.pushButton > a:hover {
+  opacity: 0.2;
+  background: rgba(255, 255, 0, 1);
+  box-shadow: 0 2px 10px rgba(255, 255, 0, 1);
+}
+
+.annotationLayer .textAnnotation img {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.annotationLayer .textWidgetAnnotation input,
+.annotationLayer .textWidgetAnnotation textarea,
+.annotationLayer .choiceWidgetAnnotation select,
+.annotationLayer .buttonWidgetAnnotation.checkBox input,
+.annotationLayer .buttonWidgetAnnotation.radioButton input {
+  background-image: var(--annotation-unfocused-field-background);
+  border: 2px solid var(--input-unfocused-border-color);
+  box-sizing: border-box;
+  font: calc(9px * var(--scale-factor)) sans-serif;
+  height: 100%;
+  margin: 0;
+  vertical-align: top;
+  width: 100%;
+}
+
+.annotationLayer .textWidgetAnnotation input:required,
+.annotationLayer .textWidgetAnnotation textarea:required,
+.annotationLayer .choiceWidgetAnnotation select:required,
+.annotationLayer .buttonWidgetAnnotation.checkBox input:required,
+.annotationLayer .buttonWidgetAnnotation.radioButton input:required {
+  outline: 1.5px solid red;
+}
+
+.annotationLayer .choiceWidgetAnnotation select option {
+  padding: 0;
+}
+
+.annotationLayer .buttonWidgetAnnotation.radioButton input {
+  border-radius: 50%;
+}
+
+.annotationLayer .textWidgetAnnotation textarea {
+  resize: none;
+}
+
+.annotationLayer .textWidgetAnnotation input[disabled],
+.annotationLayer .textWidgetAnnotation textarea[disabled],
+.annotationLayer .choiceWidgetAnnotation select[disabled],
+.annotationLayer .buttonWidgetAnnotation.checkBox input[disabled],
+.annotationLayer .buttonWidgetAnnotation.radioButton input[disabled] {
+  background: none;
+  border: 2px solid var(--input-disabled-border-color);
+  cursor: not-allowed;
+}
+
+.annotationLayer .textWidgetAnnotation input:hover,
+.annotationLayer .textWidgetAnnotation textarea:hover,
+.annotationLayer .choiceWidgetAnnotation select:hover,
+.annotationLayer .buttonWidgetAnnotation.checkBox input:hover,
+.annotationLayer .buttonWidgetAnnotation.radioButton input:hover {
+  border: 2px solid var(--input-hover-border-color);
+}
+.annotationLayer .textWidgetAnnotation input:hover,
+.annotationLayer .textWidgetAnnotation textarea:hover,
+.annotationLayer .choiceWidgetAnnotation select:hover,
+.annotationLayer .buttonWidgetAnnotation.checkBox input:hover {
+  border-radius: 2px;
+}
+
+.annotationLayer .textWidgetAnnotation input:focus,
+.annotationLayer .textWidgetAnnotation textarea:focus,
+.annotationLayer .choiceWidgetAnnotation select:focus {
+  background: none;
+  border: 2px solid var(--input-focus-border-color);
+  border-radius: 2px;
+  outline: var(--input-focus-outline);
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox :focus,
+.annotationLayer .buttonWidgetAnnotation.radioButton :focus {
+  background-image: none;
+  background-color: transparent;
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox :focus {
+  border: 2px solid var(--input-focus-border-color);
+  border-radius: 2px;
+  outline: var(--input-focus-outline);
+}
+
+.annotationLayer .buttonWidgetAnnotation.radioButton :focus {
+  border: 2px solid var(--input-focus-border-color);
+  outline: var(--input-focus-outline);
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox input:checked:before,
+.annotationLayer .buttonWidgetAnnotation.checkBox input:checked:after,
+.annotationLayer .buttonWidgetAnnotation.radioButton input:checked:before {
+  background-color: CanvasText;
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox input:checked:before,
+.annotationLayer .buttonWidgetAnnotation.checkBox input:checked:after {
+  height: 80%;
+  left: 45%;
+  width: 1px;
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox input:checked:before {
+  transform: rotate(45deg);
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox input:checked:after {
+  transform: rotate(-45deg);
+}
+
+.annotationLayer .buttonWidgetAnnotation.radioButton input:checked:before {
+  border-radius: 50%;
+  height: 50%;
+  left: 30%;
+  top: 20%;
+  width: 50%;
+}
+
+.annotationLayer .textWidgetAnnotation input.comb {
+  font-family: monospace;
+  padding-left: 2px;
+  padding-right: 0;
+}
+
+.annotationLayer .textWidgetAnnotation input.comb:focus {
+  /*
+   * Letter spacing is placed on the right side of each character. Hence, the
+   * letter spacing of the last character may be placed outside the visible
+   * area, causing horizontal scrolling. We avoid this by extending the width
+   * when the element has focus and revert this when it loses focus.
+   */
+  width: 103%;
+}
+
+.annotationLayer .buttonWidgetAnnotation.checkBox input,
+.annotationLayer .buttonWidgetAnnotation.radioButton input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.annotationLayer .popupTriggerArea {
+  height: 100%;
+  width: 100%;
+}
+
+.annotationLayer .fileAttachmentAnnotation .popupTriggerArea {
+  position: absolute;
+}
+
+.annotationLayer .popupWrapper {
+  position: absolute;
+  font-size: calc(9px * var(--scale-factor));
+  width: 100%;
+  min-width: calc(180px * var(--scale-factor));
+  pointer-events: none;
+}
+
+.annotationLayer .popup {
+  position: absolute;
+  max-width: calc(180px * var(--scale-factor));
+  background-color: rgba(255, 255, 153, 1);
+  box-shadow: 0 calc(2px * var(--scale-factor)) calc(5px * var(--scale-factor))
+    rgba(136, 136, 136, 1);
+  border-radius: calc(2px * var(--scale-factor));
+  padding: calc(6px * var(--scale-factor));
+  margin-left: calc(5px * var(--scale-factor));
+  cursor: pointer;
+  font: message-box;
+  white-space: normal;
+  word-wrap: break-word;
+  pointer-events: auto;
+}
+
+.annotationLayer .popup > * {
+  font-size: calc(9px * var(--scale-factor));
+}
+
+.annotationLayer .popup h1 {
+  display: inline-block;
+}
+
+.annotationLayer .popupDate {
+  display: inline-block;
+  margin-left: calc(5px * var(--scale-factor));
+}
+
+.annotationLayer .popupContent {
+  border-top: 1px solid rgba(51, 51, 51, 1);
+  margin-top: calc(2px * var(--scale-factor));
+  padding-top: calc(2px * var(--scale-factor));
+}
+
+.annotationLayer .richText > * {
+  white-space: pre-wrap;
+  font-size: calc(9px * var(--scale-factor));
+}
+
+.annotationLayer .highlightAnnotation,
+.annotationLayer .underlineAnnotation,
+.annotationLayer .squigglyAnnotation,
+.annotationLayer .strikeoutAnnotation,
+.annotationLayer .freeTextAnnotation,
+.annotationLayer .lineAnnotation svg line,
+.annotationLayer .squareAnnotation svg rect,
+.annotationLayer .circleAnnotation svg ellipse,
+.annotationLayer .polylineAnnotation svg polyline,
+.annotationLayer .polygonAnnotation svg polygon,
+.annotationLayer .caretAnnotation,
+.annotationLayer .inkAnnotation svg polyline,
+.annotationLayer .stampAnnotation,
+.annotationLayer .fileAttachmentAnnotation {
+  cursor: pointer;
+}
+
+.annotationLayer section svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.annotationLayer .annotationTextContent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.annotationLayer .annotationTextContent span {
+  width: 100%;
+  display: inline-block;
+}
+
+:root {
+  --xfa-unfocused-field-background: url("data:image/svg+xml;charset=UTF-8,<svg width='1px' height='1px' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' style='fill:rgba(0, 54, 255, 0.13);'/></svg>");
+  --xfa-focus-outline: auto;
+}
+
+@media screen and (forced-colors: active) {
+  :root {
+    --xfa-focus-outline: 2px solid CanvasText;
+  }
+  .xfaLayer *:required {
+    outline: 1.5px solid selectedItem;
+  }
+}
+
+.xfaLayer {
+  background-color: transparent;
+}
+
+.xfaLayer .highlight {
+  margin: -1px;
+  padding: 1px;
+  background-color: rgba(239, 203, 237, 1);
+  border-radius: 4px;
+}
+
+.xfaLayer .highlight.appended {
+  position: initial;
+}
+
+.xfaLayer .highlight.begin {
+  border-radius: 4px 0 0 4px;
+}
+
+.xfaLayer .highlight.end {
+  border-radius: 0 4px 4px 0;
+}
+
+.xfaLayer .highlight.middle {
+  border-radius: 0;
+}
+
+.xfaLayer .highlight.selected {
+  background-color: rgba(203, 223, 203, 1);
+}
+
+.xfaPage {
+  overflow: hidden;
+  position: relative;
+}
+
+.xfaContentarea {
+  position: absolute;
+}
+
+.xfaPrintOnly {
+  display: none;
+}
+
+.xfaLayer {
+  position: absolute;
+  text-align: initial;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  line-height: 1.2;
+}
+
+.xfaLayer * {
+  color: inherit;
+  font: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  font-kerning: inherit;
+  letter-spacing: -0.01px;
+  text-align: inherit;
+  text-decoration: inherit;
+  box-sizing: border-box;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  pointer-events: auto;
+  line-height: inherit;
+}
+
+.xfaLayer *:required {
+  outline: 1.5px solid red;
+}
+
+.xfaLayer div {
+  pointer-events: none;
+}
+
+.xfaLayer svg {
+  pointer-events: none;
+}
+
+.xfaLayer svg * {
+  pointer-events: none;
+}
+
+.xfaLayer a {
+  color: blue;
+}
+
+.xfaRich li {
+  margin-left: 3em;
+}
+
+.xfaFont {
+  color: black;
+  font-weight: normal;
+  font-kerning: none;
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0;
+  text-decoration: none;
+  vertical-align: 0;
+}
+
+.xfaCaption {
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.xfaCaptionForCheckButton {
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.xfaLabel {
+  height: 100%;
+  width: 100%;
+}
+
+.xfaLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.xfaRight {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.xfaLeft > .xfaCaption,
+.xfaLeft > .xfaCaptionForCheckButton,
+.xfaRight > .xfaCaption,
+.xfaRight > .xfaCaptionForCheckButton {
+  max-height: 100%;
+}
+
+.xfaTop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.xfaBottom {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.xfaTop > .xfaCaption,
+.xfaTop > .xfaCaptionForCheckButton,
+.xfaBottom > .xfaCaption,
+.xfaBottom > .xfaCaptionForCheckButton {
+  width: 100%;
+}
+
+.xfaBorder {
+  background-color: transparent;
+  position: absolute;
+  pointer-events: none;
+}
+
+.xfaWrapped {
+  width: 100%;
+  height: 100%;
+}
+
+.xfaTextfield:focus,
+.xfaSelect:focus {
+  background-image: none;
+  background-color: transparent;
+  outline: var(--xfa-focus-outline);
+  outline-offset: -1px;
+}
+
+.xfaCheckbox:focus,
+.xfaRadio:focus {
+  outline: var(--xfa-focus-outline);
+}
+
+.xfaTextfield,
+.xfaSelect {
+  height: 100%;
+  width: 100%;
+  flex: 1 1 auto;
+  border: none;
+  resize: none;
+  background-image: var(--xfa-unfocused-field-background);
+}
+
+.xfaSelect {
+  padding-inline: 2px;
+}
+
+.xfaTop > .xfaTextfield,
+.xfaTop > .xfaSelect,
+.xfaBottom > .xfaTextfield,
+.xfaBottom > .xfaSelect {
+  flex: 0 1 auto;
+}
+
+.xfaButton {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border: none;
+  text-align: center;
+}
+
+.xfaLink {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.xfaCheckbox,
+.xfaRadio {
+  width: 100%;
+  height: 100%;
+  flex: 0 0 auto;
+  border: none;
+}
+
+.xfaRich {
+  white-space: pre-wrap;
+  width: 100%;
+  height: 100%;
+}
+
+.xfaImage {
+  -o-object-position: left top;
+  object-position: left top;
+  -o-object-fit: contain;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.xfaLrTb,
+.xfaRlTb,
+.xfaTb {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.xfaLr {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.xfaRl {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+}
+
+.xfaTb > div {
+  justify-content: left;
+}
+
+.xfaPosition {
+  position: relative;
+}
+
+.xfaArea {
+  position: relative;
+}
+
+.xfaValignMiddle {
+  display: flex;
+  align-items: center;
+}
+
+.xfaTable {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.xfaTable .xfaRow {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.xfaTable .xfaRlRow {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  flex: 1;
+}
+
+.xfaTable .xfaRlRow > div {
+  flex: 1;
+}
+
+.xfaNonInteractive input,
+.xfaNonInteractive textarea,
+.xfaDisabled input,
+.xfaDisabled textarea,
+.xfaReadOnly input,
+.xfaReadOnly textarea {
+  background: initial;
+}
+
+@media print {
+  .xfaTextfield,
+  .xfaSelect {
+    background: transparent;
+  }
+
+  .xfaSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-indent: 1px;
+    text-overflow: "";
+  }
+}
+
+:root {
+  --focus-outline: solid 2px blue;
+  --hover-outline: dashed 2px blue;
+  --freetext-line-height: 1.35;
+  --freetext-padding: 2px;
+  --editorFreeText-editing-cursor: text;
+  --editorInk-editing-cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M0.0189877 13.6645L0.612989 10.4635C0.687989 10.0545 0.884989 9.6805 1.18099 9.3825L9.98199 0.5805C10.756 -0.1925 12.015 -0.1945 12.792 0.5805L14.42 2.2085C15.194 2.9835 15.194 4.2435 14.42 5.0185L5.61599 13.8215C5.31999 14.1165 4.94599 14.3125 4.53799 14.3875L1.33599 14.9815C1.26599 14.9935 1.19799 15.0005 1.12999 15.0005C0.832989 15.0005 0.544988 14.8835 0.330988 14.6695C0.0679874 14.4055 -0.0490122 14.0305 0.0189877 13.6645Z' fill='white'/%3E %3Cpath d='M0.0189877 13.6645L0.612989 10.4635C0.687989 10.0545 0.884989 9.6805 1.18099 9.3825L9.98199 0.5805C10.756 -0.1925 12.015 -0.1945 12.792 0.5805L14.42 2.2085C15.194 2.9835 15.194 4.2435 14.42 5.0185L5.61599 13.8215C5.31999 14.1165 4.94599 14.3125 4.53799 14.3875L1.33599 14.9815C1.26599 14.9935 1.19799 15.0005 1.12999 15.0005C0.832989 15.0005 0.544988 14.8835 0.330988 14.6695C0.0679874 14.4055 -0.0490122 14.0305 0.0189877 13.6645ZM12.472 5.1965L13.632 4.0365L13.631 3.1885L11.811 1.3675L10.963 1.3685L9.80299 2.5285L12.472 5.1965ZM4.31099 13.1585C4.47099 13.1285 4.61799 13.0515 4.73399 12.9345L11.587 6.0815L8.91899 3.4135L2.06599 10.2655C1.94899 10.3835 1.87199 10.5305 1.84099 10.6915L1.36699 13.2485L1.75199 13.6335L4.31099 13.1585Z' fill='black'/%3E %3C/svg%3E") 0 16, pointer;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.1), (min-resolution: 1.1dppx) {
+  :root {
+    --editorFreeText-editing-cursor: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M12 2.75H12.5V2.25V1V0.5H12H10.358C9.91165 0.5 9.47731 0.625661 9.09989 0.860442L9.09886 0.861087L8 1.54837L6.89997 0.860979L6.89911 0.860443C6.5218 0.625734 6.08748 0.5 5.642 0.5H4H3.5V1V2.25V2.75H4H5.642C5.66478 2.75 5.6885 2.75641 5.71008 2.76968C5.71023 2.76977 5.71038 2.76986 5.71053 2.76995L6.817 3.461C6.81704 3.46103 6.81709 3.46105 6.81713 3.46108C6.81713 3.46108 6.81713 3.46108 6.81714 3.46109C6.8552 3.48494 6.876 3.52285 6.876 3.567V8V12.433C6.876 12.4771 6.85523 12.515 6.81722 12.5389C6.81715 12.5389 6.81707 12.539 6.817 12.539L5.70953 13.23C5.70941 13.2301 5.70929 13.2302 5.70917 13.2303C5.68723 13.2438 5.6644 13.25 5.641 13.25H4H3.5V13.75V15V15.5H4H5.642C6.08835 15.5 6.52269 15.3743 6.90011 15.1396L6.90086 15.1391L8 14.4526L9.10003 15.14L9.10089 15.1406C9.47831 15.3753 9.91265 15.501 10.359 15.501H12H12.5V15.001V13.751V13.251H12H10.358C10.3352 13.251 10.3115 13.2446 10.2899 13.2313C10.2897 13.2312 10.2896 13.2311 10.2895 13.231L9.183 12.54C9.18298 12.54 9.18295 12.54 9.18293 12.54C9.18291 12.5399 9.18288 12.5399 9.18286 12.5399C9.14615 12.5169 9.125 12.4797 9.125 12.434V8V3.567C9.125 3.52266 9.14603 3.48441 9.18364 3.4606C9.18377 3.46052 9.1839 3.46043 9.18404 3.46035L10.2895 2.76995C10.2896 2.76985 10.2898 2.76975 10.2899 2.76966C10.3119 2.75619 10.3346 2.75 10.358 2.75H12Z' fill='black' stroke='white'/%3E %3C/svg%3E") 0 16,
+      text;
+  }
+}
+
+@media screen and (forced-colors: active) {
+  :root {
+    --focus-outline: solid 3px ButtonText;
+    --hover-outline: dashed 3px ButtonText;
+  }
+}
+
+[data-editor-rotation="90"] {
+  transform: rotate(90deg);
+}
+[data-editor-rotation="180"] {
+  transform: rotate(180deg);
+}
+[data-editor-rotation="270"] {
+  transform: rotate(270deg);
+}
+
+.annotationEditorLayer {
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: calc(100px * var(--scale-factor));
+  transform-origin: 0 0;
+  cursor: auto;
+  z-index: 4;
+}
+
+.annotationEditorLayer.freeTextEditing {
+  cursor: var(--editorFreeText-editing-cursor);
+}
+
+.annotationEditorLayer.inkEditing {
+  cursor: var(--editorInk-editing-cursor);
+}
+
+.annotationEditorLayer .selectedEditor {
+  outline: var(--focus-outline);
+  resize: none;
+}
+
+.annotationEditorLayer .freeTextEditor {
+  position: absolute;
+  background: transparent;
+  border-radius: 3px;
+  padding: calc(var(--freetext-padding) * var(--scale-factor));
+  resize: none;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  transform-origin: 0 0;
+  touch-action: none;
+  cursor: auto;
+}
+
+.annotationEditorLayer .freeTextEditor .internal {
+  background: transparent;
+  border: none;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  white-space: nowrap;
+  resize: none;
+  font: 10px sans-serif;
+  line-height: var(--freetext-line-height);
+}
+
+.annotationEditorLayer .freeTextEditor .overlay {
+  position: absolute;
+  display: none;
+  background: transparent;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.annotationEditorLayer .freeTextEditor .overlay.enabled {
+  display: block;
+}
+
+.annotationEditorLayer .freeTextEditor .internal:empty::before {
+  content: attr(default-content);
+  color: gray;
+}
+
+.annotationEditorLayer .freeTextEditor .internal:focus {
+  outline: none;
+}
+
+.annotationEditorLayer .inkEditor.disabled {
+  resize: none;
+}
+
+.annotationEditorLayer .inkEditor.disabled.selectedEditor {
+  resize: horizontal;
+}
+
+.annotationEditorLayer .freeTextEditor:hover:not(.selectedEditor),
+.annotationEditorLayer .inkEditor:hover:not(.selectedEditor) {
+  outline: var(--hover-outline);
+}
+
+.annotationEditorLayer .inkEditor {
+  position: absolute;
+  background: transparent;
+  border-radius: 3px;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transform-origin: 0 0;
+  cursor: auto;
+}
+
+.annotationEditorLayer .inkEditor.editing {
+  resize: none;
+  cursor: inherit;
+}
+
+.annotationEditorLayer .inkEditor .inkEditorCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+:root {
+  --viewer-container-height: 0;
+  --pdfViewer-padding-bottom: 0;
+  --page-margin: 1px auto -8px;
+  --page-border: 9px solid transparent;
+  --spreadHorizontalWrapped-margin-LR: -3.5px;
+  --loading-icon-delay: 400ms;
+}
+
+@media screen and (forced-colors: active) {
+  :root {
+    --pdfViewer-padding-bottom: 9px;
+    --page-margin: 8px auto -1px;
+    --page-border: 1px solid CanvasText;
+    --spreadHorizontalWrapped-margin-LR: 3.5px;
+  }
+}
+
+[data-main-rotation="90"] {
+  transform: rotate(90deg) translateY(-100%);
+}
+[data-main-rotation="180"] {
+  transform: rotate(180deg) translate(-100%, -100%);
+}
+[data-main-rotation="270"] {
+  transform: rotate(270deg) translateX(-100%);
+}
+
+.pdfViewer {
+  /* Define this variable here and not in :root to avoid to reflow all the UI
+     when scaling (see #15929). */
+  --scale-factor: 1;
+
+  padding-bottom: var(--pdfViewer-padding-bottom);
+}
+
+.pdfViewer .canvasWrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.pdfViewer .page {
+  direction: ltr;
+  width: 816px;
+  height: 1056px;
+  margin: var(--page-margin);
+  position: relative;
+  overflow: visible;
+  border: var(--page-border);
+  background-clip: content-box;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.pdfViewer .dummyPage {
+  position: relative;
+  width: 0;
+  height: var(--viewer-container-height);
+}
+
+.pdfViewer.removePageBorders .page {
+  margin: 0 auto 10px;
+  border: none;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pdfViewer.scrollHorizontal,
+.pdfViewer.scrollWrapped,
+.spread {
+  margin-left: 3.5px;
+  margin-right: 3.5px;
+  text-align: center;
+}
+
+.pdfViewer.scrollHorizontal,
+.spread {
+  white-space: nowrap;
+}
+
+.pdfViewer.removePageBorders,
+.pdfViewer.scrollHorizontal .spread,
+.pdfViewer.scrollWrapped .spread {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.spread .page,
+.spread .dummyPage,
+.pdfViewer.scrollHorizontal .page,
+.pdfViewer.scrollWrapped .page,
+.pdfViewer.scrollHorizontal .spread,
+.pdfViewer.scrollWrapped .spread {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.spread .page,
+.pdfViewer.scrollHorizontal .page,
+.pdfViewer.scrollWrapped .page {
+  margin-left: var(--spreadHorizontalWrapped-margin-LR);
+  margin-right: var(--spreadHorizontalWrapped-margin-LR);
+}
+
+.pdfViewer.removePageBorders .spread .page,
+.pdfViewer.removePageBorders.scrollHorizontal .page,
+.pdfViewer.removePageBorders.scrollWrapped .page {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.pdfViewer .page canvas {
+  margin: 0;
+  display: block;
+}
+
+.pdfViewer .page canvas .structTree {
+  contain: strict;
+}
+
+.pdfViewer .page canvas[hidden] {
+  display: none;
+}
+
+.pdfViewer .page canvas[zooming] {
+  width: 100%;
+  height: 100%;
+}
+
+.pdfViewer .page.loadingIcon:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='animation:spinLoadingIcon 1s steps(12,end) infinite'%3E%3Cstyle%3E@keyframes spinLoadingIcon%7Bto%7Btransform:rotate(360deg)%7D%7D%3C/style%3E%3Cpath d='M7 3V1s0-1 1-1 1 1 1 1v2s0 1-1 1-1-1-1-1z'/%3E%3Cpath d='M4.63 4.1l-1-1.73S3.13 1.5 4 1c.87-.5 1.37.37 1.37.37l1 1.73s.5.87-.37 1.37c-.87.57-1.37-.37-1.37-.37z' fill-opacity='.93'/%3E%3Cpath d='M3.1 6.37l-1.73-1S.5 4.87 1 4c.5-.87 1.37-.37 1.37-.37l1.73 1s.87.5.37 1.37c-.5.87-1.37.37-1.37.37z' fill-opacity='.86'/%3E%3Cpath d='M3 9H1S0 9 0 8s1-1 1-1h2s1 0 1 1-1 1-1 1z' fill-opacity='.79'/%3E%3Cpath d='M4.1 11.37l-1.73 1S1.5 12.87 1 12c-.5-.87.37-1.37.37-1.37l1.73-1s.87-.5 1.37.37c.5.87-.37 1.37-.37 1.37z' fill-opacity='.72'/%3E%3Cpath d='M3.63 13.56l1-1.73s.5-.87 1.37-.37c.87.5.37 1.37.37 1.37l-1 1.73s-.5.87-1.37.37c-.87-.5-.37-1.37-.37-1.37z' fill-opacity='.65'/%3E%3Cpath d='M7 15v-2s0-1 1-1 1 1 1 1v2s0 1-1 1-1-1-1-1z' fill-opacity='.58'/%3E%3Cpath d='M10.63 14.56l-1-1.73s-.5-.87.37-1.37c.87-.5 1.37.37 1.37.37l1 1.73s.5.87-.37 1.37c-.87.5-1.37-.37-1.37-.37z' fill-opacity='.51'/%3E%3Cpath d='M13.56 12.37l-1.73-1s-.87-.5-.37-1.37c.5-.87 1.37-.37 1.37-.37l1.73 1s.87.5.37 1.37c-.5.87-1.37.37-1.37.37z' fill-opacity='.44'/%3E%3Cpath d='M15 9h-2s-1 0-1-1 1-1 1-1h2s1 0 1 1-1 1-1 1z' fill-opacity='.37'/%3E%3Cpath d='M14.56 5.37l-1.73 1s-.87.5-1.37-.37c-.5-.87.37-1.37.37-1.37l1.73-1s.87-.5 1.37.37c.5.87-.37 1.37-.37 1.37z' fill-opacity='.3'/%3E%3Cpath d='M9.64 3.1l.98-1.66s.5-.874 1.37-.37c.87.5.37 1.37.37 1.37l-1 1.73s-.5.87-1.37.37c-.87-.5-.37-1.37-.37-1.37z' fill-opacity='.23'/%3E%3C/svg%3E") center no-repeat;
+  display: none;
+  /* Using a delay with background-image doesn't work,
+     consequently we use the display. */
+  transition-property: display;
+  transition-delay: var(--loading-icon-delay);
+  z-index: 5;
+  contain: strict;
+}
+
+.pdfViewer .page.loading:after {
+  display: block;
+}
+
+.pdfViewer .page:not(.loading):after {
+  transition-property: none;
+  display: none;
+}
+
+.pdfViewer.enablePermissions .textLayer span {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+  cursor: not-allowed;
+}
+
+.pdfPresentationMode .pdfViewer {
+  padding-bottom: 0;
+}
+
+.pdfPresentationMode .spread {
+  margin: 0;
+}
+
+.pdfPresentationMode .pdfViewer .page {
+  margin: 0 auto;
+  border: 2px solid transparent;
+}
+
+:root {
+  --dir-factor: 1;
+  --inline-start: left;
+  --inline-end: right;
+
+  --sidebar-width: 200px;
+  --sidebar-transition-duration: 200ms;
+  --sidebar-transition-timing-function: ease;
+
+  --toolbar-icon-opacity: 0.7;
+  --doorhanger-icon-opacity: 0.9;
+
+  --main-color: rgba(12, 12, 13, 1);
+  --body-bg-color: rgba(212, 212, 215, 1);
+  --progressBar-color: rgba(10, 132, 255, 1);
+  --progressBar-bg-color: rgba(221, 221, 222, 1);
+  --progressBar-blend-color: rgba(116, 177, 239, 1);
+  --scrollbar-color: auto;
+  --scrollbar-bg-color: auto;
+  --toolbar-icon-bg-color: rgba(0, 0, 0, 1);
+  --toolbar-icon-hover-bg-color: rgba(0, 0, 0, 1);
+
+  --sidebar-narrow-bg-color: rgba(212, 212, 215, 0.9);
+  --sidebar-toolbar-bg-color: rgba(245, 246, 247, 1);
+  --toolbar-bg-color: rgba(249, 249, 250, 1);
+  --toolbar-border-color: rgba(184, 184, 184, 1);
+  --toolbar-box-shadow: 0 1px 0 var(--toolbar-border-color);
+  --toolbar-border-bottom: none;
+  --toolbarSidebar-box-shadow: inset calc(-1px * var(--dir-factor)) 0 0
+      rgba(0, 0, 0, 0.25),
+    0 1px 0 rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+  --toolbarSidebar-border-bottom: none;
+  --button-hover-color: rgba(221, 222, 223, 1);
+  --toggled-btn-color: rgba(0, 0, 0, 1);
+  --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
+  --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
+  --dropdown-btn-bg-color: rgba(215, 215, 219, 1);
+  --dropdown-btn-border: none;
+  --separator-color: rgba(0, 0, 0, 0.3);
+  --field-color: rgba(6, 6, 6, 1);
+  --field-bg-color: rgba(255, 255, 255, 1);
+  --field-border-color: rgba(187, 187, 188, 1);
+  --treeitem-color: rgba(0, 0, 0, 0.8);
+  --treeitem-hover-color: rgba(0, 0, 0, 0.9);
+  --treeitem-selected-color: rgba(0, 0, 0, 0.9);
+  --treeitem-selected-bg-color: rgba(0, 0, 0, 0.25);
+  --sidebaritem-bg-color: rgba(0, 0, 0, 0.15);
+  --doorhanger-bg-color: rgba(255, 255, 255, 1);
+  --doorhanger-border-color: rgba(12, 12, 13, 0.2);
+  --doorhanger-hover-color: rgba(12, 12, 13, 1);
+  --doorhanger-hover-bg-color: rgba(237, 237, 237, 1);
+  --doorhanger-separator-color: rgba(222, 222, 222, 1);
+  --dialog-button-border: none;
+  --dialog-button-bg-color: rgba(12, 12, 13, 0.1);
+  --dialog-button-hover-bg-color: rgba(12, 12, 13, 0.3);
+
+  --loading-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' style='animation:spinLoadingIcon 1s steps(12,end) infinite'%3E%3Cstyle%3E@keyframes spinLoadingIcon%7Bto%7Btransform:rotate(360deg)%7D%7D%3C/style%3E%3Cpath d='M7 3V1s0-1 1-1 1 1 1 1v2s0 1-1 1-1-1-1-1z'/%3E%3Cpath d='M4.63 4.1l-1-1.73S3.13 1.5 4 1c.87-.5 1.37.37 1.37.37l1 1.73s.5.87-.37 1.37c-.87.57-1.37-.37-1.37-.37z' fill-opacity='.93'/%3E%3Cpath d='M3.1 6.37l-1.73-1S.5 4.87 1 4c.5-.87 1.37-.37 1.37-.37l1.73 1s.87.5.37 1.37c-.5.87-1.37.37-1.37.37z' fill-opacity='.86'/%3E%3Cpath d='M3 9H1S0 9 0 8s1-1 1-1h2s1 0 1 1-1 1-1 1z' fill-opacity='.79'/%3E%3Cpath d='M4.1 11.37l-1.73 1S1.5 12.87 1 12c-.5-.87.37-1.37.37-1.37l1.73-1s.87-.5 1.37.37c.5.87-.37 1.37-.37 1.37z' fill-opacity='.72'/%3E%3Cpath d='M3.63 13.56l1-1.73s.5-.87 1.37-.37c.87.5.37 1.37.37 1.37l-1 1.73s-.5.87-1.37.37c-.87-.5-.37-1.37-.37-1.37z' fill-opacity='.65'/%3E%3Cpath d='M7 15v-2s0-1 1-1 1 1 1 1v2s0 1-1 1-1-1-1-1z' fill-opacity='.58'/%3E%3Cpath d='M10.63 14.56l-1-1.73s-.5-.87.37-1.37c.87-.5 1.37.37 1.37.37l1 1.73s.5.87-.37 1.37c-.87.5-1.37-.37-1.37-.37z' fill-opacity='.51'/%3E%3Cpath d='M13.56 12.37l-1.73-1s-.87-.5-.37-1.37c.5-.87 1.37-.37 1.37-.37l1.73 1s.87.5.37 1.37c-.5.87-1.37.37-1.37.37z' fill-opacity='.44'/%3E%3Cpath d='M15 9h-2s-1 0-1-1 1-1 1-1h2s1 0 1 1-1 1-1 1z' fill-opacity='.37'/%3E%3Cpath d='M14.56 5.37l-1.73 1s-.87.5-1.37-.37c-.5-.87.37-1.37.37-1.37l1.73-1s.87-.5 1.37.37c.5.87-.37 1.37-.37 1.37z' fill-opacity='.3'/%3E%3Cpath d='M9.64 3.1l.98-1.66s.5-.874 1.37-.37c.87.5.37 1.37.37 1.37l-1 1.73s-.5.87-1.37.37c-.87-.5-.37-1.37-.37-1.37z' fill-opacity='.23'/%3E%3C/svg%3E");
+  --treeitem-expanded-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M10 13l4-7H6z'/%3E%3C/svg%3E");
+  --treeitem-collapsed-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M13 9L6 5v8z'/%3E%3C/svg%3E");
+  --toolbarButton-editorFreeText-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8.625 2.942C8.625 2.725 8.735 2.527 8.918 2.412L10.026 1.72C10.126 1.658 10.24 1.625 10.358 1.625H12V0.375H10.358C10.006 0.375 9.663 0.474 9.364 0.66L8.256 1.353C8.161 1.412 8.081 1.488 8 1.562C7.918 1.488 7.839 1.412 7.744 1.353L6.635 0.66C6.336 0.474 5.993 0.375 5.642 0.375H4V1.625H5.642C5.759 1.625 5.874 1.658 5.974 1.72L7.082 2.412C7.266 2.527 7.376 2.725 7.376 2.942V8V13.058C7.376 13.275 7.266 13.473 7.082 13.588L5.973 14.28C5.873 14.342 5.759 14.375 5.641 14.375H4V15.625H5.642C5.994 15.625 6.337 15.526 6.636 15.34L7.744 14.648C7.84 14.588 7.919 14.512 8 14.439C8.081 14.512 8.161 14.588 8.256 14.648L9.365 15.341C9.664 15.527 10.007 15.626 10.359 15.626H12V14.376H10.358C10.241 14.376 10.126 14.343 10.026 14.281L8.918 13.589C8.734 13.474 8.625 13.276 8.625 13.059V8V2.942Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-editorInk-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M2.49913 12.6251C2.61913 12.6251 2.73913 12.6051 2.85713 12.5661L6.29013 11.4201L13.2891 4.4221C14.0191 3.6911 14.0191 2.5011 13.2891 1.7701L12.2291 0.710098C11.4971 -0.0199023 10.3091 -0.0199023 9.57713 0.710098L2.57813 7.7091L1.43313 11.1451C1.29813 11.5511 1.40213 11.9931 1.70513 12.2951C1.92113 12.5101 2.20613 12.6251 2.49913 12.6251ZM10.4611 1.5951C10.7031 1.3511 11.1021 1.3511 11.3441 1.5951L12.4051 2.6561C12.6491 2.8991 12.6491 3.2961 12.4051 3.5391L11.3401 4.6051L9.39513 2.6601L10.4611 1.5951ZM3.67013 8.3851L8.51013 3.5451L10.4541 5.4891L5.61413 10.3301L2.69713 11.3031L3.67013 8.3851Z' fill='black'/%3E %3Cpath d='M14.8169 13.314L13.0229 13.862C12.3309 14.073 11.5909 14.111 10.8859 13.968L8.80391 13.551C7.58491 13.308 6.29791 13.48 5.18491 14.036C3.95291 14.652 2.46691 14.412 1.49191 13.436L1.44091 13.385L0.60791 14.321C1.46291 15.175 2.59991 15.625 3.75291 15.625C4.42891 15.625 5.10991 15.471 5.74391 15.153C6.60891 14.721 7.60891 14.586 8.55891 14.777L10.6409 15.194C11.5509 15.376 12.5009 15.327 13.3879 15.056L15.1819 14.508L14.8169 13.314Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-menuArrow-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8.23336 10.4664L11.8474 6.85339C11.894 6.8071 11.931 6.75203 11.9563 6.69136C11.9816 6.63069 11.9946 6.56562 11.9946 6.49989C11.9946 6.43417 11.9816 6.3691 11.9563 6.30843C11.931 6.24776 11.894 6.19269 11.8474 6.14639C11.7536 6.05266 11.6264 6 11.4939 6C11.3613 6 11.2341 6.05266 11.1404 6.14639L7.99236 9.29339L4.84736 6.14739C4.75305 6.05631 4.62675 6.00592 4.49566 6.00706C4.36456 6.0082 4.23915 6.06078 4.14645 6.15348C4.05374 6.24619 4.00116 6.37159 4.00002 6.50269C3.99888 6.63379 4.04928 6.76009 4.14036 6.85439L7.75236 10.4674L8.23336 10.4664Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-sidebarToggle-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill-rule='evenodd' d='M16 4V12.25C16 12.7804 15.7893 13.2891 15.4142 13.6642C15.0391 14.0393 14.5304 14.25 14 14.25H2C1.46957 14.25 0.960859 14.0393 0.585786 13.6642C0.210714 13.2891 0 12.7804 0 12.25V4C0 3.46957 0.210714 2.96086 0.585786 2.58579C0.960859 2.21071 1.46957 2 2 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4ZM1.25 3.85V12.4L1.85 13H6.75V3.25H1.85L1.25 3.85ZM14.15 13H8V3.25H14.15L14.75 3.85V12.4L14.15 13ZM5.35355 10.1464C5.44732 10.2402 5.5 10.3674 5.5 10.5C5.5 10.6326 5.44732 10.7598 5.35355 10.8536C5.25979 10.9473 5.13261 11 5 11H3C2.86739 11 2.74021 10.9473 2.64645 10.8536C2.55268 10.7598 2.5 10.6326 2.5 10.5C2.5 10.3674 2.55268 10.2402 2.64645 10.1464C2.74021 10.0527 2.86739 10 3 10H5C5.13261 10 5.25979 10.0527 5.35355 10.1464ZM5.5 8C5.5 7.86739 5.44732 7.74021 5.35355 7.64645C5.25979 7.55268 5.13261 7.5 5 7.5H3C2.86739 7.5 2.74021 7.55268 2.64645 7.64645C2.55268 7.74021 2.5 7.86739 2.5 8C2.5 8.13261 2.55268 8.25979 2.64645 8.35355C2.74021 8.44732 2.86739 8.5 3 8.5H5C5.13261 8.5 5.25979 8.44732 5.35355 8.35355C5.44732 8.25979 5.5 8.13261 5.5 8ZM5.35355 5.14645C5.44732 5.24021 5.5 5.36739 5.5 5.5C5.5 5.63261 5.44732 5.75979 5.35355 5.85355C5.25979 5.94732 5.13261 6 5 6H3C2.86739 6 2.74021 5.94732 2.64645 5.85355C2.55268 5.75979 2.5 5.63261 2.5 5.5C2.5 5.36739 2.55268 5.24021 2.64645 5.14645C2.74021 5.05268 2.86739 5 3 5H5C5.13261 5 5.25979 5.05268 5.35355 5.14645Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-secondaryToolbarToggle-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M2.53406 13.818L7.99906 8.35203L8.00006 7.64703L2.53606 2.18203C2.41769 2.06965 2.26012 2.00795 2.09692 2.01006C1.93372 2.01218 1.7778 2.07795 1.66239 2.19336C1.54698 2.30877 1.48121 2.46469 1.47909 2.62789C1.47697 2.79109 1.53868 2.94867 1.65106 3.06703L6.58506 7.99803L1.65006 12.932C1.53754 13.0503 1.47565 13.2078 1.47758 13.371C1.47951 13.5342 1.54511 13.6902 1.66039 13.8057C1.77567 13.9213 1.93152 13.9872 2.09472 13.9895C2.25792 13.9918 2.41557 13.9303 2.53406 13.818ZM8.53406 13.818L13.9991 8.35203L14.0001 7.64703L8.53606 2.18203C8.4177 2.06965 8.26012 2.00795 8.09692 2.01006C7.93372 2.01218 7.7778 2.07795 7.66239 2.19336C7.54698 2.30877 7.48121 2.46469 7.47909 2.62789C7.47697 2.79109 7.53868 2.94867 7.65106 3.06703L12.5851 7.99803L7.65006 12.932C7.53754 13.0503 7.47565 13.2078 7.47758 13.371C7.47951 13.5342 7.54511 13.6902 7.66039 13.8057C7.77567 13.9213 7.93152 13.9872 8.09472 13.9895C8.25792 13.9918 8.41557 13.9303 8.53406 13.818Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-pageUp-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8.35179 5.001L13.8178 10.466C13.876 10.524 13.9222 10.5929 13.9537 10.6688C13.9852 10.7447 14.0013 10.826 14.0012 10.9082C14.0011 10.9904 13.9848 11.0717 13.9531 11.1475C13.9215 11.2234 13.8751 11.2922 13.8168 11.35C13.6991 11.4668 13.5401 11.5324 13.3743 11.5324C13.2085 11.5324 13.0494 11.4668 12.9318 11.35L7.99879 6.416L3.06679 11.349C2.94842 11.4614 2.79085 11.5231 2.62765 11.521C2.46445 11.5189 2.30853 11.4531 2.19312 11.3377C2.07771 11.2223 2.01193 11.0663 2.00982 10.9031C2.0077 10.7399 2.06941 10.5824 2.18179 10.464L7.64779 5L8.35179 5.001Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-pageDown-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8.35176 10.9989L13.8178 5.53391C13.876 5.47594 13.9222 5.40702 13.9537 5.33113C13.9851 5.25524 14.0013 5.17387 14.0012 5.0917C14.0011 5.00954 13.9848 4.9282 13.9531 4.85238C13.9215 4.77656 13.8751 4.70775 13.8168 4.64991C13.6991 4.53309 13.5401 4.46753 13.3743 4.46753C13.2085 4.46753 13.0494 4.53309 12.9318 4.64991L7.99776 9.58491L3.06776 4.65091C2.9494 4.53853 2.79183 4.47682 2.62863 4.47894C2.46542 4.48106 2.3095 4.54683 2.19409 4.66224C2.07868 4.77765 2.01291 4.93357 2.01079 5.09677C2.00868 5.25997 2.07039 5.41754 2.18276 5.53591L7.64776 10.9999L8.35176 10.9989Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-zoomOut-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M13.375 9.25C13.5408 9.25 13.6997 9.18415 13.8169 9.06694C13.9342 8.94973 14 8.79076 14 8.625C14 8.45924 13.9342 8.30027 13.8169 8.18306C13.6997 8.06585 13.5408 8 13.375 8H2.625C2.45924 8 2.30027 8.06585 2.18306 8.18306C2.06585 8.30027 2 8.45924 2 8.625C2 8.79076 2.06585 8.94973 2.18306 9.06694C2.30027 9.18415 2.45924 9.25 2.625 9.25H13.375Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-zoomIn-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M7.00488 9.75V14C7.00488 14.1658 7.07073 14.3247 7.18794 14.4419C7.30515 14.5592 7.46412 14.625 7.62988 14.625C7.79564 14.625 7.95461 14.5592 8.07183 14.4419C8.18904 14.3247 8.25488 14.1658 8.25488 14V9.75L8.75488 9.25H13.0049C13.1706 9.25 13.3296 9.18415 13.4468 9.06694C13.564 8.94973 13.6299 8.79076 13.6299 8.625C13.6299 8.45924 13.564 8.30027 13.4468 8.18306C13.3296 8.06585 13.1706 8 13.0049 8H8.75488L8.25488 7.5V3.25C8.25488 3.08424 8.18904 2.92527 8.07183 2.80806C7.95461 2.69085 7.79564 2.625 7.62988 2.625C7.46412 2.625 7.30515 2.69085 7.18794 2.80806C7.07073 2.92527 7.00488 3.08424 7.00488 3.25V7.5L6.50488 8H2.25488C2.08912 8 1.93015 8.06585 1.81294 8.18306C1.69573 8.30027 1.62988 8.45924 1.62988 8.625C1.62988 8.79076 1.69573 8.94973 1.81294 9.06694C1.93015 9.18415 2.08912 9.25 2.25488 9.25H6.39188L7.00488 9.75Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-presentationMode-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M1.5 3C1.5 2.72421 1.72421 2.5 2 2.5H14C14.2758 2.5 14.5 2.72421 14.5 3V11C14.5 11.2758 14.2758 11.5 14 11.5H2C1.72421 11.5 1.5 11.2758 1.5 11V3ZM2 1C0.895786 1 0 1.89579 0 3V11C0 12.1042 0.895786 13 2 13H2.64979L1.35052 15.2499L2.64949 16L4.38194 13H11.6391L13.3715 16L14.6705 15.2499L13.3712 13H14C15.1042 13 16 12.1042 16 11V3C16 1.89579 15.1042 1 14 1H2ZM5.79501 4.64401V9.35601C5.79501 9.85001 6.32901 10.159 6.75701 9.91401L10.88 7.55801C11.312 7.31201 11.312 6.68901 10.88 6.44201L6.75701 4.08601C6.32801 3.84101 5.79501 4.15001 5.79501 4.64401Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-print-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M13 4H12V2C12 1.46957 11.7893 0.960859 11.4142 0.585786C11.0391 0.210714 10.5304 0 10 0L6 0C5.46957 0 4.96086 0.210714 4.58579 0.585786C4.21071 0.960859 4 1.46957 4 2V4H3C2.46957 4 1.96086 4.21071 1.58579 4.58579C1.21071 4.96086 1 5.46957 1 6V11C1 11.5304 1.21071 12.0391 1.58579 12.4142C1.96086 12.7893 2.46957 13 3 13H4V14C4 14.5304 4.21071 15.0391 4.58579 15.4142C4.96086 15.7893 5.46957 16 6 16H10C10.5304 16 11.0391 15.7893 11.4142 15.4142C11.7893 15.0391 12 14.5304 12 14V13H13C13.5304 13 14.0391 12.7893 14.4142 12.4142C14.7893 12.0391 15 11.5304 15 11V6C15 5.46957 14.7893 4.96086 14.4142 4.58579C14.0391 4.21071 13.5304 4 13 4V4ZM10.75 14.15L10.15 14.75H5.85L5.25 14.15V10H10.75V14.15ZM10.75 4H5.25V1.85L5.85 1.25H10.15L10.75 1.85V4V4ZM13 7.6L12.6 8H11.4L11 7.6V6.4L11.4 6H12.6L13 6.4V7.6Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-openFile-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M10.4287 1.08398C10.5111 1.02905 10.608 0.999824 10.707 1H14.7L15 1.3V5.293C15 5.39194 14.9706 5.48864 14.9156 5.57088C14.8606 5.65311 14.7824 5.71718 14.691 5.75498C14.5996 5.79277 14.499 5.80259 14.402 5.78319C14.3049 5.76379 14.2159 5.71605 14.146 5.646L12.973 4.473L12.692 4.192L9.067 7.817C8.94923 7.93347 8.79034 7.99888 8.6247 7.99907C8.45907 7.99925 8.30003 7.93421 8.182 7.818C8.06518 7.70036 7.99962 7.54129 7.99962 7.3755C7.99962 7.20971 8.06518 7.05065 8.182 6.933L11.807 3.308L10.353 1.854C10.2829 1.78407 10.2351 1.6949 10.2158 1.59779C10.1964 1.50068 10.2063 1.40001 10.2442 1.30854C10.2821 1.21707 10.3464 1.13891 10.4287 1.08398ZM7.81694 2.06694C7.69973 2.18415 7.54076 2.25 7.375 2.25H2.85L2.25 2.85V13.15L2.85 13.75H13.15L13.75 13.15V8.625C13.75 8.45924 13.8158 8.30027 13.9331 8.18306C14.0503 8.06585 14.2092 8 14.375 8C14.5408 8 14.6997 8.06585 14.8169 8.18306C14.9342 8.30027 15 8.45924 15 8.625V13C15 13.5304 14.7893 14.0391 14.4142 14.4142C14.0391 14.7893 13.5304 15 13 15H3C2.46957 15 1.96086 14.7893 1.58579 14.4142C1.21071 14.0391 1 13.5304 1 13V3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H7.375C7.54076 1 7.69973 1.06585 7.81694 1.18306C7.93415 1.30027 8 1.45924 8 1.625C8 1.79076 7.93415 1.94973 7.81694 2.06694Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-download-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M9.79407 7.31811H7.86307C7.41807 7.31811 7.19407 7.85711 7.50907 8.17211L10.1911 10.8541C10.3861 11.0491 10.7031 11.0491 10.8981 10.8541L13.5801 8.17211C13.8951 7.85711 13.6721 7.31811 13.2261 7.31811H11.2941V4.38211H11.2961V3.13211H11.2941V2.30811H9.79407V3.13211H9.79107V4.38211H9.79507V7.31811H9.79407Z' fill='black'/%3E %3Cpath d='M14 3.13208H12.796V4.38208H14C14.345 4.38208 14.625 4.66208 14.625 5.00708V13.0071C14.625 13.3521 14.345 13.6321 14 13.6321H2C1.655 13.6321 1.375 13.3521 1.375 13.0071V3.00708C1.375 2.66208 1.655 2.38208 2 2.38208H5.643C5.82 2.38208 5.989 2.45808 6.108 2.58908L7.536 4.17508C7.654 4.30708 7.823 4.38208 8 4.38208H8.291V3.13208H8.278L7.036 1.75208C6.681 1.35808 6.173 1.13208 5.642 1.13208H2C0.966 1.13208 0.125 1.97308 0.125 3.00708V13.0071C0.125 14.0411 0.966 14.8821 2 14.8821H14C15.034 14.8821 15.875 14.0411 15.875 13.0071V5.00708C15.875 3.97308 15.034 3.13208 14 3.13208Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-bookmark-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M2 3.5C1.72421 3.5 1.5 3.72421 1.5 4V12C1.5 12.2758 1.72421 12.5 2 12.5H14C14.2758 12.5 14.5 12.2758 14.5 12V4C14.5 3.72421 14.2758 3.5 14 3.5H2ZM0 4C0 2.89579 0.895786 2 2 2H14C15.1042 2 16 2.89579 16 4V12C16 13.1042 15.1042 14 14 14H2C0.895786 14 0 13.1042 0 12V4ZM8.75 8.75H7.25V7.25H8.75V8.75ZM8.00001 4.625C5.91142 4.625 4.14736 5.94291 3.45159 7.77847L3.36761 8L3.45159 8.22153C4.14736 10.0571 5.91142 11.375 8.00001 11.375C10.0886 11.375 11.8527 10.0571 12.5484 8.22153L12.6324 8L12.5484 7.77847C11.8527 5.94291 10.0886 4.625 8.00001 4.625ZM8.00001 10.125C6.53912 10.125 5.28508 9.25455 4.71282 8C5.28508 6.74545 6.53912 5.875 8.00001 5.875C9.4609 5.875 10.7149 6.74545 11.2872 8C10.7149 9.25455 9.4609 10.125 8.00001 10.125Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-viewThumbnail-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M3.5 2C3.5 1.72421 3.72421 1.5 4 1.5H5.25C5.52579 1.5 5.75 1.72421 5.75 2V5.25C5.75 5.52579 5.52579 5.75 5.25 5.75H4C3.72421 5.75 3.5 5.52579 3.5 5.25V2ZM4 0C2.89579 0 2 0.895786 2 2V5.25C2 6.35421 2.89579 7.25 4 7.25H5.25C6.35421 7.25 7.25 6.35421 7.25 5.25V2C7.25 0.895786 6.35421 0 5.25 0H4ZM3.5 10.75C3.5 10.4742 3.72421 10.25 4 10.25H5.25C5.52579 10.25 5.75 10.4742 5.75 10.75V14C5.75 14.2758 5.52579 14.5 5.25 14.5H4C3.72421 14.5 3.5 14.2758 3.5 14V10.75ZM4 8.75C2.89579 8.75 2 9.64579 2 10.75V14C2 15.1042 2.89579 16 4 16H5.25C6.35421 16 7.25 15.1042 7.25 14V10.75C7.25 9.64579 6.35421 8.75 5.25 8.75H4ZM10.75 1.5C10.4742 1.5 10.25 1.72421 10.25 2V5.25C10.25 5.52579 10.4742 5.75 10.75 5.75H12C12.2758 5.75 12.5 5.52579 12.5 5.25V2C12.5 1.72421 12.2758 1.5 12 1.5H10.75ZM8.75 2C8.75 0.895786 9.64579 0 10.75 0H12C13.1042 0 14 0.895786 14 2V5.25C14 6.35421 13.1042 7.25 12 7.25H10.75C9.64579 7.25 8.75 6.35421 8.75 5.25V2ZM10.25 10.75C10.25 10.4742 10.4742 10.25 10.75 10.25H12C12.2758 10.25 12.5 10.4742 12.5 10.75V14C12.5 14.2758 12.2758 14.5 12 14.5H10.75C10.4742 14.5 10.25 14.2758 10.25 14V10.75ZM10.75 8.75C9.64579 8.75 8.75 9.64579 8.75 10.75V14C8.75 15.1042 9.64579 16 10.75 16H12C13.1042 16 14 15.1042 14 14V10.75C14 9.64579 13.1042 8.75 12 8.75H10.75Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-viewOutline-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M3 1.25H15V2.75H3V1.25ZM15 5.25H3V6.75H15V5.25ZM15 13.25H3V14.75H15V13.25ZM15 9.25H6V10.75H15V9.25ZM0 5.25H1.5V6.75H0V5.25ZM1.5 13.25H0V14.75H1.5V13.25ZM0 1.25H1.5V2.75H0V1.25ZM4.5 9.25H3V10.75H4.5V9.25Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-viewAttachments-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M3.5 3.75C3.5 1.67879 5.17879 0 7.25 0C9.32121 0 11 1.67879 11 3.75V10.25C11 11.4922 9.99221 12.5 8.75 12.5C7.50779 12.5 6.5 11.4922 6.5 10.25V3.5H8V10.25C8 10.6638 8.33621 11 8.75 11C9.16379 11 9.5 10.6638 9.5 10.25V3.75C9.5 2.50721 8.49279 1.5 7.25 1.5C6.00721 1.5 5 2.50721 5 3.75V10.75C5 12.8208 6.67921 14.5 8.75 14.5C10.8208 14.5 12.5 12.8208 12.5 10.75V3.5H14V10.75C14 13.6492 11.6492 16 8.75 16C5.85079 16 3.5 13.6492 3.5 10.75V3.75Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-viewLayers-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8.36645 2.34562C8.13878 2.21813 7.86122 2.21813 7.63355 2.34562L1.38355 5.84562C1.14669 5.97826 1 6.22853 1 6.5C1 6.77147 1.14669 7.02174 1.38355 7.15438L7.63355 10.6544C7.86122 10.7819 8.13878 10.7819 8.36645 10.6544L14.6165 7.15438C14.8533 7.02174 15 6.77147 15 6.5C15 6.22853 14.8533 5.97826 14.6165 5.84562L8.36645 2.34562ZM8 9.14041L3.28499 6.5L8 3.85959L12.715 6.5L8 9.14041ZM1.63647 9.0766L7.99999 12.6404L14.3255 9.09761L15.0585 10.4063L8.36649 14.1543C8.13881 14.2818 7.86122 14.2819 7.63353 14.1543L0.903534 10.3853L1.63647 9.0766Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-currentOutlineItem-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M10.803 4.74998V6.02436C10.803 6.39302 10.3571 6.57793 10.0967 6.31753L7.87716 4.098C7.71566 3.93649 7.71566 3.67434 7.87716 3.51283L10.0967 1.29329C10.3571 1.0329 10.8036 1.21722 10.8036 1.58588V3.24998H15V4.74998H10.803ZM8 1.24998H3V2.74998H6.5L8 1.24998ZM6.5 5.24998H3V6.74998H8L6.5 5.24998ZM3 13.25H15V14.75H3V13.25ZM6 9.24998H15V10.75H6V9.24998ZM1.5 5.24998H0V6.74998H1.5V5.24998ZM0 13.25H1.5V14.75H0V13.25ZM1.5 1.24998H0V2.74998H1.5V1.24998ZM3 9.24998H4.5V10.75H3V9.24998Z' fill='black'/%3E %3C/svg%3E");
+  --toolbarButton-search-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M10.089 10.973L13.934 14.817C13.9918 14.8754 14.0605 14.9218 14.1364 14.9534C14.2122 14.9851 14.2936 15.0013 14.3757 15.0012C14.4579 15.0011 14.5392 14.9847 14.6149 14.9529C14.6907 14.9211 14.7594 14.8746 14.817 14.816C14.875 14.7579 14.921 14.6889 14.9523 14.613C14.9836 14.5372 14.9997 14.4559 14.9996 14.3738C14.9995 14.2917 14.9833 14.2104 14.9518 14.1346C14.9203 14.0588 14.8741 13.99 14.816 13.932L10.983 10.1L10.989 9.67299C11.489 8.96674 11.8152 8.15249 11.9413 7.29642C12.0674 6.44034 11.9897 5.5666 11.7145 4.74621C11.4394 3.92582 10.9745 3.18192 10.3578 2.57498C9.74104 1.96804 8.98979 1.51519 8.16509 1.25322C7.34039 0.991255 6.46551 0.927572 5.61157 1.06735C4.75763 1.20712 3.94871 1.54641 3.25057 2.05764C2.55243 2.56887 1.98476 3.23761 1.59371 4.0095C1.20265 4.7814 0.999236 5.63468 1 6.49999C1 7.95868 1.57946 9.35763 2.61091 10.3891C3.64236 11.4205 5.04131 12 6.5 12C7.689 12 8.788 11.62 9.687 10.978L10.089 10.973V10.973ZM6.5 10.75C4.157 10.75 2.25 8.84299 2.25 6.49999C2.25 4.15699 4.157 2.24999 6.5 2.24999C8.843 2.24999 10.75 4.15699 10.75 6.49999C10.75 8.84299 8.843 10.75 6.5 10.75Z' fill='black'/%3E %3C/svg%3E");
+  --findbarButton-previous-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M5.001 8.352L10.466 13.818C10.5845 13.9303 10.7421 13.9918 10.9053 13.9895C11.0685 13.9872 11.2244 13.9212 11.3397 13.8057C11.4549 13.6902 11.5205 13.5342 11.5225 13.3709C11.5244 13.2077 11.4625 13.0502 11.35 12.932L6.416 7.999L11.349 3.067C11.4614 2.94864 11.5231 2.79106 11.521 2.62786C11.5189 2.46466 11.4531 2.30874 11.3377 2.19333C11.2223 2.07792 11.0663 2.01215 10.9031 2.01003C10.7399 2.00792 10.5824 2.06962 10.464 2.182L5 7.647L5.001 8.352Z' fill='black'/%3E %3C/svg%3E");
+  --findbarButton-next-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M10.999 8.352L5.534 13.818C5.41551 13.9303 5.25786 13.9918 5.09466 13.9895C4.93146 13.9872 4.77561 13.9212 4.66033 13.8057C4.54505 13.6902 4.47945 13.5342 4.47752 13.3709C4.47559 13.2077 4.53748 13.0502 4.65 12.932L9.585 7.998L4.651 3.067C4.53862 2.94864 4.47691 2.79106 4.47903 2.62786C4.48114 2.46466 4.54692 2.30874 4.66233 2.19333C4.77774 2.07792 4.93366 2.01215 5.09686 2.01003C5.26006 2.00792 5.41763 2.06962 5.536 2.182L11 7.647L10.999 8.352Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-firstPage-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M14 3.5H2V5H14V3.5ZM8 8.811L12.939 13.75L14.001 12.689L8.531 7.219C8.238 6.926 7.763 6.926 7.47 7.219L2 12.689L3.061 13.75L8 8.811Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-lastPage-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8 8.189L12.939 3.25L14 4.311L8.531 9.781C8.238 10.074 7.763 10.074 7.47 9.781L2 4.311L3.061 3.25L8 8.189ZM14 13.5V12H2V13.5H14Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-rotateCcw-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M3.4105 4.83612L4.77001 6.19601C5.06701 6.49201 4.85701 7.00001 4.43701 7.00001H0.862006C0.602006 7.00001 0.391006 6.78901 0.391006 6.52901V2.95401C0.391006 2.53401 0.899006 2.32401 1.19601 2.62101L2.32796 3.75328C3.67958 1.78973 5.9401 0.5 8.5 0.5C12.636 0.5 16 3.864 16 8C16 12.136 12.636 15.5 8.5 15.5C4.704 15.5 1.566 12.663 1.075 9H2.59C3.068 11.833 5.532 14 8.5 14C11.809 14 14.5 11.309 14.5 8C14.5 4.691 11.809 2 8.5 2C6.35262 2 4.46893 3.13503 3.4105 4.83612Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-rotateCw-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M12.5895 4.83613L11.23 6.19601C10.933 6.49201 11.143 7.00001 11.563 7.00001H15.138C15.398 7.00001 15.609 6.78901 15.609 6.52901V2.95401C15.609 2.53401 15.101 2.32401 14.804 2.62101L13.672 3.75328C12.3204 1.78973 10.0599 0.5 7.5 0.5C3.364 0.5 0 3.864 0 8C0 12.136 3.364 15.5 7.5 15.5C11.296 15.5 14.434 12.663 14.925 9H13.41C12.932 11.833 10.468 14 7.5 14C4.191 14 1.5 11.309 1.5 8C1.5 4.691 4.191 2 7.5 2C9.64738 2 11.5311 3.13503 12.5895 4.83613Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-selectTool-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M0.371588 2.93131C-0.203366 1.33422 1.3342 -0.20335 2.93129 0.371603L2.93263 0.372085L12.0716 3.68171C12.0718 3.68178 12.0714 3.68163 12.0716 3.68171C13.4459 4.17758 13.8478 5.9374 12.8076 6.9776L11.8079 7.97727L14.6876 10.8569C15.4705 11.6398 15.4705 12.9047 14.6876 13.6876L13.6476 14.7276C12.8647 15.5105 11.5998 15.5105 10.8169 14.7276L7.93725 11.8479L6.97758 12.8076C5.93739 13.8478 4.17779 13.4465 3.68192 12.0722C3.68184 12.072 3.682 12.0724 3.68192 12.0722L0.371588 2.93131ZM1.78292 2.42323C1.78298 2.4234 1.78286 2.42305 1.78292 2.42323L5.09281 11.5629C5.21725 11.9082 5.65728 12.0066 5.91692 11.7469L7.93725 9.72661L11.8776 13.6669C12.0747 13.864 12.3898 13.864 12.5869 13.6669L13.6269 12.6269C13.824 12.4298 13.824 12.1147 13.6269 11.9176L9.68659 7.97727L11.7469 5.91694C12.0066 5.65729 11.9081 5.21727 11.5629 5.09283L11.5619 5.09245L2.42321 1.78293C2.42304 1.78287 2.42339 1.783 2.42321 1.78293C2.02067 1.63847 1.63846 2.02069 1.78292 2.42323Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-handTool-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M7.75 2.125C7.75 1.78021 8.03021 1.5 8.375 1.5C8.71979 1.5 9 1.78021 9 2.125V3.125V8H10.5V3.125C10.5 2.78021 10.7802 2.5 11.125 2.5C11.4698 2.5 11.75 2.78021 11.75 3.125V4.625V8H13.25V4.625C13.25 4.28021 13.5302 4 13.875 4C14.2198 4 14.5 4.28021 14.5 4.625V12.0188L13.3802 13.6628C13.2954 13.7872 13.25 13.9344 13.25 14.085V16H14.75V14.3162L15.8698 12.6722C15.9546 12.5478 16 12.4006 16 12.25V4.625C16 3.45179 15.0482 2.5 13.875 2.5C13.6346 2.5 13.4035 2.53996 13.188 2.6136C12.959 1.68724 12.1219 1 11.125 1C10.8235 1 10.5366 1.06286 10.2768 1.17618C9.9281 0.478968 9.20726 0 8.375 0C7.54274 0 6.8219 0.478968 6.47323 1.17618C6.21337 1.06286 5.9265 1 5.625 1C4.45179 1 3.5 1.95179 3.5 3.125V7.25317C2.66504 6.54282 1.41035 6.58199 0.621672 7.37067C-0.208221 8.20056 -0.208221 9.54644 0.621672 10.3763L0.62188 10.3765L5.499 15.2498V16H6.999V14.939C6.999 14.74 6.9199 14.5491 6.77912 14.4085L1.68233 9.31567C1.43823 9.07156 1.43823 8.67544 1.68233 8.43133C1.92644 8.18722 2.32257 8.18722 2.56667 8.43133L3.71967 9.58433C3.93417 9.79883 4.25676 9.863 4.53701 9.74691C4.81727 9.63082 5 9.35735 5 9.054V3.125C5 2.78021 5.28022 2.5 5.625 2.5C5.96921 2.5 6.24906 2.77927 6.25 3.12326V8H7.75L7.75 3.125L7.75 3.12178V2.125Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-scrollPage-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M3.5 2C3.5 1.72421 3.72421 1.5 4 1.5H12C12.2758 1.5 12.5 1.72421 12.5 2V14C12.5 14.2758 12.2758 14.5 12 14.5H4C3.72421 14.5 3.5 14.2758 3.5 14V2ZM4 0C2.89579 0 2 0.895786 2 2V14C2 15.1042 2.89579 16 4 16H12C13.1042 16 14 15.1042 14 14V2C14 0.895786 13.1042 0 12 0H4ZM5.89301 6H7.25V10H5.89301C5.54301 10 5.36801 10.423 5.61501 10.67L7.72101 12.776C7.87401 12.929 8.12301 12.929 8.27601 12.776L10.383 10.669C10.63 10.422 10.455 9.99902 10.105 9.99902H8.75V6H10.106C10.456 6 10.632 5.577 10.383 5.331L8.27601 3.224C8.12301 3.071 7.87401 3.071 7.72101 3.224L5.61501 5.33C5.36801 5.577 5.54301 6 5.89301 6Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-scrollVertical-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M2 1V1.25H2.01476C2.11834 2.13279 2.7621 3 3.78 3H11.72C12.7379 3 13.3817 2.13279 13.4852 1.25H13.5V1H12C12 1.18133 11.9391 1.32279 11.8697 1.40708C11.8018 1.48961 11.7454 1.5 11.72 1.5H3.78C3.75458 1.5 3.69823 1.48961 3.63029 1.40708C3.5609 1.32279 3.5 1.18133 3.5 1H2ZM4 6C3.72386 6 3.5 6.22386 3.5 6.5V10C3.5 10.2761 3.72386 10.5 4 10.5H11.5C11.7761 10.5 12 10.2761 12 10V6.5C12 6.22386 11.7761 6 11.5 6H4ZM2 6.5C2 5.39543 2.89543 4.5 4 4.5H11.5C12.6046 4.5 13.5 5.39543 13.5 6.5V10C13.5 11.1046 12.6046 12 11.5 12H4C2.89543 12 2 11.1046 2 10V6.5ZM3.78 13.5C2.7621 13.5 2.11834 14.3672 2.01476 15.25H2V15.5H3.5C3.5 15.3187 3.5609 15.1772 3.63029 15.0929C3.69823 15.0104 3.75458 15 3.78 15H11.72C11.7454 15 11.8018 15.0104 11.8697 15.0929C11.9391 15.1772 12 15.3187 12 15.5H13.5V15.25H13.4852C13.3817 14.3672 12.7379 13.5 11.72 13.5H3.78Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-scrollHorizontal-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M3 3.78C3 2.7621 2.13279 2.11834 1.25 2.01476V2H1V3.5C1.18133 3.5 1.32279 3.5609 1.40708 3.63029C1.48961 3.69823 1.5 3.75458 1.5 3.78V11.72C1.5 11.7454 1.48961 11.8018 1.40708 11.8697C1.32279 11.9391 1.18133 12 1 12V13.5H1.25V13.4852C2.13279 13.3817 3 12.7379 3 11.72V3.78ZM10.5 4C10.5 3.72386 10.2761 3.5 10 3.5H6.5C6.22386 3.5 6 3.72386 6 4V11.5C6 11.7761 6.22386 12 6.5 12H10C10.2761 12 10.5 11.7761 10.5 11.5V4ZM10 2C11.1046 2 12 2.89543 12 4V11.5C12 12.6046 11.1046 13.5 10 13.5H6.5C5.39543 13.5 4.5 12.6046 4.5 11.5V4C4.5 2.89543 5.39543 2 6.5 2H10ZM15.5 2H15.25V2.01476C14.3672 2.11834 13.5 2.7621 13.5 3.78V11.72C13.5 12.7379 14.3672 13.3817 15.25 13.4852V13.5H15.5V12C15.3187 12 15.1772 11.9391 15.0929 11.8697C15.0104 11.8018 15 11.7454 15 11.72V3.78C15 3.75458 15.0104 3.69823 15.0929 3.63029C15.1772 3.5609 15.3187 3.5 15.5 3.5V2Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-scrollWrapped-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M2.5 1C2.5 1.27579 2.72421 1.5 3 1.5H5C5.27579 1.5 5.5 1.27579 5.5 1H7C7 2.10421 6.10421 3 5 3H3C1.89579 3 1 2.10421 1 1H2.5ZM2.5 6C2.5 5.72421 2.72421 5.5 3 5.5H5C5.27579 5.5 5.5 5.72421 5.5 6V10C5.5 10.2758 5.27579 10.5 5 10.5H3C2.72421 10.5 2.5 10.2758 2.5 10V6ZM3 4C1.89579 4 1 4.89579 1 6V10C1 11.1042 1.89579 12 3 12H5C6.10421 12 7 11.1042 7 10V6C7 4.89579 6.10421 4 5 4H3ZM10 6C10 5.72421 10.2242 5.5 10.5 5.5H12.5C12.7758 5.5 13 5.72421 13 6V10C13 10.2758 12.7758 10.5 12.5 10.5H10.5C10.2242 10.5 10 10.2758 10 10V6ZM10.5 4C9.39579 4 8.5 4.89579 8.5 6V10C8.5 11.1042 9.39579 12 10.5 12H12.5C13.6042 12 14.5 11.1042 14.5 10V6C14.5 4.89579 13.6042 4 12.5 4H10.5ZM3 14.5C2.72421 14.5 2.5 14.7242 2.5 15H1C1 13.8958 1.89579 13 3 13H5C6.10421 13 7 13.8958 7 15H5.5C5.5 14.7242 5.27579 14.5 5 14.5H3ZM10 15C10 14.7242 10.2242 14.5 10.5 14.5H12.5C12.7758 14.5 13 14.7242 13 15H14.5C14.5 13.8958 13.6042 13 12.5 13H10.5C9.39579 13 8.5 13.8958 8.5 15H10ZM10.5 1.5C10.2242 1.5 10 1.27579 10 1H8.5C8.5 2.10421 9.39579 3 10.5 3H12.5C13.6042 3 14.5 2.10421 14.5 1H13C13 1.27579 12.7758 1.5 12.5 1.5H10.5Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-spreadNone-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M4 1.5C3.72421 1.5 3.5 1.72421 3.5 2V14C3.5 14.2758 3.72421 14.5 4 14.5H12C12.2758 14.5 12.5 14.2758 12.5 14V2C12.5 1.72421 12.2758 1.5 12 1.5H4ZM2 2C2 0.895786 2.89579 0 4 0H12C13.1042 0 14 0.895786 14 2V14C14 15.1042 13.1042 16 12 16H4C2.89579 16 2 15.1042 2 14V2Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-spreadOdd-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M1.5 4C1.5 3.72421 1.72421 3.5 2 3.5H7.25V13H2C1.72421 13 1.5 12.7758 1.5 12.5V4ZM8.75 13V3.5H14C14.2758 3.5 14.5 3.72421 14.5 4V12.5C14.5 12.7758 14.2758 13 14 13H8.75ZM2 2C0.895786 2 0 2.89579 0 4V12.5C0 13.6042 0.895786 14.5 2 14.5H14C15.1042 14.5 16 13.6042 16 12.5V4C16 2.89579 15.1042 2 14 2H2ZM4.75 5H3V6.5H4V11.5H5.5V5.75C5.5 5.33579 5.16421 5 4.75 5ZM10 6.5H11.5V7.28647L10.4146 7.82918C10.1605 7.95622 10 8.21592 10 8.5V10.75C10 11.1642 10.3358 11.5 10.75 11.5H13V10H11.5V8.96353L12.5854 8.42082C12.8395 8.29378 13 8.03408 13 7.75V5.75C13 5.33579 12.6642 5 12.25 5H10V6.5Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-spreadEven-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill-rule='evenodd' d='M2 3.5C1.72421 3.5 1.5 3.72421 1.5 4V12.5C1.5 12.7758 1.72421 13 2 13H7.25V3.5H2ZM14 13H8.75V3.5H14C14.2758 3.5 14.5 3.72421 14.5 4V12.5C14.5 12.7758 14.2758 13 14 13ZM0 4C0 2.89579 0.895786 2 2 2H14C15.1042 2 16 2.89579 16 4V12.5C16 13.6042 15.1042 14.5 14 14.5H2C0.895786 14.5 0 13.6042 0 12.5V4ZM10 6.5H11.5V7.5H10V9H11.5V10H10V11.5H12.25C12.6642 11.5 13 11.1642 13 10.75V5.75C13 5.33579 12.6642 5 12.25 5H10V6.5ZM4.5 6.5H3V5H5.25C5.66421 5 6 5.33579 6 5.75V7.75C6 8.03408 5.8395 8.29378 5.58541 8.42082L4.5 8.96353V10H6V11.5H3.75C3.33579 11.5 3 11.1642 3 10.75V8.5C3 8.21592 3.1605 7.95622 3.41459 7.82918L4.5 7.28647V6.5Z' fill='black'/%3E %3C/svg%3E");
+  --secondaryToolbarButton-documentProperties-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.5899 4.41015 14.5 8 14.5C11.5899 14.5 14.5 11.5899 14.5 8C14.5 4.41015 11.5899 1.5 8 1.5ZM0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8ZM8.75 4V5.5H7.25V4H8.75ZM8.75 12V7H7.25V12H8.75Z' fill='black'/%3E %3C/svg%3E");
+}
+
+[dir="rtl"]:root {
+  --dir-factor: -1;
+  --inline-start: right;
+  --inline-end: left;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: rgba(249, 249, 250, 1);
+    --body-bg-color: rgba(42, 42, 46, 1);
+    --progressBar-color: rgba(0, 96, 223, 1);
+    --progressBar-bg-color: rgba(40, 40, 43, 1);
+    --progressBar-blend-color: rgba(20, 68, 133, 1);
+    --scrollbar-color: rgba(121, 121, 123, 1);
+    --scrollbar-bg-color: rgba(35, 35, 39, 1);
+    --toolbar-icon-bg-color: rgba(255, 255, 255, 1);
+    --toolbar-icon-hover-bg-color: rgba(255, 255, 255, 1);
+
+    --sidebar-narrow-bg-color: rgba(42, 42, 46, 0.9);
+    --sidebar-toolbar-bg-color: rgba(50, 50, 52, 1);
+    --toolbar-bg-color: rgba(56, 56, 61, 1);
+    --toolbar-border-color: rgba(12, 12, 13, 1);
+    --button-hover-color: rgba(102, 102, 103, 1);
+    --toggled-btn-color: rgba(255, 255, 255, 1);
+    --toggled-btn-bg-color: rgba(0, 0, 0, 0.3);
+    --toggled-hover-active-btn-color: rgba(0, 0, 0, 0.4);
+    --dropdown-btn-bg-color: rgba(74, 74, 79, 1);
+    --separator-color: rgba(0, 0, 0, 0.3);
+    --field-color: rgba(250, 250, 250, 1);
+    --field-bg-color: rgba(64, 64, 68, 1);
+    --field-border-color: rgba(115, 115, 115, 1);
+    --treeitem-color: rgba(255, 255, 255, 0.8);
+    --treeitem-hover-color: rgba(255, 255, 255, 0.9);
+    --treeitem-selected-color: rgba(255, 255, 255, 0.9);
+    --treeitem-selected-bg-color: rgba(255, 255, 255, 0.25);
+    --sidebaritem-bg-color: rgba(255, 255, 255, 0.15);
+    --doorhanger-bg-color: rgba(74, 74, 79, 1);
+    --doorhanger-border-color: rgba(39, 39, 43, 1);
+    --doorhanger-hover-color: rgba(249, 249, 250, 1);
+    --doorhanger-hover-bg-color: rgba(93, 94, 98, 1);
+    --doorhanger-separator-color: rgba(92, 92, 97, 1);
+    --dialog-button-bg-color: rgba(92, 92, 97, 1);
+    --dialog-button-hover-bg-color: rgba(115, 115, 115, 1);
+
+    /* This image is used in <input> elements, which unfortunately means that
+     * the `mask-image` approach used with all of the other images doesn't work
+     * here; hence why we still have two versions of this particular image. */
+    --loading-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' fill='rgba(255,255,255,1)' style='animation:spinLoadingIcon 1s steps(12,end) infinite'%3E%3Cstyle%3E@keyframes spinLoadingIcon%7Bto%7Btransform:rotate(360deg)%7D%7D%3C/style%3E%3Cpath d='M7 3V1s0-1 1-1 1 1 1 1v2s0 1-1 1-1-1-1-1z'/%3E%3Cpath d='M4.63 4.1l-1-1.73S3.13 1.5 4 1c.87-.5 1.37.37 1.37.37l1 1.73s.5.87-.37 1.37c-.87.57-1.37-.37-1.37-.37z' fill-opacity='.93'/%3E%3Cpath d='M3.1 6.37l-1.73-1S.5 4.87 1 4c.5-.87 1.37-.37 1.37-.37l1.73 1s.87.5.37 1.37c-.5.87-1.37.37-1.37.37z' fill-opacity='.86'/%3E%3Cpath d='M3 9H1S0 9 0 8s1-1 1-1h2s1 0 1 1-1 1-1 1z' fill-opacity='.79'/%3E%3Cpath d='M4.1 11.37l-1.73 1S1.5 12.87 1 12c-.5-.87.37-1.37.37-1.37l1.73-1s.87-.5 1.37.37c.5.87-.37 1.37-.37 1.37z' fill-opacity='.72'/%3E%3Cpath d='M3.63 13.56l1-1.73s.5-.87 1.37-.37c.87.5.37 1.37.37 1.37l-1 1.73s-.5.87-1.37.37c-.87-.5-.37-1.37-.37-1.37z' fill-opacity='.65'/%3E%3Cpath d='M7 15v-2s0-1 1-1 1 1 1 1v2s0 1-1 1-1-1-1-1z' fill-opacity='.58'/%3E%3Cpath d='M10.63 14.56l-1-1.73s-.5-.87.37-1.37c.87-.5 1.37.37 1.37.37l1 1.73s.5.87-.37 1.37c-.87.5-1.37-.37-1.37-.37z' fill-opacity='.51'/%3E%3Cpath d='M13.56 12.37l-1.73-1s-.87-.5-.37-1.37c.5-.87 1.37-.37 1.37-.37l1.73 1s.87.5.37 1.37c-.5.87-1.37.37-1.37.37z' fill-opacity='.44'/%3E%3Cpath d='M15 9h-2s-1 0-1-1 1-1 1-1h2s1 0 1 1-1 1-1 1z' fill-opacity='.37'/%3E%3Cpath d='M14.56 5.37l-1.73 1s-.87.5-1.37-.37c-.5-.87.37-1.37.37-1.37l1.73-1s.87-.5 1.37.37c.5.87-.37 1.37-.37 1.37z' fill-opacity='.3'/%3E%3Cpath d='M9.64 3.1l.98-1.66s.5-.874 1.37-.37c.87.5.37 1.37.37 1.37l-1 1.73s-.5.87-1.37.37c-.87-.5-.37-1.37-.37-1.37z' fill-opacity='.23'/%3E%3C/svg%3E");
+  }
+}
+
+@media screen and (forced-colors: active) {
+  :root {
+    --button-hover-color: Highlight;
+    --doorhanger-hover-bg-color: Highlight;
+    --toolbar-icon-opacity: 1;
+    --toolbar-icon-bg-color: ButtonText;
+    --toolbar-icon-hover-bg-color: ButtonFace;
+    --toolbar-border-color: CanvasText;
+    --toolbar-border-bottom: 1px solid var(--toolbar-border-color);
+    --toolbar-box-shadow: none;
+    --toggled-btn-color: HighlightText;
+    --toggled-btn-bg-color: LinkText;
+    --doorhanger-hover-color: ButtonFace;
+    --doorhanger-border-color-whcm: 1px solid ButtonText;
+    --doorhanger-triangle-opacity-whcm: 0;
+    --dialog-button-border: 1px solid Highlight;
+    --dialog-button-hover-bg-color: Highlight;
+    --dialog-button-hover-color: ButtonFace;
+    --dropdown-btn-border: 1px solid ButtonText;
+    --field-border-color: ButtonText;
+    --main-color: CanvasText;
+    --separator-color: GrayText;
+    --doorhanger-separator-color: GrayText;
+    --toolbarSidebar-box-shadow: none;
+    --toolbarSidebar-border-bottom: 1px solid var(--toolbar-border-color);
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  :root {
+    --sidebar-transition-duration: 0;
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/*
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--body-bg-color);
+  scrollbar-color: var(--scrollbar-color) var(--scrollbar-bg-color);
+}
+*/
+
+/*
+.hidden,
+[hidden] {
+  display: none !important;
+}
+*/
+#viewerContainer .hidden,
+#viewerContainer [hidden] {
+  display: none !important;
+}
+
+#viewerContainer.pdfPresentationMode:-webkit-full-screen {
+  top: 0;
+  background-color: rgba(0, 0, 0, 1);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#viewerContainer.pdfPresentationMode:fullscreen {
+  top: 0;
+  background-color: rgba(0, 0, 0, 1);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pdfPresentationMode:-webkit-full-screen section:not([data-internal-link]) {
+  pointer-events: none;
+}
+
+.pdfPresentationMode:fullscreen section:not([data-internal-link]) {
+  pointer-events: none;
+}
+
+.pdfPresentationMode:-webkit-full-screen .textLayer span {
+  cursor: none;
+}
+
+.pdfPresentationMode:fullscreen .textLayer span {
+  cursor: none;
+}
+
+.pdfPresentationMode.pdfPresentationModeControls > *,
+.pdfPresentationMode.pdfPresentationModeControls .textLayer span {
+  cursor: default;
+}
+
+#outerContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#sidebarContainer {
+  position: absolute;
+  top: 32px;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: calc(-1 * var(--sidebar-width));
+  width: var(--sidebar-width);
+  visibility: hidden;
+  z-index: 100;
+  font: message-box;
+  border-top: 1px solid rgba(51, 51, 51, 1);
+  border-inline-end: var(--doorhanger-border-color-whcm);
+  transition-property: inset-inline-start;
+  transition-duration: var(--sidebar-transition-duration);
+  transition-timing-function: var(--sidebar-transition-timing-function);
+}
+
+#outerContainer.sidebarMoving #sidebarContainer,
+#outerContainer.sidebarOpen #sidebarContainer {
+  visibility: visible;
+}
+#outerContainer.sidebarOpen #sidebarContainer {
+  inset-inline-start: 0;
+}
+
+#mainContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 350px;
+}
+
+#sidebarContent {
+  top: 32px;
+  bottom: 0;
+  inset-inline-start: 0;
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  box-shadow: inset calc(-1px * var(--dir-factor)) 0 0 rgba(0, 0, 0, 0.25);
+}
+
+#viewerContainer {
+  overflow: auto;
+  position: absolute;
+  /*top: 32px;*/
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  outline: none;
+  pointer-events: auto;
+}
+#viewerContainer:not(.pdfPresentationMode) {
+  transition-duration: var(--sidebar-transition-duration);
+  transition-timing-function: var(--sidebar-transition-timing-function);
+}
+
+#outerContainer.sidebarOpen #viewerContainer:not(.pdfPresentationMode) {
+  inset-inline-start: var(--sidebar-width);
+  transition-property: inset-inline-start;
+}
+
+.toolbar {
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  cursor: default;
+  font: message-box;
+}
+
+.toolbar input,
+.toolbar button,
+.toolbar select,
+.secondaryToolbar input,
+.secondaryToolbar button,
+.secondaryToolbar a,
+.secondaryToolbar select,
+.editorParamsToolbar input,
+.editorParamsToolbar button,
+.editorParamsToolbar select,
+.findbar input,
+.findbar button,
+.findbar select,
+#sidebarContainer input,
+#sidebarContainer button,
+#sidebarContainer select {
+  outline: none;
+  font: message-box;
+}
+
+#toolbarContainer {
+  width: 100%;
+}
+
+#toolbarSidebar {
+  width: 100%;
+  height: 32px;
+  background-color: var(--sidebar-toolbar-bg-color);
+  box-shadow: var(--toolbarSidebar-box-shadow);
+  border-bottom: var(--toolbarSidebar-border-bottom);
+}
+
+#sidebarResizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-end: -6px;
+  width: 6px;
+  z-index: 200;
+  cursor: ew-resize;
+}
+
+#toolbarContainer,
+.findbar,
+.secondaryToolbar,
+.editorParamsToolbar {
+  position: relative;
+  height: 32px;
+  background-color: var(--toolbar-bg-color);
+  box-shadow: var(--toolbar-box-shadow);
+  border-bottom: var(--toolbar-border-bottom);
+}
+
+#toolbarViewer {
+  height: 32px;
+}
+
+#loadingBar {
+  /* Define these variables here, and not in :root, to avoid reflowing the
+     entire viewer when updating progress (see issue 15958). */
+  --progressBar-percent: 0%;
+  --progressBar-end-offset: 0;
+
+  position: absolute;
+  inset-inline: 0 var(--progressBar-end-offset);
+  height: 4px;
+  background-color: var(--progressBar-bg-color);
+  border-bottom: 1px solid var(--toolbar-border-color);
+  transition-property: inset-inline-start;
+  transition-duration: var(--sidebar-transition-duration);
+  transition-timing-function: var(--sidebar-transition-timing-function);
+}
+
+#outerContainer.sidebarOpen #loadingBar {
+  inset-inline-start: var(--sidebar-width);
+}
+
+#loadingBar .progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: scaleX(var(--progressBar-percent));
+  transform-origin: 0 0;
+  height: 100%;
+  background-color: var(--progressBar-color);
+  overflow: hidden;
+  transition: transform 200ms;
+}
+
+@keyframes progressIndeterminate {
+  0% {
+    transform: translateX(-142px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#loadingBar.indeterminate .progress {
+  transform: none;
+  background-color: var(--progressBar-bg-color);
+  transition: none;
+}
+
+#loadingBar.indeterminate .progress .glimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: calc(100% + 150px);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--progressBar-blend-color) 0,
+    var(--progressBar-bg-color) 5px,
+    var(--progressBar-bg-color) 45px,
+    var(--progressBar-color) 55px,
+    var(--progressBar-color) 95px,
+    var(--progressBar-blend-color) 100px
+  );
+  animation: progressIndeterminate 1s linear infinite;
+}
+
+#outerContainer.sidebarResizing #sidebarContainer,
+#outerContainer.sidebarResizing #viewerContainer,
+#outerContainer.sidebarResizing #loadingBar {
+  /* Improve responsiveness and avoid visual glitches when the sidebar is resized. */
+  transition-duration: 0s;
+}
+
+.findbar,
+.secondaryToolbar,
+.editorParamsToolbar {
+  top: 32px;
+  position: absolute;
+  z-index: 30000;
+  height: auto;
+  padding: 0 4px;
+  margin: 4px 2px;
+  font: message-box;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: left;
+  cursor: default;
+}
+
+.findbar {
+  inset-inline-start: 64px;
+  min-width: 300px;
+  background-color: var(--toolbar-bg-color);
+}
+.findbar > div {
+  height: 32px;
+}
+.findbar > div#findbarInputContainer {
+  margin-inline-end: 4px;
+}
+.findbar.wrapContainers > div,
+.findbar.wrapContainers > div#findbarMessageContainer > * {
+  clear: both;
+}
+.findbar.wrapContainers > div#findbarMessageContainer {
+  height: auto;
+}
+
+.findbar input[type="checkbox"] {
+  pointer-events: none;
+}
+
+.findbar label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.findbar label:hover,
+.findbar input:focus-visible + label {
+  color: var(--toggled-btn-color);
+  background-color: var(--button-hover-color);
+}
+
+.findbar .toolbarField[type="checkbox"]:checked + .toolbarLabel {
+  background-color: var(--toggled-btn-bg-color) !important;
+  color: var(--toggled-btn-color);
+}
+
+#findInput {
+  width: 200px;
+}
+#findInput::-moz-placeholder {
+  font-style: normal;
+}
+#findInput::placeholder {
+  font-style: normal;
+}
+#findInput[data-status="pending"] {
+  background-image: var(--loading-icon);
+  background-repeat: no-repeat;
+  background-position: calc(50% + 48% * var(--dir-factor));
+}
+#findInput[data-status="notFound"] {
+  background-color: rgba(255, 102, 102, 1);
+}
+
+.secondaryToolbar,
+.editorParamsToolbar {
+  padding: 6px 0 10px;
+  inset-inline-end: 4px;
+  height: auto;
+  background-color: var(--doorhanger-bg-color);
+}
+
+.editorParamsToolbarContainer {
+  width: 220px;
+  margin-bottom: -4px;
+}
+
+.editorParamsToolbarContainer > .editorParamsSetter {
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 10px;
+}
+
+.editorParamsToolbarContainer .editorParamsLabel {
+  padding-inline-end: 10px;
+  flex: none;
+  color: var(--main-color);
+}
+
+.editorParamsToolbarContainer .editorParamsColor {
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+
+.editorParamsToolbarContainer .editorParamsSlider {
+  background-color: transparent;
+  width: 90px;
+  flex: 0 1 0;
+}
+
+.editorParamsToolbarContainer .editorParamsSlider::-moz-range-progress {
+  background-color: black;
+}
+
+.editorParamsToolbarContainer
+  .editorParamsSlider::-webkit-slider-runnable-track,
+.editorParamsToolbarContainer .editorParamsSlider::-moz-range-track {
+  background-color: black;
+}
+
+.editorParamsToolbarContainer .editorParamsSlider::-webkit-slider-thumb,
+.editorParamsToolbarContainer .editorParamsSlider::-moz-range-thumb {
+  background-color: white;
+}
+
+#secondaryToolbarButtonContainer {
+  max-width: 220px;
+  min-height: 26px;
+  max-height: calc(var(--viewer-container-height) - 40px);
+  overflow-y: auto;
+  margin-bottom: -4px;
+}
+
+#editorInkParamsToolbar {
+  inset-inline-end: 40px;
+  background-color: var(--toolbar-bg-color);
+}
+
+#editorFreeTextParamsToolbar {
+  inset-inline-end: 68px;
+  background-color: var(--toolbar-bg-color);
+}
+
+.doorHanger,
+.doorHangerRight {
+  border-radius: 2px;
+  box-shadow: 0 1px 5px var(--doorhanger-border-color),
+    0 0 0 1px var(--doorhanger-border-color);
+  border: var(--doorhanger-border-color-whcm);
+}
+.doorHanger:after,
+.doorHanger:before,
+.doorHangerRight:after,
+.doorHangerRight:before {
+  bottom: 100%;
+  border: 8px solid rgba(0, 0, 0, 0);
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  opacity: var(--doorhanger-triangle-opacity-whcm);
+}
+.doorHanger:after {
+  inset-inline-start: 10px;
+  margin-inline-start: -8px;
+  border-bottom-color: var(--toolbar-bg-color);
+}
+.doorHangerRight:after {
+  inset-inline-end: 10px;
+  margin-inline-end: -8px;
+  border-bottom-color: var(--doorhanger-bg-color);
+}
+.doorHanger:before,
+.doorHangerRight:before {
+  border-bottom-color: var(--doorhanger-border-color);
+  border-width: 9px;
+}
+.doorHanger:before {
+  inset-inline-start: 10px;
+  margin-inline-start: -9px;
+}
+.doorHangerRight:before {
+  inset-inline-end: 10px;
+  margin-inline-end: -9px;
+}
+
+#findResultsCount {
+  background-color: rgba(217, 217, 217, 1);
+  color: rgba(82, 82, 82, 1);
+  text-align: center;
+  padding: 4px 5px;
+  margin: 5px;
+}
+
+#findMsg {
+  color: rgba(251, 0, 0, 1);
+}
+
+#findResultsCount:empty,
+#findMsg:empty {
+  display: none;
+}
+
+#toolbarViewerMiddle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#toolbarViewerLeft,
+#toolbarSidebarLeft {
+  float: var(--inline-start);
+}
+#toolbarViewerRight,
+#toolbarSidebarRight {
+  float: var(--inline-end);
+}
+
+#toolbarViewerLeft > *,
+#toolbarViewerMiddle > *,
+#toolbarViewerRight > *,
+#toolbarSidebarLeft *,
+#toolbarSidebarRight *,
+.findbar * {
+  position: relative;
+  float: var(--inline-start);
+}
+
+#toolbarViewerLeft {
+  padding-inline-start: 1px;
+}
+#toolbarViewerRight {
+  padding-inline-end: 1px;
+}
+#toolbarSidebarRight {
+  padding-inline-end: 2px;
+}
+
+.splitToolbarButton {
+  margin: 2px;
+  display: inline-block;
+}
+.splitToolbarButton > .toolbarButton {
+  float: var(--inline-start);
+}
+
+.toolbarButton,
+.secondaryToolbarButton,
+.dialogButton {
+  border: none;
+  background: none;
+  width: 28px;
+  height: 28px;
+  outline: none;
+}
+
+.dialogButton:hover,
+.dialogButton:focus-visible {
+  background-color: var(--dialog-button-hover-bg-color);
+}
+
+.dialogButton:hover > span,
+.dialogButton:focus-visible > span {
+  color: var(--dialog-button-hover-color);
+}
+
+.toolbarButton > span {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.toolbarButton[disabled],
+.secondaryToolbarButton[disabled],
+.dialogButton[disabled] {
+  opacity: 0.5;
+}
+
+.splitToolbarButton > .toolbarButton:hover,
+.splitToolbarButton > .toolbarButton:focus-visible,
+.dropdownToolbarButton:hover {
+  background-color: var(--button-hover-color);
+}
+.splitToolbarButton > .toolbarButton {
+  position: relative;
+  margin: 0;
+}
+#toolbarSidebar .splitToolbarButton > .toolbarButton {
+  margin-inline-end: 2px;
+}
+
+.splitToolbarButtonSeparator {
+  float: var(--inline-start);
+  margin: 4px 0;
+  width: 1px;
+  height: 20px;
+  background-color: var(--separator-color);
+}
+
+.toolbarButton,
+.dropdownToolbarButton,
+.secondaryToolbarButton,
+.dialogButton {
+  min-width: 16px;
+  margin: 2px 1px;
+  padding: 2px 6px 0;
+  border: none;
+  border-radius: 2px;
+  color: var(--main-color);
+  font-size: 12px;
+  line-height: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: default;
+  box-sizing: border-box;
+}
+
+.toolbarButton:hover,
+.toolbarButton:focus-visible {
+  background-color: var(--button-hover-color);
+}
+.secondaryToolbarButton:hover,
+.secondaryToolbarButton:focus-visible {
+  background-color: var(--doorhanger-hover-bg-color);
+  color: var(--doorhanger-hover-color);
+}
+
+.toolbarButton.toggled,
+.splitToolbarButton.toggled > .toolbarButton.toggled,
+.secondaryToolbarButton.toggled {
+  background-color: var(--toggled-btn-bg-color);
+  color: var(--toggled-btn-color);
+}
+
+.toolbarButton.toggled::before,
+.secondaryToolbarButton.toggled::before {
+  background-color: var(--toggled-btn-color);
+}
+
+.toolbarButton.toggled:hover:active,
+.splitToolbarButton.toggled > .toolbarButton.toggled:hover:active,
+.secondaryToolbarButton.toggled:hover:active {
+  background-color: var(--toggled-hover-active-btn-color);
+}
+
+.dropdownToolbarButton {
+  /* Define this variable here, and not in :root, to avoid reflowing the
+     entire viewer when updating the width. */
+  --scale-select-width: 140px;
+
+  width: var(--scale-select-width);
+  padding: 0;
+  background-color: var(--dropdown-btn-bg-color);
+  border: var(--dropdown-btn-border);
+}
+.dropdownToolbarButton::after {
+  top: 6px;
+  inset-inline-end: 6px;
+  pointer-events: none;
+  -webkit-mask-image: var(--toolbarButton-menuArrow-icon);
+  mask-image: var(--toolbarButton-menuArrow-icon);
+}
+
+.dropdownToolbarButton > select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: inherit;
+  height: 28px;
+  font-size: 12px;
+  color: var(--main-color);
+  margin: 0;
+  padding: 1px 0 2px;
+  padding-inline-start: 6px;
+  border: none;
+  background-color: var(--dropdown-btn-bg-color);
+}
+.dropdownToolbarButton > select:hover,
+.dropdownToolbarButton > select:focus-visible {
+  background-color: var(--button-hover-color);
+  color: var(--toggled-btn-color);
+}
+.dropdownToolbarButton > select > option {
+  background: var(--doorhanger-bg-color);
+  color: var(--main-color);
+}
+
+.toolbarButtonSpacer {
+  width: 30px;
+  display: inline-block;
+  height: 1px;
+}
+
+.toolbarButton::before,
+.secondaryToolbarButton::before,
+.dropdownToolbarButton::after,
+.treeItemToggler::before {
+  /* All matching images have a size of 16x16
+   * All relevant containers have a size of 28x28 */
+  position: absolute;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+
+  content: "";
+  background-color: var(--toolbar-icon-bg-color);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+
+.dropdownToolbarButton:hover::after,
+.dropdownToolbarButton:focus-visible::after,
+.dropdownToolbarButton:active::after {
+  background-color: var(--toolbar-icon-hover-bg-color);
+}
+
+.toolbarButton::before {
+  opacity: var(--toolbar-icon-opacity);
+  top: 6px;
+  left: 6px;
+}
+
+.toolbarButton:hover::before,
+.toolbarButton:focus-visible::before,
+.secondaryToolbarButton:hover::before,
+.secondaryToolbarButton:focus-visible::before {
+  background-color: var(--toolbar-icon-hover-bg-color);
+}
+
+.secondaryToolbarButton::before {
+  opacity: var(--doorhanger-icon-opacity);
+  top: 5px;
+  inset-inline-start: 12px;
+}
+
+#sidebarToggle::before {
+  -webkit-mask-image: var(--toolbarButton-sidebarToggle-icon);
+  mask-image: var(--toolbarButton-sidebarToggle-icon);
+  transform: scaleX(var(--dir-factor));
+}
+
+#secondaryToolbarToggle::before {
+  -webkit-mask-image: var(--toolbarButton-secondaryToolbarToggle-icon);
+  mask-image: var(--toolbarButton-secondaryToolbarToggle-icon);
+  transform: scaleX(var(--dir-factor));
+}
+
+#findPrevious::before {
+  -webkit-mask-image: var(--findbarButton-previous-icon);
+  mask-image: var(--findbarButton-previous-icon);
+}
+
+#findNext::before {
+  -webkit-mask-image: var(--findbarButton-next-icon);
+  mask-image: var(--findbarButton-next-icon);
+}
+
+#previous::before {
+  -webkit-mask-image: var(--toolbarButton-pageUp-icon);
+  mask-image: var(--toolbarButton-pageUp-icon);
+}
+
+#next::before {
+  -webkit-mask-image: var(--toolbarButton-pageDown-icon);
+  mask-image: var(--toolbarButton-pageDown-icon);
+}
+
+#zoomOut::before {
+  -webkit-mask-image: var(--toolbarButton-zoomOut-icon);
+  mask-image: var(--toolbarButton-zoomOut-icon);
+}
+
+#zoomIn::before {
+  -webkit-mask-image: var(--toolbarButton-zoomIn-icon);
+  mask-image: var(--toolbarButton-zoomIn-icon);
+}
+
+#presentationMode::before {
+  -webkit-mask-image: var(--toolbarButton-presentationMode-icon);
+  mask-image: var(--toolbarButton-presentationMode-icon);
+}
+
+#editorFreeText::before {
+  -webkit-mask-image: var(--toolbarButton-editorFreeText-icon);
+  mask-image: var(--toolbarButton-editorFreeText-icon);
+}
+
+#editorInk::before {
+  -webkit-mask-image: var(--toolbarButton-editorInk-icon);
+  mask-image: var(--toolbarButton-editorInk-icon);
+}
+
+#print::before,
+#secondaryPrint::before {
+  -webkit-mask-image: var(--toolbarButton-print-icon);
+  mask-image: var(--toolbarButton-print-icon);
+}
+
+#openFile::before,
+#secondaryOpenFile::before {
+  -webkit-mask-image: var(--toolbarButton-openFile-icon);
+  mask-image: var(--toolbarButton-openFile-icon);
+}
+
+#download::before,
+#secondaryDownload::before {
+  -webkit-mask-image: var(--toolbarButton-download-icon);
+  mask-image: var(--toolbarButton-download-icon);
+}
+
+a.secondaryToolbarButton {
+  padding-top: 5px;
+  text-decoration: none;
+}
+a.toolbarButton[href="#"],
+a.secondaryToolbarButton[href="#"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+#viewBookmark::before {
+  -webkit-mask-image: var(--toolbarButton-bookmark-icon);
+  mask-image: var(--toolbarButton-bookmark-icon);
+}
+
+#viewThumbnail::before {
+  -webkit-mask-image: var(--toolbarButton-viewThumbnail-icon);
+  mask-image: var(--toolbarButton-viewThumbnail-icon);
+}
+
+#viewOutline::before {
+  -webkit-mask-image: var(--toolbarButton-viewOutline-icon);
+  mask-image: var(--toolbarButton-viewOutline-icon);
+  transform: scaleX(var(--dir-factor));
+}
+
+#viewAttachments::before {
+  -webkit-mask-image: var(--toolbarButton-viewAttachments-icon);
+  mask-image: var(--toolbarButton-viewAttachments-icon);
+}
+
+#viewLayers::before {
+  -webkit-mask-image: var(--toolbarButton-viewLayers-icon);
+  mask-image: var(--toolbarButton-viewLayers-icon);
+}
+
+#currentOutlineItem::before {
+  -webkit-mask-image: var(--toolbarButton-currentOutlineItem-icon);
+  mask-image: var(--toolbarButton-currentOutlineItem-icon);
+  transform: scaleX(var(--dir-factor));
+}
+
+#viewFind::before {
+  -webkit-mask-image: var(--toolbarButton-search-icon);
+  mask-image: var(--toolbarButton-search-icon);
+}
+
+.pdfSidebarNotification::after {
+  position: absolute;
+  display: inline-block;
+  top: 2px;
+  inset-inline-end: 2px;
+  /* Create a filled circle, with a diameter of 9 pixels, using only CSS: */
+  content: "";
+  background-color: rgba(112, 219, 85, 1);
+  height: 9px;
+  width: 9px;
+  border-radius: 50%;
+}
+
+.secondaryToolbarButton {
+  position: relative;
+  margin: 0;
+  padding: 0 0 1px;
+  padding-inline-start: 36px;
+  height: auto;
+  min-height: 26px;
+  width: auto;
+  min-width: 100%;
+  text-align: start;
+  white-space: normal;
+  border-radius: 0;
+  box-sizing: border-box;
+  display: inline-block;
+}
+.secondaryToolbarButton > span {
+  padding-inline-end: 4px;
+}
+
+#firstPage::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-firstPage-icon);
+  mask-image: var(--secondaryToolbarButton-firstPage-icon);
+}
+
+#lastPage::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-lastPage-icon);
+  mask-image: var(--secondaryToolbarButton-lastPage-icon);
+}
+
+#pageRotateCcw::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-rotateCcw-icon);
+  mask-image: var(--secondaryToolbarButton-rotateCcw-icon);
+}
+
+#pageRotateCw::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-rotateCw-icon);
+  mask-image: var(--secondaryToolbarButton-rotateCw-icon);
+}
+
+#cursorSelectTool::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-selectTool-icon);
+  mask-image: var(--secondaryToolbarButton-selectTool-icon);
+}
+
+#cursorHandTool::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-handTool-icon);
+  mask-image: var(--secondaryToolbarButton-handTool-icon);
+}
+
+#scrollPage::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-scrollPage-icon);
+  mask-image: var(--secondaryToolbarButton-scrollPage-icon);
+}
+
+#scrollVertical::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-scrollVertical-icon);
+  mask-image: var(--secondaryToolbarButton-scrollVertical-icon);
+}
+
+#scrollHorizontal::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-scrollHorizontal-icon);
+  mask-image: var(--secondaryToolbarButton-scrollHorizontal-icon);
+}
+
+#scrollWrapped::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-scrollWrapped-icon);
+  mask-image: var(--secondaryToolbarButton-scrollWrapped-icon);
+}
+
+#spreadNone::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-spreadNone-icon);
+  mask-image: var(--secondaryToolbarButton-spreadNone-icon);
+}
+
+#spreadOdd::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-spreadOdd-icon);
+  mask-image: var(--secondaryToolbarButton-spreadOdd-icon);
+}
+
+#spreadEven::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-spreadEven-icon);
+  mask-image: var(--secondaryToolbarButton-spreadEven-icon);
+}
+
+#documentProperties::before {
+  -webkit-mask-image: var(--secondaryToolbarButton-documentProperties-icon);
+  mask-image: var(--secondaryToolbarButton-documentProperties-icon);
+}
+
+.verticalToolbarSeparator {
+  display: block;
+  margin: 5px 2px;
+  width: 1px;
+  height: 22px;
+  background-color: var(--separator-color);
+}
+.horizontalToolbarSeparator {
+  display: block;
+  margin: 6px 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--doorhanger-separator-color);
+}
+
+.toolbarField {
+  padding: 4px 7px;
+  margin: 3px 0;
+  border-radius: 2px;
+  background-color: var(--field-bg-color);
+  background-clip: padding-box;
+  border: 1px solid var(--field-border-color);
+  box-shadow: none;
+  color: var(--field-color);
+  font-size: 12px;
+  line-height: 16px;
+  outline: none;
+}
+
+.toolbarField[type="checkbox"] {
+  opacity: 0;
+  position: absolute !important;
+  left: 0;
+  margin: 10px 0 3px;
+  margin-inline-start: 7px;
+}
+
+#pageNumber {
+  -moz-appearance: textfield; /* hides the spinner in moz */
+  text-align: right;
+  width: 40px;
+  background-size: 0 0;
+  transition-property: none;
+}
+#pageNumber.visiblePageIsLoading {
+  background-image: var(--loading-icon);
+  background-repeat: no-repeat;
+  background-position: 3px;
+  background-size: 16px 16px;
+  /* Using a delay with background-image doesn't work,
+     consequently we use background-size. */
+  transition-property: background-size;
+  transition-delay: var(--loading-icon-delay);
+}
+#pageNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.toolbarField:focus {
+  border-color: #0a84ff;
+}
+
+.toolbarLabel {
+  min-width: 16px;
+  padding: 7px;
+  margin: 2px;
+  border-radius: 2px;
+  color: var(--main-color);
+  font-size: 12px;
+  line-height: 14px;
+  text-align: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+#numPages.toolbarLabel {
+  padding-inline-start: 3px;
+}
+
+#thumbnailView,
+#outlineView,
+#attachmentsView,
+#layersView {
+  position: absolute;
+  width: calc(100% - 8px);
+  top: 0;
+  bottom: 0;
+  padding: 4px 4px 0;
+  overflow: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+#thumbnailView {
+  width: calc(100% - 60px);
+  padding: 10px 30px 0;
+}
+
+#thumbnailView > a:active,
+#thumbnailView > a:focus {
+  outline: 0;
+}
+
+/*
+.thumbnail {
+  float: var(--inline-start);
+  margin: 0 10px 5px;
+}
+
+#thumbnailView > a:last-of-type > .thumbnail {
+  margin-bottom: 10px;
+}
+#thumbnailView > a:last-of-type > .thumbnail:not([data-loaded]) {
+  margin-bottom: 9px;
+}
+
+.thumbnail:not([data-loaded]) {
+  border: 1px dashed rgba(132, 132, 132, 1);
+  margin: -1px 9px 4px;
+}
+
+.thumbnailImage {
+  border: 1px solid rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 1);
+  background-clip: content-box;
+}
+
+.thumbnailSelectionRing {
+  border-radius: 2px;
+  padding: 7px;
+}
+
+a:focus > .thumbnail > .thumbnailSelectionRing > .thumbnailImage,
+.thumbnail:hover > .thumbnailSelectionRing > .thumbnailImage {
+  opacity: 0.9;
+}
+
+a:focus > .thumbnail > .thumbnailSelectionRing,
+.thumbnail:hover > .thumbnailSelectionRing {
+  background-color: var(--sidebaritem-bg-color);
+  background-clip: padding-box;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.thumbnail.selected > .thumbnailSelectionRing > .thumbnailImage {
+  opacity: 1;
+}
+
+.thumbnail.selected > .thumbnailSelectionRing {
+  background-color: var(--sidebaritem-bg-color);
+  background-clip: padding-box;
+  color: rgba(255, 255, 255, 1);
+}
+*/
+.treeWithDeepNesting > .treeItem,
+.treeItem > .treeItems {
+  margin-inline-start: 20px;
+}
+
+.treeItem > a {
+  text-decoration: none;
+  display: inline-block;
+  /* Subtract the right padding (left, in RTL mode) of the container: */
+  min-width: calc(100% - 4px);
+  height: auto;
+  margin-bottom: 1px;
+  padding: 2px 0 5px;
+  padding-inline-start: 4px;
+  border-radius: 2px;
+  color: var(--treeitem-color);
+  font-size: 13px;
+  line-height: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  white-space: normal;
+  cursor: pointer;
+}
+
+#layersView .treeItem > a * {
+  cursor: pointer;
+}
+#layersView .treeItem > a > label {
+  padding-inline-start: 4px;
+}
+#layersView .treeItem > a > label > input {
+  float: var(--inline-start);
+  margin-top: 1px;
+}
+
+.treeItemToggler {
+  position: relative;
+  float: var(--inline-start);
+  height: 0;
+  width: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+.treeItemToggler::before {
+  inset-inline-end: 4px;
+  -webkit-mask-image: var(--treeitem-expanded-icon);
+  mask-image: var(--treeitem-expanded-icon);
+}
+.treeItemToggler.treeItemsHidden::before {
+  -webkit-mask-image: var(--treeitem-collapsed-icon);
+  mask-image: var(--treeitem-collapsed-icon);
+  transform: scaleX(var(--dir-factor));
+}
+.treeItemToggler.treeItemsHidden ~ .treeItems {
+  display: none;
+}
+
+.treeItem.selected > a {
+  background-color: var(--treeitem-selected-bg-color);
+  color: var(--treeitem-selected-color);
+}
+
+.treeItemToggler:hover,
+.treeItemToggler:hover + a,
+.treeItemToggler:hover ~ .treeItems,
+.treeItem > a:hover {
+  background-color: var(--sidebaritem-bg-color);
+  background-clip: padding-box;
+  border-radius: 2px;
+  color: var(--treeitem-hover-color);
+}
+
+.dialogButton {
+  width: auto;
+  margin: 3px 4px 2px !important;
+  padding: 2px 11px;
+  color: var(--main-color);
+  background-color: var(--dialog-button-bg-color);
+  border: var(--dialog-button-border) !important;
+}
+
+dialog {
+  margin: auto;
+  padding: 15px;
+  border-spacing: 4px;
+  color: var(--main-color);
+  font: message-box;
+  font-size: 12px;
+  line-height: 14px;
+  background-color: var(--doorhanger-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+dialog > .row {
+  display: table-row;
+}
+
+dialog > .row > * {
+  display: table-cell;
+}
+
+dialog .toolbarField {
+  margin: 5px 0;
+}
+
+dialog .separator {
+  display: block;
+  margin: 4px 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--separator-color);
+}
+
+dialog .buttonRow {
+  text-align: center;
+  vertical-align: middle;
+}
+
+dialog :link {
+  color: rgba(255, 255, 255, 1);
+}
+
+#passwordDialog {
+  text-align: center;
+}
+#passwordDialog .toolbarField {
+  width: 200px;
+}
+
+#documentPropertiesDialog {
+  text-align: left;
+}
+#documentPropertiesDialog .row > * {
+  min-width: 100px;
+  text-align: start;
+}
+#documentPropertiesDialog .row > span {
+  width: 125px;
+  word-wrap: break-word;
+}
+#documentPropertiesDialog .row > p {
+  max-width: 225px;
+  word-wrap: break-word;
+}
+#documentPropertiesDialog .buttonRow {
+  margin-top: 10px;
+}
+
+.grab-to-pan-grab {
+  cursor: grab !important;
+}
+.grab-to-pan-grab
+  *:not(input):not(textarea):not(button):not(select):not(:link) {
+  cursor: inherit !important;
+}
+.grab-to-pan-grab:active,
+.grab-to-pan-grabbing {
+  cursor: grabbing !important;
+  position: fixed;
+  background: rgba(0, 0, 0, 0);
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 50000; /* should be higher than anything else in PDF.js! */
+}
+
+@page {
+  margin: 0;
+}
+
+#printContainer {
+  display: none;
+}
+
+@media print {
+  body {
+    background: rgba(0, 0, 0, 0) none;
+  }
+  /*
+  body[data-pdfjsprinting] #__next,
+  #printServiceDialog,
+  body[data-pdfjsprinting] #outerContainer {
+    display: none;
+  }
+  */
+  body[data-pdfjsprinting] > *:not(#printContainer) {
+    display: none;
+  }
+  body[data-pdfjsprinting] #printContainer {
+    display: block;
+  }
+  #printContainer {
+    height: 100%;
+  }
+  /* wrapper around (scaled) print canvas elements */
+  #printContainer > .printedPage {
+    page-break-after: always;
+    page-break-inside: avoid;
+
+    /* The wrapper always cover the whole page. */
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #printContainer > .xfaPrintedPage .xfaPage {
+    position: absolute;
+  }
+
+  #printContainer > .xfaPrintedPage {
+    page-break-after: always;
+    page-break-inside: avoid;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  #printContainer > .printedPage canvas,
+  #printContainer > .printedPage img {
+    /* The intrinsic canvas / image size will make sure that we fit the page. */
+    max-width: 100%;
+    max-height: 100%;
+
+    direction: ltr;
+    display: block;
+  }
+}
+
+.visibleLargeView,
+.visibleMediumView {
+  display: none;
+}
+
+@media all and (max-width: 900px) {
+  #toolbarViewerMiddle {
+    display: table;
+    margin: auto;
+    left: auto;
+    position: inherit;
+    transform: none;
+  }
+}
+
+@media all and (max-width: 840px) {
+  #sidebarContainer {
+    background-color: var(--sidebar-narrow-bg-color);
+  }
+  #outerContainer.sidebarOpen #viewerContainer {
+    inset-inline-start: 0 !important;
+  }
+}
+
+@media all and (max-width: 820px) {
+  #outerContainer .hiddenLargeView {
+    display: none;
+  }
+  #outerContainer .visibleLargeView {
+    display: inherit;
+  }
+}
+
+@media all and (max-width: 750px) {
+  #outerContainer .hiddenMediumView {
+    display: none;
+  }
+  #outerContainer .visibleMediumView {
+    display: inherit;
+  }
+}
+
+@media all and (max-width: 690px) {
+  .hiddenSmallView,
+  .hiddenSmallView * {
+    display: none;
+  }
+  .toolbarButtonSpacer {
+    width: 0;
+  }
+  .findbar {
+    inset-inline-start: 34px;
+  }
+}
+
+@media all and (max-width: 560px) {
+  #scaleSelectContainer {
+    display: none;
+  }
+}
+
+/* .pdfSlick *,
+.pdfSlick *::before,
+.pdfSlick *::after {
+  box-sizing: content-box;
+} */
+
+.pdfSlick {
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0);
+  scrollbar-width: thin;
+}
+
+.pdfSlick .page {
+  box-sizing: content-box;
+}
+
+.pdfSlick *::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.pdfSlick *::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.pdfSlick *::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.pdfSlick *::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 1px 1px 0px rgb(0 0 0 / 10%),
+    inset 0px -1px 0px rgb(0 0 0 / 7%);
+}
