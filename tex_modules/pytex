@@ -93,7 +93,7 @@ def __toc__(_):
 
 def __toc_markdown__(args):  # type: (Args) -> None
     BLACKLIST = ("toc.tex", "sandbox.tex")
-    files = map(File, get_tex_files(recursive=False))
+    files = map(File, get_tex_files())
     files = list(filter(lambda f: f.path not in BLACKLIST, files))
 
     existing_shas = []
@@ -190,7 +190,7 @@ def debug_test():
 # [SUBCOMMAND] checks if everything is in a healthy state
 # 1. checks that no two labels have the same SHA
 def __checkhealth__(_):
-    tex_filepaths = get_tex_files(recursive=False)
+    tex_filepaths = get_tex_files()
     print("Running checkheatlh on these files:")
     for f in tex_filepaths:
         print(Color.yellow("*"), f)
@@ -218,6 +218,8 @@ def __checkhealth__(_):
 if __name__ == "__main__":  # int main() {
     debug_test()
     args = Args.parse()
+    if args.all:
+        extend_tex_files(args.tex_files)
     tbl = {
         "build": __build__,
         "dev": __dev__,

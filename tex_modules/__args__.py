@@ -23,6 +23,7 @@ class Args:
     build_dir: str
     prev_rel: str
     verbose: bool
+    all: bool
     tex_files: list[str]
 
     @staticmethod
@@ -37,6 +38,7 @@ class Args:
         p.add_argument("--build-dir", default=".build")
         p.add_argument("-v", "--verbose", action="store_true")
         p.add_argument("--prev-rel")
+        p.add_argument("-a", "--all", action="store_true")
         p.add_argument("tex_files", nargs="*")
         args = p.parse_args()
         seen, tex_files = set(), []

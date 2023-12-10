@@ -2431,7 +2431,8 @@ class PDFSlick {
             externalLinkRel: "noopener noreferrer nofollow",
             ignoreDestinationZoom: false,
         });
-        new PDFHistory({ eventBus, linkService });
+        const history = new PDFHistory({ eventBus, linkService });
+        linkService.setHistory(history);
         const viewerOptions = Object.assign(Object.assign({ container }, (viewer && { viewer })), { eventBus,
             linkService,
             renderingQueue, defaultRenderingQueue: true, textLayerMode: this.textLayerMode, l10n: this.l10n, annotationMode: __classPrivateFieldGet(this, _PDFSlick_annotationMode, "f"), annotationEditorMode: __classPrivateFieldGet(this, _PDFSlick_annotationEditorMode, "f"), removePageBorders: this.removePageBorders, imageResourcesPath: "/images/", useOnlyCssZoom: this.useOnlyCssZoom });
@@ -2461,6 +2462,7 @@ class PDFSlick {
         }
         this.eventBus = eventBus;
         this.linkService = linkService;
+        this.history = history;
         this.viewer = pdfViewer;
         this.linkService.setViewer(pdfViewer);
         const scaleValue = (_o = options === null || options === void 0 ? void 0 : options.scaleValue) !== null && _o !== void 0 ? _o : "auto";

@@ -63,7 +63,7 @@ def get_in_between(
 
 
 # Get all files ending with '.tex' in the user's current directory
-def get_tex_files(recursive=True):  # type: (bool) -> list[str]
+def get_tex_files(recursive=False):  # type: (bool) -> list[str]
     is_tex = lambda f: f.endswith(".tex")
     if recursive:
         files, cwd = [], os.curdir
@@ -72,9 +72,17 @@ def get_tex_files(recursive=True):  # type: (bool) -> list[str]
             f = map(lambda f: path.join(root, f), f)
             f = map(lambda f: path.relpath(f, cwd), f)
             files.extend(f)
-        return files
     else:
-        return [x for x in os.listdir() if is_tex(x)]
+        files = [x for x in os.listdir() if is_tex(x)]
+    files.sort()
+    return files
+
+
+# for the --all flag.
+def extend_tex_files(tex_files):  # type: (list[str]) -> None
+    f = get_tex_files()
+    f = filter(lambda v: v not in tex_files, f)
+    tex_files.extend(f)
 
 
 def get_all_labels(tex_files):  # type: (list[str]) -> set[bytes]
