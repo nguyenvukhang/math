@@ -92,3 +92,7 @@ open:
 sync:
 	rm -rf ~/uni/@/tex_modules
 	cp -r $(MAKEFILE_DIR)tex_modules ~/uni/@/tex_modules
+
+hooks:
+	rm -rf $(MAKEFILE_DIR).git/hooks
+	cd $(MAKEFILE_DIR).git && ln -s ../tex_modules/.hooks hooks

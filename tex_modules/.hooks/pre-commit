@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DIFF="git diff --cached --name-only --diff-filter=ACM"
+
+while IFS= read -r pathspec; do
+  if [[ $pathspec = *".tex" ]]; then
+    printf "\x1b[33m*\x1b[37m $pathspec\x1b[0m\n"
+    latexindent -s -w -m -l=.latexindent.yaml $pathspec
+  fi
+done < <($DIFF)
+rm -f *.bak* **/*.bak* *indent.log >/dev/null 2>/dev/null
