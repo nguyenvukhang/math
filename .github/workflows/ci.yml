@@ -3,6 +3,10 @@ name: CI
 on:
   push:
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 permissions:
   contents: write
 
@@ -13,20 +17,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Checkhealth
+      - name: checkhealth
         run: python3 tex_modules/pytex checkhealth
 
-      - name: Generate single .tex files
+      - name: generate single .tex files
         run: bash .github/workflows/build.sh
 
-      - uses: xu-cheng/latex-action@v3
+      - name: latex build
+        uses: xu-cheng/latex-action@v3
         with:
           docker_image: ghcr.io/xu-cheng/texlive-small:latest
           root_file: .git/*.tex
         env:
           TEXINPUTS: "tex_modules/:"
 
-      - name: Configure git
+      - name: configure git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -36,7 +41,18 @@ jobs:
           GIT_HASH=${GIT_HASH:0:7}
           echo "GIT_HASH=$GIT_HASH" >> "$GITHUB_ENV"
 
-      - name: Push PDFs to pdf branch
+      - name: ▲ vercel build
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          cp minimath.pdf web/public/minimath.pdf
+          npm i -g vercel@latest
+          vercel=${{ secrets.VERCEL_TOKEN }}
+          vercel="vercel -t $vercel"
+          $vercel pull --yes --environment=production
+          $vercel build --prod
+          $vercel deploy --prebuilt --prod
+
+      - name: push pdfs to pdf branch
         if: ${{ github.ref_name == 'main' }}
         run: |
           cp *.pdf README.md -- .git
@@ -48,7 +64,7 @@ jobs:
           GIT_AUTHOR_DATE=$D GIT_COMMITTER_DATE=$D git commit -m "[$GIT_HASH]"
           git push -f origin pdf
 
-      - name: Release PDF
+      - name: release pdf
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:

@@ -349,7 +349,7 @@ class File:
             if label is None:
                 self.lines[lnum] += b"\\label{" + new_sha(existing) + b"}"
         with open(self.path, "wb") as f:
-            f.write(b"\n".join(self.lines))
+            f.writelines(map(lambda v: v + b"\n", self.lines))
 
     @staticmethod
     def merge_labels(files):  # type: (list[File]) -> set[bytes]

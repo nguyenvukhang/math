@@ -1,8 +1,5 @@
-const { rmSync, writeFileSync, createWriteStream } = require('fs')
+const { rmSync, writeFileSync } = require('fs')
 
-const IS_PROD = process.env['NODE_ENV'] == 'production'
-const LATEST_RELEASE =
-  'https://github.com/nguyenvukhang/math/releases/latest/download/minimath.pdf'
 const PCJ = 'postcss.config.js'
 
 writeFileSync(PCJ, 'module.exports={plugins:{tailwindcss:{},autoprefixer:{}}}')
@@ -25,19 +22,4 @@ const nextConfig = {
   },
 }
 
-async function fetchLatest() {
-  console.log("FETCHING LATEST PDF!")
-  rmSync('public/minimath.pdf', { force: true })
-  return fetch(LATEST_RELEASE)
-    .then((v) => v.blob().then((v) => v.arrayBuffer()))
-    .then((v) => createWriteStream('public/minimath.pdf').write(Buffer.from(v)))
-}
-
-if (process.env['NODE_ENV'] == 'production') {
-  rmSync('public/minimath.pdf', { force: true })
-  fetch(LATEST_RELEASE)
-    .then((v) => v.blob().then((v) => v.arrayBuffer()))
-    .then((v) => createWriteStream('public/minimath.pdf').write(Buffer.from(v)))
-}
-
-module.exports = IS_PROD ? fetchLatest().then(() => nextConfig) : nextConfig
+module.exports = nextConfig
