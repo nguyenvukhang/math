@@ -359,6 +359,23 @@ class File:
         return seen
 
 
+def make_debounced_handler(duration: float):
+    from watchdog.events import FileSystemEventHandler
+    from time import time
+
+    class EventHandler(FileSystemEventHandler):
+        def __init__(self):
+            self.last_trigger_time = time()
+
+        def should_build(self):
+            return time() - self.last_trigger_time >= duration
+
+        def build_completed(self):
+            self.last_trigger_time = time()
+
+    return EventHandler
+
+
 def assert_eq(received, expected):
     if received == expected:
         return
