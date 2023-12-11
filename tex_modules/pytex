@@ -66,9 +66,9 @@ def __label__(_):
 def __generate_section_titles__(_):
     def gen(t):  # type: (str) -> str
         b = lambda v: "{" + v + "}"
-        desc = rf"\ifx&#2&\else(#2)\fi"
+        desc = r"\ifx&#2&\else\hspace{0.5em}(#2)\fi"
         return f"\def\{t}#1#2" + b(
-            "\subsection" + b(t + " {#1}\hspace{0.7em}" + b(desc))
+            "\subsection" + b(t + " {#1}" + b(desc))
         )
 
     for l in map(lambda v: gen(v.decode("utf8")), MARKS):
