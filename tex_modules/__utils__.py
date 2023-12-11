@@ -284,7 +284,10 @@ class PdfLatex(Popen):
             os.rename(pdf_output, pdf_basename)
 
     def buf_to_stdout(self, buf):  # type: (list[bytes]) -> None
-        for l in filter(lambda v: len(v.strip()) > 0, buf):
+        buf = list(filter(lambda v: len(v.strip()) > 0, buf))
+        if len(buf) == 2 and buf[0].strip() == b"*":
+            return print("*", buf[1].decode("utf8"), end="")
+        for l in buf:
             print(l.decode("utf8"), end="")
 
     def direct_stdout(self):

@@ -18,6 +18,7 @@ TEX_FILES += complex-analysis.tex
 
 x:
 	@make test
+	@make build
 
 build:
 	$(PYTEX) -J minimath build $(TEX_FILES)
