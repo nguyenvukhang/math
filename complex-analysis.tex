@@ -355,12 +355,14 @@ modulus. Consider the directional derivatives
   D_{w_1}f(P) &:=\lim_{t\to0}\frac{f(P+tw_1)-f(P)}t \\
   D_{w_2}f(P) &:=\lim_{t\to0}\frac{f(P+tw_2)-f(P)}t
 \end{align*}
+
 Then
 \begin{enumerata}
   \item $|D_{w_1}f(P)|=|D_{w_2}f(P)|$
   \item if $|f'(P)|\neq0$, then the directed angle from $w_1$ to $w_2$ equals the
   directed angle from $D_{w_1}f(P)$ to $D_{w_2}f(P)$.
 \end{enumerata}
+
 Note:
 \begin{itemize}
   \item 2.2.3(a) alone implies that $f$ is holomorphic.
@@ -1141,3 +1143,53 @@ $$
 \begin{proof}
   This is the case $j=-1$ of \href{c1d2d0c}{Proposition 4.4.1}.
 \end{proof}
+
+\Definition{4.7.1}{Discrete sets}\label{d1b9ae6}
+
+A set $S\in\C$ is discrete if and only if for each $z\in S$ there is a positive
+number $r$ (depending on $S$ and $z$) such that
+$$
+  S\cap D(z,r)=\{z\}
+$$
+
+We also say in this circumstance that $S$ consists of isolated points.
+
+\Definition{4.7.2}{Meromorphic functions}\label{cfba843}
+
+A meromorphic function $f$ on and open set $U\subseteq\C$ with singular (as in
+``singularity") set $S$ is a function $f:U\setminus S\to\C$ such that
+\begin{enumerata}
+  \item the set $S$ is closed in $U$ and is \href{d1b9ae6}{discrete},
+  \item the function $f$ is holomorphic on $U\setminus S$ (note that $U\setminus S$ is
+  necessarily open in $\C$),
+  \item for each $z\in S$ and $r>0$ such that $D(z,r)\subseteq U$ and $S\cap
+  D(z,r)=\{z\}$, the function
+  $$
+    f|_{D(z,r)\sans z}
+  $$
+  has a (finite order) pole at $z$.
+\end{enumerata}
+
+\Lemma{4.7.3}{Reciprocal of a holomorphy with zeros is meromorphic}\label{e672e2a}
+
+Let $U\subseteq\C$ be connected and open, and let $f:U\to\C$ be a holomorphic
+function with $f\not\equiv0$, then the function
+$$
+  F:U\setminus\Set{z}{f(z)=0}\to\C
+$$
+
+defined by $F(z)=1/f(z)$, is a meromorphic function on $U$ with singular set
+(or pole set) equal to $\Set{z\in U}{f(z)=0}$.
+
+\Definition{4.7.4}{}\label{f4cee1f}
+
+Let $U\subseteq\C$ be open, and let $f:U\to\C$ be a holomorphic function.
+Suppose that for some $R>0$, we have $\set{z\in U}{|z|>R}\subseteq U$. Define
+$G:\set{z\in U}{0<|z|<1/R}\to\C$ by $G(z)=f(1/z)$. Then we say that
+\begin{enumerati}
+  \item $f$ has a removable singularity at $\infty$ if $G$ has a removable
+  singularity at $0$.
+  \item $f$ has a pole at $\infty$ if $G$ has a pole at $0$.
+  \item $f$ has an essential singularity at $\infty$ if $G$ has an essential
+  singularity at $0$.
+\end{enumerati}
