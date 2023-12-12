@@ -1488,6 +1488,78 @@ $$
 
 Then each $\phi_a$ is a conformal self-map of the unit disc.
 
+\Theorem{6.2.3}{}\label{a05afc4}
+
+Let $f:D\to D$ be a holomorphic function. Then $f$ is a conformal self-map of
+$D$ if and only if there are complex numbers $a,\omega$ with $|\omega|=1$,
+$|a|<1$ such that for all $z\in D$,
+$$
+  f(z)=\omega\cdot\phi_a(z)
+$$
+
+\Definition{6.3.1}{Linear fractional transformations}\label{d5af314}
+
+A function of the form
+$$
+  z\mapsto\frac{az+b}{cz+d},\with ad-bc\neq0
+$$
+
+is called a \textit{linear fractional transformation}.
+
+\Definition{6.3.2}{Linear fractional transformations over the extended plane}\label{f46e597}
+
+A function $f:\CX\to\CX$ is a linear fractional transformation if there exist
+$a,b,c,d\in\C$, $ad-bc\neq0$, such that either
+\begin{enumerati}
+  \item $c=0$, $f(\infty)=\infty$, and $f(z)=(a/d)z+(b/d)$ for all $z\in\C$
+  \item $c\neq0$, $f(\infty)=a/c$, $f(-d/c)=\infty$, and $f(z)=(az+b)/(cz+d)$
+  for all $z\in\C,z\neq-d/c$
+\end{enumerati}
+
+\Definition{6.3.3}{}\label{a2b8117}
+
+A sequence $\{p_k\}$ in $\CX$ converges to $p\in\CX$ if either
+\begin{enumerate}
+  \item $p=\infty$ and $\lim_{k\to+\infty}|p_k|=+\infty$ where the limit in this
+        expression is taken for all $k$ such that $p_k\in\C$; or
+  \item $p\in\C$, all but a finite number of the $p_k$ are in $\C$, and
+        $\lim_{k\to+\infty}|p_k|=p$ in the usual sense of convergence in $\C$.
+\end{enumerate}
+
+\Theorem{6.3.4}{}\label{e521731}
+
+If $f:\CX\to\CX$ is a \href{f46e597}{linear fractional transformation}, then
+$f$ is a bijective continuous function. Its inverse is also a linear fractional
+transformation.
+
+\Theorem{6.3.5}{}\label{a7b9b92}
+
+A function $\phi$ is a conformal self-mapping of $\CX$ to itself if and only if
+$\phi$ is linear fractional.
+
+\Theorem{6.3.6}{The inverse Cayley transform}\label{f17d4d9}
+
+The \href{f46e597}{linear fractional transformation} $z\mapsto (z-i)/(z+i)$
+maps the upper half plane $\set z{\Im z>0}$ conformally to the unit disc
+$D=\set{z}{|z|<1}$.
+
+\Theorem{6.3.7}{}\label{d07b1b4}
+
+Let $\mathcal C$ be the set of subsets of $\CX$ consisting of \textbf{(i)}
+circles and \textbf{(ii)} sets of the form $L\cup\{\infty\}$ where $L$ is a
+line in $\C$. Then every \href{f46e597}{linear fractional transformation}
+$\phi$ takes elements of $\mathcal C$ to elements of $\mathcal C$.
+
+Sets consisting of $L\cup\{\infty\}$ are thought of as ``generalized circles".
+Thus the theorem says that linear fractional transformations take circles to
+circles, in the generalized sense of the word.
+
+\Definition{6.4.1}{Homeomorphisms}\label{c429605}
+
+Two open sets $U$ and $V$ in $\C$ are \textit{homeomorphic} if there is a
+bijective continuous function $f:U\to V$ with $f^{-1}:V\to U$ also continuous.
+Such a function $f$ is called a \textit{homeomorphism} from $U$ to $V$.
+
 % timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
 
