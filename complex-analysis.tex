@@ -1560,6 +1560,23 @@ Two open sets $U$ and $V$ in $\C$ are \textit{homeomorphic} if there is a
 bijective continuous function $f:U\to V$ with $f^{-1}:V\to U$ also continuous.
 Such a function $f$ is called a \textit{homeomorphism} from $U$ to $V$.
 
+\Theorem{6.4.2}{Riemann mapping theorem}\label{faf0cb5}
+
+If $U\subsetneq\C$ is open, and $U$ is homeomorphic to $D$, then $U$ is
+conformally equivalent to $D$.
+
+\Definition{6.5.1}{}\label{fe96ff9}
+
+A sequence of functions $f_j$ on an open set $U\subseteq\C$ is said to converge
+normally to a limit function $f$ on $U$ if $\{f_j\}$ converges to $f$ uniformly
+on compact subsets of $U$.
+
+That is, convergence is normal if for each compact set $K\subseteq U$ and each
+$\epsilon>0$, there is a $J>0$ (depending on $K$ and $\epsilon$) such that
+$$
+  j\geq J\implies|f_j(z)-f(z)|<\epsilon\with\forall z\in K.
+$$
+
 % timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
 
