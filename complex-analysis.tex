@@ -1401,6 +1401,47 @@ Let $U\subseteq\C$ be a domain and let $f$ be a holomorphic function on $U$. if
 there is a point $P\in U$ at which $|f|$ has a local maximum, then $f$ is
 constant.
 
+\Theorem{5.4.5}{}\label{dc80ded}
+
+Let $f$ be holomorphic on a \href{f2be1bc}{domain} $U\subseteq\C$. Assume that
+$f$ never vanishes. If there is a point $P\in U$ such that $|f(P)|\leq |f(z)|$
+for all $z\in U$, then $f$ is constant.
+
+\begin{proof}
+  Apply the \href{bfc4e84}{maximum modulus principle} to the function
+  $g(z)=1/f(z)$.
+\end{proof}
+
+\Proposition{5.5.1}{Schwarz's Lemma}\label{f0c9fe2}
+
+Let $f$ be holomorphic on the unit disc. Assume that
+\begin{enumerate}
+  \item $|f(z)|\leq1$ for all $z$,
+  \item $f(0)=0$.
+\end{enumerate}
+
+Then $|f(z)|\leq|z|$ and $f'(0)\leq1$.
+
+If either $|f(z)|=|z|$ for some $z\neq0$ or if $|f'(0)|=1$, then $f$ is a
+rotation: $f(z)\equiv\alpha z$ for some complex constant $\alpha$ of unit
+modulus.
+
+\Theorem{5.5.2}{Schwarz-Pick}\label{a244534}
+
+Let $f$ be holomorphic on the unit disc with $|f(z)|\leq1$ for all $z\in
+D(0,1)$. Then, for any $a\in D(0,1)$ and with $b\equiv f(a)$, we have the
+estimate
+$$
+  |f'(a)|\leq\frac{1-|b|^2}{1-|a|^2}
+$$
+
+Moreover, if $f(a_1)=b_1$ and $f(a_2)=b_2$, then
+$$
+  \left|\frac{b_2-b_1}{1-\bar b_1b_2}\right|
+  \leq
+  \left|\frac{a_2-a_1}{1-\bar a_1a_2}\right|
+$$
+
 % timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
 
