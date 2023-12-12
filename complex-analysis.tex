@@ -1442,6 +1442,19 @@ $$
   \left|\frac{a_2-a_1}{1-\bar a_1a_2}\right|
 $$
 
+\Definition{6.0.1}{Conformal/biholomorphic maps}\label{bbb1df0}
+
+Let $U,V$ be open subsets of $\C$. Let $f:U\to V$ be holomorphic and bijective.
+Such a function $f$ is called a \textit{conformal} or \textit{biholomorphic}
+mapping. $h^{-1}:V\to U$ is necessarily holomorphic.
+
+% Refer to the opening remark of chapter 6 of the textbook
+
+\Definition{6.0.2}{Conformal equivalence}\label{ee69976}
+
+Let $U,V\subseteq\C$. We say that $U,V$ are conformally equivalent if there
+exists a \href{bbb1df0}{conformal mapping} $f$ from $U$ to $V$.
+
 \Theorem{6.1.1}{}\label{f15ad67}
 
 A function $f:\C\to\C$ is a conformal mapping if and only if there are complex
@@ -1563,7 +1576,7 @@ Such a function $f$ is called a \textit{homeomorphism} from $U$ to $V$.
 \Theorem{6.4.2}{Riemann mapping theorem}\label{faf0cb5}
 
 If $U\subsetneq\C$ is open, and $U$ is homeomorphic to $D$, then $U$ is
-conformally equivalent to $D$.
+conformally equivalent to the unit disc $D$.
 
 \Definition{6.5.1}{}\label{fe96ff9}
 
@@ -1616,6 +1629,30 @@ limit of a sequence $\{f_j\}$, $f_j\in\mathcal F$, such that
 $$
   |f_0'(P)|\geq|f'(P)|,\with\forall f\in\mathcal F
 $$
+
+\Theorem{6.6.3}{Riemann mapping theorem: analytic form}\label{bd0fcb9}
+
+If $U$ is a \href{d20898f}{HSC} open set in $\C$, and $U\neq\C$, then $U$ is
+\href{ee69976}{conformally equivalent} to the unit disc.
+
+\Lemma {6.6.4}{The holomorphic logarithm lemma}\label{f18ba82}
+
+Let $U$ be a \href{d20898f}{HSC} open set. If $f:U\to\C$ is holomorphic and
+nowhere zero on $U$, then there exists a holomorphic function $h$ on $U$ such
+that
+$$
+  e^h\equiv f\with\text{on $U$}
+$$
+
+\Corollary{6.6.5}{}\label{bd18e65}
+
+If $U$ is \href{d20898f}{HSC} and $f:U\to\C\sans0$ is holomorphic, then there
+is a function $g:U\to\C\sans0$ such that
+$$
+  f(z)=[g(z)]^2
+$$
+
+for all $z\in U$.
 
 % timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
