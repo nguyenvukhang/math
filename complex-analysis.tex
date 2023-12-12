@@ -1577,6 +1577,46 @@ $$
   j\geq J\implies|f_j(z)-f(z)|<\epsilon\with\forall z\in K.
 $$
 
+\Theorem{6.5.3}{Montel's theorem, first version}\label{b4a14fe}
+
+Let $\mathcal F=\{f_\alpha\}_{\alpha\in A}$ be a family of holomorphic
+functions on an open set $U\subseteq\C$. Suppose that there is a constant $M>0$
+such that, for all $z\in U$, and all $f_\alpha\in\mathcal F$,
+$$
+  |f_\alpha(z)|\leq M
+$$
+
+Then, for every sequence $\{f_j\}\subseteq\mathcal F$, there is a subsequence
+$\{f_{j_k}\}$ the converges normally on $U$ to a limit (holomorphic) function
+$f$.
+
+\Definition{6.5.4}{}\label{f152035}
+
+Let $\mathcal F$ be a family of functions on an open set $U\subseteq\C$. We say
+that $\mathcal F$ is \textit{bounded on compact sets} if for each compact set
+$K\subseteq U$ there is a constant $M=M_K$ such that, for all $f\in\mathcal F$
+and all $z\in K$,
+$$
+  |f(z)|\leq M
+$$
+
+\Theorem{6.5.5}{Montel's theorem, second version}\label{ad5126c}
+
+Let $U\subseteq\C$ be an open set and let $\mathcal F$ be a family of
+holomorphic functions on $U$ that is bounded on compact sets. Then for every
+sequence $\{f_j\}\subseteq\mathcal F$ there is a subsequence $\{f_{j_k}\}$ that
+converges normally on $U$ to a limit (necessarily holomorphic) function $f$.
+
+\Proposition{6.5.7}{}\label{e7d014b}
+
+Let $U\subseteq\C$ be any open set. Fix a point $P\in U$. Let $\mathcal F$ be a
+family of holomorphic functions from $U$ into the unit disc $D$ that take $P$
+to $0$. Then there is a holomorphic function $f_0:U\to D$ that is the normal
+limit of a sequence $\{f_j\}$, $f_j\in\mathcal F$, such that
+$$
+  |f_0'(P)|\geq|f'(P)|,\with\forall f\in\mathcal F
+$$
+
 % timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
 
