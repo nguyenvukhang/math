@@ -29,16 +29,16 @@ dev:
 test:
 	$(PYTEX) checkhealth
 
+ref: BUILD := $(PYTEX) -J ref build toc.tex \
+	plenary.tex \
+	calculus.tex \
+	algorithm-design.tex \
+	complex-analysis.tex \
+	nonlinear-optimization-unconstrained.tex \
+	nonlinear-optimization-constrained.tex \
+	ordinary-differential-equations.tex
 ref:
-	$(PYTEX) -J ref build \
-		toc.tex \
-		plenary.tex \
-		calculus.tex \
-    algorithm-design.tex \
-    complex-analysis.tex \
-    nonlinear-optimization-unconstrained.tex \
-    nonlinear-optimization-constrained.tex \
-    ordinary-differential-equations.tex
+	$(BUILD) && $(BUILD)
 
 toc:
 	$(PYTEX) toc
@@ -57,25 +57,10 @@ gen-notes:
 	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
 	git branch -D prev
 
-ci:
-	bash .github/workflows/build.sh
-	TEXINPUTS='tex_modules/:' pdflatex .ci/minimath.tex
-	@make clean
-
 fmt:
 	@rm -f *.bak* **/*.bak* *indent.log
 	latexindent -s -w -m -l=.latexindent.yaml *.tex || echo "failed"
 	@rm -f *.bak* **/*.bak* *indent.log
-
-plenary:
-	$(PYTEX) -J plenary \
-		build plenary.tex calculus.tex
-
-sha:
-	@$(PYTEX) sha | pbcopy
-
-sha-dev:
-	@$(PYTEX) sha
 
 label:
 	$(PYTEX) label

@@ -77,13 +77,15 @@ open subset of the complex plane $\C$.
 
 \Definition{1.4.1}{Holomorphic functions}\label{e1e08f7}
 
-Let $U\subset\mathbb C$ be open. Let $f:U\to\C$ be in $C^1(U)$. $f$ is said to
-be \textit{holomorphic} if
+Let $U\subseteq\C$ be open. Let $f:U\to\C$ be in $C^1(U)$. $f$ is said to be
+\textit{holomorphic} if
 $$
   \frac{\partial f}{\partial\bar z}=0
 $$
 
-\paragraph{Properties of holomorphic functions} If $f$ and $g$ are holomorphic in a domain $U$, then so are $f+g$, $f-g$, $fg$,
+\paragraph{Properties of holomorphic functions}
+
+If $f$ and $g$ are holomorphic in a domain $U$, then so are $f+g$, $f-g$, $fg$,
 and $f\circ g$.
 
 Additionally, if $g$ has no zeros in $U$, then $f/g$ is holomorphic too.
@@ -133,7 +135,7 @@ $$
 
 \Definition{1.4.4}{Harmonic functions}\label{d53f60f}
 
-Let $U\subset\C$ be open. Let $f:U\to\C$ be in $C^2(U)$. $f$ is said to be
+Let $U\subseteq\C$ be open. Let $f:U\to\C$ be in $C^2(U)$. $f$ is said to be
 \textit{harmonic} if
 $$
   \frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}=0
@@ -170,7 +172,7 @@ also.
 
 \Theorem{1.5.3}{}\label{e7808d1}
 
-Let $U\subset\C$ be either an open rectangle or open disc, and let $F$ be
+Let $U\subseteq\C$ be either an open rectangle or open disc, and let $F$ be
 holomorphic on $U$. Then there exists a holomorphic function $H$ on $U$ such
 that
 $$
@@ -730,12 +732,12 @@ $$
 
 on $D(P,r)$, then $a_j=b_j$ for every $j$.
 
-\Theorem{3.3.1}{}\label{b43209d}
+\Theorem{3.3.1}{Power series of a holomorphic function}\label{b43209d}
 
 Let $U\subseteq\C$ be open and let $f$ be holomorphic on $U$. Let $P\in U$ and
 suppose that $D(P,r)\subseteq U$. Then the complex power series
 $$
-  \sum_{k=0}^\infty\frac{(\partial^kf/\partial z^k)(P)}{k!}(z-P)^k
+  \sum_{k=0}^\infty\frac1{k!}\bigg[\frac{\partial^kf}{\partial z^k}(P)\bigg](z-P)^k
 $$
 
 has radius of convergence at least $r$. It converges to $f(z)$ on $D(P,r)$.
@@ -849,7 +851,7 @@ uniformly on compact sets.
 \Theorem{3.6.1}{}\label{bdc2857}
 
 Let $U\subseteq\C$ be a connected open set and let $f:U\to\C$ be holomorphic.
-Let $\mathbf Z:=\Set{z\in U}{f(z)=0}$. If there are a $z_0\in\mathbf Z$ and a
+Let $\mathbf Z:=\Set{z\in U}{f(z)=0}$. If there is a $z_0\in\mathbf Z$ and a
 sequence $\{z_j\}\subseteq\mathbf Z\sans{z_0}$ such that $z_j\to z_0$, then
 $f\equiv0$.
 
@@ -1156,7 +1158,7 @@ We also say in this circumstance that $S$ consists of isolated points.
 
 \Definition{4.7.2}{Meromorphic functions}\label{cfba843}
 
-A meromorphic function $f$ on and open set $U\subseteq\C$ with singular (as in
+A meromorphic function $f$ on an open set $U\subseteq\C$ with singular (as in
 ``singularity") set $S$ is a function $f:U\setminus S\to\C$ such that
 \begin{enumerata}
   \item the set $S$ is closed in $U$ and is \href{d1b9ae6}{discrete},
@@ -1194,6 +1196,33 @@ $G:\set{z\in U}{0<|z|<1/R}\to\C$ by $G(z)=f(1/z)$. Then we say that
   singularity at $0$.
 \end{enumerati}
 
+\Remark{4.7.4a}{Singularities and Laurent Expansions}\label{eb529b9}
+
+Building on \href{f4cee1f}{Definition 4.7.4}, let the Laurent expansion of $G$
+around $0$ be
+$$
+  G(z)=\sum_{-\infty}^{+\infty}a_nz^n
+$$
+
+Then we have the \textit{Laurent expansion of $f$ around $\infty$} as
+$$
+  f(z)=G(\tfrac1z)=\sum_{-\infty}^{+\infty}a_{-n}z^n
+$$
+
+\begin{enumerati}
+  \item $f$ has a removable singularity at $\infty$ if and only if the Laurent
+  series has no positive powers of $z$ with non-zero coefficients:
+  $$
+    f(z)=\bigg(\sum_{-\infty}^0a_{-n}z^n\bigg)+0z+0z^2+\ldots
+  $$
+
+  \item $f$ has a pole at $\infty$ if and only if the series has only a finite
+  number of positive powers of $z$ with non-zero coefficients.
+
+  \item $f$ has an essential singularity at $\infty $ if and only if the series
+  has infinitely many positive powers.
+\end{enumerati}
+
 \Theorem{4.7.5}{}\label{cabe102}
 
 Suppose that $f:\C\to\C$ is an entire function. Then
@@ -1216,9 +1245,163 @@ A meromorphic function $f$ on $\C$ which is also meromorphic at $\infty$ must
 be a rational function (i.e. a quotient of polynomials in $z$). Conversely,
 every rational function is meromorphic on $\C$ and at $\infty$.
 
-\paragraph{Remark} It is conventional to rephrase the theorem by saying that the only functions
+\paragraph{Remark}
+
+It is conventional to rephrase the theorem by saying that the only functions
 that are meromorphic in the ``extended plane" are rational functions.
 
+\Lemma{5.1.1}{}\label{bfaa6bf}
+
+If $f$ is holomorphic on a neighborhood of a disc $\overline D(z_0,r)$ and has
+a zero of order $n$ at $z_0$ and no other zeros in the closed disc, then
+$$
+  \frac1{2\pi i}\oint_{\partial D(z_0,r)}\frac{f'(\zeta)}{f(\zeta)}\,d\zeta=n
+$$
+
+% TODO page 160(179 on PDF) of chapter 5, (*) is a result of recursion on Lemma
+% 5.1.1
+
+\Proposition{5.1.2}{}\label{fb7bf08}
+
+Suppose that $f:U\to\C$ is holomorphic on an open set $U\subseteq\C$ and that
+$\overline D(P,r)\subseteq U$. Suppose that $f$ is non-vanishing on $\partial
+D(P,r)$ and that $\iter{z_1}{z_k}$ are the zeros of $f$ in the interior of the
+disc. Let $n_\ell$ be the order of the zero of $f$ at $z_\ell$. Then
+$$
+  \frac1{2\pi i}\oint_{|\zeta-P|=r}\frac{f'(\zeta)}{f(\zeta)}\,d\zeta=\sum_{\ell=1}^kn_\ell
+$$
+
+% TODO: add this proof from the textbook by Greene.
+
+\Lemma{5.1.3}{}\label{fb96cf1}
+
+This is the analogue of \href{bfaa6bf}{Lemma 5.1.1} for a pole.
+
+If $f:U\sans Q\to\C$ is a nowhere zero holomorphic function on $U\sans Q$ with
+a pole of order $n$ at $Q$ and $\overline D(Q,r)\subseteq U$, then
+$$
+  \frac1{2\pi i}\oint_{\partial D(Q,r)}\frac{f'(\zeta)}{f(\zeta)}\,d\zeta=-n
+$$
+
+\Theorem{5.1.4}{Argument principle for meromorphic functions}\label{b8c772b}
+
+This is \href{bfaa6bf}{Lemma 5.1.1} and \href{fb96cf1}{Lemma 5.1.3} put
+together.
+
+Suppose $f$ is a meromorphic function on an open set $U\subseteq\C$, that
+$\overline D(P,r)\subseteq U$ and that $f$ has neither poles nor zeros on
+$\partial D(P,r)$. Then
+$$
+  \frac1{2\pi i}\oint_{\partial D(P,r)}\frac{f'(\zeta)}{f(\zeta)}\,d\zeta=
+  \sum_{j=1}^pn_j-\sum_{k=1}^pm_k
+$$
+
+where $\iter{n_1}{n_p}$ are the multiplicities of the zeros $\iter{z_1}{z_p}$
+of $f$ in $D(P,r)$, and $\iter{m_1}{m_p}$ are the orders of the poles
+$\iter{w_1}{w_p}$ of $f$ in $D(P,r)$.
+
+\Theorem{5.2.1}{The open mapping theorem}\label{e5ecb18}
+
+If $f:U\to\C$ is a non-constant holomorphic function on a connected open set
+$U$, then $f(U)$ is an open set in $\C$.
+
+\Theorem{5.2.2}{}\label{a98fb27}
+
+Suppose that $f:U\to\C$ is a non-constant holomorphic function on a connected
+open set $U$ such that $P\in U$ and $f(P)=Q$ with order $k$. Then there are
+numbers $\delta,\epsilon>0$ such that each $q\in D(Q,\epsilon)\sans Q$ has
+exactly $k$ distinct preimages in $D(P,\delta)$ and each preimage a simple
+point of $f$.
+
+\Lemma{5.2.3}{}\label{ab74e2a}
+
+Let $f:U\to\C$ be a non-constant holomorphic function on a connected open set
+$U\subseteq\C$. Then the multiple points of $f$ in $U$ are isolated.
+
+\begin{proof}
+  Since $f$ is non-constant, the holomorphic function $f'$ is not identically
+  zero. But then \href{bdc2857}{Theorem 3.6.1} tells us that the zeros of $f'$
+  are isolated. Since any multiple point $p$ of $f$ has the property that
+  $f'(p)=0$, it follows that the multiple points are isolated.
+\end{proof}
+
+\Theorem{5.3.1}{Rouché's Theorem}\label{bf9c04f}
+
+Suppose that $f,g:U\to\C$ are holomorphic functions on an open set
+$U\subseteq\C$. Suppose also that $\overline D(P,r)\subseteq U$ and that, for
+each $\zeta\in\partial D(P,r)$,
+\begin{equation*}
+  |f(\zeta)-g(\zeta)|<|f(\zeta)|+|g(\zeta)|\Tag{*}
+\end{equation*}
+
+Then
+$$
+  \frac1{2\pi i}\oint_{\partial D(P,r)}\frac{f'(\zeta)}{f(\zeta)}\,d\zeta
+  =\frac1{2\pi i}\oint_{\partial D(P,r)}\frac{g'(\zeta)}{g(\zeta)}\,d\zeta
+$$
+
+That is, the number of zeros of $f$ in $D(P,r)$ counting multiplicities equals
+the number of zeros of $g$ in $D(P,r)$ counting multiplicities.
+
+\paragraph{Remark}
+
+Note that the inequality $(*)$ implies that neither $f(\zeta)$ nor $g(\zeta)$
+can vanish on $\partial D(P,r)$. In particular, neither $f$ nor $g$ vanishes
+identically; moreover, the integral of $f'/f$ and $g'/g$ are defined on
+$\partial D(P,r)$.
+
+\Theorem{5.3.3}{Hurwitz's Theorem}\label{a821cfc}
+
+Suppose that $U\subseteq\C$ is a connected open set and that $\{f_j\}$ is a
+sequence of nowhere vanishing holomorphic functions on $U$. If the sequence
+$\{f_j\}$ converges uniformly on compact subsets of $U$ to a (necessarily
+holomorphic) limit function $f$, then either $f$ is nowhere vanishing or
+$f\equiv0$.
+
+\Definition{5.4.1}{Domains}\label{f2be1bc}
+
+A \textit{domain} in $\C$ is a connected open set. A \textit{bounded domain} is
+a connected open set $U$ such that there is an $R>0$ with $|z|<R$ for all $z\in
+U$.
+
+\Theorem{5.4.2}{The maximum modulus principle}\label{bfc4e84}
+
+Let $U\subseteq\C$ be a \href{f2be1bc}{domain}. Let $f$ be a holomorphic
+function on $U$. If there is a point $P\in U$ such that $|f(z)|\leq |f(P)|$ for
+all $z\in U$, then $f$ is constant.
+
+\begin{proof}
+  Assume that there is such a $P$. If $f$ is not constant, then $f(U)$ is open
+  by the \href{e5ecb18}{open mapping principle}. Hence there are points $\zeta$
+  of $f(U)$ with $|f(P)|<|\zeta|$. This is a contradiction. Hence $f$ is
+  constant.
+\end{proof}
+
+\Corollary{5.4.3}{Maximum modulus theorem}\label{befe6f9}
+
+Let $U\subseteq\C$ be a \href{f2be1bc}{bounded domain}. Let $f$ be a continuous
+function on $\overline U$ that is holomorphic on $U$. Then the maximum value of
+$|f|$ on $\overline U$ (which must occur, since $\overline U$ is closed and
+bounded) must occur on $\partial U$.
+
+\begin{proof}
+  Since $|f|$ is a continuous function on the compact set $\overline U$, then it
+  must attain its maximum somewhere.
+
+  If $f$ is constant, then the maximum value of $|f|$ occurs at every point, in
+  which case the conclusion clearly holds. If $f$ is not constant, then the
+  maximum value of $|f|$ on the compact set $\overline U$ cannot occur at $P\in
+  U$, by \href{bfc4e84}{Theorem 5.4.2}, and hence the maximum occurs on $\partial
+  U$.
+\end{proof}
+
+\Theorem{5.4.4}{Maximum modulus theorem, alt}\label{c3c0370}
+
+Let $U\subseteq\C$ be a domain and let $f$ be a holomorphic function on $U$. if
+there is a point $P\in U$ at which $|f|$ has a local maximum, then $f$ is
+constant.
+
+% timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
 
 Suppose that $\{f_n\}$ is a sequence of functions with $f_n:U\to\C$ for some
@@ -1260,3 +1443,4 @@ between $P$ and the nearest non-removable \href{a7f062e}{singularity}.
 
 If there are no singularities (such as when $f$ is an entire function), then
 the radius of convergence is infinite.
+% }}}
