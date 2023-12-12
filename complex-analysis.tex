@@ -1442,6 +1442,52 @@ $$
   \left|\frac{a_2-a_1}{1-\bar a_1a_2}\right|
 $$
 
+\Theorem{6.1.1}{}\label{f15ad67}
+
+A function $f:\C\to\C$ is a conformal mapping if and only if there are complex
+numbers $a,b$ with $a\neq0$ such that
+$$
+  f(z)=az+b,\with z\in\C
+$$
+
+\Lemma{6.1.2}{}\label{af84ffc}
+
+The holomorphic function $f$ satisfies
+$$
+  \lim_{|z|\to\infty}|f(z)|=\infty
+$$
+
+That is, given $\epsilon>0$, there is a number $C>0$ sudh that if $|z|>C$, then
+$|f(z)|>1/\epsilon$.
+
+\Lemma{6.1.3}{}\label{f4e6690}
+
+There are numbers $B,D>0$ such that if $|z|>D$, then
+$$
+  |f(z)|<B|z|
+$$
+
+\Lemma{6.2.1}{}\label{beabf8e}
+
+A holomorphic function $f:D\to D$ that satisfies $f(0)=0$ is a conformal
+mapping of $D$ onto itself if and only if there is a complex number $\omega$
+with $|\omega|=1$ such that
+$$
+  f(z)\equiv\omega z,\with\forall z\in D
+$$
+
+In other words, a conformal self-map of the disc that fixes the origin must be
+a rotation.
+
+\Lemma{6.2.2}{Construction of Möbius transformation}\label{e315936}
+
+For $a\in\C$ with $|a|<1$, we define
+$$
+  \phi_a(z):=\frac{z-a}{1-\bar az}
+$$
+
+Then each $\phi_a$ is a conformal self-map of the unit disc.
+
 % timeskip {{{
 \Theorem{20.1.1}{Weierstrass M-test}\label{d4a96c1}
 
