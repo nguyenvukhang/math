@@ -260,7 +260,7 @@ class Project:
 class PdfLatex(Popen):
     # start a subprocess of `pdflatex` ready to take a latex file in
     # from stdin
-    def __init__(self, jobname="minimath", build_dir=".build", dev_mode=False):
+    def __init__(self, jobname="minimath", build_dir=".git", dev_mode=False):
         # tells latex compiler to search for .sty packages in this folder.
         os.environ["TEXINPUTS"] = path.join(os.curdir, "tex_modules") + ":"
 

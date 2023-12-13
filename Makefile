@@ -69,7 +69,7 @@ head:
 	@$(PYTEX) generate-section-titles
 
 clean:
-	rm -rf .ci .build *.aux *.out *.log minimath*.pdf
+	rm -rf *.aux *.out *.log minimath*.pdf
 
 open:
 	open minimath.pdf

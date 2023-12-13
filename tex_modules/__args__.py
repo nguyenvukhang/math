@@ -35,7 +35,7 @@ class Args:
         p.add_argument("action", choices=ACTIONS)
         p.add_argument("-H", dest="header", default="headers")
         p.add_argument("-J", "--jobname", default="out")
-        p.add_argument("--build-dir", default=".build")
+        p.add_argument("--build-dir", default=".git")
         p.add_argument("-v", "--verbose", action="store_true")
         p.add_argument("--prev-rel")
         p.add_argument("-a", "--all", action="store_true")
