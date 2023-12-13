@@ -1,7 +1,7 @@
+MINIMATH_VERSION := v1.1.7
+
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
-
-PREV_TAG := v1.1.1
 
 PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
 
@@ -39,6 +39,9 @@ ref: BUILD := $(PYTEX) -J ref build toc.tex \
 	ordinary-differential-equations.tex
 ref:
 	$(BUILD) && $(BUILD)
+
+sha:
+	$(PYTEX) sha | pbcopy
 
 toc:
 	$(PYTEX) toc
