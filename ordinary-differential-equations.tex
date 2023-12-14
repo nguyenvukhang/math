@@ -210,6 +210,8 @@ For these we split into a few cases:
 
 \Result{3.1.1}{Constant coefficients}\label{cd8a29a}
 
+% Lecture 13 page 2
+
 \begin{equation*}\def\y#1{y^{(#1)}}
   \y n+a_1\y{n-1}+a_2\y{n-2}+\ldots+a_{n-1}y'+a_ny=0\Tag{*}
 \end{equation*}
@@ -348,7 +350,6 @@ $$
   \end{align*}
 \end{compute}
 
-\newpage
 \Exercise{3.1.7}{}\label{b0e53e0}
 
 Solve the differential equation
@@ -398,3 +399,123 @@ $$
   \end{align*}
 
 \end{compute}
+
+\Definition{4.0.0}{Regular singular points}\label{f490530}
+
+This is prerequisite knowledge for the next section on \href{fdab69a}{series
+solutions}.
+
+Consider the following ODE:
+\begin{equation*}
+  y''+P(x)y'+Q(x)y=R(x)\Tag{*}
+\end{equation*}
+
+If we have both limits of
+\begin{equation*}
+  \lim_{x\to x_0}(x-x_0)P(x)\quad\text{and}\quad\lim_{x\to x_0}(x-x_0)^2Q(x)
+\end{equation*}
+
+finite, then $x_0$ is a regular singular point of the equation $(*)$.
+
+\Remark{4.0.1}{Series solutions}\label{fdab69a}
+
+The main idea here is to try to write $y$ as a power series:
+$$
+  y:=\sum_{n=0}^\infty a_n(x-x_0)^n
+$$
+
+for some fixed $x_0,a_0,a_1,\ldots\in\R$.
+
+This can be used to solve these problems:
+\begin{itemize}
+  % from Prof Hurtubise's Lecture 14
+  \item $y''+y=0$
+  \item \textit{(Airy's Equation)} $y''-xy=0$
+  \item \textit{(Hermite Equation)} $y''-2xy'+\lambda y=0$
+\end{itemize}
+
+Note that this substitution is only valid when the $x_0$ chosen occurs at a
+\href{f490530}{regular singular point}.
+
+\Remark{4.0.2}{Frobenius series}\label{b1a3270}
+
+This is when we try the substitution
+$$
+  y:=\sum_{n=0}^\infty a_nx^{r+n}
+$$
+
+This is useful for solving these problems:
+\begin{itemize}
+  \item \textit{(Euler equations)} $x^2y''+x\alpha y'+\beta y=0$. Euler
+        equations necessarily have a \href{f490530}{regular singular point}
+        (RSP) at $0$.
+  \item $2x^2y''-x\alpha y'+(1+x)y=0$. This needs showing that $x=0$ is a
+        regular singular point before continuing.
+  \item \textit{(Laguerre equation)} $xy''+(1-x)y'+\lambda y=0$. (RSP at 0)
+  \item \textit{(Chebyshev equation)} $(1-x^2)y''-xy'+\lambda^2y=0$. (RSP at 1)
+        Being the first non-zero RSP, here's how the series expansion looks
+        like:
+        $$
+          y:=\sum_{n=0}^\infty a_n(x-1)^{r+n}
+        $$
+  \item \textit{(Bessel equation)} $x^2y''+xy'+(x^2-\lambda^2)y=0$. (RSP at 0)
+\end{itemize}
+
+% \Theorem{4.1.1}{}
+%
+% Consider the differential equation
+% \begin{equation*}
+%   y''+P(x)y'+Q(x)y=0\Tag{*}
+% \end{equation*}
+%
+% where $x=0$ is a \href{f490530}{regular singular point}. Then $xP(x)$ and
+% $x^2Q(x)$ are analytic at $x=0$ with convergent power expansions.
+%
+% \newpage
+% \Result{x.x.x}{Exercise}
+%
+% Consider the equation
+% \begin{equation*}
+%   L[y]=y''+P(x)y'+Q(x)y=0\Tag{*}
+% \end{equation*}
+%
+% where $xP(x)$ and $x^2Q(x)$ are analytic. That is,
+% $$
+%   xP(x)=\sum_{n=0}^\infty p_nx^n\quad\text{and}\quad x^2Q(x)=\sum_{n=0}^\infty q_nx^n.
+% $$
+%
+% Assume that a solution for $(*)$ has the form
+% $$
+%   y=\phi(r,x)=x^r\sum_{n=0}^\infty a_nx^n=\sum_{n=0}^\infty a_nx^{r+n}
+% $$
+%
+% where $a_0\neq0$. It follows that
+% \begin{align*}
+%   y'  &=\sum_{n=0}^\infty(r+n)a_nx^{r+n-1}        \\
+%   y'' &=\sum_{n=0}^\infty(r+n)(r+n-1)a_nx^{r+n-2}
+% \end{align*}
+%
+% Note that
+% \begin{align*}
+%    &\sum_{n=0}^\infty(r+n)(r+n-1)a_nx^{r+n-2} \\
+%    &= r(r-1)a_0x^{r-2}+(r+1)ra_1x^{r-1}
+%   +\sum_{n=2}^\infty(r+n)(r+n-1)a_nx^{r+n-2}
+% \end{align*}
+%
+% and
+% \begin{align*}
+%    &\sum_{n=0}^\infty(r+n)a_nx^{r+n-1}              \\
+%    &=ra_0x^{r-1}+\sum_{n=1}^\infty(r+n)a_nx^{r+n-1}
+% \end{align*}
+%
+% Substituting all these power series back into $(*)$, we have
+% \begin{align*}
+%    &y''+P(x)y'+Q(x)y                                       \\
+%    &=\bigg[\sum_{n=0}^\infty(r+n)(r+n-1)a_nx^{r+n-2}\bigg]
+%   +P(x)\bigg[\sum_{n=0}^\infty(r+n)a_nx^{r+n-1}\bigg]
+%   +Q(x)\bigg[\sum_{n=0}^\infty a_nx^n\bigg]                \\
+%    &=\bigg[
+%   r(r-1)a_0x^{r-2}+(r+1)ra_1x^{r-1}+P(x)ra_0x^{r-1}
+%   \bigg]
+%   +\sum_{n=2}^\infty(r+n)(r+n-1)a_nx^{r+n-2}
+% \end{align*}
