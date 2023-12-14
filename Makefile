@@ -16,7 +16,10 @@ TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
 # TEX_FILES += sandbox.tex
 
-x:
+x: 
+	cd omath && dune exec omath
+
+x1:
 	@make test
 	@make build
 
