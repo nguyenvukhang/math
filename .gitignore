@@ -34,3 +34,5 @@ build.tex
 CHANGELOG*
 shas.json
 .vercel
+
+target/

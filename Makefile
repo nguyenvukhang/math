@@ -16,7 +16,12 @@ TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
 # TEX_FILES += sandbox.tex
 
-x: 
+MINIMATH := cargo run
+
+x:
+	$(MINIMATH) build $(TEX_FILES)
+
+x2: 
 	cd omath && dune exec omath
 
 x1:

@@ -17,6 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - run: cargo run
       - name: checkhealth
         run: python3 tex_modules/pytex checkhealth
 

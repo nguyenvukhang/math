@@ -1,0 +1,9 @@
+(executable
+ (public_name minimath)
+ (name main)
+ (libraries minimath unix))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
