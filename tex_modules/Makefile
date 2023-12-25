@@ -6,15 +6,15 @@
 
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
-PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
+MINIMATH := minimath
 
 # TEX_FILES += main.tex
 
 build:
-	$(PYTEX) build --all $(TEX_FILES)
+	$(MINIMATH) build -J out --pipe --all $(TEX_FILES)
 
 dev:
-	$(PYTEX) dev --all $(TEX_FILES)
+	$(MINIMATH) dev --all $(TEX_FILES)
 
 open:
 	open out.pdf

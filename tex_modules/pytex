@@ -1,226 +1,25 @@
 #!/usr/bin/env python3
 
-from __utils__ import *
-from __args__ import Args
-import json
-from datetime import datetime
-from typing import Callable
+from subprocess import Popen, PIPE
+from os import path
+import os
 
 
-class Color:
-    red = lambda v: "\x1b[31m" + v + "\x1b[0m"
-    green = lambda v: "\x1b[32m" + v + "\x1b[0m"
-    yellow = lambda v: "\x1b[33m" + v + "\x1b[0m"
+class PdfLatex(Popen):
+    # start a subprocess of `pdflatex` ready to take a latex file in
+    # from stdin
+    def __init__(self, jobname="minimath", build_dir=".build", dev_mode=False):
+        # tells latex compiler to search for .sty packages in this folder.
+        os.environ["TEXINPUTS"] = "tex_modules/:"
 
+        self.jobname = jobname
+        self.build_dir = build_dir
+        self.dev_mode = dev_mode
 
-# [SUBCOMMAND] builds using all the tex_files supplied, in that order
-def __build__(args):  # type: (Args) -> None
-    Project(args.tex_files).build(args)
+        j, d = jobname, build_dir
 
+        if not path.isdir(build_dir):
+            os.mkdir(build_dir)
 
-# [SUBCOMMAND] runs a server that rebuilds the pdf if any file
-# changed.
-def __dev__(args):  # type: (Args) -> None
-    project = Project(args.tex_files)
-
-    now = lambda: datetime.now().strftime("%H:%M:%S")
-    build = lambda: project.build(args)
-    report = lambda: print(Color.green("[Last build: %s]" % now()))
-    (build(), report())
-
-    class EventHandler(make_debounced_handler(0.5)):
-        def __build__(self):
-            if self.should_build():
-                (build(), report(), self.build_completed())
-
-        def on_modified(self, event):
-            for tf in project.tex_files:
-                if event.src_path.endswith(tf.path):
-                    tf.reload()
-                    self.__build__()
-                    break
-
-    run_observer(EventHandler())
-
-
-# [SUBCOMMAND] prints a 7-char SHA hash that the user can copy to
-# clipboard. This SHA is unique in all ".tex" files that are in the
-# current directory and all the current subdirectories.
-#
-# opinionated quirk: all generated SHAs will start with a letter.
-def __sha__(_):
-    all_labels = get_all_labels(get_tex_files())
-    print(new_sha(all_labels).decode("utf8"), end="")
-
-
-# [SUBCOMMAND] adds a label and a unique SHA to all marks that don't
-# already have a SHA.
-def __label__(_):
-    all_labels = get_all_labels(get_tex_files())
-    files = map(File, get_tex_files())
-    for file in files:
-        file.index()
-        file.add_labels_and_write(all_labels)
-
-
-def __generate_section_titles__(_):
-    def gen(t):  # type: (str) -> str
-        b = lambda v: "{" + v + "}"
-        desc = r"\ifx&#2&\else\hspace{0.5em}(#2)\fi"
-        return f"\def\{t}#1#2" + b(
-            "\subsection" + b(t + " {#1}" + b(desc))
-        )
-
-    for l in map(lambda v: gen(v.decode("utf8")), MARKS):
-        print(l)
-
-
-def __toc__(_):
-    files = list(map(File, get_tex_files()))
-    for file in files:
-        file.index()
-    data = {f.path: f.serialize() for f in files}
-    with open("toc.json", "w") as f:
-        json.dump(data, f, indent=2)
-
-
-def __toc_markdown__(args):  # type: (Args) -> None
-    BLACKLIST = ("toc.tex", "sandbox.tex")
-    files = map(File, get_tex_files())
-    files = list(filter(lambda f: f.path not in BLACKLIST, files))
-
-    existing_shas = []
-    if args.prev_rel is not None and path.isfile(args.prev_rel):
-        with open(args.prev_rel, "r") as f:
-            existing_shas = json.load(f)
-    existing_shas = set(existing_shas)
-
-    def toc_line(line):
-        _, mark, num, name, label = line
-        if label in existing_shas:
-            return None
-        line = f"- {mark} {num}"
-        if len(name) > 0:
-            line += f" {name}"
-        return line
-
-    for file in files:
-        file.index()
-
-    with open("shas.json", "w") as fp:
-        shas = []
-        for f in files:
-            labels = filter(lambda v: v is not None, f.labels())
-            shas.extend(map(lambda v: v.decode("utf8"), labels))
-        json.dump(shas, fp)
-
-    lines = []
-    for f in files:
-        tmp = []
-        for line in f.serialize():
-            tl = toc_line(line)
-            if tl is not None:
-                tmp.append(tl)
-        if len(tmp) > 0:
-            lines.extend((f"## `{f.path}`", ""))
-            lines.extend(tmp)
-            lines.append("")
-
-    with open("CHANGELOG.md", "w") as f:
-        f.write("\n".join(lines))
-
-
-# [test]
-def line_is_valid(line):  # type: (bytes) -> tuple[bool, str]
-    for label in Rx.LABEL_ANY.finditer(line):
-        # \label{} is not at end of line.
-        if label.span()[1] != len(line):
-            return False, "Found a label that is not at the end of the line."
-        label_id = label.groups()[0]
-
-        # \label{<id>} id is invalid
-        if not Rx.VALID_LABEL_ID.match(label_id):
-            id = label_id.decode()
-            return (False, f"Invalid label ID: [{id}]. Use built-in label generator.")
-    LONE = [b"\\begin{proof}", b"\\end{proof}", b"\\begin{compute}", b"\\end{compute}"]
-    stripped = line.strip().removeprefix(b"%").strip()
-    for lone in LONE:
-        if lone in stripped:
-            if lone != stripped:
-                return False, f'"{lone}" must be alone on its own line.'
-    return True, ""
-
-
-# [test]
-def no_nested_custom_environments(file):  # type: (File) -> tuple[bool, str]
-    stack = []
-    for lnum, line in enumerate(file.lines):
-        for env in Rx.CUSTOM_ENV.finditer(line):
-            env = env.groups()[0]
-            if env.startswith(b"\\begin"):
-                if len(stack) == 1:
-                    return False, f"Nested env at {file.path}:{lnum}"
-                stack.append(env)
-            # latex itself should handle all other nesting issues such as
-            # environments having to be a stack. So we can assume here that the
-            # environment that ended is in fact at the top of the stack.
-            elif env.startswith(b"\\end"):
-                stack.pop()
-    return True, ""
-
-
-# [test]
-def debug_test():
-    def test_line_is_valid(line, expected):
-        ok, _ = line_is_valid(line.encode())
-        assert_eq(ok, expected)
-
-    test_line_is_valid(r"Content\label{f3b5e5a}", True)
-    test_line_is_valid(r"Content\label{33x5ae5}", False)  # contains non-hex char 'x'
-    test_line_is_valid(r"\label{f3b5e5a}Content", False)  # doesn't end with label
-
-
-# [SUBCOMMAND] checks if everything is in a healthy state
-# 1. checks that no two labels have the same SHA
-def __checkhealth__(_):
-    tex_filepaths = get_tex_files()
-    print("Running checkheatlh on these files:")
-    for f in tex_filepaths:
-        print(Color.yellow("*"), f)
-    print("---")
-    project = {
-        "labels": get_all_labels(tex_filepaths),
-    }
-    files = list(map(File, tex_filepaths))
-    for file in files:
-        for line in file.lines:
-            ok, err = line_is_valid(line)
-            if not ok:
-                print("Invalid line:")
-                print(line)
-                print("Error:")
-                print(err)
-                panic(f"Invalid line in [{file.path}]")
-
-        if not no_nested_custom_environments(file):
-            panic(f"Found nested custom environments in {file.path}")
-
-        print(Color.green("✓"), file.path)
-
-
-if __name__ == "__main__":  # int main() {
-    debug_test()
-    args = Args.parse()
-    if args.all:
-        extend_tex_files(args.tex_files)
-    tbl = {
-        "build": __build__,
-        "dev": __dev__,
-        "sha": __sha__,
-        "label": __label__,
-        "generate-section-titles": __generate_section_titles__,
-        "toc": __toc__,
-        "toc-md": __toc_markdown__,
-        "checkhealth": __checkhealth__,
-    }  # type: dict[Args.Action, Callable]
-    tbl[args.action](args)
+        cmd = ("pdflatex", "-halt-on-error", f"-output-directory={d}", f"-jobname={j}")
+        super().__init__(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, env=os.environ)

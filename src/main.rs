@@ -67,6 +67,50 @@ fn main() -> Result<()> {
                 }
             }
         }
+        Dev { files } => {
+            use notify::RecursiveMode;
+            use std::path::Path;
+            use std::process::Command;
+            use std::time::Duration;
+
+            let (tx, rx) = std::sync::mpsc::channel();
+
+            let interval = Duration::from_millis(1000);
+            let base_dir = Path::new(".");
+            let mut count = 1;
+
+            let mut db = notify_debouncer_mini::new_debouncer(interval, tx)?;
+            db.watcher().watch(&base_dir, RecursiveMode::NonRecursive)?;
+
+            let mut build = || {
+                let output = match Command::new("minimath")
+                    .arg("build")
+                    .arg("--pipe")
+                    .args(["--jobname", "out"])
+                    .args(&files)
+                    .output()
+                {
+                    Ok(v) => v,
+                    Err(_) => return println!("build failed"),
+                };
+                println!(
+                    "{}",
+                    String::from_utf8_lossy(&output.stdout).trim_end()
+                );
+                println!("build number [{}]", count);
+                count += 1;
+            };
+
+            println!("started server...");
+            for res in rx {
+                for event in res.unwrap_or_default() {
+                    if event.path.extension().map_or(false, |v| v == "tex") {
+                        build();
+                        break;
+                    }
+                }
+            }
+        }
         Label => {
             let tex_files = utils::tex_files()?;
             let mut existing =

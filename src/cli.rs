@@ -30,6 +30,11 @@ pub enum Commands {
         files: Vec<PathBuf>,
     },
 
+    /// Build a PDF
+    Dev {
+        files: Vec<PathBuf>,
+    },
+
     /// Add labels to marked sections (Theorems, Lemmas, ...) that are not
     /// labelled yet
     Label,

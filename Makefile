@@ -25,6 +25,9 @@ ALL_TEX_FILES := toc.tex \
 	nonlinear-optimization-constrained.tex \
 	ordinary-differential-equations.tex
 
+current:
+	make dev
+
 install:
 	cargo install --path . --locked --debug
 
@@ -33,6 +36,7 @@ build:
 	$(MINIMATH) build $(TEX_FILES)
 
 dev:
+	@make install
 	$(MINIMATH) dev $(TEX_FILES)
 
 test:
