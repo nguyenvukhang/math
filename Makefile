@@ -3,8 +3,6 @@ MINIMATH_VERSION := v1.1.7
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 
-PYTEX := python3 $(MAKEFILE_DIR)tex_modules/pytex
-
 # --- [TEX_FILES] ---
 TEX_FILES += toc.tex
 TEX_FILES += plenary.tex
@@ -16,10 +14,9 @@ TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
 # TEX_FILES += sandbox.tex
 
-MINIMATH := $(MAKEFILE_DIR)target/debug/minimath
-# MINIMATH := cargo run --
+MINIMATH := minimath
 
-FULL_BUILD := $(MINIMATH) build -J ref toc.tex \
+ALL_TEX_FILES := toc.tex \
 	plenary.tex \
 	calculus.tex \
 	algorithm-design.tex \
@@ -28,43 +25,25 @@ FULL_BUILD := $(MINIMATH) build -J ref toc.tex \
 	nonlinear-optimization-constrained.tex \
 	ordinary-differential-equations.tex
 
-current:
-	@make build-cli
-	$(FULL_BUILD)
-
-build-cli:
-	cargo build
+install:
+	cargo install --path . --locked --debug
 
 build:
-	@make build-cli
+	@make install
 	$(MINIMATH) build $(TEX_FILES)
 
 dev:
 	$(MINIMATH) dev $(TEX_FILES)
 
 test:
+	@make install
 	$(MINIMATH) checkhealth
 
+ref: BUILD := $(MINIMATH) build -J ref
+ref: BUILD += $(ALL_TEX_FILES)
 ref:
 	@make build-cli
-	$(FULL_BUILD) && $(FULL_BUILD)
-
-toc:
-	$(MINIMATH) toc
-
-toc-md:
-	$(PYTEX) toc-md
-
-gen-notes:
-	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
-	git worktree add .git/prev
-	cd .git/prev && git reset --hard $(PREV_TAG)
-	cd .git/prev && $(PYTEX) toc-md
-	$(PYTEX) --prev-rel .git/prev/shas.json toc-md
-	nvim CHANGELOG.md
-	rm -f CHANGELOG.md
-	[ -d .git/prev ] && git worktree remove -f .git/prev || echo ""
-	git branch -D prev
+	$(BUILD) && $(BUILD)
 
 fmt:
 	@rm -f *.bak* **/*.bak* *indent.log
