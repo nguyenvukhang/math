@@ -13,6 +13,5 @@ done < <($DIFF)
 
 if [ $TEX_CHANGED = true ]; then
   rm -f *.bak* **/*.bak* *indent.log >/dev/null 2>/dev/null
-  make label
   git add *.tex
 fi

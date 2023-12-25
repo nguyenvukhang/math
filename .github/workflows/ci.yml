@@ -17,23 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: cargo run
-      - name: checkhealth
-        run: python3 tex_modules/pytex checkhealth
-
-      - name: generate single .tex files
-        run: bash .github/workflows/build.sh
-
-      - name: latex build
-        uses: xu-cheng/latex-action@v3
-        with:
-          docker_image: ghcr.io/xu-cheng/texlive-small:latest
-          root_file: .git/*.tex
-        env:
-          TEXINPUTS: "tex_modules/:"
-
-      - name: configure git
+      - name: configure git + environment variables
         run: |
+          # set git user for git commits
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
@@ -41,6 +27,36 @@ jobs:
           GIT_HASH=${{ github.sha }}
           GIT_HASH=${GIT_HASH:0:7}
           echo "GIT_HASH=$GIT_HASH" >> "$GITHUB_ENV"
+
+          # set minimath binary path
+          echo "MINIMATH=./target/debug/minimath" >> "$GITHUB_ENV"
+
+      - run: cargo build --quiet
+
+      - name: checkhealth
+        run: $MINIMATH checkhealth
+
+      - run: find *
+      - run: ls target/debug
+
+      - name: rust compile
+        run: |
+          $MINIMATH build -J minimath toc.tex \
+            plenary.tex \
+            calculus.tex \
+            algorithm-design.tex \
+            complex-analysis.tex \
+            nonlinear-optimization-unconstrained.tex \
+            nonlinear-optimization-constrained.tex \
+            ordinary-differential-equations.tex
+
+      - name: latex build
+        uses: xu-cheng/latex-action@v3
+        with:
+          docker_image: ghcr.io/xu-cheng/texlive-small:latest
+          root_file: .git/.build/*.tex
+        env:
+          TEXINPUTS: "tex_modules/:"
 
       - name: ▲ vercel build
         if: ${{ github.ref_name == 'main' }}

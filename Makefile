@@ -16,28 +16,10 @@ TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
 # TEX_FILES += sandbox.tex
 
-MINIMATH := cargo run
+MINIMATH := $(MAKEFILE_DIR)target/debug/minimath
+# MINIMATH := cargo run --
 
-x:
-	$(MINIMATH) build $(TEX_FILES)
-
-x2: 
-	cd omath && dune exec omath
-
-x1:
-	@make test
-	@make build
-
-build:
-	$(PYTEX) -J minimath build $(TEX_FILES)
-
-dev:
-	$(PYTEX) -J minimath dev $(TEX_FILES)
-
-test:
-	$(PYTEX) checkhealth
-
-ref: BUILD := $(PYTEX) -J ref build toc.tex \
+FULL_BUILD := $(MINIMATH) build -J ref toc.tex \
 	plenary.tex \
 	calculus.tex \
 	algorithm-design.tex \
@@ -45,14 +27,30 @@ ref: BUILD := $(PYTEX) -J ref build toc.tex \
 	nonlinear-optimization-unconstrained.tex \
 	nonlinear-optimization-constrained.tex \
 	ordinary-differential-equations.tex
-ref:
-	$(BUILD) && $(BUILD)
 
-sha:
-	$(PYTEX) sha | pbcopy
+current:
+	@make build-cli
+	$(FULL_BUILD)
+
+build-cli:
+	cargo build
+
+build:
+	@make build-cli
+	$(MINIMATH) build $(TEX_FILES)
+
+dev:
+	$(MINIMATH) dev $(TEX_FILES)
+
+test:
+	$(MINIMATH) checkhealth
+
+ref:
+	@make build-cli
+	$(FULL_BUILD) && $(FULL_BUILD)
 
 toc:
-	$(PYTEX) toc
+	$(MINIMATH) toc
 
 toc-md:
 	$(PYTEX) toc-md
@@ -74,13 +72,13 @@ fmt:
 	@rm -f *.bak* **/*.bak* *indent.log
 
 label:
-	$(PYTEX) label
+	$(MINIMATH) label
 
 head:
-	@$(PYTEX) generate-section-titles
+	$(MINIMATH) generate-marks
 
 clean:
-	rm -rf *.aux *.out *.log minimath*.pdf
+	rm -rf *.aux *.out *.log minimath*.pdf .git/.build
 
 open:
 	open minimath.pdf

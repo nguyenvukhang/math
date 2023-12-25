@@ -1,160 +1,187 @@
-use std::fs;
-use std::io;
-use std::io::Write;
-use std::io::{BufRead, BufReader};
-use std::path::PathBuf;
-use std::process::Child;
-use std::process::Command;
-use std::process::Stdio;
+use crate::consts;
+use crate::doc::Doc;
 
-use anyhow::anyhow;
+use std::fs;
+use std::io::{self, BufRead, BufReader, Write};
+use std::path::{Path, PathBuf};
+use std::process::{Child, Command, Stdio};
+
 use anyhow::Result;
 
-pub struct PdfTex {
-    child: Child,
-    jobname: String,
-    build_dir: PathBuf,
+const BUILD_DIR: &str = ".build";
+pub const DOC_START: [&str; 3] =
+    [r"\documentclass{article}", r"\usepackage{headers}", r"\begin{document}"];
+pub const DOC_END: [&str; 1] = [r"\end{document}"];
+
+pub fn build_dir() -> PathBuf {
+    let git = Path::new(".git");
+    match git.is_dir() {
+        true => git.join(BUILD_DIR),
+        false => PathBuf::from(BUILD_DIR),
+    }
 }
 
-fn print_buffer<W: Write>(buf: &Vec<String>, f: &mut W) {
-    let message = buf.join("");
-    let sw = |v: &str| message.starts_with(v);
-    let ew = |v: &str| message.ends_with(v);
-    if !(message.is_empty()
-        || sw("Package hyperref Warning")
-        || sw("This is pdfTeX")
-        || ew(r"(Please type a command or say `\end')")
-        || (sw("*[") && ew("]"))
-        || (sw("*(") && ew(")"))
-        || sw("**entering extended mode")
-        || sw("*geometry*")
-        || message.chars().filter(|v| v == &'/').count() >= 10)
-    {
-        let _ = writeln!(f, "{message}");
-    }
+/// LaTex build tool, equivalent to running `pdftex...` in shell.
+pub struct PdfTex {
+    jobname: String,
+    child: Child,
 }
 
 impl PdfTex {
-    fn new(
-        build_dir: Option<String>,
-        jobname: Option<String>,
-        texinputs: Vec<String>,
-    ) -> Result<Self> {
-        let mut cmd = Command::new("pdflatex");
-        build_dir
-            .as_ref()
-            .map(|v| cmd.args(["--output-directory", v.as_str()]));
-        jobname.as_ref().map(|v| cmd.args(["--jobname", v.as_str()]));
-        cmd.env("TEXINPUTS", texinputs.join(":") + ":");
-        let child = cmd
-            .arg("--halt-on-error")
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .spawn()?;
+    pub fn new(jobname: &str) -> Result<Self> {
+        let build_dir = build_dir();
+        consts::create_dir(&build_dir)?;
 
-        let build_dir = build_dir
-            .map(PathBuf::from)
-            .unwrap_or(std::env::current_dir().unwrap());
-        let jobname = jobname.unwrap_or("texput".to_string());
-        if !build_dir.is_dir() {
-            let _ = fs::remove_dir_all(&build_dir);
-            fs::create_dir_all(&build_dir)?;
-        }
-        Ok(Self { child, build_dir, jobname })
+        let mut pdftex = Command::new("pdflatex");
+        pdftex.env("TEXINPUTS", "tex_modules/:");
+        pdftex.arg("--halt-on-error");
+        pdftex.arg("--output-directory").arg(&build_dir);
+        pdftex.arg("--jobname").arg(jobname);
+        pdftex.arg("--");
+        pdftex.stdin(Stdio::piped());
+        pdftex.stdout(Stdio::piped());
+
+        Ok(Self { child: pdftex.spawn()?, jobname: jobname.to_string() })
     }
 
-    pub fn output_file(&self) -> PathBuf {
-        let mut f = self.build_dir.join(&self.jobname);
-        f.set_extension("pdf");
-        f
-    }
-
-    /// Writes a line to stdin
-    pub fn writeln<S: AsRef<str>>(&mut self, line: S) {
+    pub fn write_lines<S: AsRef<str>>(
+        &mut self,
+        lines: impl IntoIterator<Item = S>,
+    ) -> Result<()> {
         if let Some(stdin) = self.child.stdin.as_mut() {
-            let _ = writeln!(stdin, "{}", line.as_ref());
+            for line in lines {
+                writeln!(stdin, "{}", line.as_ref())?;
+            }
+        }
+        Ok(())
+    }
+
+    pub fn write_bytes(&mut self, buffer: &[u8]) -> Result<()> {
+        if let Some(stdin) = self.child.stdin.as_mut() {
+            stdin.write_all(buffer)?;
+        }
+        Ok(())
+    }
+
+    pub fn monitor(&mut self, print: bool, pretty: bool) -> Result<()> {
+        match (print, pretty) {
+            (false, _) => Ok(()),
+            (true, true) => monitor::pretty_print(
+                &mut self.child.stdout.take().unwrap(),
+                io::stdout().lock(),
+            ),
+            (true, false) => {
+                let stdout = self.child.stdout.take().unwrap();
+                let mut target = io::stdout().lock();
+                for l in BufReader::new(stdout).lines().filter_map(|v| v.ok()) {
+                    writeln!(target, "{l}")?;
+                }
+                Ok(())
+            }
         }
     }
 
-    pub fn pretty_print_stdout(&mut self) -> Result<()> {
-        let stdout = self
-            .child
-            .stdout
-            .as_mut()
-            .expect("Unable to take stdout from child process");
+    pub fn close(&mut self) -> Result<()> {
+        if let Some(stdin) = self.child.stdin.as_mut() {
+            stdin.flush()?;
+        }
+        self.child.wait()?;
+        Ok(())
+    }
+
+    pub fn move_pdf_to_cwd(&self) -> Result<()> {
+        let build_dir = build_dir();
+        let basename = format!("{}.pdf", self.jobname);
+        fs::rename(build_dir.join(&basename), basename)?;
+        Ok(())
+    }
+}
+
+fn _build(jobname: &str, doc: &Doc, print: bool) -> Result<()> {
+    let mut pdftex = PdfTex::new(jobname)?;
+    pdftex.write_lines(DOC_START)?;
+    pdftex.write_lines(doc.get_lines())?;
+    pdftex.write_lines(doc.get_appendix())?;
+    pdftex.write_lines(DOC_END)?;
+    pdftex.monitor(print, true)?;
+    pdftex.close()?;
+    pdftex.move_pdf_to_cwd()?;
+    Ok(())
+}
+
+pub fn build(jobname: &str, doc: &Doc) -> Result<()> {
+    _build(jobname, doc, true)
+}
+
+pub fn silent_build(jobname: &str, doc: &Doc) -> Result<()> {
+    println!("silent build...");
+    _build(jobname, doc, false)
+}
+
+/// Monitor stdout of `pdftex` and hides harmless warnings.
+///
+/// Each message from `pdftex` comes in a `chunk` that can span
+/// mulitple lines. We will group these chunks together and inspect
+/// them one by one.
+mod monitor {
+    use anyhow::{anyhow, Result};
+    use std::io::{BufRead, BufReader, Read, Write};
+
+    pub fn pretty_print<R, W>(stdout: &mut R, mut target: W) -> Result<()>
+    where
+        R: Read,
+        W: Write,
+    {
         let lines = BufReader::new(stdout).lines().filter_map(|v| v.ok());
-        let mut buf = vec![];
-        let output = &mut io::stdout();
+        let mut chunk = vec![];
         let mut ok = true;
         for line in lines {
-            let c1 = line.chars().next();
-            ok &= c1 != Some('!');
-            if c1 == Some('*')
-                || c1 == Some('!')
-                || line.starts_with("Output written")
-                || line.starts_with("Transcript written")
-            {
-                print_buffer(&buf, output);
-                buf.clear();
+            if is_chunk_start(&line, &mut ok) {
+                print_chunk(&chunk, &mut target);
+                chunk.clear();
             }
             if line.len() > 1 {
-                buf.push(line)
+                chunk.push(line)
             }
         }
-        print_buffer(&buf, output);
+        print_chunk(&chunk, &mut target);
         match ok {
             true => Ok(()),
             false => Err(anyhow!("LaTeX Error.")),
         }
     }
 
-    /// Run and wait
-    pub fn build(&mut self) {
-        if let Some(stdin) = self.child.stdin.as_mut() {
-            let _ = stdin.flush();
+    fn is_chunk_start(line: &str, ok: &mut bool) -> bool {
+        let c1 = line.chars().nth(0);
+        *ok &= c1 != Some('!');
+        c1 == Some('*')
+            || c1 == Some('!')
+            || line.starts_with("Output written")
+            || line.starts_with("Transcript written")
+    }
+
+    fn print_chunk<W: Write>(buf: &Vec<String>, f: &mut W) {
+        let message = buf.join("");
+        let m = &message;
+        if !(message.is_empty()
+            || sw(m, "Package hyperref Warning")
+            || sw(m, "This is pdfTeX")
+            || ew(m, r"(Please type a command or say `\end')")
+            || (sw(m, "*[") && ew(m, "]"))
+            || (sw(m, "*(") && ew(m, ")"))
+            || sw(m, "**entering extended mode")
+            || sw(m, "*geometry*")
+            || message.chars().filter(|v| v == &'/').count() >= 10)
+        {
+            let _ = writeln!(f, "{message}");
         }
-        let _ = self.child.wait();
     }
 
-    /// Flush stdin and wait/kill.
-    pub fn close(mut self) -> Result<()> {
-        if let Some(mut stdin) = self.child.stdin.take() {
-            let _ = stdin.flush();
-            drop(stdin);
-        }
-        let result = self.pretty_print_stdout();
-        let _ = self.child.wait();
-        result
-    }
-}
-
-pub struct PdfTexBuilder {
-    jobname: Option<String>,
-    build_dir: Option<String>,
-    texinputs: Vec<String>,
-}
-
-impl PdfTexBuilder {
-    pub fn jobname(mut self, jobname: &str) -> Self {
-        self.jobname = Some(jobname.to_string());
-        self
+    fn sw(text: &str, v: &str) -> bool {
+        text.starts_with(v)
     }
 
-    pub fn build_dir(mut self, build_dir: &str) -> Self {
-        self.build_dir = Some(build_dir.to_string());
-        self
+    fn ew(text: &str, v: &str) -> bool {
+        text.ends_with(v)
     }
-
-    pub fn add_input_dir(mut self, input_dir: &str) -> Self {
-        self.texinputs.push(input_dir.to_string());
-        self
-    }
-
-    pub fn build(self) -> Result<PdfTex> {
-        PdfTex::new(self.build_dir, self.jobname, self.texinputs)
-    }
-}
-
-pub fn builder() -> PdfTexBuilder {
-    PdfTexBuilder { jobname: None, build_dir: None, texinputs: vec![] }
 }
