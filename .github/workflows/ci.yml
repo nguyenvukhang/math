@@ -28,20 +28,14 @@ jobs:
           GIT_HASH=${GIT_HASH:0:7}
           echo "GIT_HASH=$GIT_HASH" >> "$GITHUB_ENV"
 
-          # set minimath binary path
-          echo "MINIMATH=./target/debug/minimath" >> "$GITHUB_ENV"
-
-      - run: cargo build --quiet
+      - run: cargo install --path . --locked
 
       - name: checkhealth
-        run: $MINIMATH checkhealth
-
-      - run: find *
-      - run: ls target/debug
+        run: minimath checkhealth
 
       - name: rust compile
         run: |
-          $MINIMATH build -J minimath toc.tex \
+          minimath build -J minimath toc.tex \
             plenary.tex \
             calculus.tex \
             algorithm-design.tex \
@@ -56,18 +50,18 @@ jobs:
           docker_image: ghcr.io/xu-cheng/texlive-small:latest
           root_file: .git/.build/*.tex
         env:
-          TEXINPUTS: "tex_modules/:"
+          TEXINPUTS: "tex_modules:"
 
       - name: ▲ vercel build
         if: ${{ github.ref_name == 'main' }}
         run: |
           cp minimath.pdf web/public/minimath.pdf
           npm i -g vercel@latest
-          vercel=${{ secrets.VERCEL_TOKEN }}
-          vercel="vercel -t $vercel"
-          $vercel pull --yes --environment=production
-          $vercel build --prod
-          $vercel deploy --prebuilt --prod
+          VERCEL=${{ secrets.VERCEL_TOKEN }}
+          VERCEL="vercel -t $VERCEL"
+          $VERCEL pull --yes --environment=production
+          $VERCEL build --prod
+          $VERCEL deploy --prebuilt --prod
 
       - name: push pdfs to pdf branch
         if: ${{ github.ref_name == 'main' }}
