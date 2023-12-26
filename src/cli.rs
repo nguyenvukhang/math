@@ -30,7 +30,7 @@ pub enum Commands {
         files: Vec<PathBuf>,
     },
 
-    /// Build a PDF
+    /// Build a PDF and monitor changes
     Dev {
         files: Vec<PathBuf>,
     },

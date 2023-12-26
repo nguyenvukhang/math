@@ -13,4 +13,4 @@ notify-debouncer-mini = "0.4.1"
 rand = "0.8.5"
 regex = "1.10.2"
 tree-sitter = "0.20.10"
-tree-sitter-latex = { path = "tree-sitter-latex" }
+tree-sitter-latex = { path = "src/tree-sitter-latex" }

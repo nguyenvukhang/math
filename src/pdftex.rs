@@ -165,6 +165,7 @@ mod monitor {
         let m = &message;
         if !(message.is_empty()
             || sw(m, "Package hyperref Warning")
+            || sw(m, "LaTeX Font Warning:")
             || sw(m, "This is pdfTeX")
             || ew(m, r"(Please type a command or say `\end')")
             || (sw(m, "*[") && ew(m, "]"))
