@@ -1,0 +1,41 @@
+\section{Real Analysis}\label{cd94400}
+
+\Definition{1.1.1}{Number systems}
+
+\begin{enumerati}
+  \item $\N:=$ set of all natural numbers $\{1,2,3,\ldots\}$
+  \item $\Z:=$ set of all integers $\{\ldots,-2,-1,0,1,2,\ldots\}$
+  \item $\mathbb Q:=$ set of all rational numbers $\Set{\dfrac pq}{p,q\in\Z,q\neq0}$
+  \item $\mathbb R:=$ set of all real numbers
+\end{enumerati}
+
+We have
+$$
+  \N\subseteq\Z\subseteq\mathbb Q\subseteq\R.
+$$
+
+The set of irrational numbers is denoted by $\R\setminus\mathbb Q$.
+
+\Theorem{1.1.2}{$\sqrt2$ is an irrational number}
+
+\begin{proof}
+  Suppose $\sqrt2$ is rational. Then we can write
+  $$\sqrt2=\frac ab$$
+
+  where $a$ and $b$ are integers with no common factor other than 1. Then
+  $$2=\frac{a^2}{b^2}$$
+
+  and
+  $$2b^2=a^2$$
+
+  This says that $a^2$ is even. So $a$ is also even, and $a=2k$ for some integer
+  $k$. Then we get
+  $$2b^2=4k^2$$
+
+  So
+  $$b^2=2k^2$$
+
+  But this says that $b^2$ is even, so $b$ is even. It follows that 2 is a common
+  factor for $a$ and $b$. This contradicts our assumption of $a$ and $b$, and
+  hence $\sqrt2$ is not rational.
+\end{proof}

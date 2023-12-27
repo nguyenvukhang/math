@@ -6,11 +6,12 @@ MAKEFILE_DIR  := $(dir $(MAKEFILE_PATH))
 # --- [TEX_FILES] ---
 TEX_FILES += toc.tex
 TEX_FILES += plenary.tex
-TEX_FILES += calculus.tex
+TEX_FILES += real-analysis.tex
+# TEX_FILES += calculus.tex
 # TEX_FILES += complex-analysis.tex
 # TEX_FILES += nonlinear-optimization-unconstrained.tex
 # TEX_FILES += nonlinear-optimization-constrained.tex
-TEX_FILES += ordinary-differential-equations.tex
+# TEX_FILES += ordinary-differential-equations.tex
 # TEX_FILES += algorithm-design.tex
 # TEX_FILES += sandbox.tex
 
