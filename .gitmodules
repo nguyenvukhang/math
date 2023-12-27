@@ -1,0 +1,3 @@
+[submodule "src/tree-sitter-latex"]
+	path = src/tree-sitter-latex
+	url = git@github.com:latex-lsp/tree-sitter-latex.git

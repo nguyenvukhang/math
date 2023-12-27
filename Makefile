@@ -75,3 +75,6 @@ sync:
 hooks:
 	rm -rf $(MAKEFILE_DIR).git/hooks
 	cd $(MAKEFILE_DIR).git && ln -s ../tex_modules/.hooks hooks
+
+setup:
+	git submodule update --init
