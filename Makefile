@@ -26,7 +26,7 @@ ALL_TEX_FILES := toc.tex \
 	ordinary-differential-equations.tex
 
 current:
-	make dev
+	make build
 
 install:
 	cargo install --path . --locked --debug

@@ -1,6 +1,7 @@
 use anyhow::Result;
 
 use std::fs;
+use std::io::Write;
 use std::path::PathBuf;
 
 use crate::prelude::TexFile;
@@ -33,4 +34,15 @@ pub fn extend_file_list(files: &mut Vec<PathBuf>) {
             files.push(f)
         }
     }
+}
+
+/// Write all elements of an iterator into a target
+pub fn write_all<W: Write, S: AsRef<str>>(
+    target: &mut W,
+    iter: impl IntoIterator<Item = S>,
+) -> Result<()> {
+    for v in iter {
+        writeln!(target, "{}", v.as_ref())?;
+    }
+    Ok(())
 }

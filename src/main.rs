@@ -10,7 +10,6 @@ mod prelude;
 mod structs;
 mod utils;
 
-use cli::Cli;
 use pdftex::PdfTex;
 use prelude::*;
 
@@ -20,61 +19,43 @@ use std::io::Write;
 use std::path::PathBuf;
 
 use anyhow::Result;
-use clap::Parser;
 
 fn main() -> Result<()> {
     use cli::Commands::*;
 
-    let cli = Cli::parse();
+    let cli = cli::parse();
     match cli.command {
         Pdf { src } => {
             let src_path = PathBuf::from(&src);
             let jobname = src_path.file_stem().unwrap().to_string_lossy();
             let mut pdftex = PdfTex::new(&jobname)?;
             pdftex.write_bytes(&fs::read(&src)?)?;
-            pdftex.monitor(true, true)?;
-            pdftex.close()?;
-            pdftex.move_pdf_to_cwd()?;
+            pdftex.conveniently_end()?;
         }
-        Build { all, jobname, mut files, pipe } => {
-            if all {
-                utils::extend_file_list(&mut files);
+        Build { all: _, pipe, jobname, files } if pipe => {
+            let mut pdftex = PdfTex::new(&jobname)?;
+            pdftex.write_lines(pdftex::DOC_START)?;
+            for file in files {
+                pdftex.write_bytes(&fs::read(&file)?)?;
+                pdftex.write_bytes(b"\n\\newpage\n")?;
             }
-            match pipe {
-                true => {
-                    let mut pdftex = PdfTex::new(&jobname)?;
-                    pdftex.write_lines(pdftex::DOC_START)?;
-                    for file in files {
-                        pdftex.write_bytes(&fs::read(&file)?)?;
-                        pdftex.write_bytes(b"\n\\newpage\n")?;
-                    }
-                    pdftex.write_lines(pdftex::DOC_END)?;
-                    pdftex.monitor(true, true)?;
-                    pdftex.close()?;
-                    pdftex.move_pdf_to_cwd()?;
-                }
-                false => {
-                    let mut basename = PathBuf::from(jobname);
-                    basename.set_extension("tex");
-                    let build_dir = pdftex::build_dir();
-                    consts::create_dir(&build_dir)?;
-                    let out_file = build_dir.join(basename);
-                    let mut f = fs::File::create(&out_file)?;
-                    for l in pdftex::DOC_START {
-                        writeln!(f, "{l}")?;
-                    }
-                    for file in files {
-                        f.write_all(&fs::read(&file)?)?;
-                        f.write_all(b"\n\\newpage\n")?;
-                    }
-                    for l in pdftex::DOC_END {
-                        writeln!(f, "{l}")?;
-                    }
-                    f.flush()?;
-                    drop(f);
-                    println!("Output written to: {}", out_file.display());
-                }
+            pdftex.write_lines(pdftex::DOC_END)?;
+            pdftex.conveniently_end()?;
+        }
+        Build { all: _, pipe: _, jobname, files } => {
+            let mut out_file = pdftex::build_dir().join(&jobname);
+            out_file.set_extension("tex");
+            consts::create_dir(out_file.parent().unwrap())?;
+            let mut f = fs::File::create(&out_file)?;
+            utils::write_all(&mut f, pdftex::DOC_START)?;
+            for file in files {
+                f.write_all(&fs::read(&file)?)?;
+                f.write_all(b"\n\\newpage\n")?;
             }
+            utils::write_all(&mut f, pdftex::DOC_END)?;
+            f.flush()?;
+            drop(f);
+            println!("Output written to: {}", out_file.display());
         }
         Dev { files } => {
             use notify::RecursiveMode;

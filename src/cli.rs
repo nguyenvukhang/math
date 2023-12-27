@@ -1,3 +1,5 @@
+use crate::utils;
+
 use std::path::PathBuf;
 
 use clap::{Parser, Subcommand};
@@ -49,4 +51,18 @@ pub enum Commands {
     GenerateMarks,
 
     TOC,
+}
+
+/// Parse + post-process some args
+pub fn parse() -> Cli {
+    let mut cli = Cli::parse();
+    match cli.command {
+        Commands::Build { all, pipe: _, jobname: _, ref mut files } => {
+            if all {
+                utils::extend_file_list(files);
+            }
+        }
+        _ => {}
+    }
+    cli
 }

@@ -20,6 +20,7 @@ pub struct Doc {
 
 const CUSTOM_ENVS: [&str; 2] = ["proof", "compute"];
 
+#[allow(unused)]
 impl Doc {
     pub fn new() -> Self {
         Self {

@@ -1,5 +1,5 @@
-use crate::consts;
 use crate::doc::Doc;
+use crate::{consts, utils};
 
 use std::fs;
 use std::io::{self, BufRead, BufReader, Write};
@@ -24,6 +24,7 @@ pub fn build_dir() -> PathBuf {
 /// LaTex build tool, equivalent to running `pdftex...` in shell.
 pub struct PdfTex {
     jobname: String,
+    build_dir: PathBuf,
     child: Child,
 }
 
@@ -41,7 +42,11 @@ impl PdfTex {
         pdftex.stdin(Stdio::piped());
         pdftex.stdout(Stdio::piped());
 
-        Ok(Self { child: pdftex.spawn()?, jobname: jobname.to_string() })
+        Ok(Self {
+            child: pdftex.spawn()?,
+            jobname: jobname.to_string(),
+            build_dir,
+        })
     }
 
     pub fn write_lines<S: AsRef<str>>(
@@ -49,9 +54,7 @@ impl PdfTex {
         lines: impl IntoIterator<Item = S>,
     ) -> Result<()> {
         if let Some(stdin) = self.child.stdin.as_mut() {
-            for line in lines {
-                writeln!(stdin, "{}", line.as_ref())?;
-            }
+            utils::write_all(stdin, lines)?;
         }
         Ok(())
     }
@@ -90,9 +93,15 @@ impl PdfTex {
     }
 
     pub fn move_pdf_to_cwd(&self) -> Result<()> {
-        let build_dir = build_dir();
         let basename = format!("{}.pdf", self.jobname);
-        fs::rename(build_dir.join(&basename), basename)?;
+        fs::rename(self.build_dir.join(&basename), basename)?;
+        Ok(())
+    }
+
+    pub fn conveniently_end(mut self) -> Result<()> {
+        self.monitor(true, true)?;
+        self.close()?;
+        self.move_pdf_to_cwd()?;
         Ok(())
     }
 }
@@ -107,15 +116,6 @@ fn _build(jobname: &str, doc: &Doc, print: bool) -> Result<()> {
     pdftex.close()?;
     pdftex.move_pdf_to_cwd()?;
     Ok(())
-}
-
-pub fn build(jobname: &str, doc: &Doc) -> Result<()> {
-    _build(jobname, doc, true)
-}
-
-pub fn silent_build(jobname: &str, doc: &Doc) -> Result<()> {
-    println!("silent build...");
-    _build(jobname, doc, false)
 }
 
 /// Monitor stdout of `pdftex` and hides harmless warnings.
