@@ -66,7 +66,7 @@ fn main() -> Result<()> {
 
             let (tx, rx) = std::sync::mpsc::channel();
 
-            let interval = Duration::from_millis(1000);
+            let interval = Duration::from_millis(300);
             let base_dir = Path::new(".");
             let mut count = 1;
 
