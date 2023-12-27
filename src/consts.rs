@@ -5,11 +5,13 @@ use anyhow::Result;
 
 pub const MARKS: &[&str] = &[
     "Algorithm",
+    "Axiom",
     "Corollary",
     "Definition",
     "Example",
     "Exercise",
     "Lemma",
+    "Principle",
     "Problem",
     "Proposition",
     "Remark",

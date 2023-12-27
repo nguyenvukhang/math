@@ -13,12 +13,14 @@ use regex::Regex;
 #[derive(Debug, Clone)]
 pub enum MarkKind {
     Algorithm,
+    Axiom,
     Corollary,
     Definition,
     Example,
     Exercise,
     Lemma,
     Problem,
+    Principle,
     Proposition,
     Remark,
     Result,
@@ -30,11 +32,13 @@ impl TryFrom<&str> for MarkKind {
     fn try_from(arg: &str) -> std::result::Result<Self, ()> {
         match arg {
             "Algorithm" => Ok(MarkKind::Algorithm),
+            "Axiom" => Ok(MarkKind::Axiom),
             "Corollary" => Ok(MarkKind::Corollary),
             "Definition" => Ok(MarkKind::Definition),
             "Example" => Ok(MarkKind::Example),
             "Exercise" => Ok(MarkKind::Exercise),
             "Lemma" => Ok(MarkKind::Lemma),
+            "Principle" => Ok(MarkKind::Principle),
             "Problem" => Ok(MarkKind::Problem),
             "Proposition" => Ok(MarkKind::Proposition),
             "Remark" => Ok(MarkKind::Remark),
