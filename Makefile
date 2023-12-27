@@ -29,7 +29,7 @@ current:
 	make build
 
 install:
-	cargo install --path . --locked --debug
+	cargo install --features dev --path . --locked --debug
 
 build:
 	@make install

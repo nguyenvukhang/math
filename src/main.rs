@@ -57,6 +57,7 @@ fn main() -> Result<()> {
             drop(f);
             println!("Output written to: {}", out_file.display());
         }
+        #[cfg(feature = "dev")]
         Dev { files } => {
             use notify::RecursiveMode;
             use std::path::Path;

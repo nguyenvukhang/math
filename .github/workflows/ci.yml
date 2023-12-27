@@ -30,7 +30,8 @@ jobs:
           GIT_HASH=${GIT_HASH:0:7}
           echo "GIT_HASH=$GIT_HASH" >> "$GITHUB_ENV"
 
-      - run: make install
+      - name: install minimath
+        run: cargo install --path . --locked --debug
 
       - name: checkhealth
         run: minimath checkhealth

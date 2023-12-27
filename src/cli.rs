@@ -33,6 +33,7 @@ pub enum Commands {
     },
 
     /// Build a single .tex file and its PDF and monitor changes
+    #[cfg(feature = "dev")]
     Dev {
         files: Vec<PathBuf>,
     },
