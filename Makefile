@@ -46,8 +46,10 @@ test:
 ref: BUILD := $(MINIMATH) build -J ref
 ref: BUILD += $(ALL_TEX_FILES)
 ref:
-	@make build-cli
-	$(BUILD) && $(BUILD)
+	@make install
+	$(BUILD)
+	$(MINIMATH) pdf .git/.build/ref.tex
+	$(MINIMATH) pdf .git/.build/ref.tex
 
 fmt:
 	@rm -f *.bak* **/*.bak* *indent.log

@@ -14,7 +14,7 @@ pub struct Cli {
 
 #[derive(Subcommand, Debug)]
 pub enum Commands {
-    /// Build a PDF
+    /// Build a single .tex file
     Build {
         /// lists test values
         #[arg(short, long)]
@@ -30,9 +30,14 @@ pub enum Commands {
         files: Vec<PathBuf>,
     },
 
-    /// Build a PDF and monitor changes
+    /// Build a single .tex file and its PDF and monitor changes
     Dev {
         files: Vec<PathBuf>,
+    },
+
+    /// Take a single compiled .tex file and output a PDF
+    Pdf {
+        src: String,
     },
 
     /// Add labels to marked sections (Theorems, Lemmas, ...) that are not

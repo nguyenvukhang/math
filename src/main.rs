@@ -27,6 +27,15 @@ fn main() -> Result<()> {
 
     let cli = Cli::parse();
     match cli.command {
+        Pdf { src } => {
+            let src_path = PathBuf::from(&src);
+            let jobname = src_path.file_stem().unwrap().to_string_lossy();
+            let mut pdftex = PdfTex::new(&jobname)?;
+            pdftex.write_bytes(&fs::read(&src)?)?;
+            pdftex.monitor(true, true)?;
+            pdftex.close()?;
+            pdftex.move_pdf_to_cwd()?;
+        }
         Build { all, jobname, mut files, pipe } => {
             if all {
                 utils::extend_file_list(&mut files);
