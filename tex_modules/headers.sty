@@ -95,6 +95,11 @@
 \def\sans#1{\setminus\{#1\}}
 \def\COMPLETE{\hfill\textcolor{green}{$\lozenge_{k}$}}
 \def\COMPLETEWF{\hfill\textcolor{green}{$\lozenge_{k+w}$}}
+\def\st{\,\text{ s.t. }\,}
+
+% fix spacing around `\exists`
+\let\oldexists\exists
+\def\exists{\oldexists\,}
 
 % useful environments
 \newenvironment{pmat}{\begin{pmatrix}}{\end{pmatrix}}

@@ -40,6 +40,7 @@ jobs:
         run: |
           minimath build -J minimath toc.tex \
             plenary.tex \
+            real-analysis.tex \
             calculus.tex \
             algorithm-design.tex \
             complex-analysis.tex \

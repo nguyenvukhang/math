@@ -1,6 +1,6 @@
 \section{Real Analysis}\label{cd94400}
 
-\Definition{1.1.1}{Number systems}
+\Definition{1.1.1}{Number systems}\label{d52c6b7}
 
 \begin{enumerati}
   \item $\N:=$ set of all natural numbers $\{1,2,3,\ldots\}$
@@ -16,7 +16,7 @@ $$
 
 The set of irrational numbers is denoted by $\R\setminus\mathbb Q$.
 
-\Theorem{1.1.2}{$\sqrt2$ is an irrational number}
+\Theorem{1.1.2}{$\sqrt2$ is an irrational number}\label{c2585a1}
 
 \begin{proof}
   Suppose $\sqrt2$ is rational. Then we can write
@@ -40,3 +40,48 @@ The set of irrational numbers is denoted by $\R\setminus\mathbb Q$.
   hence $\sqrt2$ is not rational.
 \end{proof}
 
+\Principle{1.2.1}{Well-ordering Property of $\N$}\label{cd7c4d1}
+
+Every non-empty subset $S$ of $\N$ has a \textit{least (or minimum)} element.
+Formally,
+$$
+  \exists m\in S:\ \forall s\in S,\ m\leq s
+$$
+
+Note that $S$ may not have a largest element.
+
+\Theorem{1.2.2}{Induction on natural numbers}\label{a824f8c}
+
+Let $S\subseteq\N$. If we have
+\begin{enumerati}
+  \item $1\in S$, and
+  \item for every $k\in\N$, $k\in S\implies k+1\in S$.
+\end{enumerati}
+
+Then $S=\N$.
+
+\begin{proof}
+  Suppose that $S\neq\N$. Then its complement $\N\setminus S\neq\emptyset$
+
+  By the \href{cd7c4d1}{well-ordering property of $\N$}, there exists a least
+  element $m\in\N\setminus S$.
+
+  By (i), we have $m\neq 1$ and hence $m\geq2$. Thus, $m-1\in\N$. Since $m$ is
+  the smallest natural number \textit{not} in $S$, we have $m-1\in S$. But by
+  (ii), $m=(m-1)+1\in S$, which is a contradition to $m\in\N\setminus S$.
+\end{proof}
+
+\Theorem{1.2.3}{Principle of Mathematical Induction}\label{b51ca45}
+
+For each $n\in\N$, let $P(n)$ be a statement about $n$. Suppose that
+\begin{enumerati}
+  \item $P(1)$ is true, and
+  \item for every $k\in\N$, if $P(k)$ is true, then $P(k+1)$ is true.
+\end{enumerati}
+
+\begin{proof}
+  Apply \href{a824f8c}{induction on natural numbers} on the set
+  $$
+    \set{n\in\N}{P(n)\text{ is true}}
+  $$
+\end{proof}
