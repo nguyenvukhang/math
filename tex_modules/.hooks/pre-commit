@@ -12,6 +12,7 @@ while IFS= read -r pathspec; do
 done < <($DIFF)
 
 if [ $TEX_CHANGED = true ]; then
+  make label
   rm -f *.bak* **/*.bak* *indent.log >/dev/null 2>/dev/null
   git add *.tex
 fi
