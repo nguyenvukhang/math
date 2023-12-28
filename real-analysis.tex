@@ -98,7 +98,7 @@ properties, for all $a,b,c\in\R$:
   \item [(\textbf{A1})] \textit{(Commutativity)} $a+b=b+a$
   \item [(\textbf{A2})] \textit{(Associativity)} $(a+b)+c=a+(b+c)$
   \item [(\textbf{A3})] \textit{(Existence of additive identity)} $\exists0\in\R:\ a+0=0+a=a$
-  \item [(\textbf{A4})] \textit{(Existence of inverse element)} $\forall
+  \item [(\textbf{A4})] \textit{(Existence of additive inverse)} $\forall
         x\in\R,\ \exists {-}x\in\R:\ x+({-}x)=({-}x)+x=0$
 \end{itemize}
 
@@ -110,8 +110,8 @@ properties, for all $a,b,c\in\R$:
   \item [(\textbf{M2})] \textit{(Associativity)} $(a\cdot b)\cdot c=a\cdot
         (b\cdot c)$
   \item [(\textbf{M3})] \textit{(Existence of multiplicative identity)} $\exists1\in\R:\ a\cdot 1=1\cdot a=a$
-  \item [(\textbf{M4})] \textit{(Existence of inverse element)} $\forall
-        x\in\R,\ \exists 1/x\in\R:\ x\cdot(1/x)=(1/x)\cdot x=1$
+  \item [(\textbf{M4})] \textit{(Existence of multiplicative inverse)} $\forall
+        x\in\R\sans0,\ \exists 1/x\in\R:\ x\cdot(1/x)=(1/x)\cdot x=1$
 \end{itemize}
 
 In addition, the two binary operations satisfy the following property:
@@ -124,3 +124,82 @@ In addition, the two binary operations satisfy the following property:
 
 Because of (\textbf{A1})-(\textbf{A4}), (\textbf{M1})-(\textbf{M4}), and
 (\textbf{D}), we say that $(\R,+,\cdot)$ forms a \textbf{field}.
+
+\Theorem{1.3.2}{Results from the algebraic properties of $\mathbb R$}\label{a1bdcab}
+
+For any $a,b,c\in\R$,
+
+\begin{enumerati}
+  \item \textit{(Uniqueness of additive inverse)} If $a+b=0$, then $b={-}a$
+  \item \textit{(Uniqueness of multiplicative inverse)} If $a\cdot b=1$ and
+  $a\neq0$, then $b=\frac1a$.
+  \item If $a+b=b$, then $a=0$.
+  \item If $b\neq0$ and $a\cdot b=b$, then $a=1$.
+  \item $a\cdot0=0$.
+  \item If $a\cdot b=0$, then $a=0$ or $b=0$.
+  \item \textit{(Cancellative property)} If $a\neq0$ and $a\cdot b=a\cdot c$, then $b=c$.
+\end{enumerati}
+
+\begin{proof}
+  \def\a{{-}a}\def\b{{-}b}
+  Let $a,b,c\in\R$.
+
+  Proof of (i): Suppose $a+b=0$. Then
+  \begin{align*}
+    a+b+(\a) &=0+(\a)                                              \\
+    a-(\a)+b &=\a\with\desc{(commutativity and additive identity)} \\
+    0+b      &=\a\with\desc{(additive inverse)}                    \\
+    b        &=\a\with\desc{(additive identity)}
+  \end{align*}
+
+  Proof of (ii): Suppose $a\cdot b=1$ and $a\neq0$. Then
+  \begin{align*}
+    a\cdot b\cdot(1/a) &=1\cdot(1/a)                                                \\
+    a\cdot(1/a)\cdot b &=1/a\with\desc{(commutativity and multiplicative identity)} \\
+    1\cdot b           &=1/a\with\desc{(multiplicative inverse)}                    \\
+    b                  &=1/a\with\desc{(multiplicative identity)}
+  \end{align*}
+
+  Proof of (iii): Suppose $a+b=b$. Then
+  \begin{align*}
+    a+b+(\b) &=b+(\b)                           \\
+    a+0      &=0\with\desc{(additive inverse)}  \\
+    a        &=0\with\desc{(additive identity)}
+  \end{align*}
+
+  Proof of (iv): Suppose $a\cdot b=b$ and $b\neq0$. Then
+  \begin{align*}
+    a\cdot b\cdot(1/b) &=b\cdot(1/b)                            \\
+    a\cdot1            &=1\with\desc{(multiplicative inverse)}  \\
+    a                  &=1\with\desc{(multiplicative identity)}
+  \end{align*}
+
+  Proof of (v):
+  \begin{align*}
+    a\cdot0 &= a\cdot0+0\with\desc{(additive identity)}                         \\
+            &= a\cdot0+[(a\cdot0)+({-}(a\cdot0))]\with\desc{(additive inverse)} \\
+            &= (a\cdot0+a\cdot0)+({-}(a\cdot0))\with\desc{(associativity)}      \\
+            &= a\cdot(0+0)+({-}(a\cdot0))\with\desc{(distributivity)}           \\
+            &= a\cdot0+({-}(a\cdot0))\with\desc{(additive identity)}            \\
+            &= 0\with\desc{(additive inverse)}                                  \\
+  \end{align*}
+
+  Proof of (vi): Suppose $a\cdot b=0$. Now if $a=0$ then we are done. So suppose
+  that $a\neq0$. Then $1/a$ exists.
+  \begin{align*}
+    a\cdot b\cdot(1/a) &=0\cdot(1/a)                            \\
+    a\cdot b\cdot(1/a) &=0\with\desc{(result (v))}              \\
+    a\cdot(1/a)\cdot b &=0\with\desc{(commutativity)}           \\
+    1\cdot b           &=0\with\desc{(multiplicative inverse)}  \\
+    b                  &=0\with\desc{(multiplicative identity)}
+  \end{align*}
+
+  Proof of (vii): Suppose that $a\neq0$ and $a\cdot b=a\cdot c$. By
+  \href{bf61f02}{(\textbf{M4})} that $1/a$ exists. Then
+  \begin{align*}
+    (1/a)\cdot(a\cdot b)  &=(1/a)\cdot(a\cdot c)                             \\
+    ((1/a)\cdot a)\cdot b &=((1/a)\cdot a)\cdot c\with\desc{(commutativity)} \\
+    1\cdot b              &=1\cdot c\with\desc{(multiplicative inverse)}     \\
+    b                     &= c\with\desc{(multiplicative identity)}
+  \end{align*}
+\end{proof}
