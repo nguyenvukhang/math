@@ -203,3 +203,56 @@ For any $a,b,c\in\R$,
     b                     &= c\with\desc{(multiplicative identity)}
   \end{align*}
 \end{proof}
+
+\Theorem{1.6.2}{Triangle inequality for $\mathbb R$}\label{f1288ad}
+
+For all $a,b\in\R$, we have
+$$
+  |a+b|\leq|a|+|b|
+$$
+
+\begin{proof}
+  We have ${-}|a|\leq a\leq|a|$ and ${-}|b|\leq b\leq|b|$. Adding, we have
+  \begin{align*}
+    -(|a|+|b|)\leq a+b\leq |a|+|b|
+  \end{align*}
+
+  which implies that $|a+b|\leq|a|+|b|$.
+\end{proof}
+
+\Corollary{1.6.3}{Corollaries of triangle inequality for $\mathbb R$}\label{f699f4d}
+
+\begin{enumerati}
+  \item $\big||a|-|b|\big|\leq|a-b|$
+  \item $|a-b|\leq|a|+|b|$
+  \item $\big||a|-|b|\big|\leq|a+b|$
+\end{enumerati}
+
+\begin{proof}
+  By the \href{f1288ad}{triangle inequality},
+  $$
+    |a|=|(a-b)+b|\leq|a-b|+|b|
+  $$
+
+  So
+  \begin{equation*}
+    |a|-|b|\leq|a-b|\Tag{*}
+  \end{equation*}
+
+  By symmetry, we also have
+  $$
+    |b|-|a|\leq|b-a|
+  $$
+
+  which can be rewritten as
+  \begin{equation*}
+    -(|a|-|b|)\leq|a-b|\Tag{**}
+  \end{equation*}
+
+  With $(*)$ and $(**)$, we have (i).
+
+  (ii) is obtained by using ${-}b$ in the place of $b$ in the
+  \href{f1288ad}{triangle inequality}
+
+  (iii) follows from using ${-}b$ in the place of $b$ in (i).
+\end{proof}
