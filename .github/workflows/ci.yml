@@ -11,13 +11,18 @@ permissions:
   contents: write
 
 jobs:
-  build-pdf:
+  main:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
+
+      - uses: actions/checkout@v4
+        with:
+          ref: web
+          path: web
 
       - name: configure git + environment variables
         run: |
@@ -58,8 +63,9 @@ jobs:
 
       - name: ▲ vercel build
         if: ${{ github.ref_name == 'main' }}
+        working-directory: web
         run: |
-          cp minimath.pdf web/public/minimath.pdf
+          cp ../minimath.pdf public/minimath.pdf
           npm i -g vercel@latest
           VERCEL=${{ secrets.VERCEL_TOKEN }}
           VERCEL="vercel -t $VERCEL"

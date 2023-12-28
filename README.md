@@ -59,11 +59,13 @@ pdf.
 
 A user-facing command that requires `pdftex` to be installed.
 
-<br>
+<br><br>
 
 <p align='center'>
   <img src="https://github.com/nguyenvukhang/math/assets/10664455/68170003-30f7-467f-ad2d-aef3c08aa15e"/>
 </p>
+
+<br>
 
 [gh-act]: https://github.com/nguyenvukhang/math/blob/main/.github/workflows/ci.yml
 [latest]: https://github.com/nguyenvukhang/math/releases/latest
