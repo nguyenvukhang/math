@@ -293,3 +293,36 @@ such that
   \item $m\in S$, and
   \item $m\leq x$ for all $x\in S$.
 \end{enumerati}
+
+\Definition{2.3.1}{Supremum}\label{e6981e1}
+
+Let $E\subseteq\R$ be non-empty. A real number $M\in\R$ is called the
+\textbf{supremum} of $E$ if
+\begin{enumerati}
+  \item $M$ is an \href{e4698be}{upper bound} of $E$, and
+  \item if $M'$ is an upper bound of $E$, then $M\leq M'$.
+\end{enumerati}
+
+\Lemma{2.3.2}{}\label{f77f162}
+
+Let $E\subseteq\R$ be non-empty. Then $M=\sup E$ if and only if $M$ is an upper
+bound of $E$ and for every $\epsilon>0$, there exists $x_\epsilon\in E$ such
+that $M-\epsilon<x_\epsilon$.
+
+\begin{proof}
+  ($\implies$) Suppose $M=\sup E$. Let $\epsilon>0$. Then $M-\epsilon<M$. Since
+  $M$ is the least upper bound of $E$ by definition, $M-\epsilon$ cannot be an
+  upper bound for $E$. Hence there exists $x_\epsilon\in E$ such that
+  $M-\epsilon<x_\epsilon$.
+
+  ($\impliedby$) Suppose $M$ is an upper bound for $E$ and that there exists
+  $x_\epsilon\in E$ such that $M-\epsilon<x_\epsilon$. Let $M'$ be an upper
+  bound of $E$. Suppose on the contrary that $M'<M$. Then we let
+  $\epsilon:=M-M'>0$. Then there exists $x_\epsilon\in E$ such that
+  $$
+    M'=M-(M-M')=M-\epsilon<x_\epsilon
+  $$
+
+  This contradicts the assumption that $M'$ is an upper bound for $E$. Hence we
+  must have $M\leq M'$, making $M$ the least upper bound of $E$.
+\end{proof}
