@@ -17,6 +17,8 @@ TEX_FILES += real-analysis.tex
 
 MINIMATH := minimath
 
+LINGUIST := $(HOMEBREW_PREFIX)/lib/ruby/gems/3.2.0/bin/github-linguist
+
 ALL_TEX_FILES := toc.tex \
 	plenary.tex \
 	calculus.tex \
@@ -27,7 +29,8 @@ ALL_TEX_FILES := toc.tex \
 	ordinary-differential-equations.tex
 
 current:
-	make build
+	$(LINGUIST) --help
+	$(LINGUIST) tex_modules/headers.sty -b
 
 install:
 	cargo install --features dev --path . --locked --debug
