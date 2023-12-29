@@ -99,7 +99,7 @@ properties, for all $a,b,c\in\R$:
   \item [(\textbf{A2})] \textit{(Associativity)} $(a+b)+c=a+(b+c)$
   \item [(\textbf{A3})] \textit{(Existence of additive identity)} $\exists0\in\R:\ a+0=0+a=a$
   \item [(\textbf{A4})] \textit{(Existence of additive inverse)} $\forall
-        x\in\R,\ \exists {-}x\in\R:\ x+({-}x)=({-}x)+x=0$
+        x\in\R,\ \exists -x\in\R:\ x+(-x)=(-x)+x=0$
 \end{itemize}
 
 The binary operation \textbf{multiplication} on $\R$ satisfies the following
@@ -130,7 +130,7 @@ Because of (\textbf{A1})-(\textbf{A4}), (\textbf{M1})-(\textbf{M4}), and
 For any $a,b,c\in\R$,
 
 \begin{enumerati}
-  \item \textit{(Uniqueness of additive inverse)} If $a+b=0$, then $b={-}a$
+  \item \textit{(Uniqueness of additive inverse)} If $a+b=0$, then $b=-a$
   \item \textit{(Uniqueness of multiplicative inverse)} If $a\cdot b=1$ and
   $a\neq0$, then $b=\frac1a$.
   \item If $a+b=b$, then $a=0$.
@@ -141,15 +141,14 @@ For any $a,b,c\in\R$,
 \end{enumerati}
 
 \begin{proof}
-  \def\a{{-}a}\def\b{{-}b}
   Let $a,b,c\in\R$.
 
   Proof of (i): Suppose $a+b=0$. Then
   \begin{align*}
-    a+b+(\a) &=0+(\a)                                              \\
-    a-(\a)+b &=\a\with\desc{(commutativity and additive identity)} \\
-    0+b      &=\a\with\desc{(additive inverse)}                    \\
-    b        &=\a\with\desc{(additive identity)}
+    a+b+(-a) &=0+(-a)                                              \\
+    a-(-a)+b &=-a\with\desc{(commutativity and additive identity)} \\
+    0+b      &=-a\with\desc{(additive inverse)}                    \\
+    b        &=-a\with\desc{(additive identity)}
   \end{align*}
 
   Proof of (ii): Suppose $a\cdot b=1$ and $a\neq0$. Then
@@ -162,7 +161,7 @@ For any $a,b,c\in\R$,
 
   Proof of (iii): Suppose $a+b=b$. Then
   \begin{align*}
-    a+b+(\b) &=b+(\b)                           \\
+    a+b+(-b) &=b+(-b)                           \\
     a+0      &=0\with\desc{(additive inverse)}  \\
     a        &=0\with\desc{(additive identity)}
   \end{align*}
@@ -176,12 +175,12 @@ For any $a,b,c\in\R$,
 
   Proof of (v):
   \begin{align*}
-    a\cdot0 &= a\cdot0+0\with\desc{(additive identity)}                         \\
-            &= a\cdot0+[(a\cdot0)+({-}(a\cdot0))]\with\desc{(additive inverse)} \\
-            &= (a\cdot0+a\cdot0)+({-}(a\cdot0))\with\desc{(associativity)}      \\
-            &= a\cdot(0+0)+({-}(a\cdot0))\with\desc{(distributivity)}           \\
-            &= a\cdot0+({-}(a\cdot0))\with\desc{(additive identity)}            \\
-            &= 0\with\desc{(additive inverse)}                                  \\
+    a\cdot0 &= a\cdot0+0\with\desc{(additive identity)}                       \\
+            &= a\cdot0+[(a\cdot0)+(-(a\cdot0))]\with\desc{(additive inverse)} \\
+            &= (a\cdot0+a\cdot0)+(-(a\cdot0))\with\desc{(associativity)}      \\
+            &= a\cdot(0+0)+(-(a\cdot0))\with\desc{(distributivity)}           \\
+            &= a\cdot0+(-(a\cdot0))\with\desc{(additive identity)}            \\
+            &= 0\with\desc{(additive inverse)}                                \\
   \end{align*}
 
   Proof of (vi): Suppose $a\cdot b=0$. Now if $a=0$ then we are done. So suppose
@@ -227,7 +226,7 @@ $$
 $$
 
 \begin{proof}
-  We have ${-}|a|\leq a\leq|a|$ and ${-}|b|\leq b\leq|b|$. Adding, we have
+  We have $-|a|\leq a\leq|a|$ and $-|b|\leq b\leq|b|$. Adding, we have
   \begin{align*}
     -(|a|+|b|)\leq a+b\leq |a|+|b|
   \end{align*}
@@ -266,10 +265,10 @@ $$
 
   With $(*)$ and $(**)$, we have (i).
 
-  (ii) is obtained by using ${-}b$ in the place of $b$ in the
+  (ii) is obtained by using $-b$ in the place of $b$ in the
   \href{f1288ad}{triangle inequality}
 
-  (iii) follows from using ${-}b$ in the place of $b$ in (i).
+  (iii) follows from using $-b$ in the place of $b$ in (i).
 \end{proof}
 
 \Definition{2.1.1}{Boundedness}\label{e4698be}
@@ -374,7 +373,7 @@ that $x_\epsilon<m+\epsilon$.
   Exercise (similar to proof of \href{f77f162}{Lemma 2.3.2})
 \end{proof}
 
-\Principle{2.3.6}{Completeness property of $\mathbb R$}\label{f330cf9}
+\Principle{2.3.6}{Completeness/supremum property of $\mathbb R$}\label{f330cf9}
 
 Every non-empty subset of $\R$ which is bounded above has a supremum in $\R$.
 
@@ -390,3 +389,33 @@ In other words, if $E\subseteq\R$ is non-empty, then $\sup E$ exists.
 \end{enumerati}
 
 With these we will build up other properties of $\R$.
+
+\Theorem{2.3.8}{The infimum property of $\mathbb R$}\label{ab2a2fe}
+
+Every non-empty subuset of $\R$ which is bounded below has an infimum in $\R$.
+
+\begin{proof}
+
+  Let $E\subseteq\R$ be non-empty and bounded below by $b\in\R$. Let
+  $A:=\set{-x}{x\in E}$. Then $A\subseteq\R$ and is non-empty. For all $x\in E$,
+  $b\leq x$ and hence $-x\leq-b$. And so $-b$ is an upper bound for $A$.
+
+  Since $A$ is non-empty and bounded above, by the \href{f330cf9}{supremum
+  property of $\R$}, $A$ has a supremum $M\in\R$. We claim that
+  \begin{equation*}
+    \inf E=-\sup A=-M.\Tag{*}
+  \end{equation*}
+
+  Since $M$ is an upper bound for $A$,
+  \begin{align*}
+    -x &\leq M,\with\forall{-x}\in A \\
+    -x &\leq M,\with\forall{x}\in E  \\
+    -M &\leq x,\with\forall{x}\in E
+  \end{align*}
+
+  Hence $-M$ is a lower bound for $E$.
+
+  Now let $m$ be another lower bound of $E$. Then $-m$ is an upper bound of $A$.
+  Since $M=\sup A$, we have $M\leq-m$. So $m\leq-M$. Hence $-M$ is indeed the
+  greatest lower bound of $E$. This proves $(*)$.
+\end{proof}
