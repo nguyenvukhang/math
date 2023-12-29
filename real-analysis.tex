@@ -483,3 +483,38 @@ In other words, $\N$ is not bounded above in $\R$.
   n\in\N$ such that $M-1<\bar n$. Then $M<\bar n+1$. But $\bar n+1\in\N$. This
   contradicts that $M$ is an upper bound of $\N$.
 \end{proof}
+
+\Corollary{2.4.2}{}\label{d845856}
+
+Let $A\subseteq\R$ be given by $A:=\set{\dfrac1n}{n\in\N}$. Then
+\begin{enumerati}
+  \item $\inf A=0$, and
+  \item given any $\epsilon>0$, there exists $n_\epsilon\in\N$ such that
+  $0<\dfrac1{n_\epsilon}<\epsilon$.
+\end{enumerati}
+
+\begin{proof}
+  Proving (i): For any $x\in A$, $x=\frac1n$ for some $n\in\N$, and thus $x>0$.
+  Thus $0$ is a lower bound of $A$. Now suppose $m'$ is another lower bound for
+  $A$. Then
+  \begin{equation*}
+    m'\leq\frac1n\with\forall n\in\N\Tag{*}
+  \end{equation*}
+
+  If $m'>0$, then $1/m'>0$. By the \href{fbc2289}{Archimedean property of $\R$},
+  there exists $\bar n\in\N$ such that
+  $$
+    \frac1{m'}<\bar n\implies\frac1{\bar n}<m'
+  $$
+
+  which contradicts $(*)$. Hence we must have $m'\leq0$, which implies that 0 is
+  the greatest lower bound of $A$.
+
+  Proving (ii): from (i) since $\epsilon>0=\inf A$, $\epsilon$ is not a lower
+  bound of $A$. That is, there is an element of $A$ smaller than $\epsilon$:
+  $$
+    \exists n_\epsilon\in\N:\ \frac1{n_\epsilon}<\epsilon
+  $$
+
+  This completes the proof.
+\end{proof}
