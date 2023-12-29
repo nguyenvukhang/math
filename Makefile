@@ -28,12 +28,15 @@ ALL_TEX_FILES := toc.tex \
 	nonlinear-optimization-constrained.tex \
 	ordinary-differential-equations.tex
 
+BUILD_CMD := cargo install --features dev --path . --locked
+# BUILD_CMD += --debug
+
 current:
 	$(LINGUIST) --help
 	$(LINGUIST) tex_modules/headers.sty -b
 
 install:
-	cargo install --features dev --path . --locked --debug
+	$(BUILD_CMD)
 
 build:
 	@make install
