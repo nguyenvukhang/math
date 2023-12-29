@@ -462,3 +462,24 @@ Then $\sup C=\sup A+\sup B$.
   Showing that $\sup A+\sup B$ is indeed the least upper bound for $C$. Hence
   $\sup C=\sup A+\sup B$.
 \end{proof}
+
+\Theorem{2.4.1}{Archimedean property of $\mathbb R$}\label{fbc2289}
+
+For any $x\in\R$, there exists $n_x\in\N$ such that $x<n_x$.
+
+Alternatively, any $x\in\R$ is not an upper bound for $\N$.
+
+In other words, $\N$ is not bounded above in $\R$.
+
+\begin{proof}
+  Suppose on the contrary that the Archimedean property of $\R$ does not hold.
+
+  Then there exists some $x\in\R$ such that $n\leq x$ for all $n\in\N$. That is,
+  the non-empty set $\N$ is bounded above.
+
+  By the \href{f330cf9}{completeness property of $\R$}, $M=\sup\N$ exists.
+
+  By \href{f77f162}{Lemma 2.3.2} (using $\epsilon:=1$), there exists $\bar
+  n\in\N$ such that $M-1<\bar n$. Then $M<\bar n+1$. But $\bar n+1\in\N$. This
+  contradicts that $M$ is an upper bound of $\N$.
+\end{proof}
