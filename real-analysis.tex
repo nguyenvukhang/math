@@ -419,3 +419,46 @@ Every non-empty subuset of $\R$ which is bounded below has an infimum in $\R$.
   Since $M=\sup A$, we have $M\leq-m$. So $m\leq-M$. Hence $-M$ is indeed the
   greatest lower bound of $E$. This proves $(*)$.
 \end{proof}
+
+\Result{2.3.9}{}\label{f426fd0}
+
+Let $A,B\subseteq\R$ be non-empty sets, and let
+$$
+  C:=\set{a+b}{a\in A,\ b\in B}
+$$
+
+Then $\sup C=\sup A+\sup B$.
+
+\begin{proof}
+  Let $c\in C$. Then $c=a+b$ for some $a\in A$ and $b\in B$. Now since
+  $a\leq\sup A$ and $b\leq\sup B$, we have
+  $$
+    c=a+b\leq\sup A+\sup B.
+  $$
+
+  Hence $\sup A+\sup B$ is an upper bound of $C$.
+
+  Next, let $M$ be an upper bound of $C$. Then for all $a\in A$ and $b\in B$,
+  $$
+    a+b\leq M
+  $$
+
+  and thus $a\leq M-b$. So then for each $b\in B$, $M-b$ is an upper bound for
+  $A$. Consequently, $\sup A\leq M-b$, and we have
+  $$
+    b\leq M-\sup A\with\forall b\in B.
+  $$
+
+  Which now implies that $M-\sup A$ is an upper bound for $B$, so
+  $$
+    \sup B\leq M-\sup A
+  $$
+
+  and thus
+  $$
+    \sup A+\sup B\leq M
+  $$
+
+  Showing that $\sup A+\sup B$ is indeed the least upper bound for $C$. Hence
+  $\sup C=\sup A+\sup B$.
+\end{proof}
