@@ -379,7 +379,9 @@ Every non-empty subset of $\R$ which is bounded above has a supremum in $\R$.
 
 In other words, if $E\subseteq\R$ is non-empty, then $\sup E$ exists.
 
-\Remark{2.3.7}{} This marks the end of our assumptions, which are:
+\Remark{2.3.7}{}\label{b1dc879}
+
+This marks the end of our assumptions, which are:
 
 \begin{enumerati}
   \item the \href{bf61f02}{field properties of $\R$} (\textbf{A1})-(\textbf{A4}),
@@ -517,4 +519,83 @@ Let $A\subseteq\R$ be given by $A:=\set{\dfrac1n}{n\in\N}$. Then
   $$
 
   This completes the proof.
+\end{proof}
+
+\Corollary{2.4.3}{Existence of the floor of a real number}\label{abc7dbd}
+
+Let $x\in\R$. Then there exists a unique $m\in\Z$ such that
+$$
+  m\leq x<m+1
+$$
+
+We denote $m$ by $\floor x$.
+
+\begin{proof}
+  For this proof, we shall consider two cases:
+
+  Case 1: $x\geq 1$. Consider the set
+  $$
+    S:=\set{n\in\N}{n>x-1}\subseteq\N
+  $$
+
+  We claim that $\floor x$ is minimum of this set.
+
+  By the \href{fbc2289}{Archimedean property of $\R$}, we know that $S$ is
+  non-empty. Then by the \href{cd7c4d1}{well-ordering property of $\N$}, it
+  follows that $S$ has a minimum element, which we denote by $m$. Since $m\in S$,
+  it follows that $m\in\N$ and
+  \begin{equation*}
+    m>x-1\implies x<m+1\Tag{*}
+  \end{equation*}
+
+  Next we show that $m\leq x$. Suppose on the contrary that $m>x$. Then
+  \begin{align*}
+    m>x\geq1
+     &\implies m-1>0\quad\text{and}\quad m-1>x-1    \\
+     &\implies m-1\in\N\quad\text{and}\quad m-1>x-1 \\
+     &\implies m-1\in S
+  \end{align*}
+
+  But this contradicts that $m=\min S$. Hence $m\leq x$. Together with $(*)$, we
+  have
+  $$
+    m\leq x<m+1.
+  $$
+
+  Case 2: $x<1$. It follows from the \href{fbc2289}{Archimedean property of $\R$}
+  that there exists $k\in\N$ such that
+  $$
+    1-x<k
+  $$
+
+  which implies that $x+k>1$. Then from Case 1 applied to $x+k$, there exists
+  $m'\in\Z$ such that
+  $$
+    m'\leq x+k<m'+1
+  $$
+
+  which is then
+  $$
+    m'-k\leq x<m'-k+1
+  $$
+
+  Let $m:=m'-k\in\Z$. then we have $m\leq x<m+1$. Thus we have proved existence.
+
+  Next, on to uniqueness. Let $m_1,m_2\in\Z$ be such that
+  $$
+    m_1\leq x<m_1+1\quad\text{and}\quad m_2\leq x<m_2+1
+  $$
+
+  Then we have
+  $$
+    m_1\leq x<m_2+1 \implies m_1-m_2<1
+  $$
+
+  and by symmetry, $m_2-m_1<1$. Hence
+  $$
+    -1<m_1-m_2<1
+  $$
+
+  But since $m_1,m_2\in\Z$, we have $m_1-m_2\in\Z$ and thus $m_1-m_2=0$. Hence
+  $m_1=m_2$ and this completes the proof for uniqueness.
 \end{proof}
