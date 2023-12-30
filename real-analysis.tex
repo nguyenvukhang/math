@@ -495,6 +495,9 @@ Let $A\subseteq\R$ be given by $A:=\set{\dfrac1n}{n\in\N}$. Then
   $0<\dfrac1{n_\epsilon}<\epsilon$.
 \end{enumerati}
 
+Note that (ii) is significant because it claims that for any positive real
+number, there exists a \textit{rational} number between it and zero.
+
 \begin{proof}
   Proving (i): For any $x\in A$, $x=\frac1n$ for some $n\in\N$, and thus $x>0$.
   Thus $0$ is a lower bound of $A$. Now suppose $m'$ is another lower bound for
@@ -719,4 +722,41 @@ Let $c>0$ and $k\in\N$. Then there exists a unique $a\in\R$ with $a^k=c$.
   $a^k=c$. To justify this claim, one shows that it is impossible to have $a^k<c$
   or $a^k>c$. Again, refer to the \href{b88beb7}{square root case} for
   inspiration.
+\end{proof}
+
+\Theorem{2.4.6}{Density Theorem}\label{d0c9c52}
+
+For any $x,y\in\R$ satisfying $x<y$, there exists a $r\in\mathbb Q$ such that
+$$
+  x<r<y
+$$
+
+\begin{proof}
+  Since $x<y$, we have $y-x>0$ and thus by \href{d845856}{Corollary 2.4.2(ii)},
+  there exists $n\in\N$ such that
+  \begin{align*}
+    y-x>\frac1n &\implies ny-nx>1        \\
+                &\implies nx+1<ny\Tag{*}
+  \end{align*}
+
+  Then by \href{abc7dbd}{Corollary 2.4.3}, the floor $\floor{nx}\in\Z$ exists and
+  it satisfies
+  $$
+    \floor{nx}\leq nx <\floor{nx}+1\implies nx<\floor{nx}\leq nx+1
+  $$
+
+  Together with $(*)$, we have
+  $$
+    nx<\floor{nx}+1<ny
+  $$
+
+  and thus
+  $$
+    x<\frac{\floor{nx}+1}{n}<y
+  $$
+
+  Hence by setting $r:=\dfrac{\floor{nx}+1}{n}$, we have
+  $$
+    r\in\mathbb Q\text{ and }x<r<y
+  $$
 \end{proof}
