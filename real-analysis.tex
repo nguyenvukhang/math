@@ -760,3 +760,39 @@ $$
     r\in\mathbb Q\text{ and }x<r<y
   $$
 \end{proof}
+
+\Example{2.4.6}{}\label{ade99b7}
+
+Let $E:=\set{x\in\mathbb Q}{x<\sqrt3}$. Then $\sup E=\sqrt3$.
+
+\begin{proof}
+  By definition of $E$, $x\leq\sqrt3$ for all $x\in E$. Thus, $E$ is bounded
+  above (by $\sqrt3$). Also, since $0\in E$, $E$ is non-empty. Thus by the
+  \href{f330cf9}{completeness property of $\R$}, $\sup E$ exists in $\R$.
+
+  Since $\sqrt3$ is an upper bound of $E$, we must have $\sup E\leq\sqrt3$.
+
+  Suppose that $\sup E\neq\sqrt3$. Then $\sup E<\sqrt3$. By the
+  \href{d0c9c52}{Density Theorem}, there exists $r\in\mathbb Q$ such that
+  \begin{equation*}
+    \sup E<r<\sqrt3\Tag{*}
+  \end{equation*}
+
+  Since $r\in\mathbb Q$ and $r<\sqrt3$, it follows that $r\in E$. But this and
+  $(*)$ contradicts the fact that $\sup E$ is an upper bound for $E$.
+
+  Hence we must have $\sup E=\sqrt3$.
+\end{proof}
+
+\Corollary{2.4.6}{}\label{d4d76b6}
+
+Let $\alpha\in\R$, and let
+$$
+  E_\alpha:=\set{x\in\mathbb Q}{x<\alpha}\subseteq\mathbb Q
+$$
+
+Then $\sup E_\alpha=\alpha$.
+
+\begin{proof}
+  Exercise. (Similar to \href{ade99b7}{Example 2.4.6})
+\end{proof}
