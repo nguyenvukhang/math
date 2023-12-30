@@ -823,3 +823,33 @@ $a<x<b$.
   \href{c2585a1}{Theorem 1.1.2}), and by a \href{d9d3f10}{known result}, the
   product of a rational number and an irrational number is irrational.
 \end{proof}
+
+\Corollary{2.4.8}{}\label{e43d143}
+
+If an interval $I\subset\R$ has at least two elements, then $I$ contains
+infinitely many rational numbers and infinitely many irrational numbers.
+
+\begin{proof}
+  \def\all{\iter{x_1}{x_n}}
+
+  Assume that $I$ contains finitely many rational numbers. Enumerate all of them
+  by $\all\in I$ in order of increasing value:
+  $$
+    x_1<x_2<\ldots<x_n.
+  $$
+  Also, by assumption we have $n\geq2$.
+
+  By the \href{d0c9c52}{density theorem}, there exists $r\in\Q$ such that
+  $$
+    x_1<r<x_2
+  $$
+
+  Note that since $I$ is an interval, we have $r\in I$. But clearly $r$ is not
+  equal to any of the $\all$ previously identified. This contradicts the
+  assumption that $\all$ are all the numbers in $I$.
+
+  Hence $I$ must contain infinitely many rational numbers.
+
+  The case with irrational numbers is completely analog to this, but instead of
+  the density theorem we use \href{b0d86cf}{Corollary 2.4.7}.
+\end{proof}
