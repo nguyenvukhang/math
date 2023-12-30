@@ -701,3 +701,22 @@ assuming the existence of $\sqrt2\in\R$.
   Since $a>0$ and $b>0$, it follows that $a+b>0$ and in particular $a+b\neq0$.
   Hence we must have $a-b=0$, which means that $a=b$.
 \end{proof}
+
+\Theorem{2.4.5}{Existence of the positive $k$-th root of a positive real number}\label{c70a9ac}
+
+Let $c>0$ and $k\in\N$. Then there exists a unique $a\in\R$ with $a^k=c$.
+
+\begin{proof}
+  The proof is similar to the \href{b88beb7}{square root case}. Let
+  $$
+    S:=\set{t\in\R}{t>0\text{ and }t^k<c}
+  $$
+
+  Then one can show that $1\in S$ if $c>1$, and $\frac c2\in S$ if $c\leq1$
+  (hence $S$ is non-empty). Moreover, $c$ is an upper bound of $S$ if $c>1$, and
+  1 is an upper bound of $S$ if $c\leq1$ (hence $S$ is bounded above). By the
+  \href{f330cf9}{supremum property of $\R$}, $a=\sup S$ exists. We claim that
+  $a^k=c$. To justify this claim, one shows that it is impossible to have $a^k<c$
+  or $a^k>c$. Again, refer to the \href{b88beb7}{square root case} for
+  inspiration.
+\end{proof}

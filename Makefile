@@ -43,7 +43,7 @@ build:
 	$(MINIMATH) build $(TEX_FILES)
 
 dev:
-	@make install
+	# @make install
 	$(MINIMATH) dev $(TEX_FILES)
 
 test:
