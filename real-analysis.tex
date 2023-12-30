@@ -796,3 +796,30 @@ Then $\sup E_\alpha=\alpha$.
 \begin{proof}
   Exercise. (Similar to \href{ade99b7}{Example 2.4.6})
 \end{proof}
+
+\Corollary{2.4.7}{}\label{b0d86cf}
+
+If $a,b\in\R$ such that $a<b$, then there exists $x\in\R\setminus\Q$ such that
+$a<x<b$.
+
+\begin{proof}
+  If $a<b$, then $a<\dfrac{a+b}2<b$ and thus
+  $$
+    \frac a{\sqrt2}<\frac{a+b}{2\sqrt2}<\frac b{\sqrt2}
+  $$
+
+  By the \href{d0c9c52}{density theorem}, there exist $r_1,r_2\in\Q$ such that
+  $$
+    \frac a{\sqrt2}<r_1<\frac{a+b}{2\sqrt2}<r_2<\frac b{\sqrt2}
+  $$
+
+  At least one of $r_1,r_2$ is non-zero. Call it $r$. Then we have $r\in\Q\sans0$
+  and
+  $$
+    \frac a{\sqrt2}<r<\frac b{\sqrt2}
+  $$
+
+  Hence we have $a<r\sqrt2<b$. $r\sqrt2$ is because $\sqrt2$ is irrational (by
+  \href{c2585a1}{Theorem 1.1.2}), and by a \href{d9d3f10}{known result}, the
+  product of a rational number and an irrational number is irrational.
+\end{proof}
