@@ -599,3 +599,105 @@ We denote $m$ by $\floor x$.
   But since $m_1,m_2\in\Z$, we have $m_1-m_2\in\Z$ and thus $m_1-m_2=0$. Hence
   $m_1=m_2$ and this completes the proof for uniqueness.
 \end{proof}
+
+\Lemma{2.4.3}{}\label{b88beb7}
+
+There exists a unique positive real number $a$ such that $a^2=2$, without
+assuming the existence of $\sqrt2\in\R$.
+
+\begin{proof}
+  \textit{(Existence)} Consider the set
+  $$
+    S:=\set{x\in\R}{x\geq0\text{ and }x^2<2}\subseteq\R
+  $$
+
+  We claim that $(\sup S)^2=2$.
+
+  $S$ is non-empty since $1\in S$. Also, $S$ is bounded above (by 2, for
+  instance). Hence by the \href{f330cf9}{completeness property of $\R$}, $\sup
+  S$ exists in $\R$. Let $a:=\sup S\in\R$.
+
+  We know that $a>0$ since $1\in S$, and hence $a$ is positive, as desired.
+
+  It remains to show that $a^2=2$. By the \href{d49c63e}{trichotomy property of
+  $\R$}, we just have to exclude the possibilities
+  $$
+    \text{Case 1: }a^2<2\quad\text{and}\quad\text{Case 2: }a^2>2
+  $$
+
+  \paragraph{Case 1: $a^2<2$.}
+
+  We will argue that there exists some $n\in\N$ such that $(a+\frac1n)^2<2$,
+  which implies that $(a+\frac1n)^2\in S$, which then implies that $a=\sup S$ is
+  not an upper bound of $S$.
+
+  Observe that
+  \begin{equation*}
+    \Big(a+\frac1n\Big)^2=a^2+\frac{2a}n+\frac1{n^2}\leq
+    a^2+\frac{2a}n+\frac1n=a^2+\frac{2a+1}n\Tag{1}
+  \end{equation*}
+
+  since $\dfrac1{n^2}\leq\dfrac1n$ for any $n\in\N$. As $a^2<2$, we have
+  \begin{equation*}
+    a^2+\frac{2a+1}n<2\iff n>\frac{2a+1}{2-a^2}\Tag{2}
+  \end{equation*}
+
+  Since $a^2<2$, we have $\dfrac{2a+1}{2-a^2}\in\R$. Thus by the
+  \href{fbc2289}{Archimedean property of $\R$}, there exists $n\in\N$ satisfying
+  $$
+    n>\frac{2a+1}{2-a^2}.
+  $$
+
+  Fixing this $n$, and together with (2) and then (1), we have
+  $(a+\frac1{n})^2<2$. Hence Case 1 is not possible.
+
+  \paragraph{Case 2: $a^2>2$.}
+
+  We claim that there exists some $n\in\N$ such that $a-\frac1n$ is an upper
+  bound of $S$, breaking the fact that $a$ is the least upper bound of $S$. We
+  proceed by
+  \begin{enumerati}
+    \item Find $n\in\N$ such that $(a-\frac1n)^2>2$.
+    \item Show that $x\leq a-\frac1n$ for all $x\in S$.
+  \end{enumerati}
+
+  Step (i): Note that
+  \begin{equation*}
+    \Big(a-\frac1n\Big)^2=a^2-\frac{2a}n+\frac1{n^2}>a^2-\frac{2a}n\Tag{3}
+  \end{equation*}
+
+  On the other hand, we have
+  \begin{equation*}
+    a^2-\frac{2a}n>2\iff\frac1n<\frac{a^2-2}{2a}\Tag{4}
+  \end{equation*}
+
+  Since $a^2>2$ and $a>0$, we have $\dfrac{a^2-2}{2a}>0$, and by
+  \href{d845856}{Corollary 2.4.2(ii)}, there exists $n\in\N$ such that
+  $\dfrac1n<\dfrac{a^2-2}{2a}$.
+
+  Fixing this $n$, and together with (4) and then (3), we have $(a-\frac1n)^2>2$
+
+  Step (ii): For all $x\in S$, we have $x\geq0$ and $x^2<2$. Thus,
+  \begin{equation*}
+    \Big(a-\frac1n\Big)^2-x^2>2-2=0\implies\Big(a-\frac1n+x\Big)\Big(a-\frac1n-x\Big)>0
+  \end{equation*}
+
+  Note that $a>1$, $\frac1n\leq 1$, $x>0$, and thus $a-\dfrac1n+x>0$. Hence we
+  must have
+  $$
+    a-\frac1n-x>0
+  $$
+
+  and thus $x<a-\frac1n$. This completes the contradiction of Case 2.
+
+  Hence we must have $a^2=2$.
+
+  \textit{(Uniqueness)} Suppose $a,b\in\R$ with $a>0$ and $b>0$ such that
+  $a^2=2$ and $b^2=2$. Then
+  \begin{equation*}
+    a^2-b^2=2-2=0\implies(a-b)(a+b)=0
+  \end{equation*}
+
+  Since $a>0$ and $b>0$, it follows that $a+b>0$ and in particular $a+b\neq0$.
+  Hence we must have $a-b=0$, which means that $a=b$.
+\end{proof}
