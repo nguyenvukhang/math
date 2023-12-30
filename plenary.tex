@@ -444,6 +444,25 @@ $$
   \end{align*}
 \end{proof}
 
+\Result{1.2.16}{Rational times irrational is irrational}\label{d9d3f10}
+
+Let $a\in\R\setminus\Q$ and $b\in\Q$. Then $ab\in\R\setminus\Q$.
+
+\begin{proof}
+  Clearly $ab\in\R$. Suppose $ab\in\Q$. Then there exists $n,m,s,t\in\Z$ such
+  that
+  $$
+    \frac nm=ab\quad\text{and}\quad \frac st=b
+  $$
+
+  Then we have
+  $$
+    a=\frac nm\cdot\frac1b=\frac nm\cdot\frac ts\in\Q
+  $$
+
+  which is a contradiction. Hence we must have $ab\in\R\setminus\Q$.
+\end{proof}
+
 % ╭─────────────────────────────────────────────────────────────────╮
 % │ 2. CALCULUS                                        __calculus__ │
 % ╰─────────────────────────────────────────────────────────────────╯

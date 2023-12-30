@@ -5,16 +5,16 @@
 \begin{enumerati}
   \item $\N:=$ set of all natural numbers $\{1,2,3,\ldots\}$
   \item $\Z:=$ set of all integers $\{\ldots,-2,-1,0,1,2,\ldots\}$
-  \item $\mathbb Q:=$ set of all rational numbers $\Set{\dfrac pq}{p,q\in\Z,q\neq0}$
+  \item $\Q:=$ set of all rational numbers $\Set{\dfrac pq}{p,q\in\Z,q\neq0}$
   \item $\mathbb R:=$ set of all real numbers
 \end{enumerati}
 
 We have
 $$
-  \N\subseteq\Z\subseteq\mathbb Q\subseteq\R.
+  \N\subseteq\Z\subseteq\Q\subseteq\R.
 $$
 
-The set of irrational numbers is denoted by $\R\setminus\mathbb Q$.
+The set of irrational numbers is denoted by $\R\setminus\Q$.
 
 \Theorem{1.1.2}{$\sqrt2$ is an irrational number}\label{c2585a1}
 
@@ -726,7 +726,7 @@ Let $c>0$ and $k\in\N$. Then there exists a unique $a\in\R$ with $a^k=c$.
 
 \Theorem{2.4.6}{Density Theorem}\label{d0c9c52}
 
-For any $x,y\in\R$ satisfying $x<y$, there exists a $r\in\mathbb Q$ such that
+For any $x,y\in\R$ satisfying $x<y$, there exists a $r\in\Q$ such that
 $$
   x<r<y
 $$
@@ -757,13 +757,13 @@ $$
 
   Hence by setting $r:=\dfrac{\floor{nx}+1}{n}$, we have
   $$
-    r\in\mathbb Q\text{ and }x<r<y
+    r\in\Q\text{ and }x<r<y
   $$
 \end{proof}
 
 \Example{2.4.6}{}\label{ade99b7}
 
-Let $E:=\set{x\in\mathbb Q}{x<\sqrt3}$. Then $\sup E=\sqrt3$.
+Let $E:=\set{x\in\Q}{x<\sqrt3}$. Then $\sup E=\sqrt3$.
 
 \begin{proof}
   By definition of $E$, $x\leq\sqrt3$ for all $x\in E$. Thus, $E$ is bounded
@@ -773,13 +773,13 @@ Let $E:=\set{x\in\mathbb Q}{x<\sqrt3}$. Then $\sup E=\sqrt3$.
   Since $\sqrt3$ is an upper bound of $E$, we must have $\sup E\leq\sqrt3$.
 
   Suppose that $\sup E\neq\sqrt3$. Then $\sup E<\sqrt3$. By the
-  \href{d0c9c52}{Density Theorem}, there exists $r\in\mathbb Q$ such that
+  \href{d0c9c52}{Density Theorem}, there exists $r\in\Q$ such that
   \begin{equation*}
     \sup E<r<\sqrt3\Tag{*}
   \end{equation*}
 
-  Since $r\in\mathbb Q$ and $r<\sqrt3$, it follows that $r\in E$. But this and
-  $(*)$ contradicts the fact that $\sup E$ is an upper bound for $E$.
+  Since $r\in\Q$ and $r<\sqrt3$, it follows that $r\in E$. But this and $(*)$
+  contradicts the fact that $\sup E$ is an upper bound for $E$.
 
   Hence we must have $\sup E=\sqrt3$.
 \end{proof}
@@ -788,7 +788,7 @@ Let $E:=\set{x\in\mathbb Q}{x<\sqrt3}$. Then $\sup E=\sqrt3$.
 
 Let $\alpha\in\R$, and let
 $$
-  E_\alpha:=\set{x\in\mathbb Q}{x<\alpha}\subseteq\mathbb Q
+  E_\alpha:=\set{x\in\Q}{x<\alpha}\subseteq\Q
 $$
 
 Then $\sup E_\alpha=\alpha$.
