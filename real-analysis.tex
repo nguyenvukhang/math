@@ -1126,3 +1126,41 @@ If $|x_n|\to0$, then $x_n\to0$.
 
   Hence $x_n\to0$.
 \end{proof}
+
+\Theorem{3.2.6}{}\label{b88d621}
+
+For a fixed $b\in\R$ satisfying $0\leq b<1$, we have
+$$
+  \lim_{n\to\infty}b^n=0
+$$
+
+\begin{proof}
+  There are two cases to consider:
+
+  % TODO: extract this out as a proof for limit of a constant sequence
+  \paragraph{Case 1: $b=0$.}
+
+  Let $\epsilon>0$ be given. Take $K=1$. Then for all $n\geq K$,
+  $$
+    |b^n-0|=|0-0|=0<\epsilon
+  $$
+
+  Therefore we have $\displaystyle\lim_{n\to\infty}b^n=0$.
+
+  \paragraph{Case 1: $0<b<1$.}
+
+  Let $a:=\dfrac1b-1$. Then $a>0$, and $b=\dfrac1{1+a}$. By
+  \href{d44713f}{Bernoulli's inequality}, we have $(1+a)^n\geq1+na$ for all
+  $n\in\N$, hence
+  $$
+    0<b^n=\frac1{(1+a)^n}\leq\frac1{1+na}\leq\frac1{na}\with(\forall n\in\N)
+  $$
+
+  Now
+  $$
+    \lim_{n\to\infty}0=0\quad\text{and}\quad\lim_{n\to\infty}\frac1{na}=0
+  $$
+
+  So by \href{c3364d9}{Squeeze Theorem}, we have
+  $\displaystyle\lim_{n\to\infty}b^n=0$.
+\end{proof}
