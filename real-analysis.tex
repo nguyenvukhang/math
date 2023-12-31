@@ -1044,3 +1044,85 @@ Every convergent sequence is bounded.
   \item Boundedness does not imply convergence. Consider the bounded sequence $\{x_n\}$
   defined by $x_n=(-1)^n$.
 \end{enumerati}
+
+\Theorem{3.2.2}{Limit arithmetic}\label{d13a5e7}
+
+If $\displaystyle\lim_{n\to\infty}x_n=\bar x$ and
+$\displaystyle\lim_{n\to\infty}y_n=\bar y$, then
+
+\begin{enumerati}
+  \def\l{\displaystyle\lim_{n\to\infty}}
+  \item $\l(x_n+y_n)=\bar x+\bar y$
+  \item $\l(x_n-y_n)=\bar x-\bar y$
+  \item $\l(x_n\cdot y_n)=\bar x\cdot\bar y$
+  \item $\l(x_n/y_n)=\bar x/\bar y$, provided $y_n\neq0$ for all $n\in\N$, and
+  $\bar y\neq0$.
+\end{enumerati}
+
+In short, the arithmetic operators $+$, $-$, $\times$, $\div$ are preserved
+upon taking limits.
+
+Note that these require both $\{x_n\}$ and $\{y_n\}$ to converge.
+
+\Corollary{3.2.3}{}\label{c182ece}
+
+If $\{x_n\}$ converges and $k\in\N$, then
+$$
+  \lim_{n\to\infty} (x_n)^k=\Big(\lim_{n\to\infty}x_n\Big)^k
+$$
+
+\Theorem{3.2.4}{Squeeze Theorem}\label{c3364d9}
+
+If $x_n\leq y_n\leq z_n$ for all $n\in\N$ and
+$\displaystyle\lim_{n\to\infty}x_n=\lim_{n\to\infty}z_n=a$, then
+$$
+  \lim_{n\to\infty}y_n=a
+$$
+
+Note that we can weaken the condition on $n$ to just $n\in\N,\ n\geq K_0$ for
+some fixed $K_0$.
+
+\begin{proof}
+  Let $\epsilon>0$ be given. Since $x_n\to a$, there exists $K_1\in\N$ such that
+  for all $n\geq K_1$,
+  \begin{equation*}
+    |x_n-a|<\epsilon \implies-\epsilon<x_n-a\Tag{*}
+  \end{equation*}
+
+  Since $z_n\to a$, there exists $K_1\in\N$ such that for all $n\geq K_1$,
+  \begin{equation*}
+    |z_n-a|<\epsilon \implies z_n-a<\epsilon\Tag{**}
+  \end{equation*}
+
+  Let $K:=\max\{K_1,K_2\}\in\N$. If we used the weaker condition, put
+  $K:=\max\{K_0,K_1,K_2\}$.
+
+  Then for all $n\geq K$, we have
+  \begin{align*}
+    x_n\leq y_n\leq z_n
+     &\implies x_n-a\leq y_n-a\leq z_n-a                                   \\
+     &\implies -\epsilon<y_n-a<\epsilon\with\desc{(from $(*)$ and $(**)$)} \\
+     &\implies |y_n-a|<\epsilon
+  \end{align*}
+
+  Hence we also have $\displaystyle\lim_{n\to\infty}y_n=a$.
+\end{proof}
+
+\Theorem{3.2.5}{}\label{a9a7a2f}
+
+If $|x_n|\to0$, then $x_n\to0$.
+
+\begin{proof}
+  Let $\epsilon>0$ be given. Since $|x_n|\to0$, it follows that there exists
+  $K\in\N$ such that
+  $$
+    n\geq K\implies \big||x_n|-0\big|<\epsilon
+  $$
+
+  But $\big||x_n|-0\big|=|x_n-0|$, and hence we have
+  $$
+    n\geq K\implies |x_n-0|=\big||x_n|-0\big|<\epsilon
+  $$
+
+  Hence $x_n\to0$.
+\end{proof}
