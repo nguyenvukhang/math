@@ -21,6 +21,7 @@ LINGUIST := $(HOMEBREW_PREFIX)/lib/ruby/gems/3.2.0/bin/github-linguist
 
 ALL_TEX_FILES := toc.tex \
 	plenary.tex \
+	real-analysis.tex \
 	calculus.tex \
 	algorithm-design.tex \
 	complex-analysis.tex \
@@ -36,14 +37,14 @@ current:
 	$(LINGUIST) tex_modules/headers.sty -b
 
 install:
-	$(BUILD_CMD)
+	# $(BUILD_CMD)
 
 build:
 	@make install
 	$(MINIMATH) build $(TEX_FILES)
 
 dev:
-	# @make install
+	@make install
 	$(MINIMATH) dev $(TEX_FILES)
 
 test:
